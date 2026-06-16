@@ -115,9 +115,23 @@ jobs:
 
       - name: Run sync Keep script
         if: env.RUN_TYPE == 'keep'
+        # 2026-06-16: 移除 `|| true` 静默吞错。
+        # 根因: 6/09 之后 7 天 Keep 没同步, cookie 失效 / 风控 / 网络抖都被 `|| true` 吞了,
+        # workflow 永远绿, 用户根本不知道 sync 挂了。
+        # 现在: keep_sync.py 真崩 → step 红 → 通知用户。
+        # 但因为 keep_sync.py 还会读历史 db 重写 activities.json, 局部失败可能也写出空 json,
+        # 所以下面再加一道 \"sync 出来的 json 必须 ≥ 阈值\" 守门。
         run: |
+          set -o pipefail
           cd /home/runner/work/sports-fair/sports-fair
-          python run_page/keep_sync.py "${{ secrets.KEEP_PHONE_NUMBER }}" "${{ secrets.KEEP_PASSWORD }}" 2>&1 || true
+          python run_page/keep_sync.py "${{ secrets.KEEP_PHONE_NUMBER }}" "${{ secrets.KEEP_PASSWORD }}" 2>&1 | tee /tmp/keep_sync.log
+          # 退出码透传 (pipefail)
+          echo "=== keep_sync exit OK ==="
+          # 简单的 sanity: 看 log 里有没有 \"login failed\" / \"401\" / \"403\" / \"风控\" 等关键字
+          if grep -E -i 'login.*fail|HTTP 401|HTTP 403|风控|invalid.*cookie|invalid.*token' /tmp/keep_sync.log; then
+            echo "::error::keep_sync 登录失败 / 风控 / cookie 失效 — 请刷新 KEEP_PHONE_NUMBER / KEEP_PASSWORD secret"
+            exit 1
+          fi
 
       # 2026-06-09: 删除 "Generate activities.json from database" 步骤
       # keep_sync.py 内部已经用 generator.load() + json.dump 写 activities.json
@@ -155,16 +169,28 @@ jobs:
         # 6/12 实战: chore: sync sports data 把 793 → 86 条, 覆盖 5 年历史
         # 保护: 对比 HEAD~ 与 working tree 的 activities.json, 下跌 > 30% (且 ≥ 50 条) 直接 fail
         # 这样 sync 不会真的把烂数据 commit/push 到 master
+        #
+        # 2026-06-16: v2.2.6 — 修两个空 needs 漏洞
+        # (a) step-level `needs:` 在 GitHub Actions 是无效字段 (job-level 才行) →
+        #     原来的 \"Push new runs\" needs: [...] 静默忽略 = safety 挂了照样 push
+        # 修: safety check + push 写在同一个 step, set -e 让 safety 退非零直接终止 step,
+        # 后续 push 永远不会跑到。
+        # (b) keep_sync.py 静默失败时 working tree 跟 HEAD 一致, safety check 看不到 \"下跌\",
+        #     但本质就是没 sync — Run sync Keep 那步现在 pipefail + grep 错误关键字守门。
         if: env.SAVE_DATA_IN_GITHUB_CACHE != 'true'
         run: |
+          set -e
           cd /home/runner/work/sports-fair/sports-fair
           echo "=== Activities safety check ==="
           python3 scripts/check_activities_safety.py
           echo "=== Safety check passed ==="
 
       - name: Push new runs
+        # 2026-06-16: v2.2.6 — 移除无效的 step-level `needs:`
+        # GitHub Actions step 没有 needs 字段, 之前的 needs: [\"safety check - prevent data cliff\"]
+        # 被静默忽略, safety 挂了 push 照样跑。
+        # 现在依赖 step 顺序 + 上一步 set -e — safety 失败 = job 直接红 = 这步不会跑。
         if: env.SAVE_DATA_IN_GITHUB_CACHE != 'true'
-        needs: ["safety check - prevent data cliff"]
         env:
           # 2026-06-10: 确保 git push 用的是 GITHUB_TOKEN 而非残留凭据
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
