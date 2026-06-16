@@ -88,7 +88,10 @@ def get_to_download_runs_ids(session, headers, sport_type):
                 for rec in run_logs[:3]:
                     print(f"  Record date: {rec.get('date')}, logs: {len(rec.get('logs', []))}")
                     for log in rec.get('logs', []):
-                        stats = log.get('stats', {})
+                        # 2026-06-16: stats 可能是 None (outdoorWalking / stairClimbing 第一条新记录就遇到),
+                        # 不加 None 守门 → AttributeError: 'NoneType' object has no attribute 'get'
+                        # → 整个 keep_sync 崩 → push 步骤跳过 → master 上没新数据
+                        stats = log.get('stats') or {}
                         st = stats.get('startTime')
                         print(f"    - id: {stats.get('id')}, doubtful: {stats.get('isDoubtful')}, time: {st}")
 

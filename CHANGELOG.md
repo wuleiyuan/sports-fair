@@ -12,6 +12,20 @@
 - 训练强度（HR / 配速）维度纳入训练负荷评估
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.2.6] - 2026-06-16
+
+### 修复 (sync 致命崩溃)
+- **`run_page/keep_sync.py:91`** — `log.get('stats', {})` 当 `stats` 字段值为 `None` 时返回 `None` 不是 `{}`（Python 默认值只在 key 不存在时生效，key 存在但值 None 时不生效）
+  - 改成 `log.get('stats') or {}` 兜住 None
+  - 影响：6/16 outdoorWalking + stairClimbing 第一条新记录的 stats 字段是 None → 崩 → 整个 sync exit 1 → push step 跳过 → 6/09–6/15 已经 parse 成功的跑步数据没 commit 到 master
+  - 之前没暴露：因为 v2.2.5 之前 `|| true` 把这种崩静默吞了 + 之前没有 outdoorWalking/stairClimbing 类型的 stats=None 数据进来
+
+### 修复 (release 自动化)
+- **`.github/workflows/release.yml`** 重写
+  - 老版本 push tag 触发后又跑 `mathieudutour/github-tag-action` 自己建一个新 tag → release 用的不是我们 push 的 tag（race condition）
+  - 老版本用 `actions/create-release@v1`（已 deprecated 2024+）
+  - 新版本：`softprops/action-gh-release@v2`，body 自动从 CHANGELOG.md 抓 `## [X.Y.Z]` 段落
+
 ## [2.2.5] - 2026-06-16
 
 ### 新增 (数据完整性保护)
