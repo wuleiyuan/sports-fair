@@ -16,7 +16,8 @@
 #   3. git add + commit -m "chore(release): bump version X.Y.Z"
 #   4. git tag -a vX.Y.Z -m "Release vX.Y.Z" + git push --tags（v2.1.8 后由 -y 自动化）
 #
-# 之后用户可选：在 GitHub UI Draft new release from tag vX.Y.Z（v2.1.7 之前 6 个版本号 release 缺失，待用户手动补）
+# tag push 后 .github/workflows/release.yml 自动建 GitHub Release（v2.2.6 修好,
+# 之前用 mathieudutour/github-tag-action 会 race 出新 tag, 导致 release 跟实际 tag 对不上）。
 #
 # 版本号约定（语义化版本）：
 #   patch (X.Y.Z → X.Y.Z+1)  bug fix / 数据修复 / 文档

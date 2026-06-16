@@ -10,6 +10,31 @@
 ### 计划中
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - 训练强度（HR / 配速）维度纳入训练负荷评估
+- `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
+
+## [2.2.5] - 2026-06-16
+
+### 新增 (数据完整性保护)
+- **`scripts/check_activities_safety.py`**: sync workflow pre-commit gate
+  - 对比 HEAD vs working tree 的 `src/static/activities.json`，下跌 ≥30% 且 ≥50 条 → exit 1
+  - 双阈值（比例 + 绝对值）防止小数据集误判和大数据集漏报
+  - 输出年份 diff 报告，定位被冲掉的年份
+- **`api/activities-stats.ts`**: 用户自查端点
+  - 返回 `{ count, earliestDate, latestDate, byYear, bySport }`
+  - 检测年份 gap，给出 `warning` / `hint`
+
+### 修复
+- **`run_data_sync.yml` keep_sync 静默吞错** → `pipefail` + 关键字 grep（cookie 失效 / 风控 / 401 / 403 直接红）
+  - 根因：6/09 之后 7 天 Keep 一条数据没同步上来，workflow 仍永远绿
+- **step-level `needs:` 是无效字段** → 改 step 顺序 + `set -e`，safety check 挂 = job 红 = push 不跑
+  - 根因：之前 safety check 失败也照样 push，保护根本没生效
+- **`release.yml`** 重写
+  - 老版本 push tag 后又跑 `mathieudutour/github-tag-action` 自己建一个新 tag，结果 release 用的不是我们 push 的 tag
+  - 老版本用了 deprecated 的 `actions/create-release@v1`
+  - 新版本：push `v*` tag → 直接用这个 tag 用 `softprops/action-gh-release@v2` 建 release，body 自动从 CHANGELOG.md 抓对应版本段
+
+### 数据
+- `src/static/activities.json` 从 db regen，562 条 / 8 年（2019-2026）/ 6 类运动（Run 452 / RopeSkipping 37 / StairStepper 33 / Walk 29 / Ride 7 / Hiking 4）
 
 ## [2.2.0] - 2026-06-13
 
