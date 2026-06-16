@@ -35,6 +35,10 @@ route.svg
 /run_page/data.db-shm
 /run_page/data.db-wal
 /run_page/data.db.bak-*
+# 但 bootstrap db 必须进仓库（GitHub Actions sync 时 cp 它到 data.db
+# 才能拿到完整 8 年 activities 历史；不进仓库会让 generator.load() 只产新拉的
+# ~116 条，触发 v2.2.5 safety check 阻拦 push，sync 永远卡死）—— v2.2.7 修复
+!/run_page/data.db.bootstrap
 /src/static/activities.json.bak-*
 
 # Local notes

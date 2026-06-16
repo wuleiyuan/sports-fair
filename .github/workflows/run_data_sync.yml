@@ -113,6 +113,28 @@ jobs:
             ${{ env.DATA_CACHE_PREFIX }}-${{ github.sha }}-
             ${{ env.DATA_CACHE_PREFIX }}-
 
+      - name: Restore bootstrap db
+        # 2026-06-16 v2.2.7: 修复 sync 永远只产 ~116 条的 bug
+        # 根因: run_page/data.db 在 .gitignore 里, GitHub Actions checkout 后没有 db,
+        # keep_sync 增量插入只能拿到当次拉的 ~100 条 → generator.load() 只产 ~116
+        # → safety check 79% drop → 阻拦 push → sync 永远绿不了。
+        # 修法: 把精简版 db (仅 activities 表, ~200KB) 作为 bootstrap commit 进仓库,
+        # 每次 sync 前 cp 它到 data.db, 再让 keep_sync 增量。
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          if [ ! -f run_page/data.db.bootstrap ]; then
+            echo "::error::run_page/data.db.bootstrap missing — 必须进仓库否则 sync 会丢历史"
+            exit 1
+          fi
+          cp run_page/data.db.bootstrap run_page/data.db
+          BOOTSTRAP_COUNT=$(python3 -c "import sqlite3; c=sqlite3.connect('run_page/data.db'); print(c.execute('SELECT COUNT(*) FROM activities').fetchone()[0])")
+          echo "=== Bootstrap db restored: $BOOTSTRAP_COUNT activities ==="
+          if [ "$BOOTSTRAP_COUNT" -lt 500 ]; then
+            echo "::error::bootstrap db 只有 $BOOTSTRAP_COUNT 条 < 500, 仓库里的 bootstrap 损坏了"
+            exit 1
+          fi
+
       - name: Run sync Keep script
         if: env.RUN_TYPE == 'keep'
         # 2026-06-16: 移除 `|| true` 静默吞错。

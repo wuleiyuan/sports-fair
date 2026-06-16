@@ -12,6 +12,32 @@
 - 训练强度（HR / 配速）维度纳入训练负荷评估
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.2.7] - 2026-06-16
+
+### 修复 (sync 永远只产 ~116 条 / 历史数据看似在线下丢失)
+
+- **`.gitignore`** 第 33 行原把 `/run_page/data.db` 全部 ignore — GitHub Actions
+  checkout 后**根本没有 db 文件**，`keep_sync.py` 起手新建空 db、增量 insert ~100 条
+  Keep 数据，`generator.load()` 自然只产 ~116 条 → safety check 79% drop → 阻拦 push
+  → sync 永远卡死，6/09 之后线上数据冻在那
+- **修法**: 加 `!/run_page/data.db.bootstrap` negate 规则，把"只含 activities 表"的
+  精简 db (~112 KB / 584 条) commit 进仓库 → workflow `Restore bootstrap db` step
+  在 keep_sync 前 `cp data.db.bootstrap data.db`，让 generator 拿到完整 8 年历史
+- 完整 db 138 MB（包含 Apple Health records 表 ~136 MB 的 daily samples）超 GitHub
+  100 MB 单文件上限不能直传，但 `DROP TABLE records; VACUUM;` 后只剩 activities 表
+  ~112 KB，完美进仓库
+
+### 新增
+
+- **`scripts/refresh_bootstrap_db.py`** — 本地一键工具：`DROP TABLE records; VACUUM;`
+  → 输出 `run_page/data.db.bootstrap`，每次本地导新数据后跑一次 + commit + push
+- **`run_page/data.db.bootstrap`** (112 KB / 584 activities / 7 sport types) — 仓库新文件
+
+### Workflow 变更
+
+- `.github/workflows/run_data_sync.yml` 加 `Restore bootstrap db` step
+  （在 `Run sync Keep script` 之前）：拷贝 + 验 ≥500 条，bootstrap 损坏直接 fail
+
 ## [2.2.6] - 2026-06-16
 
 ### 修复 (sync 致命崩溃)
