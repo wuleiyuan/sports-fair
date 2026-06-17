@@ -9,8 +9,45 @@
 
 ### 计划中
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
-- 训练强度（HR / 配速）维度纳入训练负荷评估
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
+- v2.2.9: rule-based 训练建议引擎（基于 training_load.json 输出 rule-based advice，无 LLM 依赖）
+- v2.2.10: Apple HIG Bento Box 训练看板前端卡片（读 training_load.json + training_advice.json）
+- v2.2.11: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 `cadence` 字段，激活步频分析
+
+## [2.2.8] - 2026-06-17
+
+### 新增 (训练负荷数据层)
+- **`scripts/training_load.py`** — 从 `activities.json` + `health_stats.json` 提炼训练负荷指标
+  - **ACWR (7/28 急慢性训练负荷比)** — Gabbett 1998 公式，Banister TRIMP 算法
+    - HRmax 来自 `health_stats.top_stats.hr.max_ever` (用户实测, 不用 220-age)
+    - HRrest 来自 `health_stats.top_stats.rhr.median` (用户实测中位, 更稳)
+    - 阈值: < 0.8 训练不足 / 0.8-1.3 sweet spot / 1.3-1.5 caution / > 1.5 高危
+  - **5 区心率分布 (Karvonen HRR)** — Z1 < 60% / Z2 60-70% / Z3 70-80% / Z4 80-90% / Z5 90%+
+    - 按 duration_min 时间加权，统计最近 90 天
+    - polarized_pct = Z1+Z2 (80/20 polarized training 监控)
+  - **cadence 字段占位** — activities.json 无 cadence 字段，等 v2.2.11 在 sync 源里加字段
+  - 输出: `src/static/training_load.json` (~1.3 KB)
+  - 纯 stdlib，无外部依赖
+- **`run_data_sync.yml`** 新增 `Compute training load (ACWR + HR zones)` step
+  - 在 `Run sync Keep script` 之后、`Make svg` 之前
+  - 守门：JSON 缺字段 / hr_max 不合理 / hr_rest 不合理 → exit 1
+  - `cache-dependency-path` 加 `scripts/training_load.py` + `scripts/check_activities_safety.py`
+  - `git add` 列表加 `src/static/training_load.json`
+  - `on.push.paths` 加 `src/static/training_load.json` (改动触发重 sync)
+
+### 验证 (本地实跑)
+- **ACWR 1.58 (high_risk)** — 7d acute 81838 TRIMP / 28d chronic 51924 TRIMP
+  - 7d 5 天有数据 / 28d 13 天有数据
+  - 触发: 2025 训练稀疏 + 2026 突然高强度 → 慢性基底低 → 急性飙
+  - 这正是工具的价值: 7/28 滚动窗口自动识别"训练负荷激增"风险
+- **HR 区间分布** (90 天)
+  - Z1 50.3% / Z2 25.1% / Z3 21.6% / Z4 0% / Z5 3.0%
+  - polarized_pct 75.4% (Z1+Z2, 符合 polarized training 80/20 模型)
+  - 32 个活动有 HR 数据
+
+### 后续
+- 6/17 03:20 sync run 把 v2.2.7 activities.json 推到 master (675 条 / latest 6/15)
+- v2.2.8 是新功能 (数据层新增) — minor bump 更准，但项目用 patch bump 保持低噪，minor 留给 UI 层
 
 ## [2.2.7] - 2026-06-16
 

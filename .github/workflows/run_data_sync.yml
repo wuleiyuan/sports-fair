@@ -10,6 +10,7 @@ on:
     paths:
       - run_page/keep_sync.py
       - src/static/activities.json
+      - src/static/training_load.json
       - requirements.txt
       - .github/workflows/run_data_sync.yml
 
@@ -77,6 +78,8 @@ jobs:
             run_page/generator/__init__.py
             run_page/utils.py
             run_page/config.py
+            scripts/training_load.py
+            scripts/check_activities_safety.py
 
       - name: Cache pip download artifacts
         # 二次保险：setup-python@v5 的 cache 已包含 wheel 下载
@@ -155,6 +158,33 @@ jobs:
             exit 1
           fi
 
+      - name: Compute training load (ACWR + HR zones)
+        # 2026-06-17 v2.2.8: 从 activities.json + health_stats.json 提炼训练负荷
+        #  - 7/28 急慢性负荷比 (Gabbett ACWR) — > 1.5 高危伤病预警
+        #  - 5 区心率分布 (Karvonen HRR) — 监控 Z2 比例
+        #  - cadence 字段占位 (等 v2.2.9 在 sync 源里加字段后才能分析)
+        # 输出: src/static/training_load.json
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Computing training load ==="
+          python3 scripts/training_load.py
+          if [ ! -f src/static/training_load.json ]; then
+            echo "::error::training_load.py 未生成 src/static/training_load.json"
+            exit 1
+          fi
+          # sanity: 验证 JSON 包含必需字段
+          python3 -c "
+          import json
+          with open('src/static/training_load.json') as f:
+              d = json.load(f)
+          for k in ('acwr', 'hr_zones', 'cadence', 'config', 'data_window'):
+              assert k in d, f'missing field: {k}'
+          assert d['config']['hr_max'] > 100, 'hr_max 不合理'
+          assert d['config']['hr_rest'] > 30, 'hr_rest 不合理'
+          print('training_load.json OK:', d['acwr']['status'], 'ACWR=', d['acwr']['ratio'])
+          "
+
       # 2026-06-09: 删除 "Generate activities.json from database" 步骤
       # keep_sync.py 内部已经用 generator.load() + json.dump 写 activities.json
       # 原步骤的 SQL "WHERE distance > 2000 AND type = 'Run'" 会过滤掉所有 Hiking/Walk/StairStepper 数据
@@ -227,7 +257,7 @@ jobs:
           echo "=== Git status before add ==="
           git status
           echo "=== Git add (data files only) ==="
-          git add src/static/activities.json assets/*.svg
+          git add src/static/activities.json src/static/training_load.json assets/*.svg
           echo "=== Git diff --cached --stat ==="
           git diff --cached --stat || true
           if git diff --cached --quiet; then
