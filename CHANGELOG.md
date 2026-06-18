@@ -10,8 +10,48 @@
 ### 计划中
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
-- v2.2.10: Apple HIG Bento Box 训练看板前端卡片（读 training_load.json + training_advice.json）
-- v2.2.11: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 `cadence` 字段，激活步频分析
+- v2.3.1: Apple HIG Bento Box 训练看板前端卡片（读 training_load.json + training_advice.json）
+- v2.3.2: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 `cadence` 字段，激活步频分析
+
+## [2.3.0] - 2026-06-18
+
+### 新增 (PWA 基础 + 骨架屏体感优化)
+
+#### PWA (渐进式 Web App) 基础支持
+- **`public/manifest.json`** — 标准 PWA manifest
+  - `display: standalone` (iOS Safari "添加到主屏幕" 后秒开, 无浏览器边框)
+  - `theme_color: #1a1a1a`, `background_color: #ffffff` (启动屏颜色)
+  - 2 个快捷方式: "健康评估" (/health-assess) / "运动总览" (/summary)
+  - `icons` 复用现有 favicon.png (192/512)
+- **`public/sw.js`** — Service Worker (v2.3.0 缓存策略)
+  - 静态资源 (JS/CSS/SVG/images): **stale-while-revalidate** (秒开 + 后台静默更新)
+  - JSON 数据 (activities/health_stats/training_advice/load): **cache-first + 后台刷新**
+  - `/api/*` (LLM 调用): **network-only** (避免 cache 死导致 AI 建议过期)
+  - 离线 fallback: JSON 数据用本地 cache, 其他返 503
+  - 缓存版本 `sports-fair-v2.3.0` 升级时自动清理旧 cache
+- **`index.html`** — PWA meta 全套
+  - `link rel="manifest"` / `apple-touch-icon` / `apple-mobile-web-app-capable`
+  - `theme-color` / `description` / 中文 title
+- **`src/main.tsx`** — SW 注册 (仅生产环境)
+
+#### Skeleton (骨架屏) 通用组件
+- **`src/components/Skeleton/`** — 纯 CSS 脉冲动画, 0 第三方依赖
+  - `<Skeleton />` 通用矩形
+  - `<SkeletonText lines={3} />` 文本行 (最后一行 70%, 更真实)
+  - `<SkeletonCard />` 卡片轮廓 (header + 主指标 + 文本)
+  - `<SkeletonRow />` 列表行
+  - **自适应主题**: 暗色模式自动切换灰度
+  - **`prefers-reduced-motion`**: 用户偏好降低动画时禁用脉冲
+- **接入 3 个最卡的位置**:
+  1. **`health-assess.tsx` AI 综合建议加载中** — `SkeletonText lines={3}` (替代裸文字 "AI 教练正在分析…")
+  2. **`ActivityList`** — 列表 loading 时渲染 N 个卡片骨架 (替代 100vh 居中白屏) + SVG Suspense fallback 替换 "Loading SVG..."
+  3. **`RunMap`** — 中国边界数据加载时浮层骨架 (修复了 `isLoadingMapData` 状态之前没人用的 bug)
+
+### 后续
+- v2.3.1 计划: Apple HIG Bento Box 训练看板前端卡片 (读 training_load.json + training_advice.json 渲染)
+- v2.3.2 计划: 在 sync 源加 cadence 字段, 激活 training_load.json 的 cadence 占位
+- v2.4.0 计划: LLM 周报 (等 mimo key 复活, 或换 DeepSeek/智谱 等 OpenAI 兼容接口)
+- v2.4.1 计划: SVGO CI 步骤 (asset/grid.svg 等 SVG 极限压缩 30-50%)
 
 ## [2.2.9] - 2026-06-18
 

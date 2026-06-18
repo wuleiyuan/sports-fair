@@ -18,8 +18,17 @@
       })();
     </script>
     <link rel="icon" type="image/png" href="%BASE_URL%/images/favicon.png" />
+    <!-- v2.3.0: PWA 基础 -->
+    <link rel="manifest" href="%BASE_URL%/manifest.json" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <!-- Apple Touch Icon - iOS 添加到主屏幕 -->
+    <link rel="apple-touch-icon" href="%BASE_URL%/images/favicon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="运动集市" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Running Page</title>
+    <meta name="description" content="通用的运动数据可视化仪表盘，支持 Keep / Apple Health / Garmin / Strava 等多数据源。" />
+    <title>Sports Fair · 运动集市</title>
   </head>
   <body>
     <div id="root"></div>

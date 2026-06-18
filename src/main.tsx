@@ -62,3 +62,19 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// v2.3.0: PWA Service Worker 注册
+// 只在生产环境注册 (开发环境会被 HMR/cache 冲突搞炸)
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((reg) => {
+        // 静默注册, 失败不打扰用户
+        console.log('[SW] registered, scope:', reg.scope);
+      })
+      .catch((err) => {
+        console.warn('[SW] registration failed:', err);
+      });
+  });
+}

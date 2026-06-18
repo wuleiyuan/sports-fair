@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { useTheme } from '@/hooks/useTheme';
 import AssessmentCard from '@/components/HealthAssessment/AssessmentCard';
 import AIDiagnosticsPanel from '@/components/HealthAssessment/AIDiagnosticsPanel';
+import { SkeletonText } from '@/components/Skeleton';
 import {
   assessHealth,
   fetchAIGuidanceWithCache,
@@ -168,11 +169,16 @@ const HealthAssessPage: React.FC = () => {
             )}
           </div>
           {aiState === 'loading' && (
-            <p className={styles.overallText}>
-              <span className={styles.aiLoading}>
+            <div className={styles.overallText}>
+              <p
+                className={styles.aiLoading}
+                style={{ margin: '0 0 12px', display: 'inline-flex' }}
+              >
                 <span className={styles.dotPulse} /> AI 教练正在分析你的数据…
-              </span>
-            </p>
+              </p>
+              {/* v2.3.0: 骨架屏 - 预估 3 行建议结构, 避免空白闪烁 */}
+              <SkeletonText lines={3} />
+            </div>
           )}
           {aiState === 'ok' && aiResponse?.aiGuidance && (
             <div className={styles.overallText}>

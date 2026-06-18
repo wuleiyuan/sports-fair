@@ -1,0 +1,48 @@
+{
+  "name": "Sports Fair · 运动集市",
+  "short_name": "运动集市",
+  "description": "通用的运动数据可视化仪表盘，支持 Keep / Apple Health / Garmin / Strava 等多数据源。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "lang": "zh-CN",
+  "categories": ["fitness", "health", "lifestyle"],
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "健康评估",
+      "short_name": "评估",
+      "description": "查看近 7/30 天的健康评估与建议",
+      "url": "/health-assess",
+      "icons": [
+        { "src": "/images/favicon.png", "sizes": "192x192" }
+      ]
+    },
+    {
+      "name": "运动总览",
+      "short_name": "总览",
+      "description": "查看运动总览与历史记录",
+      "url": "/summary",
+      "icons": [
+        { "src": "/images/favicon.png", "sizes": "192x192" }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

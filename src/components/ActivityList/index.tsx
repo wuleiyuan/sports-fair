@@ -27,6 +27,7 @@ import { SHOW_ELEVATION_GAIN, HOME_PAGE_TITLE } from '@/utils/const';
 import { DIST_UNIT, M_TO_DIST } from '@/utils/utils';
 import RoutePreview from '@/components/RoutePreview';
 import { Activity } from '@/utils/utils';
+import { Skeleton } from '@/components/Skeleton';
 // Layout constants (avoid magic numbers)
 const ITEM_WIDTH = 280;
 const ITEM_GAP = 20;
@@ -741,7 +742,22 @@ const ActivityList: React.FC = () => {
               </button>
             ))}
           </div>
-          <Suspense fallback={<div>Loading SVG...</div>}>
+          <Suspense
+            fallback={
+              // v2.3.0: 骨架屏替代 "Loading SVG..." 文字
+              <div
+                style={{
+                  width: '100%',
+                  height: 360,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Skeleton width="80%" height="320px" radius="12px" />
+              </div>
+            }
+          >
             {selectedYear ? (
               // Show Year Summary SVG when a year is selected
               (() => {
@@ -815,25 +831,40 @@ const ActivityList: React.FC = () => {
           <div className={styles.summaryInner}>
             <div style={{ width: rowWidth }}>
               {loading ? (
-                // Use full viewport height (or viewport minus filter height if available) to avoid flicker
+                // v2.3.0: 卡片骨架屏 - 模拟 N 个 ActivityCard 占位, 避免空白闪烁
                 <div
                   style={{
-                    height: filterRef.current
-                      ? `${Math.max(100, window.innerHeight - (filterRef.current.clientHeight || 0) - 40)}px`
-                      : '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    width: rowWidth,
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${Math.max(1, itemsPerRow)}, 1fr)`,
+                    gap: `${gap}px`,
+                    padding: '20px 0',
                   }}
+                  aria-label="正在加载活动列表"
                 >
-                  <div
-                    style={{
-                      padding: 20,
-                      color: 'var(--color-run-table-thead)',
-                    }}
-                  >
-                    {LOADING_TEXT}
-                  </div>
+                  {Array.from({ length: itemsPerRow * 2 }).map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        height: 220,
+                        borderRadius: 12,
+                        border: '1px solid rgba(0,0,0,0.06)',
+                        background: 'var(--color-run-row-hover-background, #fafafa)',
+                        padding: 16,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 10,
+                      }}
+                    >
+                      <Skeleton width="40%" height="1.1em" />
+                      <Skeleton width="55%" height="1.6em" />
+                      <Skeleton width="100%" height="120px" radius="8px" />
+                      <div style={{ display: 'flex', gap: 8, marginTop: 'auto' }}>
+                        <Skeleton width="30%" height="0.8em" />
+                        <Skeleton width="30%" height="0.8em" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <VirtualList

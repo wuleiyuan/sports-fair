@@ -8,6 +8,7 @@ import Map, {
 } from 'react-map-gl/maplibre';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { Skeleton } from '@/components/Skeleton';
 import { MapInstance } from 'react-map-gl/src/types/lib';
 import useActivities from '@/hooks/useActivities';
 import {
@@ -426,6 +427,29 @@ const RunMap = ({
           >
             Troubleshooting Guide
           </a>
+        </div>
+      )}
+      {/* v2.3.0: 加载中国边界数据时的骨架屏 (之前 isLoadingMapData 没人用) */}
+      {isLoadingMapData && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            background: 'rgba(255,255,255,0.85)',
+            padding: '16px 24px',
+            borderRadius: 12,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 12,
+            boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+          }}
+        >
+          <Skeleton width="180px" height="14px" />
+          <Skeleton width="120px" height="12px" />
         </div>
       )}
       <RunMapButtons changeYear={changeYear} thisYear={thisYear} />
