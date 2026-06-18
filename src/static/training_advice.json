@@ -1,42 +1,42 @@
 {
-  "generated_at": "2026-06-18T09:37:31",
+  "generated_at": "2026-06-18T01:52:40",
   "overall_status": "high_risk",
   "overall_severity": "high",
-  "overall_summary": "⚠️ 重点关注: 训练负荷激增（伤病高危）。",
+  "overall_summary": "⚠️ 重点关注: 数据完整度不足。",
   "advice_count": 3,
   "advice_items": [
     {
-      "id": "acwr_high_risk",
-      "category": "load",
+      "id": "data_completeness",
+      "category": "data",
       "severity": "high",
-      "title": "训练负荷激增（伤病高危）",
-      "description": "ACWR 1.58 超过 1.5 警戒线, 属高危伤病风险窗口。急/慢性训练负荷比偏离 sweet spot。",
-      "action": "立即安排 1-2 天全休或极轻松交叉训练（散步 / 瑜伽 / 拉伸）。本周不安排长距离或高强度间歇。",
-      "evidence": "7d 急性负荷 81838.5 TRIMP / 28d 慢性 51924.2 TRIMP (7d 5 天有数据 / 28d 13 天有数据)"
+      "title": "数据完整度不足",
+      "description": "以下数据缺口影响建议可信度: 7d 仅 0 天有数据 (目标 ≥ 3); 28d 仅 0 天有数据 (目标 ≥ 7)。",
+      "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
+      "evidence": "7d 0 天 / 28d 0 天 / 90d HR 0 活动"
     },
     {
-      "id": "z2_low",
-      "category": "intensity",
-      "severity": "medium",
-      "title": "Z2 有氧底座可加强",
-      "description": "Z2 占比 25.1%, 有氧基础有提升空间。",
-      "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
-      "evidence": "Z1 50.3% + Z2 25.1% = polarized 75.4%"
+      "id": "acwr_unknown",
+      "category": "load",
+      "severity": "info",
+      "title": "训练负荷数据不足",
+      "description": "无法计算 ACWR（缺少心率或时长数据）。",
+      "action": "继续训练积累心率数据, 几周后 ACWR 才能稳定。",
+      "evidence": "7d 0 天有数据 / 28d 0 天有数据"
     },
     {
-      "id": "polarized_ok",
+      "id": "z2_insufficient_hr",
       "category": "intensity",
-      "severity": "low",
-      "title": "训练分布符合 polarized",
-      "description": "低强度 (Z1+Z2) 占比 75.4%, 符合 polarized 训练 80/20 模型。",
-      "action": "保持当前训练分布, 无需调整。",
-      "evidence": "Z1+Z2 = 75.4% (≥ 70% 阈值)"
+      "severity": "info",
+      "title": "心率数据不足",
+      "description": "近 90 天仅 0 个活动有 HR 数据, 区间分布不可信。",
+      "action": "确保跑步时佩戴心率设备（AW / 心率带）, 让 HR 数据自动同步。",
+      "evidence": "90 天窗口 0 个活动有 HR"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-06-09",
-    "total_activities": 562
+    "latest": "2026-06-17",
+    "total_activities": 677
   },
   "config": {
     "hr_max": 197.0,
