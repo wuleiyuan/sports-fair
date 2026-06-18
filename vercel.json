@@ -1,16 +1,14 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+  "git": {
+    "deploymentEnabled": {
+      "gh-pages": false
     }
-  ],
-  "routes": [
-    { "src": "/sw.js", "headers": { "Cache-Control": "public, max-age=0, must-revalidate", "Service-Worker-Allowed": "/" } },
-    { "src": "/manifest.json", "headers": { "Cache-Control": "public, max-age=3600", "Content-Type": "application/manifest+json" } },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!sw\\.js|manifest\\.json|images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)",
+      "destination": "/"
+    }
   ],
   "github": {
     "silent": false,
