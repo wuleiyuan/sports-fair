@@ -11,6 +11,7 @@ on:
       - run_page/keep_sync.py
       - src/static/activities.json
       - src/static/training_load.json
+      - src/static/training_advice.json
       - requirements.txt
       - .github/workflows/run_data_sync.yml
 
@@ -79,6 +80,7 @@ jobs:
             run_page/utils.py
             run_page/config.py
             scripts/training_load.py
+            scripts/training_advice.py
             scripts/check_activities_safety.py
 
       - name: Cache pip download artifacts
@@ -185,6 +187,37 @@ jobs:
           print('training_load.json OK:', d['acwr']['status'], 'ACWR=', d['acwr']['ratio'])
           "
 
+      - name: Compute training advice (rule-based)
+        # 2026-06-18 v2.2.9: 基于 training_load.json 输出 rule-based 训练建议
+        #  - 5 类规则: ACWR 风险 / Z2 占比 / Polarized / 数据完整度 / 综合状态
+        #  - 0 LLM 依赖 (避免 6/16 已踩过的 GHA step 复杂度坑)
+        #  - 纯 stdlib (跟 training_load.py 一致)
+        # 输出: src/static/training_advice.json (~2 KB)
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Computing training advice ==="
+          python3 scripts/training_advice.py
+          if [ ! -f src/static/training_advice.json ]; then
+            echo "::error::training_advice.py 未生成 src/static/training_advice.json"
+            exit 1
+          fi
+          # sanity: 验证 JSON 包含必需字段
+          python3 -c "
+          import json
+          with open('src/static/training_advice.json') as f:
+              d = json.load(f)
+          for k in ('overall_status', 'overall_severity', 'overall_summary', 'advice_items', 'advice_count'):
+              assert k in d, f'missing field: {k}'
+          assert isinstance(d['advice_items'], list)
+          assert len(d['advice_items']) >= 1
+          for a in d['advice_items']:
+              for k in ('id', 'category', 'severity', 'title', 'description', 'action', 'evidence'):
+                  assert k in a, f'advice_item missing: {k}'
+          assert d['overall_severity'] in ('high', 'medium', 'low', 'info')
+          print('training_advice.json OK:', d['overall_status'], '(', d['advice_count'], 'items)')
+          "
+
       # 2026-06-09: 删除 "Generate activities.json from database" 步骤
       # keep_sync.py 内部已经用 generator.load() + json.dump 写 activities.json
       # 原步骤的 SQL "WHERE distance > 2000 AND type = 'Run'" 会过滤掉所有 Hiking/Walk/StairStepper 数据
@@ -257,7 +290,7 @@ jobs:
           echo "=== Git status before add ==="
           git status
           echo "=== Git add (data files only) ==="
-          git add src/static/activities.json src/static/training_load.json assets/*.svg
+          git add src/static/activities.json src/static/training_load.json src/static/training_advice.json assets/*.svg
           echo "=== Git diff --cached --stat ==="
           git diff --cached --stat || true
           if git diff --cached --quiet; then

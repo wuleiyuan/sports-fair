@@ -10,9 +10,40 @@
 ### 计划中
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
-- v2.2.9: rule-based 训练建议引擎（基于 training_load.json 输出 rule-based advice，无 LLM 依赖）
 - v2.2.10: Apple HIG Bento Box 训练看板前端卡片（读 training_load.json + training_advice.json）
 - v2.2.11: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 `cadence` 字段，激活步频分析
+
+## [2.2.9] - 2026-06-18
+
+### 新增 (训练建议引擎 — rule-based, 0 LLM 依赖)
+- **`scripts/training_advice.py`** — 读 `training_load.json` (v2.2.8) → 输出 `training_advice.json` (~2 KB)
+  - **5 类规则** (severity 排序: high > medium > low > info):
+    1. **ACWR 风险等级** — 5 状态映射: high_risk (>1.5) / caution (1.3-1.5) / sweet_spot (0.8-1.3) / undertraining (<0.8) / unknown
+    2. **Z2 占比** — 4 状态: 不足 (<20%) / 偏低 (20-60%) / 合理 (60-80%) / 过多 (>80%)
+    3. **Polarized 80/20** — 2 状态: 偏离 (<70%) / 符合 (≥70%)
+    4. **数据完整度** — 7d 不足 / 28d 不足 / 90d HR 不足 (按阈值告警)
+    5. **综合状态 (overall)** — 最高 severity → overall_status + overall_summary
+  - **每条 advice 附 `evidence` 字段** (用户能看 "为什么这么说" 的数据依据)
+  - **0 LLM 依赖** (避免 6/16 已踩过的 GHA step 复杂度坑 + API 成本)
+  - **纯 stdlib** (跟 training_load.py 一致, 沙箱 pip install 撞墙也跑得动)
+- **`run_data_sync.yml`** 新增 `Compute training advice (rule-based)` step
+  - 在 `Compute training load` 之后、`Safety check` 之前
+  - 守门: JSON 缺字段 / advice_items 数组空 / severity 不在合法集合 → exit 1
+  - `cache-dependency-path` 加 `scripts/training_advice.py` (改动时强制跳过 cache)
+  - `on.push.paths` 加 `src/static/training_advice.json` (改动触发重 sync)
+  - `git add` 列表加 `src/static/training_advice.json` (跟 activities.json / training_load.json 一起 commit)
+- **`src/static/training_advice.json`** — 实测输出 (基于 user 6/17 数据)
+  - **overall_status: high_risk** (ACWR 1.58 触发)
+  - 3 条 advice 排序: high → medium → low
+    - **[high] 训练负荷激增（伤病高危）** — ACWR 1.58 > 1.5 警戒线, 建议 1-2 天全休
+    - **[medium] Z2 有氧底座可加强** — Z2 占比 25.1%, 建议每周 1-2 次 45-60 分钟纯 Z2
+    - **[low] 训练分布符合 polarized** — Z1+Z2 = 75.4%, 符合 80/20 模型
+  - 整体摘要: "⚠️ 重点关注: 训练负荷激增（伤病高危）。"
+
+### 后续
+- v2.2.10 计划: 在 health-assess 页加训练负荷卡片, 读 training_load.json + training_advice.json 渲染
+- v2.2.11 计划: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段, 激活 training_load.json 的 cadence 占位
+- v2.2.12+ 评估: LLM 周报路径 (在 rule-based 跑通 + 验证价值后再决定要不要花 API 钱)
 
 ## [2.2.8] - 2026-06-17
 

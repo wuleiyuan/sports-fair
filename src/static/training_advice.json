@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-06-18T09:37:31",
+  "overall_status": "high_risk",
+  "overall_severity": "high",
+  "overall_summary": "⚠️ 重点关注: 训练负荷激增（伤病高危）。",
+  "advice_count": 3,
+  "advice_items": [
+    {
+      "id": "acwr_high_risk",
+      "category": "load",
+      "severity": "high",
+      "title": "训练负荷激增（伤病高危）",
+      "description": "ACWR 1.58 超过 1.5 警戒线, 属高危伤病风险窗口。急/慢性训练负荷比偏离 sweet spot。",
+      "action": "立即安排 1-2 天全休或极轻松交叉训练（散步 / 瑜伽 / 拉伸）。本周不安排长距离或高强度间歇。",
+      "evidence": "7d 急性负荷 81838.5 TRIMP / 28d 慢性 51924.2 TRIMP (7d 5 天有数据 / 28d 13 天有数据)"
+    },
+    {
+      "id": "z2_low",
+      "category": "intensity",
+      "severity": "medium",
+      "title": "Z2 有氧底座可加强",
+      "description": "Z2 占比 25.1%, 有氧基础有提升空间。",
+      "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
+      "evidence": "Z1 50.3% + Z2 25.1% = polarized 75.4%"
+    },
+    {
+      "id": "polarized_ok",
+      "category": "intensity",
+      "severity": "low",
+      "title": "训练分布符合 polarized",
+      "description": "低强度 (Z1+Z2) 占比 75.4%, 符合 polarized 训练 80/20 模型。",
+      "action": "保持当前训练分布, 无需调整。",
+      "evidence": "Z1+Z2 = 75.4% (≥ 70% 阈值)"
+    }
+  ],
+  "data_window": {
+    "earliest": "2019-05-25",
+    "latest": "2026-06-09",
+    "total_activities": 562
+  },
+  "config": {
+    "hr_max": 197.0,
+    "hr_rest": 60.0,
+    "method_hr_zones": "Karvonen HRR (5 区)",
+    "method_load": "Banister TRIMP (1991)",
+    "method_acwr": "Gabbett 7d/28d (1998)",
+    "thresholds": {
+      "acwr_under": 0.8,
+      "acwr_sweet_spot": [
+        0.8,
+        1.3
+      ],
+      "acwr_caution": 1.5
+    }
+  },
+  "source": "training_load.json (v2.2.8) + rule-based engine (v2.2.9)",
+  "method": "0 LLM, 纯 stdlib rule-based 推导"
+}
