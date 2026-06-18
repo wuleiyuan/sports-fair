@@ -7,6 +7,9 @@
 # ---- Python 同步脚本（前端构建完全不需要）----
 run_page/
 scripts/
+# 2026-06-18 v2.3.0: PWA 需要这俩 build 工具, 反向 include
+!scripts/embed-sw.js
+!scripts/vercel-ignore-build.sh
 
 # ---- 同步数据产物 ----
 # activities.json 在 src/static/ 里同步放了一份, 重要: vite 编译时直接 import 它, 不能 ignore
