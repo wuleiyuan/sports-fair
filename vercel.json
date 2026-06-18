@@ -1,9 +1,6 @@
 {
-  "git": {
-    "deploymentEnabled": {
-      "gh-pages": false
-    }
-  },
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/((?!sw\\.js|manifest\\.json|images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)",
