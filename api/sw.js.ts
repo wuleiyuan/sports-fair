@@ -5,7 +5,7 @@
  * 改用 serverless function 返回嵌入内容.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { SW_CONTENT } from './_sw_content';
+import { SW_CONTENT } from './sw-content';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');

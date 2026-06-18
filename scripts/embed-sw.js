@@ -13,8 +13,8 @@ import { join } from 'path';
 const ROOT = process.cwd();
 const SW_SRC = join(ROOT, 'public', 'sw.js');
 const MANIFEST_SRC = join(ROOT, 'public', 'manifest.json');
-const SW_OUT = join(ROOT, 'api', '_sw_content.ts');
-const MANIFEST_OUT = join(ROOT, 'api', '_manifest_content.ts');
+const SW_OUT = join(ROOT, 'api', 'sw-content.ts');
+const MANIFEST_OUT = join(ROOT, 'api', 'manifest-content.ts');
 
 function escape(s) {
   return s
