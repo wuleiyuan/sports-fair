@@ -10,8 +10,18 @@
 ### 计划中
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
-- v2.3.1: Apple HIG Bento Box 训练看板前端卡片（读 training_load.json + training_advice.json）
-- v2.3.2: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 `cadence` 字段，激活步频分析
+
+## [2.3.2] - 2026-06-19
+
+### 新增
+- **Training 页面** — v2.3.2 功能徽章显示在各卡片 footer
+- **ACWRCard** — 高危区间（ACWR > 1.5）显示 warning 文本 + 生成时间戳显示在 footer
+- **HRZonesCard** — 极化训练 >= 70% 时显示 "极化训练合理" 标签
+- **CadenceCard** — 步频信息 + 目标区间显示
+- **AdviceListCard** — 建议 action + evidence 渲染 + footer 显示 method + source
+
+### 修复
+- 修复多元素文本选择器导致的测试失败（testing-library `getByText` → `getAllByText` + 长度检查）
 
 ## [2.3.0] - 2026-06-18
 

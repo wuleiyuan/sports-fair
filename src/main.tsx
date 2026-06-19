@@ -16,6 +16,7 @@ import { withOptionalGAPageTracking } from './utils/trackRoute';
 import HomePage from '@/pages/total';
 import HealthPage from '@/pages/health';
 import HealthAssessPage from '@/pages/health-assess';
+import TrainingPage from '@/pages/training';
 
 if (USE_GOOGLE_ANALYTICS) {
   ReactGA.initialize(GOOGLE_ANALYTICS_TRACKING_ID);
@@ -46,6 +47,10 @@ const routes = createBrowserRouter(
     {
       path: 'health-assess',
       element: withOptionalGAPageTracking(<HealthAssessPage />),
+    },
+    {
+      path: 'training',
+      element: withOptionalGAPageTracking(<TrainingPage />),
     },
     {
       path: '*',

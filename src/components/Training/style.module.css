@@ -1,0 +1,675 @@
+/* v2.3.1 — Training 卡片 CSS (Apple HIG Bento Box) */
+
+/* ========== 通用卡片 ========== */
+.card {
+  background-color: var(--color-card-bg, #ffffff);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cardKicker {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.cardFooter {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* ========== ACWR 卡片 ========== */
+.acwrCard {
+  /* Bento 主卡 — 桌面端跨 2 列 */
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+@media (max-width: 768px) {
+  .acwrCard {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.acwrMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0 8px;
+  text-align: center;
+}
+
+.acwrNumber {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.acwrNumberMuted {
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1;
+}
+
+.acwrEmpty {
+  text-align: center;
+}
+
+.acwrEmptyHint {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #6b7280);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.acwrLabel {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.acwrZoneLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.acwrZoneEn {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ========== 区间色带 ========== */
+.zoneBarWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zoneBarLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #6b7280);
+  font-weight: 500;
+}
+
+.zoneBar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.zoneBarSeg {
+  height: 100%;
+  transition: opacity 0.15s ease;
+}
+
+.zoneBarSeg:hover {
+  opacity: 0.85;
+}
+
+.zoneLabels {
+  display: flex;
+  font-size: 0.65rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+}
+
+.zoneLabelItem {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.zoneMarkerWrap {
+  position: relative;
+  height: 16px;
+  margin-top: 2px;
+}
+
+.zoneMarker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease;
+}
+
+/* ========== ACWR 7d/28d 数据双行 ========== */
+.acwrStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.acwrStatItem {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.acwrStatLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.acwrStatValue {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #1a1a1a);
+  font-variant-numeric: tabular-nums;
+}
+
+.acwrStatUnit {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-left: 2px;
+}
+
+.acwrStatSub {
+  font-size: 0.65rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-top: 2px;
+}
+
+/* ========== AI 建议 (高亮) ========== */
+.aiGuidance {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, rgba(168, 85, 247, 0.06) 100%);
+  border-radius: 10px;
+  border-left: 3px solid #6366f1;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aiBadge {
+  display: inline-block;
+  font-size: 0.7rem;
+  background-color: #6366f1;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+.aiText {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #1a1a1a);
+  line-height: 1.5;
+}
+
+.aiWarning {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #ef4444;
+  font-weight: 500;
+  padding-top: 4px;
+  border-top: 1px dashed rgba(239, 68, 68, 0.2);
+}
+
+/* ========== HR 区间卡片 ========== */
+.hrZonesCard {
+  /* 默认 1x1 */
+}
+
+.hrBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.zoneStack {
+  display: flex;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.zoneStackSeg {
+  height: 100%;
+  transition: opacity 0.15s ease;
+  min-width: 2px;
+}
+
+.zoneStackSeg:hover {
+  opacity: 0.85;
+}
+
+.zoneStackLabels {
+  display: flex;
+  font-size: 0.7rem;
+  gap: 4px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.zoneStackLabelItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.zoneStackDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.zoneStackText {
+  color: var(--color-text-secondary, #6b7280);
+  font-weight: 500;
+}
+
+.zoneStackPct {
+  color: var(--color-text-primary, #1a1a1a);
+  font-weight: 700;
+  margin-left: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hrKeyStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.hrKeyStat {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.hrKeyLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.hrKeyValue {
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hrKeyHint {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.hrEmpty {
+  text-align: center;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hrEmptyIcon {
+  font-size: 2.5rem;
+  opacity: 0.4;
+}
+
+.hrEmptyTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.hrEmptyHint {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.5;
+  max-width: 240px;
+}
+
+/* ========== 训练建议卡片 ========== */
+.adviceCard {
+  /* 默认 1x1 */
+}
+
+.adviceCount {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  white-space: nowrap;
+}
+
+.adviceSummary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--color-text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+.adviceSummaryIcon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.adviceSummaryText {
+  flex: 1;
+}
+
+.adviceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.adviceList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.adviceList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.adviceList::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.adviceItem {
+  border-radius: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.adviceItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.adviceItemBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.adviceItemCategory {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  font-weight: 500;
+}
+
+.adviceItemTitle {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.adviceItemDesc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary, #4b5563);
+  line-height: 1.5;
+}
+
+.adviceItemAction {
+  font-size: 0.75rem;
+  color: var(--color-text-primary, #1a1a1a);
+  line-height: 1.5;
+  padding-top: 4px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.06);
+}
+
+.adviceItemActionLabel,
+.adviceItemEvidenceLabel {
+  font-weight: 600;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.adviceItemEvidence {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.adviceEmpty {
+  text-align: center;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.adviceEmptyIcon {
+  font-size: 2.5rem;
+  opacity: 0.4;
+}
+
+.adviceEmptyTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.adviceEmptyHint {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.5;
+}
+
+/* ========== 步频卡片 ========== */
+.cadenceCard {
+  /* 默认 1x1 */
+}
+
+.cadenceBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  white-space: nowrap;
+}
+
+.cadenceMain {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.cadenceNumber {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.cadenceUnit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-left: 6px;
+}
+
+.cadenceLabel {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cadenceLabel > :first-child {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.cadenceHint {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.cadenceStats {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.cadenceEmpty {
+  text-align: center;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cadenceEmptyIcon {
+  font-size: 2.2rem;
+  opacity: 0.4;
+}
+
+.cadenceEmptyTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.cadenceEmptyHint {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.5;
+}
+
+.cadenceEmptyRoadmap {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.6;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 8px 10px;
+  border-radius: 6px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.cadenceEmptyRoadmap code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.68rem;
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: var(--color-text-secondary, #4b5563);
+}

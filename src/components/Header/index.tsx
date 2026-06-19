@@ -99,6 +99,13 @@ const Header = () => {
           >
             🩺 评估建议
           </Link>
+          <Link
+            to="/training"
+            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            style={{ textDecoration: 'none' }}
+          >
+            🏋️ 训练负荷
+          </Link>
           {navLinks.map((n, i) => (
             <a
               key={i}
