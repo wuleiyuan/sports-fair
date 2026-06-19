@@ -5,8 +5,6 @@
 # ============================================================
 
 # ---- Python 同步脚本（前端构建完全不需要）----
-run_page/
-scripts/
 # 2026-06-18 v2.3.0: PWA 需要这俩 build 工具, 反向 include
 !scripts/embed-sw.js
 !scripts/vercel-ignore-build.sh
