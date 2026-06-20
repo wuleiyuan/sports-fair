@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import { Sparkline, type SparklinePoint } from '@/components/Sparkline';
+import { IconHeart, IconMoon, IconWave, IconSleep, IconWalk } from '@/components/Icons';
 import healthStats from '@/static/health_stats.json';
 import healthTrends from '@/static/health_trends.json';
 import healthSvgUrl from '@assets/health.svg?url';
@@ -38,27 +39,15 @@ interface TrendSeries {
   steps: SparklinePoint[];
 }
 
-function MetricColor(metric: string): string {
-  switch (metric) {
-    case 'hr': return '#ef4444';
-    case 'rhr': return '#f97316';
-    case 'hrv': return '#8b5cf6';
-    case 'sleep': return '#3b82f6';
-    case 'steps': return '#22c55e';
-    default: return '#CCFF00';
-  }
-}
+type MetricKey = 'hr' | 'rhr' | 'hrv' | 'sleep' | 'steps';
 
-function MetricSparklineColor(metric: string): string {
-  switch (metric) {
-    case 'hr': return '#ef4444';
-    case 'rhr': return '#f97316';
-    case 'hrv': return '#a78bfa';
-    case 'sleep': return '#60a5fa';
-    case 'steps': return '#4ade80';
-    default: return '#CCFF00';
-  }
-}
+const METRIC_CONFIG: Record<MetricKey, { label: string; icon: React.FC<{ size?: number; color?: string }>; color: string; sparkColor: string; unit: string }> = {
+  hr:    { label: '心率（HR）', icon: IconHeart, color: '#FF2D55', sparkColor: '#FF2D55', unit: 'bpm' },
+  rhr:   { label: '静息心率（RHR）', icon: IconMoon, color: '#FF9500', sparkColor: '#FF9500', unit: 'bpm' },
+  hrv:   { label: '心率变异性（HRV）', icon: IconWave, color: '#AF52DE', sparkColor: '#AF52DE', unit: 'ms' },
+  sleep: { label: '睡眠', icon: IconSleep, color: '#007AFF', sparkColor: '#007AFF', unit: 'h' },
+  steps: { label: '步数', icon: IconWalk, color: '#30D158', sparkColor: '#30D158', unit: '' },
+};
 
 const HealthPage: React.FC = () => {
   const data = healthStats as HealthStats;
@@ -84,47 +73,12 @@ const HealthPage: React.FC = () => {
 
   const ts = data.top_stats;
 
-  const metrics: { key: string; label: string; main: string; sub: string; foot: string; spark: SparklinePoint[] }[] = [
-    {
-      key: 'hr',
-      label: '心率（HR）',
-      main: `${ts.hr.median.toFixed(1)} bpm`,
-      sub: `均值 ${ts.hr.mean_all.toFixed(1)} · 最高 ${ts.hr.max_ever.toFixed(0)}`,
-      foot: `${ts.hr.days_with_data} 天`,
-      spark: trends.hr || [],
-    },
-    {
-      key: 'rhr',
-      label: '静息心率（RHR）',
-      main: `${ts.rhr.median.toFixed(1)} bpm`,
-      sub: `均值 ${ts.rhr.mean_all.toFixed(1)} · 最低 ${ts.rhr.min_ever.toFixed(0)}`,
-      foot: `${ts.rhr.days_with_data} 天`,
-      spark: trends.rhr || [],
-    },
-    {
-      key: 'hrv',
-      label: '心率变异性（HRV）',
-      main: `${ts.hrv.median.toFixed(1)} ms`,
-      sub: `均值 ${ts.hrv.mean_all.toFixed(1)}`,
-      foot: `${ts.hrv.days_with_data} 天`,
-      spark: trends.hrv || [],
-    },
-    {
-      key: 'sleep',
-      label: '睡眠',
-      main: `${ts.sleep.median_hours.toFixed(2)} h`,
-      sub: '中位数每晚',
-      foot: `${ts.sleep.days_with_data} 晚`,
-      spark: trends.sleep || [],
-    },
-    {
-      key: 'steps',
-      label: '步数',
-      main: `${(ts.steps.total / 10000).toFixed(0)} 万`,
-      sub: `日均 ${ts.steps.mean_daily.toLocaleString()}`,
-      foot: `${ts.steps.days_with_data} 天`,
-      spark: trends.steps || [],
-    },
+  const metrics: { key: MetricKey; main: string; sub: string; foot: string; spark: SparklinePoint[] }[] = [
+    { key: 'hr', main: `${ts.hr.median.toFixed(1)}`, sub: `均值 ${ts.hr.mean_all.toFixed(1)} · 最高 ${ts.hr.max_ever.toFixed(0)}`, foot: `${ts.hr.days_with_data} 天`, spark: trends.hr || [] },
+    { key: 'rhr', main: `${ts.rhr.median.toFixed(1)}`, sub: `均值 ${ts.rhr.mean_all.toFixed(1)} · 最低 ${ts.rhr.min_ever.toFixed(0)}`, foot: `${ts.rhr.days_with_data} 天`, spark: trends.rhr || [] },
+    { key: 'hrv', main: `${ts.hrv.median.toFixed(1)}`, sub: `均值 ${ts.hrv.mean_all.toFixed(1)}`, foot: `${ts.hrv.days_with_data} 天`, spark: trends.hrv || [] },
+    { key: 'sleep', main: `${ts.sleep.median_hours.toFixed(2)}`, sub: '中位数每晚', foot: `${ts.sleep.days_with_data} 晚`, spark: trends.sleep || [] },
+    { key: 'steps', main: `${(ts.steps.total / 10000).toFixed(0)}`, sub: `日均 ${ts.steps.mean_daily.toLocaleString()}`, foot: `${ts.steps.days_with_data} 天`, spark: trends.steps || [] },
   ];
 
   return (
@@ -135,56 +89,49 @@ const HealthPage: React.FC = () => {
 
       <div data-kinetic className="k-page">
         <header className="k-page-header">
-          <div>
-            <h1 className="k-page-title">健康分析</h1>
-            <p className="k-page-subtitle">
-              Apple HealthKit · {data.generated_at.slice(0, 10)}
-            </p>
-          </div>
+          <h1 className="k-page-title">健康分析</h1>
+          <p className="k-page-subtitle">Apple HealthKit · {data.generated_at.slice(0, 10)}</p>
           <div className="k-data-window">
-            <strong>数据跨度</strong><br />
-            {ts.hr.days_with_data} 天 HR · {ts.rhr.days_with_data} 天 RHR<br />
-            {ts.hrv.days_with_data} 天 HRV · {ts.sleep.days_with_data} 晚睡眠
+            {ts.hr.days_with_data} 天 HR · {ts.rhr.days_with_data} 天 RHR · {ts.hrv.days_with_data} 天 HRV · {ts.sleep.days_with_data} 晚睡眠
           </div>
         </header>
 
         <div className="k-bento">
-          {metrics.map((m) => (
-            <div key={m.key} className="k-card k-bento-narrow">
-              <div className="k-card-header">
-                <div>
-                  <div className="k-card-kicker" style={{ color: MetricColor(m.key) }}>
-                    ● {m.key.toUpperCase()}
+          {metrics.map((m) => {
+            const cfg = METRIC_CONFIG[m.key];
+            const Icon = cfg.icon;
+            return (
+              <div key={m.key} className="k-card k-bento-narrow">
+                <div className="k-card-header">
+                  <div className="k-card-header-left">
+                    <div className="k-card-icon"><Icon size={18} color={cfg.color} /></div>
+                    <div className="k-card-text">
+                      <div className="k-card-kicker" style={{ color: cfg.color }}>{m.key.toUpperCase()}</div>
+                      <h3 className="k-card-title">{cfg.label}</h3>
+                    </div>
                   </div>
-                  <h3 className="k-card-title">{m.label}</h3>
+                </div>
+
+                <div className="k-data-number" style={{ color: cfg.color }}>
+                  {m.main}
+                  <span className="k-data-unit">{cfg.unit}</span>
+                </div>
+
+                {m.spark.length > 0 && (
+                  <div className="k-sparkline-wrap">
+                    <Sparkline data={m.spark} color={cfg.sparkColor} height={32} />
+                  </div>
+                )}
+
+                <div className="k-guidance" style={{ padding: '10px 14px' }}>
+                  <p className="k-guidance-text" style={{ fontSize: 13 }}>{m.sub}</p>
+                  <p className="k-guidance-text" style={{ fontSize: 12, marginTop: 4, color: 'var(--a-text-tertiary)' }}>{m.foot}</p>
                 </div>
               </div>
-
-              <div className="k-data-number" style={{ color: MetricColor(m.key) }}>
-                {m.main}
-              </div>
-              <div style={{ fontSize: 12, color: 'var(--k-text-tertiary)', marginBottom: 4 }}>
-                {m.sub}
-              </div>
-
-              {m.spark.length > 0 && (
-                <div className="k-sparkline-wrap" style={{ marginTop: 6 }}>
-                  <div className="k-sparkline-label">趋势</div>
-                  <Sparkline data={m.spark} color={MetricSparklineColor(m.key)} height={32} />
-                </div>
-              )}
-
-              <div className="k-stats-grid" style={{ gridTemplateColumns: '1fr', marginTop: 6 }}>
-                <div className="k-stat-item">
-                  <div className="k-stat-label">有数据天数</div>
-                  <div className="k-stat-value" style={{ fontSize: 20 }}>{m.foot}</div>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* 按年汇总 */}
         <section className="k-section">
           <h2 className="k-section-title">按年汇总</h2>
           <div className="k-table-wrap">
@@ -192,12 +139,12 @@ const HealthPage: React.FC = () => {
               <thead>
                 <tr>
                   <th>年份</th>
-                  <th>HR 均值 (bpm)</th>
-                  <th>HRV 均值 (ms)</th>
-                  <th>睡眠中位 (h)</th>
+                  <th>HR 均值</th>
+                  <th>HRV 均值</th>
+                  <th>睡眠中位</th>
                   <th>日均步数</th>
-                  <th>总步数 (万)</th>
-                  <th>有数据天</th>
+                  <th>总步数</th>
+                  <th>天数</th>
                 </tr>
               </thead>
               <tbody>
@@ -220,16 +167,10 @@ const HealthPage: React.FC = () => {
           </div>
         </section>
 
-        {/* SVG Dashboard */}
         <section className="k-section">
           <h2 className="k-section-title">Dashboard</h2>
           <div className="k-svg-wrap">
-            <object
-              data={healthSvgUrl}
-              type="image/svg+xml"
-              className="k-svg-embed"
-              aria-label="Health dashboard"
-            >
+            <object data={healthSvgUrl} type="image/svg+xml" className="k-svg-embed" aria-label="Health dashboard">
               <a href={healthSvgUrl}>下载 health.svg</a>
             </object>
           </div>
@@ -239,8 +180,8 @@ const HealthPage: React.FC = () => {
           <details>
             <summary>数据说明</summary>
             <p style={{ margin: '8px 0', lineHeight: 1.6 }}>
-              数据来源 Apple HealthKit（2020-05 至今）<br />
-              异常值已在客户端过滤（HR 30-220 / HRV 10-200 / 睡眠 1-14h）
+              来源 Apple HealthKit（2020-05 至今）<br />
+              异常值过滤：HR 30–220 / HRV 10–200 / 睡眠 1–14h
             </p>
           </details>
         </footer>

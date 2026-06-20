@@ -118,13 +118,39 @@
   align-items: flex-start;
 }
 
+[data-kinetic] .k-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+[data-kinetic] .k-card-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+[data-kinetic] .k-card-icon svg {
+  display: block;
+}
+
+[data-kinetic] .k-card-text {
+  display: flex;
+  flex-direction: column;
+}
+
 [data-kinetic] .k-card-kicker {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--a-text-tertiary);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 [data-kinetic] .k-card-title {
@@ -436,7 +462,50 @@
   margin: 0;
 }
 
-/* ===== Section (for Health page) ===== */
+/* ===== HR Zone Legend ===== */
+[data-kinetic] .k-hr-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+}
+
+[data-kinetic] .k-hr-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+[data-kinetic] .k-hr-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+[data-kinetic] .k-hr-legend-label {
+  color: var(--a-text-secondary);
+}
+
+[data-kinetic] .k-hr-legend-value {
+  font-weight: 700;
+  color: var(--a-text-primary);
+}
+
+/* ===== Health Metric Colors ===== */
+[data-kinetic] .k-metric-hr { color: #FF2D55; }
+[data-kinetic] .k-metric-rhr { color: #FF9500; }
+[data-kinetic] .k-metric-hrv { color: #AF52DE; }
+[data-kinetic] .k-metric-sleep { color: #007AFF; }
+[data-kinetic] .k-metric-steps { color: #30D158; }
+
+[data-kinetic] .k-metric-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 [data-kinetic] .k-section {
   margin-top: 28px;
 }
