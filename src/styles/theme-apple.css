@@ -60,13 +60,29 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ===== Full-width default for data-kinetic in Layout flex ===== */
+[data-kinetic] {
+  flex: 1;
+  width: 100%;
+}
+
 /* ===== Page ===== */
 [data-kinetic] .k-page {
   flex: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px 40px;
+  padding: 0 32px 40px;
+}
+
+@media (max-width: 640px) {
+  [data-kinetic] .k-page {
+    padding: 0 12px 32px;
+  }
+}
+
+@media (min-width: 1920px) {
+  [data-kinetic] .k-page {
+    padding: 0 64px 40px;
+  }
 }
 
 [data-kinetic] .k-page-header {
