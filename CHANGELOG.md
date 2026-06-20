@@ -11,6 +11,14 @@
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.3.5] - 2026-06-20
+
+### 修复
+- **徒步/步行数据归类修复** — Keep 源 `outdoorWalking` 数据被 `keep_sync.py` 错误标记为 `Hiking`，现已重新归入 `Walk`
+  - Hiking: 41→4（仅保留真正"徒步 Hiking"的 4 条）
+  - Walk: 29→66（并入 37 条 Keep outdoorWalking）
+  - 总数 677 不变，无数据丢失
+
 ## [2.3.2] - 2026-06-19
 
 ### 新增
