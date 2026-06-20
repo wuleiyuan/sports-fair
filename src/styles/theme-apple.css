@@ -11,6 +11,8 @@
   /* 背景 */
   --a-bg: #000000;
   --a-bg-secondary: #0D0D0D;
+  background-color: #000 !important;
+  color: #ffffff;
 
   /* 毛玻璃卡片 */
   --a-card-bg: rgba(255, 255, 255, 0.04);
@@ -102,6 +104,146 @@
   color: var(--a-text-tertiary);
   margin: 4px 0 0;
   font-weight: 400;
+}
+
+/* ===== Tab Bar ===== */
+[data-kinetic] .k-tab-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+[data-kinetic] .k-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--a-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+[data-kinetic] .k-tab:hover {
+  background: rgba(255, 136, 0, 0.15);
+  border-color: var(--a-orange);
+  color: var(--a-orange);
+}
+
+[data-kinetic] .k-tab-active {
+  background: var(--a-orange);
+  border-color: var(--a-orange);
+  color: #000;
+  font-weight: 700;
+}
+
+[data-kinetic] .k-tab-active:hover {
+  background: var(--a-orange-bright);
+  color: #000;
+}
+
+[data-kinetic] .k-tab-label {
+  font-size: 12px;
+  color: var(--a-text-tertiary);
+  font-weight: 500;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+/* ===== Assessment page components ===== */
+[data-kinetic] .k-assess-banner {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: rgba(255, 136, 0, 0.08);
+  border: 1px solid rgba(255, 136, 0, 0.2);
+  border-radius: var(--a-card-radius);
+  color: var(--a-text-primary);
+  font-size: var(--a-body);
+  line-height: 1.6;
+}
+
+[data-kinetic] .k-assess-banner p {
+  margin: 0;
+}
+
+[data-kinetic] .k-assess-banner-sub {
+  margin-top: 8px !important;
+  color: var(--a-text-tertiary);
+  font-size: var(--a-subhead);
+}
+
+[data-kinetic] .k-assess-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+[data-kinetic] .k-assess-ai-badge {
+  font-size: 11px;
+  color: var(--a-orange);
+  background: rgba(255, 136, 0, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+[data-kinetic] .k-assess-cache-mark {
+  color: var(--a-text-tertiary);
+}
+
+[data-kinetic] .k-assess-text {
+  font-size: var(--a-body);
+  line-height: 1.7;
+  color: var(--a-text-primary);
+}
+
+[data-kinetic] .k-assess-text p {
+  margin: 0;
+}
+
+[data-kinetic] .k-assess-fallback {
+  margin-top: 12px;
+  font-size: var(--a-subhead);
+  color: var(--a-text-tertiary);
+  line-height: 1.6;
+}
+
+[data-kinetic] .k-assess-code {
+  font-size: 11px;
+  color: var(--a-text-tertiary);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+[data-kinetic] .k-assess-ask-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 24px;
+  background: var(--a-orange);
+  color: #000;
+  font-size: var(--a-headline);
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  margin-top: 8px;
+}
+
+[data-kinetic] .k-assess-ask-btn:hover {
+  opacity: 0.85;
 }
 
 /* ===== Bento Grid ===== */
