@@ -4,10 +4,15 @@
  * Vercel serverless function 部署时不复制 public/ 目录,
  * 而 esbuild 编译 .ts 也不支持 Vite 的 `?raw` 语法.
  *
- * 方案: vite build 之后, 读 public/sw.js 内容写到 api/_sw_content.ts,
+ * 方案: vite build 之后, 读 public/sw.js 内容写到 api/sw-content.ts,
  *       api/sw.js.ts 直接 import 这个常量.
+ *
+ * v2.3.3 (2026-06-20): Vercel build 时 .vercelignore 把 public/ 排了,
+ * 找不到源文件直接跳过——api/sw-content.ts + api/manifest-content.ts
+ * 已经在仓库里 (上次本地 build 嵌入的产物), Vercel 直接用现成的就行.
+ * 本地 dev/build 时 public/ 在, 仍会重新生成保持最新.
  */
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
 const ROOT = process.cwd();
@@ -15,6 +20,12 @@ const SW_SRC = join(ROOT, 'public', 'sw.js');
 const MANIFEST_SRC = join(ROOT, 'public', 'manifest.json');
 const SW_OUT = join(ROOT, 'api', 'sw-content.ts');
 const MANIFEST_OUT = join(ROOT, 'api', 'manifest-content.ts');
+
+// v2.3.3: public/ 不在 (Vercel build 环境) → 跳过, 用仓库里现成的 api/*-content.ts
+if (!existsSync(SW_SRC) || !existsSync(MANIFEST_SRC)) {
+  console.log(`⏭  embed-sw: public/ 不可见, 跳过 (用仓库里已嵌入的 api/sw-content.ts + api/manifest-content.ts)`);
+  process.exit(0);
+}
 
 function escape(s) {
   return s
