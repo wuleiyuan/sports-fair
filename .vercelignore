@@ -40,6 +40,9 @@ node_modules/
 .pytest_cache/
 .ruff_cache/
 public/
+# 2026-06-20 v2.3.3: scripts/embed-sw.js build 时要读 public/sw.js, 反向 include
+!public/sw.js
+!public/manifest.json
 
 # ---- IDE / OS ----
 .DS_Store
