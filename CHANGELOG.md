@@ -11,6 +11,25 @@
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.5.0] - 2026-06-20
+
+### 新增
+- **Apple HIG 设计系统** — 替换 Velocity Kinetic 暗黑工业风，采用苹果 Human Interface Guidelines 风格
+  - `theme-apple.css`: 毛玻璃卡片 (backdrop-filter blur + 20px 圆角)、SF Pro/Inter 字体栈、Fitness 环色系
+  - 暗色沉浸背景 (#121212)，48px/34px 大数字层级排版
+  - Scale 进度条、发光标记、半透明 stat 卡片
+- **Sparkline 微线图组件** — `src/components/Sparkline/` 通用 SVG 路径渲染，支持配置颜色/高度
+  - Training 页 ACWR 卡底部：42 天每日 TRIMP 趋势
+  - Health 页 5 张指标卡：HR / RHR / HRV / Sleep / Steps 趋势
+- **health_trends.py** — 新脚本，输出每日健康指标序列 (HR/RHR/HRV/睡眠/步数) 供 sparkline 消费
+
+### 变更
+- **Training 页** — 重写为 Apple HIG 布局：ACWR 主卡 (bento-wide)、TSB 卡、HR 5 区卡、训练建议卡
+- **Health 页** — 重写为 Apple HIG 布局：5 张 sparkline 指标卡 + 按年汇总表 + SVG Dashboard
+
+### 移除
+- `theme-kinetic.css` — 被 `theme-apple.css` 取代
+
 ## [2.4.1] - 2026-06-20
 
 ### 修复
@@ -560,7 +579,10 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - dependabot 关闭
 - Vercel buildCommand 修复
 
-[未发布]: https://github.com/wuleiyuan/sports-fair/compare/v2.1.3...HEAD
+[未发布]: https://github.com/wuleiyuan/sports-fair/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/wuleiyuan/sports-fair/compare/v2.4.1...v2.5.0
+[2.4.1]: https://github.com/wuleiyuan/sports-fair/compare/v2.4.0...v2.4.1
+[2.4.0]: https://github.com/wuleiyuan/sports-fair/compare/v2.3.5...v2.4.0
 [2.1.3]: https://github.com/wuleiyuan/sports-fair/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/wuleiyuan/sports-fair/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/wuleiyuan/sports-fair/releases/tag/v2.1.1
