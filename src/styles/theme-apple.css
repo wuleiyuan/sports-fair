@@ -62,9 +62,11 @@
 
 /* ===== Page ===== */
 [data-kinetic] .k-page {
-  max-width: 800px;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px 40px;
+  padding: 0 24px 40px;
 }
 
 [data-kinetic] .k-page-header {
