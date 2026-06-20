@@ -434,6 +434,16 @@ def main():
             "v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. "
             "目标: 平均步频 175-180 spm, 长期 < 170 需注意."
         ),
+        "daily_trimp_series": [
+            {"date": d.isoformat(), "trimp": round(v, 1)}
+            for d, v in sorted(daily_trimp.items(), key=lambda x: x[0])
+            if (today - d).days <= 42
+        ],
+        "cadence_note": (
+            "v2.2.8 占位: activities.json 无 cadence 字段. "
+            "v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. "
+            "目标: 平均步频 175-180 spm, 长期 < 170 需注意."
+        ),
         "data_window": {
             "earliest": min(
                 (d.isoformat() for d in valid_dates),
