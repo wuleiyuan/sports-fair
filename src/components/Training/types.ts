@@ -1,8 +1,8 @@
 /**
- * v2.3.1 — 训练负荷类型定义
+ * v2.3.2 — 训练负荷类型定义
  *
  * 数据源: src/static/training_load.json + src/static/training_advice.json
- * 生成器: scripts/training_load.py (v2.2.8) + scripts/training_advice.py (v2.2.9)
+ * 生成器: scripts/training_load.py (v2.3.2) + scripts/training_advice.py (v2.2.9)
  * 不引第三方库，结构跟生成器输出严格对齐。
  */
 
@@ -12,6 +12,14 @@ export type ACWRStatus =
   | 'undertrained'    // < 0.8 训练不足
   | 'caution'         // 1.3-1.5 过度训练
   | 'high_risk'       // > 1.5 高危伤病
+  | 'unknown';        // 数据不足
+
+/** TSB 状态 (5 态) — Coggan 疲劳模型 */
+export type TSBStatus =
+  | 'fresh'           // > 15 充分恢复
+  | 'optimal'         // -5 ~ 15 最佳训练区
+  | 'fatigued'        // -15 ~ -5 疲劳累积
+  | 'overtraining'    // < -15 过度训练
   | 'unknown';        // 数据不足
 
 /** HR 区间 5 区 — Karvonen HRR 公式 (跟 training_load.py 一致) */
@@ -62,6 +70,17 @@ export interface DataWindow {
   total_activities: number;
 }
 
+/** TSB 结果 (from training_load.json.tsb) */
+export interface TSBResult {
+  ctl: number;
+  atl: number;
+  tsb: number;
+  status: TSBStatus;
+  ctl_days: number;
+  atl_days: number;
+  data_span_days: number;
+}
+
 /** 训练负荷顶层 (from training_load.json) */
 export interface TrainingLoad {
   generated_at: string;
@@ -71,9 +90,11 @@ export interface TrainingLoad {
     method_hr_zones: string;
     method_load: string;
     method_acwr: string;
+    method_tsb: string;
     thresholds: ACWRConfig;
   };
   acwr: ACWRResult;
+  tsb: TSBResult;
   hr_zones: HRZones;
   cadence: number | null;
   cadence_note: string;
@@ -156,3 +177,21 @@ export const ACWR_STATUS_LABEL: Record<ACWRStatus, { text: string; color: string
   high_risk:    { text: '✕ 高危预警', color: '#3b82f6' },
   unknown:      { text: '? 数据不足', color: '#9ca3af' },
 };
+
+/** TSB 状态徽章文案 (Coggan 疲劳模型) */
+export const TSB_STATUS_LABEL: Record<TSBStatus, { text: string; color: string }> = {
+  fresh:        { text: '✓ 充分恢复', color: '#22c55e' },
+  optimal:      { text: '✓ 最佳训练区', color: '#6366f1' },
+  fatigued:     { text: '⚠ 疲劳累积', color: '#f97316' },
+  overtraining: { text: '✕ 过度训练', color: '#ef4444' },
+  unknown:      { text: '? 数据不足', color: '#9ca3af' },
+};
+
+/** TSB 状态文案帮助函数 */
+export function tsbStatusAdvice(tsb: number | null): string {
+  if (tsb === null) return '数据不足，无法计算 TSB。';
+  if (tsb > 15) return '充分恢复阶段，适合安排高强度或长距离训练。';
+  if (tsb >= -5) return '训练状态良好，维持当前训练计划。';
+  if (tsb >= -15) return '疲劳累积中，注意安排恢复日和低强度训练。';
+  return '过度训练风险较高，建议休息 1-2 天或大幅减量。';
+}

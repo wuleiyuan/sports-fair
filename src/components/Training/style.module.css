@@ -673,3 +673,154 @@
   border-radius: 3px;
   color: var(--color-text-secondary, #4b5563);
 }
+
+/* ========== TSB 卡片 ========== */
+.tsbCard {
+  /* 默认 1x1 */
+}
+
+.tsbMain {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.tsbNumber {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.tsbNumberMuted {
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1;
+}
+
+.tsbLabel {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.tsbUnit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.tsbEmpty {
+  text-align: center;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tsbEmptyHint {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  line-height: 1.5;
+}
+
+/* TSB 标尺 */
+.tsbScaleWrap {
+  margin: 4px 0 8px;
+}
+
+.tsbScaleLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.tsbScale {
+  display: flex;
+  height: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.tsbScaleSeg {
+  height: 100%;
+  opacity: 0.75;
+}
+
+.tsbScaleLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  font-weight: 600;
+  margin-top: 4px;
+  padding: 0 2px;
+}
+
+.tsbScaleMarkerWrap {
+  position: relative;
+  height: 14px;
+  margin-top: 2px;
+}
+
+.tsbScaleMarker {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+}
+
+/* TSB CTL/ATL 双列 */
+.tsbStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.tsbStatItem {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.tsbStatLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.tsbStatValue {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #1a1a1a);
+  font-variant-numeric: tabular-nums;
+}
+
+.tsbStatUnit {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-left: 2px;
+}
+
+.tsbStatSub {
+  font-size: 0.65rem;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-top: 2px;
+}

@@ -1,11 +1,12 @@
 {
-  "generated_at": "2026-06-20T03:45:59",
+  "generated_at": "2026-06-20T21:33:45",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
     "method_hr_zones": "Karvonen HRR (5 区)",
     "method_load": "Banister TRIMP (1991)",
     "method_acwr": "Gabbett 7d/28d (1998)",
+    "method_tsb": "CTL 42d EMA / ATL 7d EMA",
     "thresholds": {
       "acwr_under": 0.8,
       "acwr_sweet_spot": [
@@ -16,25 +17,34 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 0,
-    "chronic_28d_trimp": 0.0,
-    "acute_days_with_data": 0,
-    "chronic_days_with_data": 0,
-    "ratio": null,
-    "status": "unknown",
+    "acute_7d_trimp": 464.6,
+    "chronic_28d_trimp": 552.4,
+    "acute_days_with_data": 5,
+    "chronic_days_with_data": 14,
+    "ratio": 0.84,
+    "status": "sweet_spot",
     "warning": null
   },
+  "tsb": {
+    "ctl": 71.9,
+    "atl": 74.0,
+    "tsb": -2.1,
+    "status": "optimal",
+    "ctl_days": 42,
+    "atl_days": 7,
+    "data_span_days": 1432
+  },
   "hr_zones": {
-    "z1_recovery": 0,
-    "z2_aerobic_base": 0,
-    "z3_aerobic": 0,
-    "z4_threshold": 0,
-    "z5_anaerobic": 0,
-    "dominant_zone": "n/a",
-    "z2_pct": 0,
-    "polarized_pct": 0,
-    "activities_with_hr": 0,
-    "window_days": 0
+    "z1_recovery": 56.4,
+    "z2_aerobic_base": 21.5,
+    "z3_aerobic": 22.1,
+    "z4_threshold": 0.0,
+    "z5_anaerobic": 0.0,
+    "dominant_zone": "z1",
+    "z2_pct": 21.5,
+    "polarized_pct": 77.9,
+    "activities_with_hr": 72,
+    "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",

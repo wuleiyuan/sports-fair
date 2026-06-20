@@ -11,6 +11,27 @@
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.4.0] - 2026-06-20
+
+### 新增
+- **TSB 训练状态模型** — Coggan TSB (2003) 基于 CTL 42d / ATL 7d 指数移动平均
+  - `scripts/training_load.py`: 新增 `compute_ctl_atl()` + TSB 输出字段
+  - 规律: TSB > 15 恢复 / -5~15 最佳 / -15~-5 疲劳 / < -15 过度
+- **TSBCard 前端组件** — Apple HIG Bento 风格，替换原 CadenceCard 占位
+  - 大数字 TSB 值 + CTL / ATL 双列数据
+  - TSB 标尺 (-30 ~ +30) 带指针定位
+  - 静态训练建议 (Coggan 模型)
+  - `types.ts`: TSBResult / TSBStatus / TSB_STATUS_LABEL / tsbStatusAdvice()
+- **训练负荷页算法说明** — training.tsx footer 增加 Coggan TSB 公式说明
+
+### 修复
+- **TRIMP 公式修正** — `training_load.py` 中 `compute_trimp()` 的 Banister 公式错用 `delta_hr` (绝对差值) 替代 `hrr_ratio` (相对比例)，导致 TRIMP 数值高估约 100 倍
+  - 修复后: ACWR 比值不变 (同比例缩放)，TSB 降至合理区间 (-2.1)
+- **导航栏重复链接** — Header 中 "📊 旅程总览" 和 site-metadata navLinks 中 "Summary" 均指向 `/summary`，现已删除 navLinks 中冗余条目
+
+### 移除
+- **CadenceCard** — 从 training.tsx Bento grid 移除 (占位待后续 cadence 数据源就绪后再恢复)
+
 ## [2.3.5] - 2026-06-20
 
 ### 修复

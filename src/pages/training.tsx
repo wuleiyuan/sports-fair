@@ -20,7 +20,7 @@ import {
   ACWRCard,
   HRZonesCard,
   AdviceListCard,
-  CadenceCard,
+  TSBCard,
   type TrainingLoad,
   type TrainingAdvice,
 } from '@/components/Training';
@@ -121,13 +121,9 @@ const TrainingPage: React.FC = () => {
         {load && advice && (
           <div className={styles.bentoGrid}>
             <ACWRCard acwr={load.acwr} generatedAt={load.generated_at} />
+            <TSBCard tsb={load.tsb} generatedAt={load.generated_at} />
             <HRZonesCard hrZones={load.hr_zones} windowDays={load.hr_zones.window_days || 90} />
             <AdviceListCard advice={advice} />
-            <CadenceCard
-              cadence={load.cadence}
-              note={load.cadence_note}
-              activityCount={load.data_window.total_activities}
-            />
           </div>
         )}
 
@@ -149,6 +145,12 @@ const TrainingPage: React.FC = () => {
                   <strong>Gabbett ACWR (1998)</strong>
                   <p>急慢性训练负荷比 = 7d TRIMP / 28d TRIMP</p>
                   <p>&lt; 0.8 训练不足 / 0.8-1.3 最佳 / 1.3-1.5 注意 / &gt; 1.5 高危</p>
+                </div>
+                <div>
+                  <strong>Coggan TSB (2003)</strong>
+                  <p>训练状态 = CTL − ATL</p>
+                  <p>CTL = 42d EMA / ATL = 7d EMA</p>
+                  <p>&gt; 15 充分恢复 / -5~15 最佳 / -15~-5 疲劳 / &lt; -15 过度</p>
                 </div>
                 <div>
                   <strong>HRmax / HRrest (用户实测)</strong>

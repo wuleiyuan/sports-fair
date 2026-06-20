@@ -64,6 +64,13 @@ ZONE_BOUNDS = [
 ACUTE_DAYS = 7
 CHRONIC_DAYS = 28
 
+# TSB (Training Stress Balance) — 指数移动平均时间常数
+CTL_DAYS = 42   # 长期体能 (Chronic Training Load)
+ATL_DAYS = 7    # 短期疲劳 (Acute Training Load)
+
+# TSB 状态区间
+# > 15: 状态极佳, 5~15: 恢复充足, -5~5: 最佳训练区, -15~-5: 疲劳偏高, < -15: 过度训练
+
 
 def parse_iso_datetime(s):
     """解析 '1970-01-01 01:13:03' / '2026-06-09 08:30:55' 格式"""
@@ -83,15 +90,15 @@ def parse_local_date(s):
 
 
 def parse_duration_minutes(s):
-    """'1970-01-01 01:13:03' → 73.05 分钟 (datetime 里的时间部分)"""
-    if not s or " " not in str(s):
+    """解析 duration: '1:16:07' → 76.12 分钟, 也支持 '1970-01-01 01:13:03'"""
+    if not s:
         return None
-    parts = str(s).split(" ", 1)
-    if len(parts) < 2:
-        return None
-    time_part = parts[1].split(".")[0]
+    raw = str(s)
+    if " " in raw:
+        raw = raw.split(" ", 1)[1]
+    raw = raw.split(".")[0]
     try:
-        h, m, sec = time_part.split(":")
+        h, m, sec = raw.split(":")
         return int(h) * 60 + int(m) + int(sec) / 60
     except (ValueError, IndexError):
         return None
@@ -116,7 +123,7 @@ def compute_trimp(hr_avg, duration_min, hr_rest, hr_max):
     """
     Banister TRIMP (1991) — HR-based training impulse.
 
-    TRIMP = duration_min * ΔHR * 0.64 * exp(1.92 * y)
+    TRIMP = duration_min * y * 0.64 * exp(1.92 * y)
     where y = (HRavg - HRrest) / (HRmax - HRrest)  (HRR 比例 0-1)
 
     特点: 高强度训练权重指数级增长 (Z4-Z5 加成大)
@@ -128,8 +135,7 @@ def compute_trimp(hr_avg, duration_min, hr_rest, hr_max):
     hrr_ratio = (hr_avg - hr_rest) / (hr_max - hr_rest)
     if hrr_ratio <= 0:
         return 0
-    delta_hr = hr_avg - hr_rest
-    trimp = duration_min * delta_hr * 0.64 * math.exp(1.92 * hrr_ratio)
+    trimp = duration_min * hrr_ratio * 0.64 * math.exp(1.92 * hrr_ratio)
     return round(trimp, 2)
 
 
@@ -169,7 +175,7 @@ def compute_acwr(activities, hr_rest, hr_max, today):
         if not d or d > today or d < cutoff_28:
             continue
         hr_avg = a.get("average_heartrate")
-        dur = parse_duration_minutes(a.get("elapsed_time", ""))
+        dur = parse_duration_minutes(a.get("moving_time", ""))
         if not hr_avg or not dur:
             continue
         t = compute_trimp(hr_avg, dur, hr_rest, hr_max)
@@ -226,7 +232,7 @@ def compute_hr_zones(activities, hr_rest, hr_max, window_days=90):
         if not d or d < cutoff:
             continue
         hr_avg = a.get("average_heartrate")
-        dur = parse_duration_minutes(a.get("elapsed_time", ""))
+        dur = parse_duration_minutes(a.get("moving_time", ""))
         if not hr_avg or not dur or dur <= 0:
             continue
         z = bucket_hr_zone(hr_avg, hr_rest, hr_max)
@@ -285,6 +291,87 @@ def _empty_acwr():
     }
 
 
+def _build_daily_trimp(activities, hr_rest, hr_max):
+    """构建完整每日 TRIMP 时间线 {date: total_trimp}"""
+    daily = Counter()
+    for a in activities:
+        d = parse_local_date(a.get("start_date_local", ""))
+        if not d:
+            continue
+        hr_avg = a.get("average_heartrate")
+        dur = parse_duration_minutes(a.get("moving_time", ""))
+        if not hr_avg or not dur:
+            continue
+        t = compute_trimp(hr_avg, dur, hr_rest, hr_max)
+        if t > 0:
+            daily[d] += t
+    return daily
+
+
+def compute_ctl_atl(daily_trimp):
+    """CTL (42d EMA) / ATL (7d EMA) → TSB = CTL - ATL
+
+    指数移动平均: EMA_t = EMA_{t-1} + (load_t - EMA_{t-1}) * (1 - e^{-1/τ})
+    从最早有数据的天开始顺序计算到最新天, 无活动日 load=0 但 EMA 仍衰减.
+    """
+    if not daily_trimp:
+        return _empty_tsb()
+
+    start_date = min(daily_trimp)
+    end_date = max(daily_trimp)
+    dates = []
+    d = start_date
+    while d <= end_date:
+        dates.append(d)
+        d += timedelta(days=1)
+
+    ctl_alpha = 1 - math.exp(-1 / CTL_DAYS)
+    atl_alpha = 1 - math.exp(-1 / ATL_DAYS)
+
+    ctl = float(daily_trimp[dates[0]])
+    atl = float(daily_trimp[dates[0]])
+
+    for dt in dates[1:]:
+        load = float(daily_trimp.get(dt, 0))
+        ctl = ctl + (load - ctl) * ctl_alpha
+        atl = atl + (load - atl) * atl_alpha
+
+    tsb = ctl - atl
+
+    def classify_tsb(v):
+        if v > 15:
+            return "very_fresh"
+        if v > 5:
+            return "fresh"
+        if v > -5:
+            return "optimal"
+        if v > -15:
+            return "fatigued"
+        return "overtraining"
+
+    return {
+        "ctl": round(ctl, 1),
+        "atl": round(atl, 1),
+        "tsb": round(tsb, 1),
+        "status": classify_tsb(tsb),
+        "ctl_days": CTL_DAYS,
+        "atl_days": ATL_DAYS,
+        "data_span_days": len(dates),
+    }
+
+
+def _empty_tsb():
+    return {
+        "ctl": 0,
+        "atl": 0,
+        "tsb": None,
+        "status": "unknown",
+        "ctl_days": CTL_DAYS,
+        "atl_days": ATL_DAYS,
+        "data_span_days": 0,
+    }
+
+
 def compute_cadence(activities):
     """步频分析 — v2.2.8 占位"""
     return None
@@ -319,6 +406,8 @@ def main():
 
     acwr = compute_acwr(activities, hr_rest, hr_max, today)
     hr_zones = compute_hr_zones(activities, hr_rest, hr_max, window_days=90)
+    daily_trimp = _build_daily_trimp(activities, hr_rest, hr_max)
+    tsb = compute_ctl_atl(daily_trimp)
     cadence = compute_cadence(activities)
 
     output = {
@@ -329,6 +418,7 @@ def main():
             "method_hr_zones": "Karvonen HRR (5 区)",
             "method_load": "Banister TRIMP (1991)",
             "method_acwr": "Gabbett 7d/28d (1998)",
+            "method_tsb": "CTL 42d EMA / ATL 7d EMA",
             "thresholds": {
                 "acwr_under": ACWR_UNDER,
                 "acwr_sweet_spot": [ACWR_SWEET_LOW, ACWR_SWEET_HIGH],
@@ -336,6 +426,7 @@ def main():
             },
         },
         "acwr": acwr,
+        "tsb": tsb,
         "hr_zones": hr_zones,
         "cadence": cadence,
         "cadence_note": (
@@ -360,6 +451,7 @@ def main():
     print(f"  ACWR: {acwr['ratio']} ({acwr['status']})")
     print(f"  7d acute: {acwr['acute_7d_trimp']} TRIMP")
     print(f"  28d chronic: {acwr['chronic_28d_trimp']} TRIMP")
+    print(f"  TSB: {tsb['tsb']} ({tsb['status']}) — CTL {tsb['ctl']} / ATL {tsb['atl']}")
     print(f"  HR zones: dominant={hr_zones['dominant_zone']}, z2={hr_zones['z2_pct']}%, polarized={hr_zones['polarized_pct']}%")
     print(f"  Cadence: not available (v2.2.8 placeholder)")
     return 0

@@ -49,6 +49,7 @@ const baseAdvice: TrainingAdvice = {
     method_hr_zones: 'Karvonen HRR',
     method_load: 'Banister TRIMP',
     method_acwr: 'Gabbett 7d/28d',
+    method_tsb: 'CTL 42d EMA / ATL 7d EMA',
     thresholds: { acwr_under: 0.8, acwr_sweet_spot: [0.8, 1.3], acwr_caution: 1.5 },
   },
   source: 'training_load.json (v2.2.8) + rule-based engine (v2.2.9)',

@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-06-20T03:45:59",
-  "overall_status": "high_risk",
-  "overall_severity": "high",
-  "overall_summary": "⚠️ 重点关注: 数据完整度不足。",
+  "generated_at": "2026-06-20T21:33:45",
+  "overall_status": "caution",
+  "overall_severity": "medium",
+  "overall_summary": "建议关注: Z2 有氧底座可加强。",
   "advice_count": 3,
   "advice_items": [
     {
-      "id": "data_completeness",
-      "category": "data",
-      "severity": "high",
-      "title": "数据完整度不足",
-      "description": "以下数据缺口影响建议可信度: 7d 仅 0 天有数据 (目标 ≥ 3); 28d 仅 0 天有数据 (目标 ≥ 7)。",
-      "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
-      "evidence": "7d 0 天 / 28d 0 天 / 90d HR 0 活动"
-    },
-    {
-      "id": "acwr_unknown",
-      "category": "load",
-      "severity": "info",
-      "title": "训练负荷数据不足",
-      "description": "无法计算 ACWR（缺少心率或时长数据）。",
-      "action": "继续训练积累心率数据, 几周后 ACWR 才能稳定。",
-      "evidence": "7d 0 天有数据 / 28d 0 天有数据"
-    },
-    {
-      "id": "z2_insufficient_hr",
+      "id": "z2_low",
       "category": "intensity",
-      "severity": "info",
-      "title": "心率数据不足",
-      "description": "近 90 天仅 0 个活动有 HR 数据, 区间分布不可信。",
-      "action": "确保跑步时佩戴心率设备（AW / 心率带）, 让 HR 数据自动同步。",
-      "evidence": "90 天窗口 0 个活动有 HR"
+      "severity": "medium",
+      "title": "Z2 有氧底座可加强",
+      "description": "Z2 占比 21.5%, 有氧基础有提升空间。",
+      "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
+      "evidence": "Z1 56.4% + Z2 21.5% = polarized 77.9%"
+    },
+    {
+      "id": "acwr_sweet_spot",
+      "category": "load",
+      "severity": "low",
+      "title": "训练负荷合理",
+      "description": "ACWR 0.84 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
+      "action": "按计划训练, 保持当前负荷节奏。",
+      "evidence": "7d 急性 464.6 TRIMP / 28d 慢性 552.4 TRIMP"
+    },
+    {
+      "id": "polarized_ok",
+      "category": "intensity",
+      "severity": "low",
+      "title": "训练分布符合 polarized",
+      "description": "低强度 (Z1+Z2) 占比 77.9%, 符合 polarized 训练 80/20 模型。",
+      "action": "保持当前训练分布, 无需调整。",
+      "evidence": "Z1+Z2 = 77.9% (≥ 70% 阈值)"
     }
   ],
   "data_window": {
@@ -44,6 +44,7 @@
     "method_hr_zones": "Karvonen HRR (5 区)",
     "method_load": "Banister TRIMP (1991)",
     "method_acwr": "Gabbett 7d/28d (1998)",
+    "method_tsb": "CTL 42d EMA / ATL 7d EMA",
     "thresholds": {
       "acwr_under": 0.8,
       "acwr_sweet_spot": [
