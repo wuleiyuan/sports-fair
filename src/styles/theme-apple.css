@@ -246,6 +246,45 @@
   opacity: 0.85;
 }
 
+/* ===== Assessment Card ===== */
+[data-kinetic] .assessment-card {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+}
+
+[data-kinetic] .assessment-card h3 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+}
+
+[data-kinetic] .assessment-card .acwr-zone-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+[data-kinetic] .assessment-card .acwr-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+[data-kinetic] .assessment-card .acwr-status-label {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+[data-kinetic] .assessment-card .acwr-status-en {
+  font-size: 0.7rem;
+  color: var(--a-text-tertiary, rgba(255,255,255,0.4));
+}
+
 /* ===== Bento Grid ===== */
 [data-kinetic] .k-bento {
   display: grid;

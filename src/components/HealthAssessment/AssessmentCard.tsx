@@ -73,11 +73,11 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
     <div
       className={`assessment-card severity-${card.severity}`}
       style={{
-        backgroundColor: 'var(--color-card-bg, #fff)',
+        backgroundColor: 'var(--a-card-bg, rgba(255,255,255,0.04))',
         borderRadius: 12,
         padding: 20,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-        border: '1px solid rgba(0, 0, 0, 0.08)',
+        boxShadow: 'var(--a-card-shadow, 0 2px 24px rgba(0,0,0,0.5))',
+        border: '1px solid var(--a-card-border, rgba(255,255,255,0.06))',
         borderLeft: `4px solid ${
           card.severity === 'good'
             ? '#4caf50'
@@ -93,7 +93,7 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 600 }}>{card.title}</h3>
+        <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 600, color: 'var(--a-text-primary, #fff)' }}>{card.title}</h3>
         <SeverityBadge severity={card.severity} size="sm" />
       </div>
 
@@ -102,7 +102,7 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
           style={{
             fontSize: '1.6rem',
             fontWeight: 700,
-            color: 'var(--color-text-primary, #222)',
+            color: 'var(--a-text-primary, #fff)',
             lineHeight: 1.2,
           }}
         >
@@ -112,7 +112,7 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
           <div
             style={{
               fontSize: '0.8rem',
-              color: 'var(--color-text-secondary, #666)',
+              color: 'var(--a-text-secondary, rgba(255,255,255,0.72))',
               marginTop: 4,
             }}
           >
@@ -126,13 +126,12 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
         const { zone, staticAdvice } = acwrZone(acwrRatio);
         return (
           <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary, #888)', marginBottom: 6 }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--a-text-tertiary, rgba(255,255,255,0.4))', marginBottom: 6 }}>
               ACWR 风险区间（0-2.0）
             </div>
             <div className="acwr-zone-bar">
               {ACWR_ZONES.map((z, i) => {
-                // width 百分比: 紫 0-0.8 (40%) / 绿 0.8-1.3 (25%) / 橙 1.3-1.5 (10%) / 蓝 1.5+ (25%)
-                const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5; // = 2.0
+                const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5;
                 const span = z.max === 99 ? 0.5 : (z.max - z.min);
                 const widthPct = (span / TOTAL_SPAN) * 100;
                 return (
@@ -166,7 +165,7 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
                 position: 'relative',
                 height: 14,
                 margin: '6px 0 10px',
-                borderTop: '1px dashed rgba(0,0,0,0.08)',
+                borderTop: '1px dashed rgba(255,255,255,0.12)',
               }}
             >
               <div
@@ -180,8 +179,8 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
                   height: 14,
                   borderRadius: '50%',
                   backgroundColor: zone.color,
-                  border: '2px solid #fff',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.25)',
+                  border: '2px solid #000',
+                  boxShadow: '0 0 8px rgba(255,136,0,0.4)',
                 }}
                 title={`ACWR = ${acwrRatio.toFixed(2)}`}
               />
@@ -201,11 +200,11 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
               style={{
                 padding: '10px 12px',
                 marginTop: 8,
-                background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, rgba(168, 85, 247, 0.06) 100%)',
+                background: 'rgba(255, 136, 0, 0.06)',
                 borderRadius: 6,
-                borderLeft: '3px solid #6366f1',
+                borderLeft: '3px solid var(--a-orange, #FF8800)',
                 fontSize: '0.85rem',
-                color: 'var(--color-text-primary, #1a1a1a)',
+                color: 'var(--a-text-primary, #fff)',
                 lineHeight: 1.5,
               }}
             >
@@ -214,15 +213,15 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
                 style={{
                   display: 'inline-block',
                   fontSize: '0.7rem',
-                  background: '#6366f1',
-                  color: 'white',
+                  background: 'var(--a-orange, #FF8800)',
+                  color: '#000',
                   padding: '1px 8px',
                   borderRadius: 8,
                   marginBottom: 4,
-                  fontWeight: 500,
+                  fontWeight: 700,
                 }}
               >
-                🤖 AI 教练建议
+                AI 教练建议
               </span>
               <p style={{ margin: 0 }}>{staticAdvice}</p>
             </div>
@@ -235,16 +234,16 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
         style={{
           padding: '10px 12px',
           borderRadius: 6,
-          color: '#1a1a1a',
+          color: 'var(--a-text-primary, #fff)',
           fontWeight: 500,
           backgroundColor:
             card.severity === 'good'
-              ? 'rgba(76, 175, 80, 0.06)'
+              ? 'rgba(76, 175, 80, 0.12)'
               : card.severity === 'watch'
-                ? 'rgba(255, 193, 7, 0.08)'
+                ? 'rgba(255, 193, 7, 0.12)'
                 : card.severity === 'warn'
-                  ? 'rgba(255, 152, 0, 0.10)'
-                  : 'rgba(244, 67, 54, 0.08)',
+                  ? 'rgba(255, 152, 0, 0.15)'
+                  : 'rgba(244, 67, 54, 0.12)',
           fontSize: '0.9rem',
           lineHeight: 1.5,
         }}
@@ -256,12 +255,12 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
         <details
           style={{
             fontSize: '0.8rem',
-            color: 'var(--color-text-secondary, #888)',
+            color: 'var(--a-text-tertiary, rgba(255,255,255,0.4))',
             marginTop: 4,
           }}
         >
           <summary style={{ cursor: 'pointer', userSelect: 'none' }}>说明 / 数据局限</summary>
-          <p style={{ marginTop: 8, lineHeight: 1.5 }}>{card.detail}</p>
+          <p style={{ marginTop: 8, lineHeight: 1.5, color: 'var(--a-text-secondary, rgba(255,255,255,0.72))' }}>{card.detail}</p>
         </details>
       )}
     </div>
