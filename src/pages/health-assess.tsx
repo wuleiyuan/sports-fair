@@ -97,7 +97,7 @@ const HealthAssessPage: React.FC = () => {
         <html lang="zh-CN" data-theme={theme} />
       </Helmet>
 
-      <div className={styles.healthAssessPage}>
+      <div data-kinetic className={styles.healthAssessPage}>
         <header className={styles.header}>
           <h1>运动健康评估建议</h1>
           <p className={styles.subtitle}>

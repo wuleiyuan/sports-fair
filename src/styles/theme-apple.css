@@ -6,31 +6,34 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ---- 暗色变量（默认） ---- */
+/* ---- 暗色变量（Pornhub 橙黑风格） ---- */
 [data-kinetic] {
   /* 背景 */
-  --a-bg: #121212;
-  --a-bg-secondary: #1a1a1a;
+  --a-bg: #000000;
+  --a-bg-secondary: #0D0D0D;
 
   /* 毛玻璃卡片 */
-  --a-card-bg: rgba(255, 255, 255, 0.06);
-  --a-card-border: rgba(255, 255, 255, 0.08);
-  --a-card-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  --a-card-radius: 20px;
+  --a-card-bg: rgba(255, 255, 255, 0.04);
+  --a-card-border: rgba(255, 255, 255, 0.06);
+  --a-card-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+  --a-card-radius: 16px;
 
   /* 文字 */
   --a-text-primary: #ffffff;
-  --a-text-secondary: rgba(255, 255, 255, 0.7);
-  --a-text-tertiary: rgba(255, 255, 255, 0.45);
+  --a-text-secondary: rgba(255, 255, 255, 0.72);
+  --a-text-tertiary: rgba(255, 255, 255, 0.4);
 
-  /* 健身环色系 */
-  --a-red: #FF2D55;
-  --a-green: #30D158;
-  --a-blue: #007AFF;
-  --a-orange: #FF9500;
-  --a-purple: #AF52DE;
-  --a-mint: #00C7BE;
-  --a-yellow: #FFD60A;
+  /* Pornhub 橙黑色系 */
+  --a-orange: #FF8800;
+  --a-orange-bright: #FF9900;
+  --a-orange-dark: #CC6600;
+  --a-orange-light: #FFB347;
+  --a-red: #FF5500;
+  --a-green: #FF8800;
+  --a-blue: #FF9900;
+  --a-purple: #FFB347;
+  --a-mint: #CC6600;
+  --a-yellow: #FFCC00;
 
   /* 字号 */
   --a-title-1: 28px;
@@ -295,7 +298,7 @@
 [data-kinetic] .k-guidance-badge {
   font-size: 11px;
   font-weight: 700;
-  color: var(--a-green);
+  color: #FF9900;
   display: block;
   margin-bottom: 4px;
 }
@@ -494,11 +497,11 @@
 }
 
 /* ===== Health Metric Colors ===== */
-[data-kinetic] .k-metric-hr { color: #FF2D55; }
-[data-kinetic] .k-metric-rhr { color: #FF9500; }
-[data-kinetic] .k-metric-hrv { color: #AF52DE; }
-[data-kinetic] .k-metric-sleep { color: #007AFF; }
-[data-kinetic] .k-metric-steps { color: #30D158; }
+[data-kinetic] .k-metric-hr { color: #FF5500; }
+[data-kinetic] .k-metric-rhr { color: #FF8800; }
+[data-kinetic] .k-metric-hrv { color: #FFB347; }
+[data-kinetic] .k-metric-sleep { color: #FF9900; }
+[data-kinetic] .k-metric-steps { color: #CC6600; }
 
 [data-kinetic] .k-metric-dot {
   width: 10px;

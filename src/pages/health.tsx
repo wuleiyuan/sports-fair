@@ -42,11 +42,11 @@ interface TrendSeries {
 type MetricKey = 'hr' | 'rhr' | 'hrv' | 'sleep' | 'steps';
 
 const METRIC_CONFIG: Record<MetricKey, { label: string; icon: React.FC<{ size?: number; color?: string }>; color: string; sparkColor: string; unit: string }> = {
-  hr:    { label: '心率（HR）', icon: IconHeart, color: '#FF2D55', sparkColor: '#FF2D55', unit: 'bpm' },
-  rhr:   { label: '静息心率（RHR）', icon: IconMoon, color: '#FF9500', sparkColor: '#FF9500', unit: 'bpm' },
-  hrv:   { label: '心率变异性（HRV）', icon: IconWave, color: '#AF52DE', sparkColor: '#AF52DE', unit: 'ms' },
-  sleep: { label: '睡眠', icon: IconSleep, color: '#007AFF', sparkColor: '#007AFF', unit: 'h' },
-  steps: { label: '步数', icon: IconWalk, color: '#30D158', sparkColor: '#30D158', unit: '' },
+  hr:    { label: '心率（HR）', icon: IconHeart, color: '#FF5500', sparkColor: '#FF5500', unit: 'bpm' },
+  rhr:   { label: '静息心率（RHR）', icon: IconMoon, color: '#FF8800', sparkColor: '#FF8800', unit: 'bpm' },
+  hrv:   { label: '心率变异性（HRV）', icon: IconWave, color: '#FFB347', sparkColor: '#FFB347', unit: 'ms' },
+  sleep: { label: '睡眠', icon: IconSleep, color: '#FF9900', sparkColor: '#FF9900', unit: 'h' },
+  steps: { label: '步数', icon: IconWalk, color: '#CC6600', sparkColor: '#CC6600', unit: '' },
 };
 
 const HealthPage: React.FC = () => {

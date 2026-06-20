@@ -395,45 +395,47 @@ const Index = () => {
       <Helmet>
         <html lang="en" data-theme={theme} />
       </Helmet>
-      <div className="w-full lg:w-1/3">
-        <h1 className="my-12 mt-6 text-5xl font-extrabold italic">
-          <a href={siteUrl}>{siteTitle}</a>
-        </h1>
-        {IS_CHINESE ? (
-          <LocationStat
+      <div data-kinetic className="k-page flex flex-wrap">
+        <div className="w-full lg:w-1/3">
+          <h1 className="my-12 mt-6 text-5xl font-extrabold italic">
+            <a href={siteUrl}>{siteTitle}</a>
+          </h1>
+          {IS_CHINESE ? (
+            <LocationStat
+              changeYear={changeYear}
+              changeCity={changeCity}
+              changeTitle={changeTitle}
+              sportKey="Run"
+            />
+          ) : (
+            <YearsStat year={year} onClick={changeYear} />
+          )}
+        </div>
+        <div className="w-full lg:w-2/3" id="map-container">
+          <RunMap
+            title={title}
+            viewState={viewState}
+            geoData={animatedGeoData}
+            setViewState={setViewState}
             changeYear={changeYear}
-            changeCity={changeCity}
-            changeTitle={changeTitle}
-            sportKey="Run"
+            thisYear={year}
+            animationTrigger={animationTrigger}
           />
-        ) : (
-          <YearsStat year={year} onClick={changeYear} />
-        )}
+          {year === 'Total' ? (
+            <SVGStat />
+          ) : (
+            <RunTable
+              runs={runs}
+              locateActivity={locateActivity}
+              setActivity={setActivity}
+              runIndex={runIndex}
+              setRunIndex={setRunIndex}
+            />
+          )}
+        </div>
+        {/* Enable Audiences in Vercel Analytics: https://vercel.com/docs/concepts/analytics/audiences/quickstart */}
+        {import.meta.env.VERCEL && <Analytics />}
       </div>
-      <div className="w-full lg:w-2/3" id="map-container">
-        <RunMap
-          title={title}
-          viewState={viewState}
-          geoData={animatedGeoData}
-          setViewState={setViewState}
-          changeYear={changeYear}
-          thisYear={year}
-          animationTrigger={animationTrigger}
-        />
-        {year === 'Total' ? (
-          <SVGStat />
-        ) : (
-          <RunTable
-            runs={runs}
-            locateActivity={locateActivity}
-            setActivity={setActivity}
-            runIndex={runIndex}
-            setRunIndex={setRunIndex}
-          />
-        )}
-      </div>
-      {/* Enable Audiences in Vercel Analytics: https://vercel.com/docs/concepts/analytics/audiences/quickstart */}
-      {import.meta.env.VERCEL && <Analytics />}
     </Layout>
   );
 };

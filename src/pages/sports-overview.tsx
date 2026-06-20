@@ -71,7 +71,7 @@ const SportsOverview = () => {
         <title>运动总览</title>
       </Helmet>
 
-      <div className="mx-auto max-w-screen-2xl px-6 lg:px-16 py-8">
+      <div data-kinetic className="mx-auto max-w-screen-2xl px-6 lg:px-16 py-8">
         {/* 页头 */}
         <header className="mb-8">
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">

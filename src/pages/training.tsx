@@ -25,9 +25,9 @@ const TSB_LOW = -30;
 const TSB_HIGH = 30;
 
 const SEV_COLORS: Record<string, string> = {
-  high: '#FF2D55',
-  low: '#FF9500',
-  info: '#30D158',
+  high: '#FF5500',
+  low: '#FF8800',
+  info: '#FF9900',
 };
 
 function sevColor(s: string): string {
@@ -98,7 +98,7 @@ const TrainingPage: React.FC = () => (
         <div className="k-card k-bento-wide">
           <div className="k-card-header">
             <div className="k-card-header-left">
-              <div className="k-card-icon"><IconBolt size={18} color="#30D158" /></div>
+              <div className="k-card-icon"><IconBolt size={18} color="#FF9900" /></div>
               <div className="k-card-text">
                 <div className="k-card-kicker">Banister TRIMP · Gabbett 7/28</div>
                 <h3 className="k-card-title">ACWR 训练负荷</h3>
@@ -152,7 +152,7 @@ const TrainingPage: React.FC = () => (
               {trimpSeries.length > 0 && (
                 <div className="k-sparkline-wrap">
                   <div className="k-sparkline-label">每日 TRIMP · 近 42 天</div>
-                  <Sparkline data={trimpSeries} color="#30D158" height={36} />
+                  <Sparkline data={trimpSeries} color="#FF9900" height={36} />
                 </div>
               )}
             </>
@@ -165,7 +165,7 @@ const TrainingPage: React.FC = () => (
             <p className="k-guidance-text">{acwrZoneAdvice(acwr.ratio)}</p>
             {acwr.warning && (
               <p className="k-guidance-text" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 10, marginTop: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <IconWarning size={16} color="#FF9500" />
+                <IconWarning size={16} color="#FF8800" />
                 {acwr.warning}
               </p>
             )}
@@ -178,7 +178,7 @@ const TrainingPage: React.FC = () => (
         <div className="k-card k-bento-narrow">
           <div className="k-card-header">
             <div className="k-card-header-left">
-              <div className="k-card-icon"><IconArrowUpDown size={18} color="#AF52DE" /></div>
+              <div className="k-card-icon"><IconArrowUpDown size={18} color="#FFB347" /></div>
               <div className="k-card-text">
                 <div className="k-card-kicker">Coggan · CTL 42d / ATL 7d</div>
                 <h3 className="k-card-title">TSB 训练状态</h3>
@@ -199,19 +199,19 @@ const TrainingPage: React.FC = () => (
 
           <div>
             <div className="k-label">疲劳 ← 状态 → 恢复</div>
-            <div className="k-scale">
-              <div className="k-scale-seg" style={{ flex: 3, background: '#FF2D55' }} />
-              <div className="k-scale-seg" style={{ flex: 2, background: '#FF9500' }} />
-              <div className="k-scale-seg" style={{ flex: 4, background: '#6366f1' }} />
-              <div className="k-scale-seg" style={{ flex: 2, background: '#30D158' }} />
-              <div className="k-scale-seg" style={{ flex: 4, background: '#30D158' }} />
-            </div>
-            <div className="k-scale-labels">
-              <span style={{ color: '#FF2D55' }}>–30</span>
-              <span style={{ color: '#FF9500' }}>–15</span>
-              <span style={{ color: '#6366f1' }}>–5</span>
-              <span style={{ color: '#30D158' }}>15</span>
-              <span style={{ color: '#30D158' }}>30</span>
+              <div className="k-scale">
+                <div className="k-scale-seg" style={{ flex: 3, background: '#FF5500' }} />
+                <div className="k-scale-seg" style={{ flex: 2, background: '#FF8800' }} />
+                <div className="k-scale-seg" style={{ flex: 4, background: '#FFB347' }} />
+                <div className="k-scale-seg" style={{ flex: 2, background: '#FF9900' }} />
+                <div className="k-scale-seg" style={{ flex: 4, background: '#FF9900' }} />
+              </div>
+              <div className="k-scale-labels">
+                <span style={{ color: '#FF5500' }}>–30</span>
+                <span style={{ color: '#FF8800' }}>–15</span>
+                <span style={{ color: '#FFB347' }}>–5</span>
+                <span style={{ color: '#FF9900' }}>15</span>
+                <span style={{ color: '#FF9900' }}>30</span>
             </div>
             <div className="k-scale-marker-wrap">
               {hasTsb && <div className="k-scale-marker" style={{ left: `${tsbPercent}%`, background: tsbBadge.color }} />}
@@ -243,7 +243,7 @@ const TrainingPage: React.FC = () => (
         <div className="k-card k-bento-narrow">
           <div className="k-card-header">
             <div className="k-card-header-left">
-              <div className="k-card-icon"><IconHeart size={18} color="#FF2D55" /></div>
+              <div className="k-card-icon"><IconHeart size={18} color="#FF5500" /></div>
               <div className="k-card-text">
                 <div className="k-card-kicker">Karvonen HRR · {hrZones.window_days || 90}d</div>
                 <h3 className="k-card-title">HR 5 区间</h3>
@@ -277,7 +277,7 @@ const TrainingPage: React.FC = () => (
           <div style={statsGridStyle}>
             <div style={statItemStyle}>
               <div className="k-stat-label">Z2 占比</div>
-              <div className="k-stat-value" style={{ color: hrZones.z2_pct >= 60 ? '#30D158' : '#FF9500' }}>
+              <div className="k-stat-value" style={{ color: hrZones.z2_pct >= 60 ? '#FF9900' : '#FF8800' }}>
                 {hrZones.z2_pct.toFixed(1)}<span className="k-data-unit">%</span>
               </div>
               <div className="k-stat-sub">{hrZones.z2_pct >= 60 ? '✓ 合理' : '需加强'}</div>
@@ -296,14 +296,14 @@ const TrainingPage: React.FC = () => (
         <div className="k-card k-bento-wide">
           <div className="k-card-header">
             <div className="k-card-header-left">
-              <div className="k-card-icon"><IconClipboard size={18} color="#007AFF" /></div>
+              <div className="k-card-icon"><IconClipboard size={18} color="#FF8800" /></div>
               <div className="k-card-text">
                 <div className="k-card-kicker">Rule-based · 0 LLM</div>
                 <h3 className="k-card-title">训练建议</h3>
               </div>
             </div>
             <span className="k-badge" style={{
-              background: advice.overall_severity === 'high' ? '#FF2D55' : advice.overall_severity === 'low' ? '#FF9500' : 'rgba(255,255,255,0.08)',
+              background: advice.overall_severity === 'high' ? '#FF5500' : advice.overall_severity === 'low' ? '#FF8800' : 'rgba(255,255,255,0.08)',
               color: advice.overall_severity === 'high' || advice.overall_severity === 'low' ? '#fff' : 'rgba(255,255,255,0.7)',
             }}>
               {advice.advice_count} 条

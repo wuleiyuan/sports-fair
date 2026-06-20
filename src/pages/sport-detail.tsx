@@ -132,11 +132,13 @@ const SportDetail = () => {
   if (!sport) {
     return (
       <Layout>
-        <div className="mx-auto max-w-2xl px-6 py-16 text-center">
-          <h1 className="text-2xl text-white mb-4">未找到运动类型</h1>
-          <Link to="/sports" className="text-blue-400 hover:text-blue-300">
-            ← 回到运动总览
-          </Link>
+        <div data-kinetic className="k-page">
+          <div className="mx-auto max-w-2xl px-6 py-16 text-center">
+            <h1 className="k-page-title" style={{ fontSize: 28, marginBottom: 16 }}>未找到运动类型</h1>
+            <Link to="/sports" style={{ color: '#FF8800' }}>
+              ← 回到运动总览
+            </Link>
+          </div>
         </div>
       </Layout>
     );
@@ -144,7 +146,8 @@ const SportDetail = () => {
 
   return (
     <Layout>
-      <Helmet>
+      <div data-kinetic>
+        <Helmet>
         <title>{sport.label} · 运动详情</title>
       </Helmet>
 
@@ -361,6 +364,7 @@ const SportDetail = () => {
             )}
           </>
         )}
+      </div>
       </div>
     </Layout>
   );
