@@ -6,7 +6,7 @@
  */
 @import 'tailwindcss';
 @import './mobile.css';
-@import './theme-kinetic.css';
+@import './theme-apple.css';
 
 :root {
   /* === 字体栈 === */

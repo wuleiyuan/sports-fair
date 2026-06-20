@@ -1,0 +1,514 @@
+/* ===== Apple HIG 设计系统 =====
+ * 灵感: Apple Fitness / Health / Weather
+ * 字体: SF Pro (系统字体栈) + SF Pro Rounded (数字)
+ * 核心: 毛玻璃卡片 · 大圆角 · 层次排版 · 健身环色彩
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ---- 暗色变量（默认） ---- */
+[data-kinetic] {
+  /* 背景 */
+  --a-bg: #121212;
+  --a-bg-secondary: #1a1a1a;
+
+  /* 毛玻璃卡片 */
+  --a-card-bg: rgba(255, 255, 255, 0.06);
+  --a-card-border: rgba(255, 255, 255, 0.08);
+  --a-card-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  --a-card-radius: 20px;
+
+  /* 文字 */
+  --a-text-primary: #ffffff;
+  --a-text-secondary: rgba(255, 255, 255, 0.7);
+  --a-text-tertiary: rgba(255, 255, 255, 0.45);
+
+  /* 健身环色系 */
+  --a-red: #FF2D55;
+  --a-green: #30D158;
+  --a-blue: #007AFF;
+  --a-orange: #FF9500;
+  --a-purple: #AF52DE;
+  --a-mint: #00C7BE;
+  --a-yellow: #FFD60A;
+
+  /* 字号 */
+  --a-title-1: 28px;
+  --a-title-2: 22px;
+  --a-title-3: 20px;
+  --a-headline: 17px;
+  --a-body: 15px;
+  --a-subhead: 13px;
+  --a-caption: 12px;
+
+  /* 间距 */
+  --a-gap: 16px;
+  --a-inset: 20px;
+}
+
+[data-kinetic] * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+}
+
+[data-kinetic] .k-number {
+  font-family: 'Inter', 'SF Pro Rounded', 'SF Pro Display', -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Page ===== */
+[data-kinetic] .k-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+[data-kinetic] .k-page-header {
+  padding: 32px 0 20px;
+}
+
+[data-kinetic] .k-page-title {
+  font-size: var(--a-title-1);
+  font-weight: 800;
+  color: var(--a-text-primary);
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+[data-kinetic] .k-page-subtitle {
+  font-size: var(--a-subhead);
+  color: var(--a-text-tertiary);
+  margin: 4px 0 0;
+  font-weight: 400;
+}
+
+/* ===== Bento Grid ===== */
+[data-kinetic] .k-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+[data-kinetic] .k-bento-wide {
+  grid-column: 1 / -1;
+}
+
+[data-kinetic] .k-bento-narrow {
+  grid-column: span 1;
+}
+
+/* ===== Card ===== */
+[data-kinetic] .k-card {
+  background: var(--a-card-bg);
+  border: 1px solid var(--a-card-border);
+  border-radius: var(--a-card-radius);
+  box-shadow: var(--a-card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: var(--a-inset);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+[data-kinetic] .k-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+[data-kinetic] .k-card-kicker {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--a-text-tertiary);
+  margin-bottom: 2px;
+}
+
+[data-kinetic] .k-card-title {
+  font-size: var(--a-headline);
+  font-weight: 700;
+  color: var(--a-text-primary);
+  margin: 0;
+}
+
+/* ===== Badge ===== */
+[data-kinetic] .k-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ===== Data Number ===== */
+[data-kinetic] .k-data-number {
+  font-family: 'Inter', 'SF Pro Rounded', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.03em;
+  color: var(--a-text-primary);
+}
+
+[data-kinetic] .k-data-number-lg {
+  font-size: 48px;
+}
+
+[data-kinetic] .k-data-unit {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--a-text-tertiary);
+  margin-left: 4px;
+}
+
+/* ===== Stats Grid ===== */
+[data-kinetic] .k-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+[data-kinetic] .k-stat-item {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+[data-kinetic] .k-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--a-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+[data-kinetic] .k-stat-value {
+  font-family: 'Inter', 'SF Pro Rounded', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--a-text-primary);
+}
+
+[data-kinetic] .k-stat-sub {
+  font-size: 11px;
+  color: var(--a-text-tertiary);
+  margin-top: 2px;
+}
+
+/* ===== Scale / Progress Bar ===== */
+[data-kinetic] .k-scale {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-kinetic] .k-scale-seg {
+  transition: flex 0.3s;
+}
+
+[data-kinetic] .k-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+[data-kinetic] .k-scale-marker-wrap {
+  position: relative;
+  height: 14px;
+  margin-top: 2px;
+}
+
+[data-kinetic] .k-scale-marker {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.4s ease;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* ===== Label ===== */
+[data-kinetic] .k-label {
+  font-size: var(--a-caption);
+  font-weight: 600;
+  color: var(--a-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Sparkline ===== */
+[data-kinetic] .k-sparkline-wrap {
+  margin-top: 4px;
+}
+
+[data-kinetic] .k-sparkline-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--a-text-tertiary);
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* ===== Guidance / Advice ===== */
+[data-kinetic] .k-guidance {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+[data-kinetic] .k-guidance-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--a-green);
+  display: block;
+  margin-bottom: 4px;
+}
+
+[data-kinetic] .k-guidance-text {
+  font-size: var(--a-body);
+  color: var(--a-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===== Advice List ===== */
+[data-kinetic] .k-advice-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-kinetic] .k-advice-item {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+  padding: 14px;
+  border-left: 4px solid var(--a-blue);
+}
+
+[data-kinetic] .k-advice-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+[data-kinetic] .k-advice-item-category {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--a-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+[data-kinetic] .k-advice-item-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+[data-kinetic] .k-advice-item-title {
+  font-size: var(--a-headline);
+  font-weight: 700;
+  color: var(--a-text-primary);
+  margin: 0 0 4px;
+}
+
+[data-kinetic] .k-advice-item-desc {
+  font-size: var(--a-body);
+  color: var(--a-text-secondary);
+  line-height: 1.45;
+  margin: 0 0 8px;
+}
+
+[data-kinetic] .k-advice-item-action,
+[data-kinetic] .k-advice-item-action-label {
+  font-size: 13px;
+  color: var(--a-text-secondary);
+  line-height: 1.5;
+}
+
+[data-kinetic] .k-advice-item-action-label {
+  font-weight: 700;
+  color: var(--a-text-primary);
+}
+
+[data-kinetic] .k-advice-item-evidence-label {
+  font-weight: 700;
+  color: var(--a-text-primary);
+  font-size: 12px;
+}
+
+[data-kinetic] .k-advice-item-evidence {
+  font-size: 12px;
+  color: var(--a-text-tertiary);
+}
+
+/* ===== Empty State ===== */
+[data-kinetic] .k-empty {
+  text-align: center;
+  padding: 24px;
+  color: var(--a-text-tertiary);
+  font-size: var(--a-body);
+}
+
+/* ===== Card Footer ===== */
+[data-kinetic] .k-card-footer {
+  font-size: 11px;
+  color: var(--a-text-tertiary);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+/* ===== Data Window ===== */
+[data-kinetic] .k-data-window {
+  font-size: 12px;
+  color: var(--a-text-tertiary);
+  line-height: 1.5;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+[data-kinetic] .k-data-window strong {
+  color: var(--a-text-secondary);
+}
+
+/* ===== Formula Footer ===== */
+[data-kinetic] .k-formula-footer {
+  margin-top: 24px;
+}
+
+[data-kinetic] .k-formula-footer details {
+  background: var(--a-card-bg);
+  border: 1px solid var(--a-card-border);
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+[data-kinetic] .k-formula-footer summary {
+  font-size: var(--a-subhead);
+  font-weight: 600;
+  color: var(--a-text-secondary);
+  cursor: pointer;
+}
+
+[data-kinetic] .k-formula-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+[data-kinetic] .k-formula-grid div {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+[data-kinetic] .k-formula-grid strong {
+  font-size: 12px;
+  color: var(--a-text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+[data-kinetic] .k-formula-grid p {
+  font-size: var(--a-caption);
+  color: var(--a-text-tertiary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===== Section (for Health page) ===== */
+[data-kinetic] .k-section {
+  margin-top: 28px;
+}
+
+[data-kinetic] .k-section-title {
+  font-size: var(--a-title-2);
+  font-weight: 800;
+  color: var(--a-text-primary);
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+/* ===== Table ===== */
+[data-kinetic] .k-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-kinetic] .k-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+[data-kinetic] .k-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--a-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 12px;
+  text-align: right;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-kinetic] .k-table thead th:first-child {
+  text-align: left;
+}
+
+[data-kinetic] .k-table tbody td {
+  padding: 12px;
+  text-align: right;
+  color: var(--a-text-primary);
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+[data-kinetic] .k-table tbody td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+
+[data-kinetic] .k-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+[data-kinetic] .k-table-year {
+  font-weight: 700;
+}
+
+/* ===== SVG Embed ===== */
+[data-kinetic] .k-svg-wrap {
+  background: var(--a-card-bg);
+  border: 1px solid var(--a-card-border);
+  border-radius: var(--a-card-radius);
+  padding: 16px;
+  overflow: hidden;
+}
+
+[data-kinetic] .k-svg-embed {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
