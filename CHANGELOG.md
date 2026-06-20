@@ -11,6 +11,11 @@
 - 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
 - `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
+## [2.4.1] - 2026-06-20
+
+### 修复
+- **训练页 404** — `fetch('/training_load.json')` 在生产构建中返回 404，因 Vite 不自动 serve `src/static/` 目录文件。改为使用 `import` 直接引 JSON（与项目中 `health.tsx` 等所有页面一致），JSON 内联至 JS bundle，消除额外网络请求
+
 ## [2.4.0] - 2026-06-20
 
 ### 新增
