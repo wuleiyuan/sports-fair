@@ -390,28 +390,63 @@ const Index = () => {
 
   const { theme } = useTheme();
 
+  const pageLinks = [
+    { href: '/summary', label: 'Stats', icon: '📊' },
+    { href: '/health', label: 'Health', icon: '❤️' },
+    { href: '/health-assess', label: 'AI Assess', icon: '🧠' },
+    { href: '/training', label: 'Training', icon: '⚡' },
+    { href: '/sports', label: 'Sports', icon: '🏅' },
+  ];
+
   return (
     <Layout>
       <Helmet>
         <html lang="en" data-theme={theme} />
       </Helmet>
-      <div data-kinetic className="k-page flex flex-wrap">
-        <div className="w-full lg:w-1/3">
-          <h1 className="my-12 mt-6 text-5xl font-extrabold italic">
-            <a href={siteUrl}>{siteTitle}</a>
-          </h1>
-          {IS_CHINESE ? (
-            <LocationStat
-              changeYear={changeYear}
-              changeCity={changeCity}
-              changeTitle={changeTitle}
-              sportKey="Run"
-            />
-          ) : (
-            <YearsStat year={year} onClick={changeYear} />
-          )}
-        </div>
-        <div className="w-full lg:w-2/3" id="map-container">
+      <div data-kinetic className="k-page">
+        {/* ── Landing intro ── */}
+        <section className="k-landing">
+          <p className="k-landing-desc">
+            {IS_CHINESE
+              ? '多数据源运动仪表盘，支持跑步 / 骑行 / 游泳 / 跳绳等运动类型。地图追踪、健康评估、训练分析，一站式开源自部署。'
+              : 'Multi-source sports dashboard with map tracking, health assessment, and training load analysis. Self-hosted & open-source.'}
+          </p>
+          <nav className="k-landing-nav">
+            {pageLinks.map((link) => (
+              <a key={link.href} href={link.href} className="k-landing-pill">
+                <span>{link.icon}</span>
+                <span>{link.label}</span>
+              </a>
+            ))}
+            <a href="https://github.com/wuleiyuan/sports-fair" className="k-landing-pill k-landing-pill-gh">
+              <span>⭐</span>
+              <span>GitHub</span>
+            </a>
+          </nav>
+        </section>
+
+        <div className="flex flex-wrap">
+          <div className="w-full lg:w-1/3">
+            <div className="k-landing-title-area">
+              <h1 className="k-landing-title">
+                <a href={siteUrl}>{siteTitle}</a>
+              </h1>
+              <p className="k-landing-subtitle">
+                {IS_CHINESE ? '跑步 · 全量记录' : 'Running · Full Archive'}
+              </p>
+            </div>
+            {IS_CHINESE ? (
+              <LocationStat
+                changeYear={changeYear}
+                changeCity={changeCity}
+                changeTitle={changeTitle}
+                sportKey="Run"
+              />
+            ) : (
+              <YearsStat year={year} onClick={changeYear} />
+            )}
+          </div>
+          <div className="w-full lg:w-2/3" id="map-container">
           <RunMap
             title={title}
             viewState={viewState}
@@ -433,8 +468,8 @@ const Index = () => {
             />
           )}
         </div>
-        {/* Enable Audiences in Vercel Analytics: https://vercel.com/docs/concepts/analytics/audiences/quickstart */}
         {import.meta.env.VERCEL && <Analytics />}
+      </div>
       </div>
     </Layout>
   );
