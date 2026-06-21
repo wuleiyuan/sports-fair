@@ -65,10 +65,11 @@ def login(session, mobile, password):
     }
     data = {"mobile": mobile, "password": password}
     r = http_post_with_retry(session, LOGIN_API, headers=headers, data=data)
-    if r.ok:
-        token = r.json()["data"]["token"]
-        headers["Authorization"] = f"Bearer {token}"
-        return session, headers
+    if not r.ok:
+        raise RuntimeError(f"Keep login failed (HTTP {r.status_code}): {r.text[:200]}")
+    token = r.json()["data"]["token"]
+    headers["Authorization"] = f"Bearer {token}"
+    return session, headers
 
 
 def get_to_download_runs_ids(session, headers, sport_type):
