@@ -5,6 +5,20 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
+## [2.5.1] - 2026-06-21
+
+### 修复
+- **Keep 运动类型映射**: outdoorWalking 从 Hiking 改为 Walk，解决徒步/步行数据混杂问题
+- **步行颜色**: 从徒步紫色改为青色 (`rgb(0,200,200)`)，地图上可区分
+
+### 新增
+- **GitHub Profile 联动**: 自动生成 ACWR/TSB/HR zones SVG 统计卡片
+- **demo.gif**: README 添加页面动效演示
+
+### 变更
+- **README 重写**: 先展示截图和功能介绍，再放一键部署按钮（展示优先）
+- **中英文 README 同步**: 结构统一
+
 ## [未发布]
 
 ### 计划中
