@@ -8,6 +8,10 @@
 </p>
 
 <p align="center">
+  <a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a>
+</p>
+
+<p align="center">
   <a href="https://sports-fair.vercel.app"><img src="https://img.shields.io/badge/Live-Demo-FF8800?style=flat-square" alt="Live Demo"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="License"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/releases"><img src="https://img.shields.io/github/v/release/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="Release"></a>
