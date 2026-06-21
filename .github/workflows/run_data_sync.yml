@@ -160,6 +160,15 @@ jobs:
             exit 1
           fi
 
+      - name: Deduplicate activities
+        # 2026-06-21 v2.5.1: Keep + bootstrap 可能产生同日期+同 moving_time 的重复
+        # 按 (start_date, moving_time) 分组，保留公里数更长的
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Deduplicating activities.json ==="
+          python3 scripts/dedup_json.py
+
       - name: Compute training load (ACWR + HR zones)
         # 2026-06-17 v2.2.8: 从 activities.json + health_stats.json 提炼训练负荷
         #  - 7/28 急慢性负荷比 (Gabbett ACWR) — > 1.5 高危伤病预警
