@@ -12,6 +12,7 @@
   <a href="https://github.com/wuleiyuan/sports-fair/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="License"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/releases"><img src="https://img.shields.io/github/v/release/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="Release"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/blob/master/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-FF8800?style=flat-square" alt="PRs Welcome"></a>
+  <a href="https://github.com/yihong0618/running_page"><img src="https://img.shields.io/badge/Forked%20from-running__page-1a1a1a?style=flat-square" alt="Forked from running_page"></a>
 </p>
 
 ---
@@ -65,7 +66,16 @@
 
 ## Upstream
 
-This project is a fork of [yihong0618/running_page](https://github.com/yihong0618/running_page), re-architected with a completely redesigned UI and expanded feature scope.
+This project is built on the foundation of [yihong0618/running_page](https://github.com/yihong0618/running_page) — an excellent open-source running data dashboard with over 10k stars. We forked and re-architected it with a completely redesigned UI and expanded feature scope.
+
+**What we inherited from the upstream:**
+- Python data sync infrastructure (Garmin / Strava / Nike / Keep adapters)
+- GitHub Actions CI/CD for automated data fetching
+- Core data models & database schema
+- Original map & timeline rendering logic
+- GPX / TCX / FIT import pipeline
+
+We are deeply grateful to [@yihong0618](https://github.com/yihong0618) and all [running_page contributors](https://github.com/yihong0618/running_page/graphs/contributors) for making this possible. If you find this project useful, consider giving a [star to the upstream](https://github.com/yihong0618/running_page) as well.
 
 ## License
 
