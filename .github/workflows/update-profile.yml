@@ -1,0 +1,40 @@
+name: Update Profile Stats
+
+on:
+  schedule:
+    # Daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/static/training_load.json'
+      - 'scripts/generate_profile_svg.py'
+
+jobs:
+  generate-svg:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout sports-fair
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate SVG
+        run: python3 scripts/generate_profile_svg.py
+
+      - name: Commit SVG
+        run: |
+          git config --local user.name 'github-actions[bot]'
+          git config --local user.email 'github-actions[bot]@users.noreply.github.com'
+          git add profile/stats.svg
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(profile): update stats SVG [skip ci]"
+            git push
+          fi

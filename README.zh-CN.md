@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="screenshots/screenshot-home.png" alt="Sports Fair" width="720">
+  <img src="screenshots/demo.gif" alt="Sports Fair 演示" width="720">
 </p>
 
 <p align="center">
