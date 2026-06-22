@@ -394,9 +394,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     ],
     desc: '节奏感的燃脂',
     displayMetric: 'count',
-    unitLabel: '次',
+    unitLabel: '个',
   },
-  // === 球类 ===
   {
     key: 'Soccer',
     label: '足球',
