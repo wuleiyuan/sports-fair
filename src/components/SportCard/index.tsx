@@ -164,7 +164,8 @@ export default function SportCard({
           )}
         </div>
         <div className="flex items-center gap-3 text-xs text-gray-500">
-          {sport.displayMetric === 'distance' && (
+          {(sport.displayMetric === 'distance' ||
+            (sport.displayMetric === 'count' && totalReps && totalReps > 0)) && (
             <span>⏱ {formatTotalTime(totalTime)}</span>
           )}
           {!locked && lastDate && (
