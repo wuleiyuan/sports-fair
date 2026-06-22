@@ -13,6 +13,7 @@
 "average_heartrate": 141.0,
 "average_speed": 2.2805612345584976,
 "elevation_gain": 38.03754922375083,
+"reps": null,
 "streak": 1
 },
 {
@@ -29,6 +30,7 @@
 "average_heartrate": 108.0,
 "average_speed": 1.2554756050417146,
 "elevation_gain": 2.1371963312849402,
+"reps": null,
 "streak": 1
 },
 {
@@ -45,6 +47,7 @@
 "average_heartrate": 141.0,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -61,6 +64,7 @@
 "average_heartrate": 157.0,
 "average_speed": 2.19923671173637,
 "elevation_gain": 13.93650550302118,
+"reps": null,
 "streak": 1
 },
 {
@@ -77,6 +81,7 @@
 "average_heartrate": 157.0,
 "average_speed": 2.3706776930116646,
 "elevation_gain": 43.0631197988987,
+"reps": null,
 "streak": 1
 },
 {
@@ -93,6 +98,7 @@
 "average_heartrate": 147.0,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -109,6 +115,7 @@
 "average_heartrate": 79.0,
 "average_speed": 0.7166671528994489,
 "elevation_gain": 36.451955565340086,
+"reps": null,
 "streak": 6
 },
 {
@@ -125,6 +132,7 @@
 "average_heartrate": 152.0,
 "average_speed": 2.306139427742237,
 "elevation_gain": 13.494899741373956,
+"reps": null,
 "streak": 6
 },
 {
@@ -141,6 +149,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -157,6 +166,7 @@
 "average_heartrate": 78.0,
 "average_speed": 0.980471210949081,
 "elevation_gain": 8.74163850583136,
+"reps": null,
 "streak": 5
 },
 {
@@ -173,6 +183,7 @@
 "average_heartrate": null,
 "average_speed": 1.6009236364550954,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -189,6 +200,7 @@
 "average_heartrate": 158.186,
 "average_speed": 2.289278657540496,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -205,6 +217,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -221,6 +234,7 @@
 "average_heartrate": 136.0,
 "average_speed": 2.2865529700461917,
 "elevation_gain": 2.5806684037670493,
+"reps": null,
 "streak": 3
 },
 {
@@ -237,6 +251,7 @@
 "average_heartrate": null,
 "average_speed": 0.7545347313432328,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -253,6 +268,7 @@
 "average_heartrate": null,
 "average_speed": 1.6679132634943181,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -269,6 +285,7 @@
 "average_heartrate": 143.891,
 "average_speed": 0.6986299527819557,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -285,6 +302,7 @@
 "average_heartrate": null,
 "average_speed": 0.8474322526276488,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -301,6 +319,7 @@
 "average_heartrate": null,
 "average_speed": 1.4025479477514609,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -317,6 +336,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.3735273105210304,
 "elevation_gain": 22.00819801259786,
+"reps": null,
 "streak": 3
 },
 {
@@ -333,6 +353,7 @@
 "average_heartrate": null,
 "average_speed": 1.2669973520132212,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -349,6 +370,7 @@
 "average_heartrate": null,
 "average_speed": 1.3991152042140547,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -365,6 +387,7 @@
 "average_heartrate": 127.19,
 "average_speed": 1.448494036996359,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -381,6 +404,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -397,6 +421,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -413,6 +438,7 @@
 "average_heartrate": 109.951,
 "average_speed": 0.34391312921626976,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -429,6 +455,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -445,6 +472,7 @@
 "average_heartrate": 146.648,
 "average_speed": 0.8287284499884489,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -461,6 +489,7 @@
 "average_heartrate": 153.749,
 "average_speed": 2.4303342222232582,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -477,6 +506,7 @@
 "average_heartrate": 158.0,
 "average_speed": 2.4092799059697776,
 "elevation_gain": 19.890643785707653,
+"reps": null,
 "streak": 1
 },
 {
@@ -493,6 +523,7 @@
 "average_heartrate": 122.633,
 "average_speed": 0.7269815465013556,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -509,6 +540,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -525,6 +557,7 @@
 "average_heartrate": null,
 "average_speed": 1.2444859309298548,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -541,6 +574,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -557,6 +591,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -573,6 +608,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -589,6 +625,7 @@
 "average_heartrate": 144.34,
 "average_speed": 0.6364256310517536,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -605,6 +642,7 @@
 "average_heartrate": 122.475,
 "average_speed": 0.4768790672853827,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -621,6 +659,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -637,6 +676,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -653,6 +693,7 @@
 "average_heartrate": 157.964,
 "average_speed": 2.4371826003125023,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -669,6 +710,7 @@
 "average_heartrate": 154.903,
 "average_speed": 2.350849658349329,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -685,6 +727,7 @@
 "average_heartrate": 160.209,
 "average_speed": 2.4600189515065924,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -701,6 +744,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -717,6 +761,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -733,6 +778,7 @@
 "average_heartrate": 163.899,
 "average_speed": 2.505226784111149,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -749,6 +795,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 8
 },
 {
@@ -765,6 +812,7 @@
 "average_heartrate": null,
 "average_speed": 0.5034413793103448,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -781,6 +829,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -797,6 +846,7 @@
 "average_heartrate": null,
 "average_speed": 0.2734442857142857,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -813,6 +863,7 @@
 "average_heartrate": null,
 "average_speed": 1.193330303030303,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -829,6 +880,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -845,6 +897,7 @@
 "average_heartrate": 159.773,
 "average_speed": 2.5247582179141084,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -861,6 +914,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -877,6 +931,7 @@
 "average_heartrate": null,
 "average_speed": 1.9849565756823822,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -893,6 +948,7 @@
 "average_heartrate": 115.764,
 "average_speed": 0.4682477833700395,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -909,6 +965,7 @@
 "average_heartrate": null,
 "average_speed": 2.027511683168317,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -925,6 +982,7 @@
 "average_heartrate": null,
 "average_speed": 7.302491537530268,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -941,6 +999,7 @@
 "average_heartrate": 148.015,
 "average_speed": 0.7664151417979645,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -957,6 +1016,7 @@
 "average_heartrate": null,
 "average_speed": 2.849995869947276,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -973,6 +1033,7 @@
 "average_heartrate": 148.641,
 "average_speed": 2.1637738967417333,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -989,6 +1050,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -1005,6 +1067,7 @@
 "average_heartrate": null,
 "average_speed": null,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -1021,6 +1084,7 @@
 "average_heartrate": null,
 "average_speed": 2.4639169738118327,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -1037,6 +1101,7 @@
 "average_heartrate": 124.595,
 "average_speed": 0.5672187662992476,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -1053,6 +1118,7 @@
 "average_heartrate": 152.108,
 "average_speed": 1.9508214575968115,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1069,6 +1135,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -1085,6 +1152,7 @@
 "average_heartrate": null,
 "average_speed": 0.32727348066298345,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 19
 },
 {
@@ -1101,6 +1169,7 @@
 "average_heartrate": null,
 "average_speed": 5.749197736450382,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 19
 },
 {
@@ -1117,6 +1186,7 @@
 "average_heartrate": 156.0,
 "average_speed": 2.1552625695148193,
 "elevation_gain": 404.3837778444255,
+"reps": null,
 "streak": 19
 },
 {
@@ -1133,6 +1203,7 @@
 "average_heartrate": 156.145,
 "average_speed": 2.1556171976066754,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 19
 },
 {
@@ -1149,6 +1220,7 @@
 "average_heartrate": null,
 "average_speed": 3.897703639097744,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 18
 },
 {
@@ -1165,6 +1237,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 17
 },
 {
@@ -1181,6 +1254,7 @@
 "average_heartrate": null,
 "average_speed": 3.989093797468355,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 17
 },
 {
@@ -1197,6 +1271,7 @@
 "average_heartrate": null,
 "average_speed": 4.353136394557824,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 17
 },
 {
@@ -1213,6 +1288,7 @@
 "average_heartrate": 146.474,
 "average_speed": 0.7714943427518429,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 17
 },
 {
@@ -1229,6 +1305,7 @@
 "average_heartrate": null,
 "average_speed": 2.8214305317324184,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 16
 },
 {
@@ -1245,6 +1322,7 @@
 "average_heartrate": 74.0,
 "average_speed": 0.8519377305926364,
 "elevation_gain": 454.7519675561591,
+"reps": null,
 "streak": 16
 },
 {
@@ -1261,6 +1339,7 @@
 "average_heartrate": 74.4633,
 "average_speed": 0.8520319312214047,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 16
 },
 {
@@ -1277,6 +1356,7 @@
 "average_heartrate": null,
 "average_speed": 0.9410311778433156,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1293,6 +1373,7 @@
 "average_heartrate": null,
 "average_speed": 2.199819791277259,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1309,6 +1390,7 @@
 "average_heartrate": null,
 "average_speed": 5.019657349059062,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1325,6 +1407,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1341,6 +1424,7 @@
 "average_heartrate": null,
 "average_speed": 0.37684077358490564,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1357,6 +1441,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 15
 },
 {
@@ -1373,6 +1458,7 @@
 "average_heartrate": 162.548,
 "average_speed": 2.2166626855075595,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 14
 },
 {
@@ -1389,6 +1475,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 14
 },
 {
@@ -1405,6 +1492,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 13
 },
 {
@@ -1421,6 +1509,7 @@
 "average_heartrate": null,
 "average_speed": 0.13255466666666668,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 12
 },
 {
@@ -1437,6 +1526,7 @@
 "average_heartrate": 77.0,
 "average_speed": 13.297065732566814,
 "elevation_gain": 148.38971542438662,
+"reps": null,
 "streak": 12
 },
 {
@@ -1453,6 +1543,7 @@
 "average_heartrate": null,
 "average_speed": 25.72024833578126,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 12
 },
 {
@@ -1469,6 +1560,7 @@
 "average_heartrate": 77.0,
 "average_speed": 4.18342128668009,
 "elevation_gain": 11.754175227895814,
+"reps": null,
 "streak": 12
 },
 {
@@ -1485,6 +1577,7 @@
 "average_heartrate": 78.0,
 "average_speed": 7.860403502553166,
 "elevation_gain": 8.285154123986217,
+"reps": null,
 "streak": 12
 },
 {
@@ -1501,6 +1594,7 @@
 "average_heartrate": 77.0,
 "average_speed": 7.00863511276897,
 "elevation_gain": 10.310351602258436,
+"reps": null,
 "streak": 12
 },
 {
@@ -1517,6 +1611,7 @@
 "average_heartrate": 75.0,
 "average_speed": 0.8293285977737767,
 "elevation_gain": 14.49094127677381,
+"reps": null,
 "streak": 12
 },
 {
@@ -1533,6 +1628,7 @@
 "average_heartrate": 154.069,
 "average_speed": 2.2579585966409703,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 12
 },
 {
@@ -1549,6 +1645,7 @@
 "average_heartrate": null,
 "average_speed": 2.7400337268128165,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 11
 },
 {
@@ -1565,6 +1662,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 11
 },
 {
@@ -1581,6 +1679,7 @@
 "average_heartrate": null,
 "average_speed": 1.2576666666666667,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 11
 },
 {
@@ -1597,6 +1696,7 @@
 "average_heartrate": null,
 "average_speed": 0.9332804878048782,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 11
 },
 {
@@ -1613,6 +1713,7 @@
 "average_heartrate": null,
 "average_speed": 1.2066158222359864,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 10
 },
 {
@@ -1629,6 +1730,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 10
 },
 {
@@ -1645,6 +1747,7 @@
 "average_heartrate": 153.0,
 "average_speed": 2.2050647275309916,
 "elevation_gain": 40.805341676808894,
+"reps": null,
 "streak": 10
 },
 {
@@ -1661,6 +1764,7 @@
 "average_heartrate": null,
 "average_speed": 0.038685632183908046,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -1677,6 +1781,7 @@
 "average_heartrate": null,
 "average_speed": 0.14297127071823204,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 8
 },
 {
@@ -1693,6 +1798,7 @@
 "average_heartrate": 158.098,
 "average_speed": 2.3386707841105356,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -1709,6 +1815,7 @@
 "average_heartrate": null,
 "average_speed": 3.4843404399323186,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -1725,6 +1832,7 @@
 "average_heartrate": null,
 "average_speed": 3.352197060494959,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -1741,6 +1849,7 @@
 "average_heartrate": null,
 "average_speed": 2.2093337982565378,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -1757,6 +1866,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -1773,6 +1883,7 @@
 "average_heartrate": 156.661,
 "average_speed": 2.263339739579532,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -1789,6 +1900,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -1805,6 +1917,7 @@
 "average_heartrate": null,
 "average_speed": 0.15225132075471695,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -1821,6 +1934,7 @@
 "average_heartrate": 153.893,
 "average_speed": 2.3286972424228867,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -1837,6 +1951,7 @@
 "average_heartrate": null,
 "average_speed": 0.22473995037220842,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1853,6 +1968,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1869,6 +1985,7 @@
 "average_heartrate": null,
 "average_speed": 0.9702113989637304,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1885,6 +2002,7 @@
 "average_heartrate": null,
 "average_speed": 1.6290736842105265,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1901,6 +2019,7 @@
 "average_heartrate": null,
 "average_speed": 0.023150586264656617,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -1917,6 +2036,7 @@
 "average_heartrate": null,
 "average_speed": 1.5324390956333704,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1933,6 +2053,7 @@
 "average_heartrate": null,
 "average_speed": 2.143885566988238,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -1949,6 +2070,7 @@
 "average_heartrate": null,
 "average_speed": 1.9883076930240975,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -1965,6 +2087,7 @@
 "average_heartrate": null,
 "average_speed": 0.8528261737954769,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -1981,6 +2104,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -1997,6 +2121,7 @@
 "average_heartrate": null,
 "average_speed": 1.3347313290550595,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2013,6 +2138,7 @@
 "average_heartrate": null,
 "average_speed": 0.9079278523489933,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2029,6 +2155,7 @@
 "average_heartrate": null,
 "average_speed": 0.875114664096357,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2045,6 +2172,7 @@
 "average_heartrate": null,
 "average_speed": 0.4443143489126691,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2061,6 +2189,7 @@
 "average_heartrate": null,
 "average_speed": 0.0,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2077,6 +2206,7 @@
 "average_heartrate": null,
 "average_speed": 2.3675542746279956,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2093,6 +2223,7 @@
 "average_heartrate": null,
 "average_speed": 2.2560612845368335,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2109,6 +2240,7 @@
 "average_heartrate": null,
 "average_speed": 1.9569462539093962,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2125,6 +2257,7 @@
 "average_heartrate": null,
 "average_speed": 1.7497967029503758,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2141,6 +2274,7 @@
 "average_heartrate": null,
 "average_speed": 2.234204897198716,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2157,6 +2291,7 @@
 "average_heartrate": null,
 "average_speed": 2.1269258776475533,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2173,6 +2308,7 @@
 "average_heartrate": null,
 "average_speed": 1.7897050236367842,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2189,6 +2325,7 @@
 "average_heartrate": null,
 "average_speed": 2.127156549520767,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2205,6 +2342,7 @@
 "average_heartrate": 150.892,
 "average_speed": 0.9848865808059825,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2221,6 +2359,7 @@
 "average_heartrate": 163.727,
 "average_speed": 2.357174190794358,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2237,6 +2376,7 @@
 "average_heartrate": 157.757,
 "average_speed": 3.72776616680032,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2253,6 +2393,7 @@
 "average_heartrate": 160.57,
 "average_speed": 4.272109344894027,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2269,6 +2410,7 @@
 "average_heartrate": null,
 "average_speed": 2.2932819347717457,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2285,6 +2427,7 @@
 "average_heartrate": 152.626,
 "average_speed": 4.129499444859813,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2301,6 +2444,7 @@
 "average_heartrate": 154.961,
 "average_speed": 3.05637689133425,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2317,6 +2461,7 @@
 "average_heartrate": 155.062,
 "average_speed": 1.3724877344877344,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2333,6 +2478,7 @@
 "average_heartrate": 157.05,
 "average_speed": 4.16056165857962,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2349,6 +2495,7 @@
 "average_heartrate": 115.378,
 "average_speed": 0.284704433497537,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2365,6 +2512,7 @@
 "average_heartrate": 181.114,
 "average_speed": 4.456306835443038,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2381,6 +2529,7 @@
 "average_heartrate": null,
 "average_speed": 1.9208281831046146,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2397,6 +2546,7 @@
 "average_heartrate": 165.987,
 "average_speed": 4.783951079266397,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2413,6 +2563,7 @@
 "average_heartrate": 173.367,
 "average_speed": 4.863714537755822,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2429,6 +2580,7 @@
 "average_heartrate": null,
 "average_speed": 2.3122055674518203,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2445,6 +2597,7 @@
 "average_heartrate": null,
 "average_speed": 2.431297709923664,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -2461,6 +2614,7 @@
 "average_heartrate": 154.068,
 "average_speed": 4.527314944421572,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2477,6 +2631,7 @@
 "average_heartrate": 144.451,
 "average_speed": 3.7073014314214463,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2493,6 +2648,7 @@
 "average_heartrate": 150.492,
 "average_speed": 2.5970967579570687,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2509,6 +2665,7 @@
 "average_heartrate": 158.205,
 "average_speed": 4.9719076262626265,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2525,6 +2682,7 @@
 "average_heartrate": 153.525,
 "average_speed": 4.760478033516627,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2541,6 +2699,7 @@
 "average_heartrate": 150.21,
 "average_speed": 2.630435897435898,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2557,6 +2716,7 @@
 "average_heartrate": 154.068,
 "average_speed": 4.56454495179667,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2573,6 +2733,7 @@
 "average_heartrate": 150.761,
 "average_speed": 4.797898840365161,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2589,6 +2750,7 @@
 "average_heartrate": 170.124,
 "average_speed": 5.180484480431848,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2605,6 +2767,7 @@
 "average_heartrate": 160.726,
 "average_speed": 5.182340927126556,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2621,6 +2784,7 @@
 "average_heartrate": 164.717,
 "average_speed": 4.813876362299816,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2637,6 +2801,7 @@
 "average_heartrate": null,
 "average_speed": 3.430112685369425,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -2653,6 +2818,7 @@
 "average_heartrate": 104.981,
 "average_speed": 3.7143345796949756,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2669,6 +2835,7 @@
 "average_heartrate": 153.307,
 "average_speed": 4.527431092436975,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2685,6 +2852,7 @@
 "average_heartrate": 177.299,
 "average_speed": 5.309978664449985,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2701,6 +2869,7 @@
 "average_heartrate": 144.203,
 "average_speed": 0.49096658590852904,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2717,6 +2886,7 @@
 "average_heartrate": 180.142,
 "average_speed": 2.5564374416433235,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2733,6 +2903,7 @@
 "average_heartrate": 163.402,
 "average_speed": 2.535151940545004,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2749,6 +2920,7 @@
 "average_heartrate": 163.993,
 "average_speed": 5.107424103299857,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2765,6 +2937,7 @@
 "average_heartrate": 159.59,
 "average_speed": 4.933891324200913,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2781,6 +2954,7 @@
 "average_heartrate": 164.263,
 "average_speed": 4.06909840418277,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2797,6 +2971,7 @@
 "average_heartrate": 186.761,
 "average_speed": 5.738210727969347,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2813,6 +2988,7 @@
 "average_heartrate": 163.428,
 "average_speed": 2.418439464193715,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2829,6 +3005,7 @@
 "average_heartrate": 172.161,
 "average_speed": 3.073086,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2845,6 +3022,7 @@
 "average_heartrate": null,
 "average_speed": 2.535927513405635,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -2861,6 +3039,7 @@
 "average_heartrate": 171.967,
 "average_speed": 5.317417816588785,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -2877,6 +3056,7 @@
 "average_heartrate": 168.774,
 "average_speed": 4.549213382279741,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2893,6 +3073,7 @@
 "average_heartrate": 163.968,
 "average_speed": 4.631271409858828,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2909,6 +3090,7 @@
 "average_heartrate": 166.426,
 "average_speed": 2.5066410342857144,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2925,6 +3107,7 @@
 "average_heartrate": 166.671,
 "average_speed": 1.9750311259338313,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2941,6 +3124,7 @@
 "average_heartrate": 162.789,
 "average_speed": 2.6575498202341135,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2957,6 +3141,7 @@
 "average_heartrate": 171.808,
 "average_speed": 2.7908785046728966,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2973,6 +3158,7 @@
 "average_heartrate": 176.968,
 "average_speed": 2.5918508214381903,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -2989,6 +3175,7 @@
 "average_heartrate": 177.585,
 "average_speed": 4.534432071875851,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3005,6 +3192,7 @@
 "average_heartrate": 177.15,
 "average_speed": 4.853319612147823,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3021,6 +3209,7 @@
 "average_heartrate": 170.437,
 "average_speed": 4.41754203525641,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3037,6 +3226,7 @@
 "average_heartrate": 160.728,
 "average_speed": 2.305158511111111,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3053,6 +3243,7 @@
 "average_heartrate": 158.394,
 "average_speed": 2.6420211824051654,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3069,6 +3260,7 @@
 "average_heartrate": 157.108,
 "average_speed": 2.2100864544413548,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3085,6 +3277,7 @@
 "average_heartrate": 176.953,
 "average_speed": 2.6626443490700997,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3101,6 +3294,7 @@
 "average_heartrate": 176.85,
 "average_speed": 2.5701315458276333,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3117,6 +3311,7 @@
 "average_heartrate": 172.275,
 "average_speed": 2.505275431606906,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3133,6 +3328,7 @@
 "average_heartrate": 171.565,
 "average_speed": 2.3503709558823527,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3149,6 +3345,7 @@
 "average_heartrate": 150.758,
 "average_speed": 2.3420769418066714,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3165,6 +3362,7 @@
 "average_heartrate": null,
 "average_speed": 2.1549893842887475,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -3181,6 +3379,7 @@
 "average_heartrate": null,
 "average_speed": 2.418347326786548,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -3197,6 +3396,7 @@
 "average_heartrate": 158.432,
 "average_speed": 4.640918026728262,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3213,6 +3413,7 @@
 "average_heartrate": 156.745,
 "average_speed": 4.366481434384537,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3229,6 +3430,7 @@
 "average_heartrate": 159.806,
 "average_speed": 4.175987241255605,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3245,6 +3447,7 @@
 "average_heartrate": 178.222,
 "average_speed": 4.975290044456423,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3261,6 +3464,7 @@
 "average_heartrate": 169.135,
 "average_speed": 4.856523152860494,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3277,6 +3481,7 @@
 "average_heartrate": 163.093,
 "average_speed": 4.685723731077472,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3293,6 +3498,7 @@
 "average_heartrate": 163.807,
 "average_speed": 4.546790987005806,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3309,6 +3515,7 @@
 "average_heartrate": 182.428,
 "average_speed": 4.889573529411764,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3325,6 +3532,7 @@
 "average_heartrate": 169.473,
 "average_speed": 4.380842985842986,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -3341,6 +3549,7 @@
 "average_heartrate": 101.744,
 "average_speed": 1.0063039346666662,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -3357,6 +3566,7 @@
 "average_heartrate": 118.267,
 "average_speed": 1.314403147333334,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3373,6 +3583,7 @@
 "average_heartrate": 165.979,
 "average_speed": 4.252177334441674,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3389,6 +3600,7 @@
 "average_heartrate": 117.893,
 "average_speed": 1.2662361057142866,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -3405,6 +3617,7 @@
 "average_heartrate": 125.095,
 "average_speed": 1.4185097946666665,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -3421,6 +3634,7 @@
 "average_heartrate": 113.102,
 "average_speed": 1.174042420666667,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -3437,6 +3651,7 @@
 "average_heartrate": 161.638,
 "average_speed": 2.4033252168447516,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -3453,6 +3668,7 @@
 "average_heartrate": 110.109,
 "average_speed": 1.3371930323655423,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3469,6 +3685,7 @@
 "average_heartrate": 112.323,
 "average_speed": 1.1917665450000003,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3485,6 +3702,7 @@
 "average_heartrate": 110.241,
 "average_speed": 1.260982180555557,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -3501,6 +3719,7 @@
 "average_heartrate": 154.801,
 "average_speed": 4.310038889674682,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -3517,6 +3736,7 @@
 "average_heartrate": 127.561,
 "average_speed": 1.4320297246666656,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -3533,6 +3753,7 @@
 "average_heartrate": 129.125,
 "average_speed": 1.249979713703705,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -3549,6 +3770,7 @@
 "average_heartrate": 118.287,
 "average_speed": 1.2883998965517247,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -3565,6 +3787,7 @@
 "average_heartrate": 81.8058,
 "average_speed": 0.06956756622516556,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3581,6 +3804,7 @@
 "average_heartrate": 116.129,
 "average_speed": 1.2208358954602272,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3597,6 +3821,7 @@
 "average_heartrate": 158.517,
 "average_speed": 4.105749087885984,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3613,6 +3838,7 @@
 "average_heartrate": 170.024,
 "average_speed": 4.928442173913044,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -3629,6 +3855,7 @@
 "average_heartrate": 128.601,
 "average_speed": 1.2959364959999995,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -3645,6 +3872,7 @@
 "average_heartrate": 127.622,
 "average_speed": 1.418062077043204,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -3661,6 +3889,7 @@
 "average_heartrate": 122.377,
 "average_speed": 1.205489712383488,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3677,6 +3906,7 @@
 "average_heartrate": 172.436,
 "average_speed": 4.337717447833065,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3693,6 +3923,7 @@
 "average_heartrate": 143.937,
 "average_speed": 5.813968602652834,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3709,6 +3940,7 @@
 "average_heartrate": null,
 "average_speed": 2.360827724594328,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -3725,6 +3957,7 @@
 "average_heartrate": null,
 "average_speed": 0.5232897438737076,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -3741,6 +3974,7 @@
 "average_heartrate": 152.774,
 "average_speed": 4.366860125319798,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3757,6 +3991,7 @@
 "average_heartrate": 82.5221,
 "average_speed": 1.80977191011236,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -3773,6 +4008,7 @@
 "average_heartrate": null,
 "average_speed": 0.8933689188984391,
 "elevation_gain": null,
+"reps": null,
 "streak": 4
 },
 {
@@ -3789,6 +4025,7 @@
 "average_heartrate": 150.516,
 "average_speed": 4.31636878387933,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -3805,6 +4042,7 @@
 "average_heartrate": 153.802,
 "average_speed": 4.12118420073717,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -3821,6 +4059,7 @@
 "average_heartrate": null,
 "average_speed": 2.222369154873071,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -3837,6 +4076,7 @@
 "average_heartrate": 98.1154,
 "average_speed": 0.6616775184275184,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3853,6 +4093,7 @@
 "average_heartrate": null,
 "average_speed": 0.9065590351160014,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -3869,6 +4110,7 @@
 "average_heartrate": 85.5208,
 "average_speed": 0.9105678059536934,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -3885,6 +4127,7 @@
 "average_heartrate": 165.401,
 "average_speed": 2.700044432320083,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 13
 },
 {
@@ -3901,6 +4144,7 @@
 "average_heartrate": 117.908,
 "average_speed": 1.2052325277777771,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 12
 },
 {
@@ -3917,6 +4161,7 @@
 "average_heartrate": 112.63,
 "average_speed": 1.0737818206666656,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 11
 },
 {
@@ -3933,6 +4178,7 @@
 "average_heartrate": 165.687,
 "average_speed": 2.746911392089196,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 10
 },
 {
@@ -3949,6 +4195,7 @@
 "average_heartrate": 122.031,
 "average_speed": 1.0408537786666665,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -3965,6 +4212,7 @@
 "average_heartrate": 127.147,
 "average_speed": 0.9239172939999997,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 8
 },
 {
@@ -3981,6 +4229,7 @@
 "average_heartrate": 176.577,
 "average_speed": 2.6184751044568246,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -3997,6 +4246,7 @@
 "average_heartrate": 117.407,
 "average_speed": 1.008942832828285,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4013,6 +4263,7 @@
 "average_heartrate": 117.335,
 "average_speed": 0.8626442600000008,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -4029,6 +4280,7 @@
 "average_heartrate": 124.883,
 "average_speed": 0.7974427120000005,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -4045,6 +4297,7 @@
 "average_heartrate": 106.926,
 "average_speed": 0.8536537883333333,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -4061,6 +4314,7 @@
 "average_heartrate": 117.773,
 "average_speed": 1.0538529733475477,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -4077,6 +4331,7 @@
 "average_heartrate": 84.7036,
 "average_speed": 2.1015853027630804,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -4093,6 +4348,7 @@
 "average_heartrate": 81.222,
 "average_speed": 2.0049850560398506,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4109,6 +4365,7 @@
 "average_heartrate": null,
 "average_speed": 1.0889662098361157,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4125,6 +4382,7 @@
 "average_heartrate": 158.105,
 "average_speed": 4.055514021901444,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 8
 },
 {
@@ -4141,6 +4399,7 @@
 "average_heartrate": 145.681,
 "average_speed": 1.2550121417910456,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -4157,6 +4416,7 @@
 "average_heartrate": 116.586,
 "average_speed": 1.4974814814814814,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4173,6 +4433,7 @@
 "average_heartrate": 136.579,
 "average_speed": 2.257210542222218,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4189,6 +4450,7 @@
 "average_heartrate": 159.719,
 "average_speed": 4.414595005433601,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -4205,6 +4467,7 @@
 "average_heartrate": 98.0926,
 "average_speed": 2.752412447257384,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -4221,6 +4484,7 @@
 "average_heartrate": 166.56,
 "average_speed": 4.584971079862033,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -4237,6 +4501,7 @@
 "average_heartrate": 136.727,
 "average_speed": 2.2236429866666683,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -4253,6 +4518,7 @@
 "average_heartrate": 168.038,
 "average_speed": 4.527392441860464,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4269,6 +4535,7 @@
 "average_heartrate": 123.89,
 "average_speed": 1.516513903192585,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 9
 },
 {
@@ -4285,6 +4552,7 @@
 "average_heartrate": 168.063,
 "average_speed": 4.734463375675675,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 8
 },
 {
@@ -4301,6 +4569,7 @@
 "average_heartrate": 142.637,
 "average_speed": 1.4478984833333328,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -4317,6 +4586,7 @@
 "average_heartrate": 136.731,
 "average_speed": 2.3249646591760285,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 7
 },
 {
@@ -4333,6 +4603,7 @@
 "average_heartrate": 167.867,
 "average_speed": 4.454337390506161,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4349,6 +4620,7 @@
 "average_heartrate": 99.4385,
 "average_speed": 3.0384741458413527,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4365,6 +4637,7 @@
 "average_heartrate": 69.2019,
 "average_speed": 5.3706843302325575,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 6
 },
 {
@@ -4381,6 +4654,7 @@
 "average_heartrate": 139.946,
 "average_speed": 1.697535859375,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -4397,6 +4671,7 @@
 "average_heartrate": 143.007,
 "average_speed": 1.5478555449826983,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 5
 },
 {
@@ -4413,6 +4688,7 @@
 "average_heartrate": 159.204,
 "average_speed": 1.5557685700000008,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -4429,6 +4705,7 @@
 "average_heartrate": 146.921,
 "average_speed": 1.4002595085248342,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -4445,6 +4722,7 @@
 "average_heartrate": 94.8769,
 "average_speed": 0.242962962962963,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 4
 },
 {
@@ -4461,6 +4739,7 @@
 "average_heartrate": 169.303,
 "average_speed": 2.636402985074627,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 3
 },
 {
@@ -4477,6 +4756,7 @@
 "average_heartrate": 137.9,
 "average_speed": 1.4803340807174887,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -4493,6 +4773,7 @@
 "average_heartrate": 134.98,
 "average_speed": 1.506774991489362,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 2
 },
 {
@@ -4509,6 +4790,7 @@
 "average_heartrate": 154.97,
 "average_speed": 2.616190703517588,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4525,6 +4807,7 @@
 "average_heartrate": 162.596,
 "average_speed": 2.4799134414162585,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4541,6 +4824,7 @@
 "average_heartrate": null,
 "average_speed": 2.6147088353413657,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4557,6 +4841,7 @@
 "average_heartrate": null,
 "average_speed": 2.345702708466624,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4573,6 +4858,7 @@
 "average_heartrate": null,
 "average_speed": 2.5680473372781063,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4589,6 +4875,7 @@
 "average_heartrate": null,
 "average_speed": 4.093811973200778,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4605,6 +4892,7 @@
 "average_heartrate": null,
 "average_speed": 2.454634384935192,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4621,6 +4909,7 @@
 "average_heartrate": null,
 "average_speed": 2.3441910966340935,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4637,6 +4926,7 @@
 "average_heartrate": null,
 "average_speed": 2.166707287350719,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4653,6 +4943,7 @@
 "average_heartrate": null,
 "average_speed": 2.5673146148308135,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4669,6 +4960,7 @@
 "average_heartrate": null,
 "average_speed": 2.820120284308365,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4685,6 +4977,7 @@
 "average_heartrate": null,
 "average_speed": 2.696867719389076,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4701,6 +4994,7 @@
 "average_heartrate": null,
 "average_speed": 2.4391304347826086,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4717,6 +5011,7 @@
 "average_heartrate": null,
 "average_speed": 4.39270144501592,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4733,6 +5028,7 @@
 "average_heartrate": null,
 "average_speed": 2.6510323731837877,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4749,6 +5045,7 @@
 "average_heartrate": null,
 "average_speed": 2.54753040456689,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4765,6 +5062,7 @@
 "average_heartrate": null,
 "average_speed": 2.549798285426122,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4781,6 +5079,7 @@
 "average_heartrate": null,
 "average_speed": 2.695467091295117,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4797,6 +5096,7 @@
 "average_heartrate": null,
 "average_speed": 2.475450283740439,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4813,6 +5113,7 @@
 "average_heartrate": 160.0,
 "average_speed": 2.2778973871942854,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4829,6 +5130,7 @@
 "average_heartrate": null,
 "average_speed": 2.4907635467980294,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4845,6 +5147,7 @@
 "average_heartrate": 151.0,
 "average_speed": 2.200031767231037,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4861,6 +5164,7 @@
 "average_heartrate": null,
 "average_speed": 2.357144152311877,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4877,6 +5181,7 @@
 "average_heartrate": 153.0,
 "average_speed": 2.0139159854996365,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4893,6 +5198,7 @@
 "average_heartrate": null,
 "average_speed": 2.5844282321004415,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4909,6 +5215,7 @@
 "average_heartrate": null,
 "average_speed": 2.3283206831119547,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4925,6 +5232,7 @@
 "average_heartrate": null,
 "average_speed": 2.4316911392405065,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4941,6 +5249,7 @@
 "average_heartrate": 134.0,
 "average_speed": 2.20657084919561,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -4957,6 +5266,7 @@
 "average_heartrate": null,
 "average_speed": 2.042122992557775,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4973,6 +5283,7 @@
 "average_heartrate": null,
 "average_speed": 2.6611809593023255,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -4989,6 +5300,7 @@
 "average_heartrate": 106.0,
 "average_speed": 1.4832690224677783,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5005,6 +5317,7 @@
 "average_heartrate": null,
 "average_speed": 2.6940697749196145,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -5021,6 +5334,7 @@
 "average_heartrate": null,
 "average_speed": 2.677796777375863,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -5037,6 +5351,7 @@
 "average_heartrate": null,
 "average_speed": 2.6067857142857145,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -5053,6 +5368,7 @@
 "average_heartrate": 178.0,
 "average_speed": 2.3862737297316436,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5069,6 +5385,7 @@
 "average_heartrate": null,
 "average_speed": 2.645308890005023,
 "elevation_gain": 0.0,
+"reps": null,
 "streak": 1
 },
 {
@@ -5085,6 +5402,7 @@
 "average_heartrate": 158.0,
 "average_speed": 2.401813416062612,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5101,6 +5419,7 @@
 "average_heartrate": 156.0,
 "average_speed": 2.535556116149001,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5117,6 +5436,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.527861289558624,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5133,6 +5453,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.576582489705309,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5149,6 +5470,7 @@
 "average_heartrate": null,
 "average_speed": 2.3929729228056322,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5165,6 +5487,7 @@
 "average_heartrate": 171.0,
 "average_speed": 2.57703355643554,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5181,6 +5504,7 @@
 "average_heartrate": null,
 "average_speed": 2.6368407898025494,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5197,6 +5521,7 @@
 "average_heartrate": 97.0,
 "average_speed": 1.5028323995065138,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5213,6 +5538,7 @@
 "average_heartrate": 155.0,
 "average_speed": 2.603270639675079,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5229,6 +5555,7 @@
 "average_heartrate": 160.0,
 "average_speed": 2.4151067905732453,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5245,6 +5572,7 @@
 "average_heartrate": 159.0,
 "average_speed": 2.5363105586254617,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5261,6 +5589,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.631305596781698,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5277,6 +5606,7 @@
 "average_heartrate": null,
 "average_speed": 2.6969809914275067,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5293,6 +5623,7 @@
 "average_heartrate": 174.0,
 "average_speed": 2.620302454976517,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5309,6 +5640,7 @@
 "average_heartrate": 170.0,
 "average_speed": 2.7962750134456535,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5325,6 +5657,7 @@
 "average_heartrate": 158.0,
 "average_speed": 2.6749207485216018,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5341,6 +5674,7 @@
 "average_heartrate": 170.0,
 "average_speed": 2.8089167832298387,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5357,6 +5691,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.711202683638936,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5373,6 +5708,7 @@
 "average_heartrate": null,
 "average_speed": 2.8119136960600377,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5389,6 +5725,7 @@
 "average_heartrate": 144.0,
 "average_speed": 2.6789376335815165,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5405,6 +5742,7 @@
 "average_heartrate": 169.0,
 "average_speed": 2.8493264186642207,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5421,6 +5759,7 @@
 "average_heartrate": null,
 "average_speed": 2.8601209089013966,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5437,6 +5776,7 @@
 "average_heartrate": 146.0,
 "average_speed": 2.640338737222043,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5453,6 +5793,7 @@
 "average_heartrate": 163.0,
 "average_speed": 2.7688503229876424,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5469,6 +5810,7 @@
 "average_heartrate": null,
 "average_speed": 2.594805067484239,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5485,6 +5827,7 @@
 "average_heartrate": 151.0,
 "average_speed": 2.5777233190349174,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5501,6 +5844,7 @@
 "average_heartrate": null,
 "average_speed": 2.8503562945368173,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5517,6 +5861,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.7859593768087483,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5533,6 +5878,7 @@
 "average_heartrate": null,
 "average_speed": 2.5432866802195937,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5549,6 +5895,7 @@
 "average_heartrate": 170.0,
 "average_speed": 2.739447201771773,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5565,6 +5912,7 @@
 "average_heartrate": 159.0,
 "average_speed": 2.6905134096146393,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5581,6 +5929,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.7952105658955464,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5597,6 +5946,7 @@
 "average_heartrate": null,
 "average_speed": 2.637325209444638,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5613,6 +5963,7 @@
 "average_heartrate": 147.0,
 "average_speed": 1.7533807277413227,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5629,6 +5980,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.84954460561743,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -5645,6 +5997,7 @@
 "average_heartrate": 165.0,
 "average_speed": 2.8969158106427337,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5661,6 +6014,7 @@
 "average_heartrate": null,
 "average_speed": 2.8854625550660793,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5677,6 +6031,7 @@
 "average_heartrate": 137.0,
 "average_speed": 2.823561828010707,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5693,6 +6048,7 @@
 "average_heartrate": null,
 "average_speed": 2.7823691460055096,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5709,6 +6065,7 @@
 "average_heartrate": 170.0,
 "average_speed": 2.9768805586533817,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5725,6 +6082,7 @@
 "average_heartrate": null,
 "average_speed": 2.5456389452332657,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5741,6 +6099,7 @@
 "average_heartrate": 166.0,
 "average_speed": 2.9630736134096773,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5757,6 +6116,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.8108426230002808,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5773,6 +6133,7 @@
 "average_heartrate": 164.0,
 "average_speed": 2.8308187484812204,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5789,6 +6150,7 @@
 "average_heartrate": null,
 "average_speed": 2.9962329759490003,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5805,6 +6167,7 @@
 "average_heartrate": null,
 "average_speed": 1.491280817799158,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5821,6 +6184,7 @@
 "average_heartrate": 152.0,
 "average_speed": 2.3396780332784353,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5837,6 +6201,7 @@
 "average_heartrate": 164.0,
 "average_speed": 2.82965341432703,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5853,6 +6218,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.460109537022537,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5869,6 +6235,7 @@
 "average_heartrate": null,
 "average_speed": 2.9605963791267307,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5885,6 +6252,7 @@
 "average_heartrate": 166.0,
 "average_speed": 2.7188623170889867,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5901,6 +6269,7 @@
 "average_heartrate": 159.0,
 "average_speed": 2.1592205622667775,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5917,6 +6286,7 @@
 "average_heartrate": 157.0,
 "average_speed": 2.736017325888815,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5933,6 +6303,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.804461786784829,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5949,6 +6320,7 @@
 "average_heartrate": null,
 "average_speed": 3.0101735487731895,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -5965,6 +6337,7 @@
 "average_heartrate": 165.0,
 "average_speed": 2.976784207985804,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -5981,6 +6354,7 @@
 "average_heartrate": null,
 "average_speed": 3.2107716209218022,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -5997,6 +6371,7 @@
 "average_heartrate": null,
 "average_speed": 0.5213270142180095,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6013,6 +6388,7 @@
 "average_heartrate": 169.0,
 "average_speed": 2.435933733207217,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6029,6 +6405,7 @@
 "average_heartrate": null,
 "average_speed": 3.1533477321814254,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6045,6 +6422,7 @@
 "average_heartrate": 159.0,
 "average_speed": 2.732184271228098,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6061,6 +6439,7 @@
 "average_heartrate": 118.0,
 "average_speed": 2.047073879883818,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6077,6 +6456,7 @@
 "average_heartrate": null,
 "average_speed": 2.926829268292683,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6093,6 +6473,7 @@
 "average_heartrate": 167.0,
 "average_speed": 2.862135895960631,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -6109,6 +6490,7 @@
 "average_heartrate": 162.0,
 "average_speed": 2.770172201991252,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6125,6 +6507,7 @@
 "average_heartrate": null,
 "average_speed": 2.9964448958862366,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6141,6 +6524,7 @@
 "average_heartrate": null,
 "average_speed": 2.675059008654603,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6157,6 +6541,7 @@
 "average_heartrate": 156.0,
 "average_speed": 2.4856961179949164,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6173,6 +6558,7 @@
 "average_heartrate": 146.0,
 "average_speed": 2.4008263146066855,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -6189,6 +6575,7 @@
 "average_heartrate": 170.0,
 "average_speed": 2.716740437158061,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6205,6 +6592,7 @@
 "average_heartrate": 155.0,
 "average_speed": 2.7479544506191003,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6221,6 +6609,7 @@
 "average_heartrate": null,
 "average_speed": 2.2274415556041074,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6237,6 +6626,7 @@
 "average_heartrate": null,
 "average_speed": 2.7181818181818183,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6253,6 +6643,7 @@
 "average_heartrate": null,
 "average_speed": 2.4083386378103118,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6269,6 +6660,7 @@
 "average_heartrate": null,
 "average_speed": 2.313075506445672,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6285,6 +6677,7 @@
 "average_heartrate": null,
 "average_speed": 2.229867256637168,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6301,6 +6694,7 @@
 "average_heartrate": null,
 "average_speed": 2.2787925398961737,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6317,6 +6711,7 @@
 "average_heartrate": null,
 "average_speed": 2.294881588999236,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6333,6 +6728,7 @@
 "average_heartrate": null,
 "average_speed": 2.1399368147184537,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6349,6 +6745,7 @@
 "average_heartrate": null,
 "average_speed": 2.219269102990033,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6365,6 +6762,7 @@
 "average_heartrate": null,
 "average_speed": 2.210657095527333,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6381,6 +6779,7 @@
 "average_heartrate": null,
 "average_speed": 2.2762356127285037,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6397,6 +6796,7 @@
 "average_heartrate": null,
 "average_speed": 2.3761577532118316,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6413,6 +6813,7 @@
 "average_heartrate": null,
 "average_speed": 2.5301914580265095,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6429,6 +6830,7 @@
 "average_heartrate": null,
 "average_speed": 2.290406050955414,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6445,6 +6847,7 @@
 "average_heartrate": null,
 "average_speed": 2.1286985850282,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6461,6 +6864,7 @@
 "average_heartrate": null,
 "average_speed": 2.291552695092518,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6477,6 +6881,7 @@
 "average_heartrate": null,
 "average_speed": 2.3452935694315005,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6493,6 +6898,7 @@
 "average_heartrate": null,
 "average_speed": 2.4915393013100435,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -6509,6 +6915,7 @@
 "average_heartrate": null,
 "average_speed": 2.4911816578483243,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6525,6 +6932,7 @@
 "average_heartrate": null,
 "average_speed": 2.445516334137251,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6541,6 +6949,7 @@
 "average_heartrate": null,
 "average_speed": 2.446243523316062,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6557,6 +6966,7 @@
 "average_heartrate": null,
 "average_speed": 2.4519079154840746,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6573,6 +6983,7 @@
 "average_heartrate": null,
 "average_speed": 2.6133177570093458,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6589,6 +7000,7 @@
 "average_heartrate": null,
 "average_speed": 2.413365155131265,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6605,6 +7017,7 @@
 "average_heartrate": null,
 "average_speed": 2.4373252562907735,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6621,6 +7034,7 @@
 "average_heartrate": null,
 "average_speed": 2.4974346445150255,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6637,6 +7051,7 @@
 "average_heartrate": null,
 "average_speed": 2.6375838926174495,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6653,6 +7068,7 @@
 "average_heartrate": null,
 "average_speed": 2.4069880297638306,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -6669,6 +7085,7 @@
 "average_heartrate": null,
 "average_speed": 2.37505784359093,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6685,6 +7102,7 @@
 "average_heartrate": null,
 "average_speed": 2.2389620449264136,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6701,6 +7119,7 @@
 "average_heartrate": null,
 "average_speed": 2.4283671036948746,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6717,6 +7136,7 @@
 "average_heartrate": null,
 "average_speed": 2.540613496932515,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6733,6 +7153,7 @@
 "average_heartrate": null,
 "average_speed": 2.248039435357383,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6749,6 +7170,7 @@
 "average_heartrate": null,
 "average_speed": 2.383084577114428,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6765,6 +7187,7 @@
 "average_heartrate": null,
 "average_speed": 2.3327272727272725,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6781,6 +7204,7 @@
 "average_heartrate": null,
 "average_speed": 2.318565882621603,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6797,6 +7221,7 @@
 "average_heartrate": null,
 "average_speed": 2.1296201232032854,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6813,6 +7238,7 @@
 "average_heartrate": null,
 "average_speed": 2.465088474414156,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6829,6 +7255,7 @@
 "average_heartrate": null,
 "average_speed": 2.343000263643554,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6845,6 +7272,7 @@
 "average_heartrate": null,
 "average_speed": 2.460389437183249,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6861,6 +7289,7 @@
 "average_heartrate": null,
 "average_speed": 2.4164068121851763,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6877,6 +7306,7 @@
 "average_heartrate": null,
 "average_speed": 2.166379012771833,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6893,6 +7323,7 @@
 "average_heartrate": null,
 "average_speed": 2.17351598173516,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6909,6 +7340,7 @@
 "average_heartrate": null,
 "average_speed": 2.1975635593220337,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6925,6 +7357,7 @@
 "average_heartrate": null,
 "average_speed": 2.2823879118157047,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6941,6 +7374,7 @@
 "average_heartrate": null,
 "average_speed": 2.35373781148429,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6957,6 +7391,7 @@
 "average_heartrate": null,
 "average_speed": 2.2150381402106794,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6973,6 +7408,7 @@
 "average_heartrate": null,
 "average_speed": 2.4225820763087844,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -6989,6 +7425,7 @@
 "average_heartrate": null,
 "average_speed": 2.5101991840652746,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7005,6 +7442,7 @@
 "average_heartrate": null,
 "average_speed": 2.322522113858018,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7021,6 +7459,7 @@
 "average_heartrate": null,
 "average_speed": 2.4553314121037464,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7037,6 +7476,7 @@
 "average_heartrate": null,
 "average_speed": 2.4890313039191523,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7053,6 +7493,7 @@
 "average_heartrate": null,
 "average_speed": 2.4997186268992686,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7069,6 +7510,7 @@
 "average_heartrate": null,
 "average_speed": 2.465783664459161,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7085,6 +7527,7 @@
 "average_heartrate": null,
 "average_speed": 2.4758031720211466,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7101,6 +7544,7 @@
 "average_heartrate": null,
 "average_speed": 2.666233428645698,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7117,6 +7561,7 @@
 "average_heartrate": null,
 "average_speed": 2.5816782522343593,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7133,6 +7578,7 @@
 "average_heartrate": null,
 "average_speed": 2.4727807748896518,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7149,6 +7595,7 @@
 "average_heartrate": null,
 "average_speed": 2.469081054446908,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7165,6 +7612,7 @@
 "average_heartrate": null,
 "average_speed": 2.5187597707139133,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7181,6 +7629,7 @@
 "average_heartrate": null,
 "average_speed": 2.548891129032258,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7197,6 +7646,7 @@
 "average_heartrate": null,
 "average_speed": 2.506313443921763,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7213,6 +7663,7 @@
 "average_heartrate": null,
 "average_speed": 2.4913385826771655,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7229,6 +7680,7 @@
 "average_heartrate": null,
 "average_speed": 2.3439045679371544,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7245,6 +7697,7 @@
 "average_heartrate": null,
 "average_speed": 2.5030948254518446,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7261,6 +7714,7 @@
 "average_heartrate": null,
 "average_speed": 2.3524905970530625,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7277,6 +7731,7 @@
 "average_heartrate": null,
 "average_speed": 2.526010101010101,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7293,6 +7748,7 @@
 "average_heartrate": null,
 "average_speed": 2.5130955350461464,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7309,6 +7765,7 @@
 "average_heartrate": null,
 "average_speed": 2.367197701749804,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7325,6 +7782,7 @@
 "average_heartrate": null,
 "average_speed": 2.4297303746122645,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7341,6 +7799,7 @@
 "average_heartrate": null,
 "average_speed": 2.3026246719160106,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7357,6 +7816,7 @@
 "average_heartrate": null,
 "average_speed": 2.8034875922199864,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7373,6 +7833,7 @@
 "average_heartrate": null,
 "average_speed": 2.371501925545571,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7389,6 +7850,7 @@
 "average_heartrate": null,
 "average_speed": 2.423488773747841,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7405,6 +7867,7 @@
 "average_heartrate": null,
 "average_speed": 2.4339087254670133,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7421,6 +7884,7 @@
 "average_heartrate": null,
 "average_speed": 2.2361437688948604,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -7437,6 +7901,7 @@
 "average_heartrate": null,
 "average_speed": 2.3273365511189117,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7453,6 +7918,7 @@
 "average_heartrate": null,
 "average_speed": 2.6224046354418156,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7469,6 +7935,7 @@
 "average_heartrate": null,
 "average_speed": 2.3755806304879465,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7485,6 +7952,7 @@
 "average_heartrate": null,
 "average_speed": 0.9418643132928847,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7501,6 +7969,7 @@
 "average_heartrate": null,
 "average_speed": 2.6490944372574385,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7517,6 +7986,7 @@
 "average_heartrate": null,
 "average_speed": 2.3919963619827196,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7533,6 +8003,7 @@
 "average_heartrate": null,
 "average_speed": 2.451709107593485,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7549,6 +8020,7 @@
 "average_heartrate": null,
 "average_speed": 2.3298755186721993,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7565,6 +8037,7 @@
 "average_heartrate": null,
 "average_speed": 2.6769590036325894,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7581,6 +8054,7 @@
 "average_heartrate": null,
 "average_speed": 2.4024774774774773,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7597,6 +8071,7 @@
 "average_heartrate": null,
 "average_speed": 2.608860459606728,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7613,6 +8088,7 @@
 "average_heartrate": null,
 "average_speed": 2.449569065921267,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7629,6 +8105,7 @@
 "average_heartrate": null,
 "average_speed": 2.499111111111111,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -7645,6 +8122,7 @@
 "average_heartrate": null,
 "average_speed": 2.7474747474747474,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7661,6 +8139,7 @@
 "average_heartrate": null,
 "average_speed": 2.5925799863852963,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7677,6 +8156,7 @@
 "average_heartrate": null,
 "average_speed": 2.55119926199262,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7693,6 +8173,7 @@
 "average_heartrate": null,
 "average_speed": 2.705991209808004,
 "elevation_gain": null,
+"reps": null,
 "streak": 3
 },
 {
@@ -7709,6 +8190,7 @@
 "average_heartrate": null,
 "average_speed": 2.6555984555984558,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -7725,6 +8207,7 @@
 "average_heartrate": null,
 "average_speed": 2.64812030075188,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7741,6 +8224,7 @@
 "average_heartrate": null,
 "average_speed": 2.6340195016251355,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7757,6 +8241,7 @@
 "average_heartrate": null,
 "average_speed": 2.5204059121994264,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7773,6 +8258,7 @@
 "average_heartrate": null,
 "average_speed": 2.7245337159253946,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7789,6 +8275,7 @@
 "average_heartrate": null,
 "average_speed": 2.5623577605826124,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7805,6 +8292,7 @@
 "average_heartrate": null,
 "average_speed": 2.7174334140435836,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7821,6 +8309,7 @@
 "average_heartrate": null,
 "average_speed": 2.785253227408143,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7837,6 +8326,7 @@
 "average_heartrate": null,
 "average_speed": 2.2487108290360966,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7853,6 +8343,7 @@
 "average_heartrate": null,
 "average_speed": 2.523342670401494,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7869,6 +8360,7 @@
 "average_heartrate": null,
 "average_speed": 2.729849012775842,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7885,6 +8377,7 @@
 "average_heartrate": null,
 "average_speed": 2.6272273699215964,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -7901,6 +8394,7 @@
 "average_heartrate": null,
 "average_speed": 0.7090110736781883,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7917,6 +8411,7 @@
 "average_heartrate": null,
 "average_speed": 1.2742366412213741,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7933,6 +8428,7 @@
 "average_heartrate": null,
 "average_speed": 2.5375569954403647,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7949,6 +8445,7 @@
 "average_heartrate": null,
 "average_speed": 2.6088320463320462,
 "elevation_gain": null,
+"reps": null,
 "streak": 3
 },
 {
@@ -7965,6 +8462,7 @@
 "average_heartrate": null,
 "average_speed": 2.544642857142857,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -7981,6 +8479,7 @@
 "average_heartrate": null,
 "average_speed": 2.8317617866004965,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -7997,6 +8496,7 @@
 "average_heartrate": null,
 "average_speed": 2.0751895103462403,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8013,6 +8513,7 @@
 "average_heartrate": null,
 "average_speed": 2.4941724941724943,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8029,6 +8530,7 @@
 "average_heartrate": null,
 "average_speed": 2.6121142857142856,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8045,6 +8547,7 @@
 "average_heartrate": null,
 "average_speed": 2.832966428178316,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8061,6 +8564,7 @@
 "average_heartrate": null,
 "average_speed": 2.481951219512195,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8077,6 +8581,7 @@
 "average_heartrate": null,
 "average_speed": 2.5259108040201004,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8093,6 +8598,7 @@
 "average_heartrate": null,
 "average_speed": 2.516834603096584,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8109,6 +8615,7 @@
 "average_heartrate": null,
 "average_speed": 2.600667693888033,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8125,6 +8632,7 @@
 "average_heartrate": null,
 "average_speed": 2.6519135641759957,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8141,6 +8649,7 @@
 "average_heartrate": null,
 "average_speed": 2.626191670847968,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8157,6 +8666,7 @@
 "average_heartrate": null,
 "average_speed": 2.4775212636695016,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8173,6 +8683,7 @@
 "average_heartrate": null,
 "average_speed": 2.443875616230565,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8189,6 +8700,7 @@
 "average_heartrate": null,
 "average_speed": 2.4167573449401525,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8205,6 +8717,7 @@
 "average_heartrate": null,
 "average_speed": 2.4195133364529715,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8221,6 +8734,7 @@
 "average_heartrate": null,
 "average_speed": 2.2639423076923078,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8237,6 +8751,7 @@
 "average_heartrate": null,
 "average_speed": 2.5155325443786984,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8253,6 +8768,7 @@
 "average_heartrate": null,
 "average_speed": 2.7035468501852833,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8269,6 +8785,7 @@
 "average_heartrate": null,
 "average_speed": 2.6978370111426697,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8285,6 +8802,7 @@
 "average_heartrate": null,
 "average_speed": 1.6843971631205674,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8301,6 +8819,7 @@
 "average_heartrate": null,
 "average_speed": 2.599540581929556,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8317,6 +8836,7 @@
 "average_heartrate": null,
 "average_speed": 2.596040438079191,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8333,6 +8853,7 @@
 "average_heartrate": null,
 "average_speed": 2.4682501211827437,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8349,6 +8870,7 @@
 "average_heartrate": null,
 "average_speed": 2.1259605937035877,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8365,6 +8887,7 @@
 "average_heartrate": null,
 "average_speed": 2.472487160674982,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8381,6 +8904,7 @@
 "average_heartrate": null,
 "average_speed": 2.6064531899291126,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8397,6 +8921,7 @@
 "average_heartrate": null,
 "average_speed": 2.4241977130210253,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8413,6 +8938,7 @@
 "average_heartrate": null,
 "average_speed": 2.5134615384615384,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8429,6 +8955,7 @@
 "average_heartrate": null,
 "average_speed": 2.5994079921065616,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8445,6 +8972,7 @@
 "average_heartrate": null,
 "average_speed": 2.305308964316797,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8461,6 +8989,7 @@
 "average_heartrate": null,
 "average_speed": 2.377695949500263,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8477,6 +9006,7 @@
 "average_heartrate": null,
 "average_speed": 2.5985364622760536,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8493,6 +9023,7 @@
 "average_heartrate": null,
 "average_speed": 2.3759259259259258,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8509,6 +9040,7 @@
 "average_heartrate": null,
 "average_speed": 2.40089485458613,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8525,6 +9057,7 @@
 "average_heartrate": null,
 "average_speed": 2.170101925254813,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8541,6 +9074,7 @@
 "average_heartrate": null,
 "average_speed": 2.2872770511296077,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8557,6 +9091,7 @@
 "average_heartrate": null,
 "average_speed": 2.1048007530593034,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8573,6 +9108,7 @@
 "average_heartrate": null,
 "average_speed": 2.311789905010244,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8589,6 +9125,7 @@
 "average_heartrate": null,
 "average_speed": 2.4580279025774416,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8605,6 +9142,7 @@
 "average_heartrate": null,
 "average_speed": 2.3627610085707302,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8621,6 +9159,7 @@
 "average_heartrate": null,
 "average_speed": 1.9527191179218837,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8637,6 +9176,7 @@
 "average_heartrate": null,
 "average_speed": 2.4465973534971646,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8653,6 +9193,7 @@
 "average_heartrate": null,
 "average_speed": 2.229318332230311,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8669,6 +9210,7 @@
 "average_heartrate": null,
 "average_speed": 2.429740472293664,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8685,6 +9227,7 @@
 "average_heartrate": null,
 "average_speed": 2.281635615775466,
 "elevation_gain": null,
+"reps": null,
 "streak": 3
 },
 {
@@ -8701,6 +9244,7 @@
 "average_heartrate": null,
 "average_speed": 2.1833952912019825,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8717,6 +9261,7 @@
 "average_heartrate": null,
 "average_speed": 2.3711183496199784,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8733,6 +9278,7 @@
 "average_heartrate": null,
 "average_speed": 2.302108537849983,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8749,6 +9295,7 @@
 "average_heartrate": null,
 "average_speed": 2.4731530076705694,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8765,6 +9312,7 @@
 "average_heartrate": null,
 "average_speed": 2.414772727272727,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8781,6 +9329,7 @@
 "average_heartrate": null,
 "average_speed": 2.369871218927823,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8797,6 +9346,7 @@
 "average_heartrate": null,
 "average_speed": 2.545639633525619,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8813,6 +9363,7 @@
 "average_heartrate": null,
 "average_speed": 2.4644045242847636,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8829,6 +9380,7 @@
 "average_heartrate": null,
 "average_speed": 2.421353670162059,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8845,6 +9397,7 @@
 "average_heartrate": null,
 "average_speed": 2.2560975609756095,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8861,6 +9414,7 @@
 "average_heartrate": null,
 "average_speed": 2.399189089568743,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8877,6 +9431,7 @@
 "average_heartrate": null,
 "average_speed": 2.488777089783282,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8893,6 +9448,7 @@
 "average_heartrate": null,
 "average_speed": 2.458460495083079,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -8909,6 +9465,7 @@
 "average_heartrate": null,
 "average_speed": 2.3451998162609096,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8925,6 +9482,7 @@
 "average_heartrate": null,
 "average_speed": 2.44897466827503,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8941,6 +9499,7 @@
 "average_heartrate": null,
 "average_speed": 2.2878612716763005,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8957,6 +9516,7 @@
 "average_heartrate": null,
 "average_speed": 2.487516425755585,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8973,6 +9533,7 @@
 "average_heartrate": null,
 "average_speed": 2.712558764271323,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -8989,6 +9550,7 @@
 "average_heartrate": null,
 "average_speed": 2.340354997964382,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9005,6 +9567,7 @@
 "average_heartrate": null,
 "average_speed": 2.29182156133829,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9021,6 +9584,7 @@
 "average_heartrate": null,
 "average_speed": 2.1198830409356724,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9037,6 +9601,7 @@
 "average_heartrate": null,
 "average_speed": 1.3785678517776665,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9053,6 +9618,7 @@
 "average_heartrate": null,
 "average_speed": 2.179169457468185,
 "elevation_gain": null,
+"reps": null,
 "streak": 3
 },
 {
@@ -9069,6 +9635,7 @@
 "average_heartrate": null,
 "average_speed": 2.3024082116067905,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9085,6 +9652,7 @@
 "average_heartrate": null,
 "average_speed": 2.4110893307196863,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9101,6 +9669,7 @@
 "average_heartrate": null,
 "average_speed": 2.368204071115692,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9117,6 +9686,7 @@
 "average_heartrate": null,
 "average_speed": 2.3012886597938143,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9133,6 +9703,7 @@
 "average_heartrate": null,
 "average_speed": 2.448426755574078,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9149,6 +9720,7 @@
 "average_heartrate": null,
 "average_speed": 1.9045549045549046,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9165,6 +9737,7 @@
 "average_heartrate": null,
 "average_speed": 2.4853116790064487,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9181,6 +9754,7 @@
 "average_heartrate": null,
 "average_speed": 2.5001450536698577,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9197,6 +9771,7 @@
 "average_heartrate": null,
 "average_speed": 2.3103057757644394,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9213,6 +9788,7 @@
 "average_heartrate": null,
 "average_speed": 2.4488330341113107,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9229,6 +9805,7 @@
 "average_heartrate": null,
 "average_speed": 2.381561679790026,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9245,6 +9822,7 @@
 "average_heartrate": null,
 "average_speed": 2.28741935483871,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9261,6 +9839,7 @@
 "average_heartrate": null,
 "average_speed": 2.326896865061336,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9277,6 +9856,7 @@
 "average_heartrate": null,
 "average_speed": 2.3920108327691265,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9293,6 +9873,7 @@
 "average_heartrate": null,
 "average_speed": 2.3663324979114453,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9309,6 +9890,7 @@
 "average_heartrate": null,
 "average_speed": 2.186717998075072,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9325,6 +9907,7 @@
 "average_heartrate": null,
 "average_speed": 2.440966501922021,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9341,6 +9924,7 @@
 "average_heartrate": null,
 "average_speed": 2.1892672708741125,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9357,6 +9941,7 @@
 "average_heartrate": null,
 "average_speed": 2.238273381294964,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9373,6 +9958,7 @@
 "average_heartrate": null,
 "average_speed": 2.253441295546559,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9389,6 +9975,7 @@
 "average_heartrate": null,
 "average_speed": 1.989185013518733,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9405,6 +9992,7 @@
 "average_heartrate": null,
 "average_speed": 2.1628232005590498,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9421,6 +10009,7 @@
 "average_heartrate": null,
 "average_speed": 2.241294752329573,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9437,6 +10026,7 @@
 "average_heartrate": null,
 "average_speed": 2.2384524279510463,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9453,6 +10043,7 @@
 "average_heartrate": null,
 "average_speed": 2.155237377543331,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9469,6 +10060,7 @@
 "average_heartrate": null,
 "average_speed": 1.8548876745598057,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9485,6 +10077,7 @@
 "average_heartrate": null,
 "average_speed": 2.285485164394547,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9501,6 +10094,7 @@
 "average_heartrate": null,
 "average_speed": 2.157721796276013,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9517,6 +10111,7 @@
 "average_heartrate": null,
 "average_speed": 2.100371747211896,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9533,6 +10128,7 @@
 "average_heartrate": null,
 "average_speed": 1.90694626474443,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9549,6 +10145,7 @@
 "average_heartrate": null,
 "average_speed": 1.9914346895074946,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9565,6 +10162,7 @@
 "average_heartrate": null,
 "average_speed": 1.7761368052856588,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9581,6 +10179,7 @@
 "average_heartrate": null,
 "average_speed": 1.9961612284069097,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9597,6 +10196,7 @@
 "average_heartrate": null,
 "average_speed": 1.933673469387755,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9613,6 +10213,7 @@
 "average_heartrate": null,
 "average_speed": 1.7173289977808768,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9629,6 +10230,7 @@
 "average_heartrate": null,
 "average_speed": 2.4170258088375425,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9645,6 +10247,7 @@
 "average_heartrate": null,
 "average_speed": 2.0382486160040263,
 "elevation_gain": null,
+"reps": null,
 "streak": 2
 },
 {
@@ -9661,6 +10264,7 @@
 "average_heartrate": null,
 "average_speed": 2.026544155181215,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9677,6 +10281,7 @@
 "average_heartrate": null,
 "average_speed": 1.9207173194903255,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9693,6 +10298,7 @@
 "average_heartrate": null,
 "average_speed": 2.3747597693786036,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 },
 {
@@ -9709,6 +10315,7 @@
 "average_heartrate": null,
 "average_speed": 2.231850656660413,
 "elevation_gain": null,
+"reps": null,
 "streak": 1
 }
 ]
