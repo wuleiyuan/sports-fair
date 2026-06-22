@@ -11,6 +11,7 @@ interface SportCardProps {
   count: number;             // 活动次数
   totalDistance: number;     // 米
   totalTime: number;         // 秒
+  totalReps?: number;        // 总计数（跳绳次数/爬楼层数），0 或 undefined=暂无
   lastDate?: string;         // 最近一次活动日期
   href: string;              // 点击进哪个页
 }
@@ -42,6 +43,7 @@ export default function SportCard({
   count,
   totalDistance,
   totalTime,
+  totalReps,
   lastDate,
   href,
 }: SportCardProps) {
@@ -50,9 +52,15 @@ export default function SportCard({
   const { primaryValue, primaryUnit } = (() => {
     switch (sport.displayMetric) {
       case 'count':
+        if (totalReps && totalReps > 0) {
+          return {
+            primaryValue: totalReps.toLocaleString(),
+            primaryUnit: sport.unitLabel,
+          };
+        }
         return {
-          primaryValue: count > 0 ? count.toLocaleString() : '0',
-          primaryUnit: sport.unitLabel,
+          primaryValue: formatTotalTime(totalTime),
+          primaryUnit: '',
         };
       case 'duration':
         return {

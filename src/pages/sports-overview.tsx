@@ -17,12 +17,12 @@ const SportsOverview = () => {
   const sportStats = useMemo(() => {
     const stats: Record<
       string,
-      { count: number; totalDistance: number; totalTime: number; lastDate?: string }
+      { count: number; totalDistance: number; totalTime: number; totalReps: number; lastDate?: string }
     > = {};
 
     // 先初始化所有运动类型
     SPORT_TYPES.forEach((s) => {
-      stats[s.key] = { count: 0, totalDistance: 0, totalTime: 0 };
+      stats[s.key] = { count: 0, totalDistance: 0, totalTime: 0, totalReps: 0 };
     });
 
     // 累加每条活动
@@ -30,7 +30,7 @@ const SportsOverview = () => {
     activities.forEach((act: Activity) => {
       const key = normalizeSportType(act.type, act.name);
       if (!stats[key]) {
-        stats[key] = { count: 0, totalDistance: 0, totalTime: 0 };
+        stats[key] = { count: 0, totalDistance: 0, totalTime: 0, totalReps: 0 };
       }
       stats[key].count += 1;
       stats[key].totalDistance += act.distance || 0;
@@ -38,6 +38,11 @@ const SportsOverview = () => {
       // 用项目自带的 convertMovingTime2Sec 转换（utils.ts）
       const t = convertMovingTime2Sec((act.moving_time as string) || '0');
       stats[key].totalTime += t;
+      // reps: 跳绳次数/爬楼层数（后端新字段，旧数据是 0/None）
+      const reps = (act as unknown as Record<string, unknown>).reps;
+      if (typeof reps === 'number' && reps > 0) {
+        stats[key].totalReps += reps;
+      }
       // 最近一次活动日期
       const date = act.start_date_local || act.start_date;
       if (!stats[key].lastDate || (date && date > stats[key].lastDate)) {
@@ -93,6 +98,7 @@ const SportsOverview = () => {
               count: 0,
               totalDistance: 0,
               totalTime: 0,
+              totalReps: 0,
             };
             return (
               <SportCard
@@ -101,6 +107,7 @@ const SportsOverview = () => {
                 count={stat.count}
                 totalDistance={stat.totalDistance}
                 totalTime={stat.totalTime}
+                totalReps={stat.totalReps}
                 lastDate={stat.lastDate}
                 href={`/sports/${sport.key}`}
               />
