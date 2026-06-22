@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T06:25:45",
+  "generated_at": "2026-06-22T02:40:37",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,49 +17,41 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 464.6,
-    "chronic_28d_trimp": 552.4,
-    "acute_days_with_data": 5,
-    "chronic_days_with_data": 14,
-    "ratio": 0.84,
+    "acute_7d_trimp": 290.7,
+    "chronic_28d_trimp": 327.3,
+    "acute_days_with_data": 3,
+    "chronic_days_with_data": 13,
+    "ratio": 0.89,
     "status": "sweet_spot",
     "warning": null
   },
   "tsb": {
-    "ctl": 71.9,
-    "atl": 74.0,
-    "tsb": -2.1,
+    "ctl": 44.5,
+    "atl": 44.7,
+    "tsb": -0.1,
     "status": "optimal",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1432
+    "data_span_days": 1436
   },
   "hr_zones": {
-    "z1_recovery": 56.4,
-    "z2_aerobic_base": 21.5,
-    "z3_aerobic": 22.1,
+    "z1_recovery": 54.4,
+    "z2_aerobic_base": 22.8,
+    "z3_aerobic": 22.8,
     "z4_threshold": 0.0,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 21.5,
-    "polarized_pct": 77.9,
-    "activities_with_hr": 72,
+    "z2_pct": 22.8,
+    "polarized_pct": 77.2,
+    "activities_with_hr": 47,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
     {
-      "date": "2026-05-06",
-      "trimp": 253.9
-    },
-    {
-      "date": "2026-05-08",
-      "trimp": 192.7
-    },
-    {
       "date": "2026-05-10",
-      "trimp": 263.0
+      "trimp": 135.0
     },
     {
       "date": "2026-05-13",
@@ -67,7 +59,7 @@
     },
     {
       "date": "2026-05-15",
-      "trimp": 208.4
+      "trimp": 106.4
     },
     {
       "date": "2026-05-17",
@@ -79,11 +71,11 @@
     },
     {
       "date": "2026-05-21",
-      "trimp": 183.7
+      "trimp": 90.7
     },
     {
       "date": "2026-05-23",
-      "trimp": 228.1
+      "trimp": 116.5
     },
     {
       "date": "2026-05-25",
@@ -95,23 +87,23 @@
     },
     {
       "date": "2026-06-02",
-      "trimp": 424.5
+      "trimp": 222.1
     },
     {
       "date": "2026-06-04",
-      "trimp": 318.6
+      "trimp": 157.9
     },
     {
       "date": "2026-06-07",
-      "trimp": 140.9
+      "trimp": 70.4
     },
     {
       "date": "2026-06-08",
-      "trimp": 22.9
+      "trimp": 11.4
     },
     {
       "date": "2026-06-09",
-      "trimp": 264.7
+      "trimp": 132.7
     },
     {
       "date": "2026-06-10",
@@ -132,11 +124,15 @@
     {
       "date": "2026-06-17",
       "trimp": 67.8
+    },
+    {
+      "date": "2026-06-21",
+      "trimp": 88.6
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-06-17",
-    "total_activities": 677
+    "latest": "2026-06-21",
+    "total_activities": 607
   }
 }
