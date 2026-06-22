@@ -245,13 +245,18 @@ def get_all_keep_tracks(
     keep_sports_data_api,
     with_gpx=False,
     with_tcx=False,
+    session=None,
+    headers=None,
 ):
     if with_gpx and not os.path.exists(GPX_FOLDER):
         os.mkdir(GPX_FOLDER)
     if with_tcx and not os.path.exists(TCX_FOLDER):
         os.mkdir(TCX_FOLDER)
-    s = requests.Session()
-    s, headers = login(s, email, password)
+    if session is None or headers is None:
+        s = requests.Session()
+        s, headers = login(s, email, password)
+    else:
+        s = session
     tracks = []
     for api in keep_sports_data_api:
         runs = get_to_download_runs_ids(s, headers, api)
@@ -521,12 +526,14 @@ def download_keep_tcx(tcx_data, keep_id):
 
 
 def run_keep_sync(
-    email, password, keep_sports_data_api, with_gpx=False, with_tcx=False
+    email, password, keep_sports_data_api, with_gpx=False, with_tcx=False,
+    session=None, headers=None,
 ):
     generator = Generator(SQL_FILE)
     old_tracks_ids = generator.get_old_tracks_ids()
     new_tracks = get_all_keep_tracks(
-        email, password, old_tracks_ids, keep_sports_data_api, with_gpx, with_tcx
+        email, password, old_tracks_ids, keep_sports_data_api, with_gpx, with_tcx,
+        session=session, headers=headers,
     )
     # Filter out None values (tracks that failed to parse)
     new_tracks = [t for t in new_tracks if t is not None]
@@ -566,9 +573,9 @@ if __name__ == "__main__":
         assert (
             _tpye in KEEP_SPORT_TYPES
         ), f"{_tpye} are not supported type, please make sure that the type entered in the {KEEP_SPORT_TYPES}"
-    # 容错：单 type 失败不阻断其他 type；最终给 CI 一个非零 exit
-    # 这样 keep source 整段挂掉时 CI 仍能记录，garmin/其他 source 在 workflow 里继续跑
     exit_code = 0
+    s = requests.Session()
+    s, headers = login(s, options.phone_number, options.password)
     for _tpye in options.sync_types:
         try:
             run_keep_sync(
@@ -577,6 +584,8 @@ if __name__ == "__main__":
                 [_tpye],
                 options.with_gpx,
                 options.with_tcx,
+                session=s,
+                headers=headers,
             )
         except Exception as e:
             print(f"[KEEP-FAIL] type={_tpye} error: {e}", file=sys.stderr)
