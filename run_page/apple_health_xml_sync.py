@@ -112,6 +112,11 @@ DISTANCE_TYPE_MAP = {
     "HKQuantityTypeIdentifierDistanceWheelchair": {"Wheelchair"},
 }
 
+COUNT_TYPE_MAP = {
+    "HKQuantityTypeIdentifierStepCount": {"RopeSkipping"},
+    "HKQuantityTypeIdentifierFlightsClimbed": {"StairStepper"},
+}
+
 
 def parse_iso(date_str):
     if not date_str:
@@ -232,11 +237,39 @@ def main():
             elem.clear()
     print(f"📊 扫了 {record_count} 个 Record, {matched_count} 个匹配到 workout")
 
-    # 把距离写回 workout + 计算 avg_speed
+    # ========== Pass 3: 聚合计数类 Record (StepCount / FlightsClimbed) ==========
+    reps_by_workout: dict[int, float] = {}
+    count_record_count = 0
+    count_matched_count = 0
+    if COUNT_TYPE_MAP:
+        for event, elem in ET.iterparse(str(xml_path), events=("end",)):
+            if elem.tag == "Record":
+                rec_type = elem.attrib.get("type", "")
+                if rec_type not in COUNT_TYPE_MAP:
+                    elem.clear()
+                    continue
+                rec_start = parse_iso(elem.attrib.get("startDate", ""))
+                rec_end = parse_iso(elem.attrib.get("endDate", ""))
+                value = float(elem.attrib.get("value", "0") or 0)
+                if not rec_start or value <= 0:
+                    elem.clear()
+                    continue
+                for w in workouts:
+                    if w["type"] in COUNT_TYPE_MAP[rec_type]:
+                        if w["_start_dt"] <= rec_start and rec_end <= w["_end_dt"]:
+                            reps_by_workout.setdefault(w["run_id"], 0)
+                            reps_by_workout[w["run_id"]] += value
+                            count_matched_count += 1
+                            break
+                elem.clear()
+        print(f"📊 扫 {count_matched_count} 个计数 Record 匹配到 workout")
+
+    # 把距离写回 workout + 计算 avg_speed + 写 reps
     for w in workouts:
         w["distance"] = distance_by_workout[w["run_id"]] * 1000  # km → m
         if w["distance"] > 0 and w["_duration_sec"] > 0:
             w["average_speed"] = w["distance"] / w["_duration_sec"]
+        w["reps"] = int(reps_by_workout.get(w["run_id"], 0)) or None
         # 删内部字段
         del w["_start_dt"]
         del w["_end_dt"]
@@ -276,8 +309,8 @@ def main():
     INSERT OR REPLACE INTO activities
     (run_id, name, distance, moving_time, elapsed_time, type, subtype, start_date,
      start_date_local, location_country, summary_polyline,
-     average_heartrate, average_speed, elevation_gain)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     average_heartrate, average_speed, elevation_gain, reps)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
     inserted = 0
     for w in workouts:
@@ -285,7 +318,7 @@ def main():
             w["run_id"], w["name"], w["distance"], w["moving_time"], w["elapsed_time"],
             w["type"], w["subtype"], w["start_date"], w["start_date_local"],
             w["location_country"], w["summary_polyline"],
-            w["average_heartrate"], w["average_speed"], w["elevation_gain"],
+            w["average_heartrate"], w["average_speed"], w["elevation_gain"], w["reps"],
         ))
         inserted += 1
     conn.commit()

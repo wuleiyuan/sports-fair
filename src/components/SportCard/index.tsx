@@ -46,8 +46,33 @@ export default function SportCard({
   href,
 }: SportCardProps) {
   const locked = count === 0;
-  const dist = formatDistance(totalDistance, sport.unit);
-  const unit = formatUnit(sport.unit);
+
+  const { primaryValue, primaryUnit } = (() => {
+    switch (sport.displayMetric) {
+      case 'count':
+        return {
+          primaryValue: count > 0 ? count.toLocaleString() : '0',
+          primaryUnit: sport.unitLabel,
+        };
+      case 'duration':
+        return {
+          primaryValue: formatTotalTime(totalTime),
+          primaryUnit: '',
+        };
+      case 'energy':
+        return {
+          primaryValue: formatTotalTime(totalTime),
+          primaryUnit: '',
+        };
+      case 'distance':
+      default:
+        return {
+          primaryValue: formatDistance(totalDistance, sport.unit),
+          primaryUnit: formatUnit(sport.unit),
+        };
+    }
+  })();
+
   // 懒加载：进入视口 100px 前触发；触发一次后保持可见
   const [ref, isVisible] = useIntersectionObserver<HTMLAnchorElement>({
     rootMargin: '100px',
@@ -124,12 +149,16 @@ export default function SportCard({
             className="text-2xl font-semibold tabular-nums"
             style={{ color: locked ? '#475569' : sport.color }}
           >
-            {dist}
+            {primaryValue}
           </span>
-          <span className="text-xs text-gray-400">{unit}</span>
+          {primaryUnit && (
+            <span className="text-xs text-gray-400">{primaryUnit}</span>
+          )}
         </div>
         <div className="flex items-center gap-3 text-xs text-gray-500">
-          <span>⏱ {formatTotalTime(totalTime)}</span>
+          {sport.displayMetric === 'distance' && (
+            <span>⏱ {formatTotalTime(totalTime)}</span>
+          )}
           {!locked && lastDate && (
             <span className="text-gray-600">· {lastDate.slice(0, 10)}</span>
           )}

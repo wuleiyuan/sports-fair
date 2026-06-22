@@ -246,6 +246,7 @@ def parse_raw_data_to_nametuple(
         "average_speed": run_data["distance"] / run_data["duration"],
         "elevation_gain": elevation_gain,
         "location_country": str(run_data.get("region", "")),
+        "reps": run_data.get("steps") or run_data.get("floors") or None,
     }
     return namedtuple("x", d.keys())(*d.values())
 
