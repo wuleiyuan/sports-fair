@@ -138,6 +138,18 @@ def decode_runmap_data(text, is_geo=False):
     return run_points_data
 
 
+def compute_elevation_gain(points_with_altitude):
+    gain = 0.0
+    prev_alt = None
+    for p in points_with_altitude:
+        alt = p.get("altitude")
+        if alt is not None:
+            if prev_alt is not None and alt > prev_alt:
+                gain += alt - prev_alt
+            prev_alt = alt
+    return gain
+
+
 def parse_raw_data_to_nametuple(
     run_data, old_gpx_ids, old_tcx_ids, with_gpx=False, with_tcx=False
 ):
@@ -186,11 +198,11 @@ def parse_raw_data_to_nametuple(
             run_data["dataType"].startswith("outdoor")
             or run_data["dataType"] == "mountaineering"
         ):
+            elevation_gain = compute_elevation_gain(run_points_data_gpx)
             if with_gpx:
                 gpx_data = parse_points_to_gpx(
                     run_points_data_gpx, start_time, KEEP2STRAVA[run_data["dataType"]]
                 )
-                elevation_gain = gpx_data.get_uphill_downhill().uphill
                 if str(keep_id) not in old_gpx_ids:
                     download_keep_gpx(gpx_data.to_xml(), str(keep_id))
             if with_tcx:
