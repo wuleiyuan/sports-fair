@@ -5,7 +5,14 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/vite';
 
-// The following are known larger packages or packages that can be loaded asynchronously.
+const SPLIT_VENDORS: [string, string][] = [
+  ['maplibre-gl', 'vendor-map'],
+  ['react-map-gl', 'vendor-map'],
+  ['@mapbox',       'vendor-map'],
+  ['recharts',      'vendor-charts'],
+  ['d3-',           'vendor-charts'],
+];
+
 const individuallyPackages = [
   'activities',
   'github.svg',
@@ -96,7 +103,10 @@ export default defineConfig({
       output: {
         manualChunks: (id: string) => {
           if (id.includes('node_modules')) {
-            return 'vendors';
+            for (const [pkg, chunk] of SPLIT_VENDORS) {
+              if (id.includes(pkg)) return chunk;
+            }
+            return 'vendor-misc';
           } else {
             for (const item of individuallyPackages) {
               if (id.includes(item)) {
