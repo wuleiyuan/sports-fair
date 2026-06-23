@@ -52,8 +52,8 @@ def main():
             ratio = d_km / target_km
             if not (0.95 <= ratio <= 1.05):
                 continue
-            # 配速合理性：< 3'30"/km（任何距离都太快，GPS 异常）or > 8'00"/km（误触发步行）
-            if pace_s_per_km < 210 or pace_s_per_km > 480:
+            # 配速合理性：< 4'30"/km（GPS 异常或数据错误）or > 8'00"/km（误触发步行）
+            if pace_s_per_km < 270 or pace_s_per_km > 480:
                 continue
             key = str(target_km)
             if key not in pbs or mt_sec < pbs[key]["time_sec"]:

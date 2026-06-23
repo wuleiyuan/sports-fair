@@ -9,18 +9,10 @@
   },
   {
     "label": "10km",
-    "time_sec": 2282,
-    "pace_s_per_km": 219.1,
-    "date": "2024-06-19 20:57:04",
-    "distance_km": 10.42,
-    "pace_str": "3'39\"/km"
-  },
-  {
-    "label": "半马",
-    "time_sec": 4492,
-    "pace_s_per_km": 213.4,
-    "date": "2024-01-16 18:33:48",
-    "distance_km": 21.05,
-    "pace_str": "3'33\"/km"
+    "time_sec": 3342,
+    "pace_s_per_km": 332.2,
+    "date": "2022-08-11 20:54:37",
+    "distance_km": 10.06,
+    "pace_str": "5'32\"/km"
   }
 ]
