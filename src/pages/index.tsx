@@ -1,16 +1,19 @@
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef, lazy, Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import LocationStat from '@/components/LocationStat';
-import RunMap from '@/components/RunMap';
 import RunTable from '@/components/RunTable';
 import SVGStat from '@/components/SVGStat';
 import YearsStat from '@/components/YearsStat';
 import useActivities from '@/hooks/useActivities';
 import useSiteMetadata from '@/hooks/useSiteMetadata';
 import { useInterval } from '@/hooks/useInterval';
-import { IS_CHINESE } from '@/utils/const';
+import { SkeletonCard } from '@/components/Skeleton';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { IS_CHINESE, MAP_HEIGHT } from '@/utils/const';
+
+const RunMap = lazy(() => import('@/components/RunMap'));
 import {
   Activity,
   IViewState,
@@ -447,6 +450,12 @@ const Index = () => {
             )}
           </div>
           <div className="w-full lg:w-2/3" id="map-container">
+          <ErrorBoundary>
+          <Suspense fallback={
+            <div className="w-full" style={{ height: MAP_HEIGHT }}>
+              <SkeletonCard />
+            </div>
+          }>
           <RunMap
             title={title}
             viewState={viewState}
@@ -456,6 +465,8 @@ const Index = () => {
             thisYear={year}
             animationTrigger={animationTrigger}
           />
+          </Suspense>
+          </ErrorBoundary>
           {year === 'Total' ? (
             <SVGStat />
           ) : (
