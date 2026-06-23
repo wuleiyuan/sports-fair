@@ -1,5 +1,6 @@
 import datetime
 import os
+import statistics
 import sys
 
 import arrow
@@ -229,6 +230,47 @@ class Generator:
             print(f"[generator.load] skipped {skipped_long_zero_distance} long-duration zero-distance activities (any type)")
         if skipped_impossible_speed_runs:
             print(f"[generator.load] skipped {skipped_impossible_speed_runs} impossible-speed Run activities (< 1 km/h > 1h or > 30 km/h > 5min)")
+
+        # ====== Post-process: 3σ anomaly detection (Run only) ======
+        # Iterative outlier removal: compute mean/stddev, remove > 3σ, repeat until stable
+        run_paces = []
+        for idx, act in enumerate(activity_list):
+            if act.get("type") != "Run":
+                continue
+            d_km = act.get("distance", 0) / 1000.0
+            mt_sec = _moving_time_to_seconds(act.get("moving_time"))
+            if d_km > 0 and mt_sec and mt_sec > 60:
+                pace = mt_sec / d_km
+                if 60 < pace < 3600:
+                    run_paces.append((idx, pace))
+
+        indices = set(idx for idx, _ in run_paces)
+        for _ in range(10):
+            valid = [(idx, p) for idx, p in run_paces if idx in indices]
+            if len(valid) < 3:
+                break
+            paces = [p for _, p in valid]
+            mean = statistics.mean(paces)
+            std = statistics.stdev(paces)
+            lo, hi = mean - 3 * std, mean + 3 * std
+            kept = {idx for idx, p in valid if lo <= p <= hi}
+            n_removed = len(indices) - len(kept)
+            indices = kept
+            if n_removed == 0:
+                break
+
+        anomaly_count = 0
+        for idx, pace in run_paces:
+            if idx not in indices:
+                activity_list[idx]["anomaly"] = {
+                    "type": "pace",
+                    "detail": f"pace {pace/60:.1f}\"/km (mean={mean/60:.1f}\"/km ± 3σ)"
+                }
+                anomaly_count += 1
+
+        if anomaly_count:
+            print(f"[generator.load] flagged {anomaly_count} Run activities as 3σ pace anomalies")
+
         return activity_list[::-1]
 
     def get_old_tracks_ids(self):

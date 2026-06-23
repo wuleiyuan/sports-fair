@@ -54,6 +54,7 @@ export interface Activity {
   elevation_gain: number | null;
   average_speed: number;
   streak: number;
+  anomaly?: { type: string; detail: string } | null;
 }
 
 const titleForShow = (run: Activity): string => {

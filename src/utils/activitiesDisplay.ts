@@ -76,6 +76,11 @@ function formatPace(distance: number, seconds: number, unit: 'km' | 'mi'): strin
  * 检测异常数据（防御性：即使 generator.filter 漏过滤，UI 层也提示用户）
  */
 function detectAnomaly(activity: Activity): { anomaly: 'warning' | 'error'; reason: string } | null {
+  // Backend 3σ anomaly detection takes priority
+  if ('anomaly' in activity && activity.anomaly) {
+    return { anomaly: 'error', reason: `⚡ ${activity.anomaly.detail}` };
+  }
+
   const distance = activity.distance ?? 0;
   const seconds = movingTimeToSecondsForTest(activity.moving_time);
 
@@ -83,7 +88,7 @@ function detectAnomaly(activity: Activity): { anomaly: 'warning' | 'error'; reas
   if (distance <= 0 && seconds > 3600) {
     return { anomaly: 'warning', reason: '0 距离 + 长时长，可能数据不全' };
   }
-  // Run 速度异常
+  // Run 速度异常（hard threshold fallback for non-flagged data）
   if (activity.type === 'Run' && distance > 0 && seconds > 60) {
     const kmh = (distance / 1000) / (seconds / 3600);
     if (kmh < 1.0 && seconds > 3600) {
