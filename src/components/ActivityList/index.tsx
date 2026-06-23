@@ -437,6 +437,7 @@ const ActivityList: React.FC = () => {
   ): ActivityGroups {
     return (activities as Activity[])
       .filter((activity) => {
+        if (activity.anomaly) return false;
         if (sportTypeArg === 'all') return true;
         if (sportTypeArg === 'running')
           return activity.type === 'running' || activity.type === 'Run';

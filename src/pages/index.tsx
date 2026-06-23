@@ -10,7 +10,7 @@ import YearsStat from '@/components/YearsStat';
 import useActivities from '@/hooks/useActivities';
 import useSiteMetadata from '@/hooks/useSiteMetadata';
 import { useInterval } from '@/hooks/useInterval';
-import { IS_CHINESE, MAP_HEIGHT } from '@/utils/const';
+import { IS_CHINESE } from '@/utils/const';
 import {
   Activity,
   IViewState,
