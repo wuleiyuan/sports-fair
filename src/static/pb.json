@@ -14,5 +14,13 @@
     "date": "2022-08-11 20:54:37",
     "distance_km": 10.06,
     "pace_str": "5'32\"/km"
+  },
+  {
+    "label": "半马",
+    "time_sec": 6900,
+    "pace_s_per_km": 327.1,
+    "date": "手动设置",
+    "distance_km": 21.1,
+    "pace_str": "5'27\"/km"
   }
 ]
