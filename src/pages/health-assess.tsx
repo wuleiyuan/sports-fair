@@ -43,9 +43,8 @@ const HealthAssessPage: React.FC = () => {
     saveProviderPref(p);
   };
 
-  const isEmptyData = bundle.cards.every(
-    (c) => c.status === 'nodata' || c.status === 'error'
-  );
+  const hasTrainingData = bundle.cards[bundle.cards.length - 1]?.main !== '—';
+  const isEmptyData = bundle.healthKitMissing && !hasTrainingData;
 
   // AI guidance
   const handleAskAI = async () => {
@@ -118,11 +117,15 @@ const HealthAssessPage: React.FC = () => {
           ))}
         </div>
 
-        {/* 空数据提示 */}
-        {isEmptyData && (
+        {/* HealthKit 缺失提示 */}
+        {bundle.healthKitMissing && (
           <div className="k-assess-banner">
-            <p><strong>暂无可评估数据</strong>。请先同步 Apple HealthKit 数据，或导入运动记录（GPX / TCX / FIT 文件）。</p>
-            <p className="k-assess-banner-sub">健康评估需要至少 {windowDays} 天的 {bundle.cards.length} 项核心指标。</p>
+            <p><strong>Apple HealthKit 数据暂不可用</strong>。建议在 iPhone "健康" App 中检查数据同步状态。</p>
+            <p className="k-assess-banner-sub">
+              {hasTrainingData
+                ? '运动训练数据可用，将继续显示训练负荷评估。'
+                : '请先同步 Apple HealthKit 数据，或导入运动记录（GPX / TCX / FIT 文件）。'}
+            </p>
           </div>
         )}
 
@@ -180,7 +183,9 @@ const HealthAssessPage: React.FC = () => {
 
         {/* 评估卡片网格 */}
         <div className="k-bento">
-          {bundle.cards.map((card) => {
+          {bundle.cards
+            .filter((card) => !(bundle.healthKitMissing && card.key !== 'training_load'))
+            .map((card) => {
             const isTrainingLoad = card.key === 'training_load';
             const acwrRatio = isTrainingLoad ? parseFloat(card.main) || 0 : 0;
             return (

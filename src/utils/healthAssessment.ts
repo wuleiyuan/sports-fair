@@ -26,6 +26,7 @@
 import type { Activity } from '@/hooks/useActivities';
 import healthStatsRaw from '@/static/health_stats.json';
 import activitiesJson from '@/static/activities.json';
+import trainingLoadRaw from '@/static/training_load.json';
 
 // ==================== 类型定义 ====================
 
@@ -58,6 +59,8 @@ export interface AssessmentBundle {
   trainingLoadTrend?: number[];
   /** AI 个性化建议占位 — v2.2.0 接入 LLM 后填充 */
   aiGuidance?: string;
+  /** 近 windowDays 天内是否有 HealthKit 日级数据 */
+  healthKitMissing: boolean;
 }
 
 // ==================== 健康统计类型 ====================
@@ -435,11 +438,85 @@ interface TrainingLoadResult {
   trend: number[];
 }
 
+interface TrainingLoadData {
+  generated_at: string;
+  acwr: {
+    acute_7d_trimp: number;
+    chronic_28d_trimp: number;
+    acute_days_with_data: number;
+    chronic_days_with_data: number;
+    ratio: number | null;
+    status: string;
+    warning: string | null;
+  } | null;
+  daily_trimp_series?: Array<{ date: string; trimp: number }>;
+}
+
+const TRAINING_LOAD = trainingLoadRaw as TrainingLoadData;
+
+function recent7Trend(): number[] {
+  const series = TRAINING_LOAD.daily_trimp_series ?? [];
+  if (series.length === 0) return new Array(7).fill(0);
+
+  const sorted = [...series].sort((a, b) => a.date.localeCompare(b.date));
+  const today = new Date().toISOString().slice(0, 10);
+  const lastDate = sorted[sorted.length - 1].date;
+  const ref = lastDate < today ? lastDate : today;
+
+  const out = new Array(7).fill(0);
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(ref);
+    d.setDate(d.getDate() - (6 - i));
+    const key = d.toISOString().slice(0, 10);
+    const entry = sorted.find((s) => s.date === key);
+    if (entry) out[i] = entry.trimp;
+  }
+  return out;
+}
+
 function assessTrainingLoad(): TrainingLoadResult {
+  // 优先使用 training_load.json（与 training 页一致）
+  const acwr = TRAINING_LOAD.acwr;
+  const hasServerAcwr = acwr && acwr.ratio !== null && acwr.ratio > 0;
+
+  if (hasServerAcwr) {
+    const ratio = acwr!.ratio!;
+    const acute7d = acwr!.acute_7d_trimp;
+    const chronic28d = acwr!.chronic_28d_trimp;
+
+    let severity: Severity;
+    let advice: string;
+
+    if (ratio >= 0.8 && ratio <= 1.3) {
+      severity = 'good';
+      advice = `训练负荷 ${ratio.toFixed(2)} 在安全窗口 (0.8-1.3)，可保持当前节奏。`;
+    } else if (ratio > 1.3 && ratio <= 1.5) {
+      severity = 'watch';
+      advice = `训练负荷 ${ratio.toFixed(2)} 处于警戒区 (1.3-1.5)。建议本周减少 20% 训练量。`;
+    } else if (ratio > 1.5) {
+      severity = 'urgent';
+      advice = `训练负荷 ${ratio.toFixed(2)} 超过 1.5，受伤风险高。强烈建议减量 50% 或休息 1-2 天。`;
+    } else {
+      severity = 'watch';
+      advice = `训练负荷 ${ratio.toFixed(2)} 偏低 (<0.8)，可逐步加量。`;
+    }
+
+    return {
+      card: {
+        key: 'training_load',
+        title: '训练负荷（ACWR / TRIMP）',
+        main: ratio > 0 ? ratio.toFixed(2) : '—',
+        sub: `急性 ${acute7d.toFixed(0)} TRIMP · 慢性 ${chronic28d.toFixed(0)} TRIMP`,
+        severity,
+        advice,
+      },
+      trend: recent7Trend(),
+    };
+  }
+
   const recent7 = getRecentActivities(7);
   const recent28 = getRecentActivities(28);
 
-  // moving_time 格式是 "1970-01-01 HH:MM:SS" — 取时间部分转秒
   const parseMovingTime = (s: string | undefined): number => {
     if (!s) return 0;
     const m = s.match(/(\d{1,2}):(\d{2}):(\d{2})/);
@@ -448,20 +525,16 @@ function assessTrainingLoad(): TrainingLoadResult {
     return parseInt(h) * 3600 + parseInt(mn) * 60 + parseInt(sc);
   };
 
-  // 跑步 + 骑行 + 徒步 = 计入训练负荷
   const validTypes = new Set(['Run', 'Ride', 'Hiking', 'Walk']);
 
-  // TRIMP 参数：hrMax 近似用 top_stats.hr.max_ever，hrRest 用 top_stats.rhr.median
   const hrMax = HEALTH_STATS.top_stats.hr.max_ever || 190;
   const hrRest = HEALTH_STATS.top_stats.rhr.median || 60;
 
-  // 单条活动的 TRIMP
   const calcActTRIMP = (a: Activity): number => {
     const durMin = parseMovingTime(a.moving_time) / 60;
     return calcTRIMP(a.average_heartrate, durMin, hrMax, hrRest);
   };
 
-  // 按日聚合（7 天 + 28 天）
   const dailyTRIMP7 = new Array(7).fill(0);
   const dailyTRIMP28 = new Array(28).fill(0);
   const today = new Date();
@@ -480,9 +553,7 @@ function assessTrainingLoad(): TrainingLoadResult {
   });
 
   const acute7d = dailyTRIMP7.reduce((a, b) => a + b, 0);
-  // chronic = 28 天日均 × 7 (与 acute 同窗口)
   const chronic28d = (dailyTRIMP28.reduce((a, b) => a + b, 0) / 28) * 7;
-
   const ratio = chronic28d > 0 ? acute7d / chronic28d : 0;
 
   let severity: Severity;
@@ -555,6 +626,10 @@ export function assessHealth(opts: AssessOptions = {}): AssessmentBundle {
   const { windowDays = 7, refDate = new Date() } = opts;
   const recent7 = getRecentDaily(windowDays);
 
+  const healthKitMissing = recent7.every(
+    (d) => !d.hr && !d.rhr && !d.steps && !d.sleep
+  );
+
   const trainingLoadResult = assessTrainingLoad();
   const cards: AssessmentCard[] = [
     assessRHR(recent7),
@@ -570,6 +645,7 @@ export function assessHealth(opts: AssessOptions = {}): AssessmentBundle {
     cards,
     overall: buildOverall(cards),
     trainingLoadTrend: trainingLoadResult.trend,
+    healthKitMissing,
   };
 }
 
