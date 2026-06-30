@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T04:02:24",
+  "generated_at": "2026-06-30T03:44:22",
   "overall_status": "caution",
   "overall_severity": "medium",
   "overall_summary": "建议关注: 训练负荷不足; Z2 有氧底座可加强。",
@@ -10,33 +10,33 @@
       "category": "load",
       "severity": "medium",
       "title": "训练负荷不足",
-      "description": "ACWR 0.61 低于 0.8, 28d 慢性基数偏低。",
+      "description": "ACWR 0.73 低于 0.8, 28d 慢性基数偏低。",
       "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 189.9 TRIMP / 28d 慢性 312.3 TRIMP"
+      "evidence": "7d 急性 254.5 TRIMP / 28d 慢性 350.5 TRIMP"
     },
     {
       "id": "z2_low",
       "category": "intensity",
       "severity": "medium",
       "title": "Z2 有氧底座可加强",
-      "description": "Z2 占比 22.4%, 有氧基础有提升空间。",
+      "description": "Z2 占比 22.0%, 有氧基础有提升空间。",
       "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
-      "evidence": "Z1 53.9% + Z2 22.4% = polarized 76.3%"
+      "evidence": "Z1 52.9% + Z2 22.0% = polarized 74.9%"
     },
     {
       "id": "polarized_ok",
       "category": "intensity",
       "severity": "low",
       "title": "训练分布符合 polarized",
-      "description": "低强度 (Z1+Z2) 占比 76.3%, 符合 polarized 训练 80/20 模型。",
+      "description": "低强度 (Z1+Z2) 占比 74.9%, 符合 polarized 训练 80/20 模型。",
       "action": "保持当前训练分布, 无需调整。",
-      "evidence": "Z1+Z2 = 76.3% (≥ 70% 阈值)"
+      "evidence": "Z1+Z2 = 74.9% (≥ 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-06-27",
-    "total_activities": 609
+    "latest": "2026-06-29",
+    "total_activities": 635
   },
   "config": {
     "hr_max": 197.0,
