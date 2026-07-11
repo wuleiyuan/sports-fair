@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T03:25:04",
+  "generated_at": "2026-07-11T02:43:39",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -10,33 +10,33 @@
       "category": "intensity",
       "severity": "high",
       "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 19.4%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "description": "Z2 占比仅 19.5%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 54.5% + Z2 19.4% = polarized 73.9%"
+      "evidence": "Z1 55.0% + Z2 19.5% = polarized 74.5%"
     },
     {
-      "id": "acwr_sweet_spot",
+      "id": "acwr_caution",
       "category": "load",
-      "severity": "low",
-      "title": "训练负荷合理",
-      "description": "ACWR 1.29 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
-      "action": "按计划训练, 保持当前负荷节奏。",
-      "evidence": "7d 急性 445.9 TRIMP / 28d 慢性 346.6 TRIMP"
+      "severity": "medium",
+      "title": "训练负荷偏高",
+      "description": "ACWR 1.43 处于 1.3-1.5 caution 区, 接近伤病风险窗口。",
+      "action": "本周安排 1 天轻量训练（30 分钟以内轻松跑或交叉训练）。",
+      "evidence": "7d 急性 445.9 TRIMP / 28d 慢性 311.9 TRIMP"
     },
     {
       "id": "polarized_ok",
       "category": "intensity",
       "severity": "low",
       "title": "训练分布符合 polarized",
-      "description": "低强度 (Z1+Z2) 占比 73.9%, 符合 polarized 训练 80/20 模型。",
+      "description": "低强度 (Z1+Z2) 占比 74.5%, 符合 polarized 训练 80/20 模型。",
       "action": "保持当前训练分布, 无需调整。",
-      "evidence": "Z1+Z2 = 73.9% (≥ 70% 阈值)"
+      "evidence": "Z1+Z2 = 74.5% (≥ 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-07",
-    "total_activities": 645
+    "latest": "2026-07-09",
+    "total_activities": 647
   },
   "config": {
     "hr_max": 197.0,
