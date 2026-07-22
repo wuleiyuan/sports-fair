@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T02:46:00",
+  "generated_at": "2026-07-22T02:43:35",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,33 +17,33 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 501.4,
-    "chronic_28d_trimp": 322.6,
+    "acute_7d_trimp": 405.3,
+    "chronic_28d_trimp": 337.5,
     "acute_days_with_data": 4,
-    "chronic_days_with_data": 11,
-    "ratio": 1.55,
-    "status": "high_risk",
-    "warning": "ACWR > 1.5 属高危伤病风险, 建议安排 1-2 天全休或极轻松交叉训练"
+    "chronic_days_with_data": 12,
+    "ratio": 1.2,
+    "status": "sweet_spot",
+    "warning": null
   },
   "tsb": {
-    "ctl": 45.4,
-    "atl": 51.3,
-    "tsb": -5.9,
+    "ctl": 45.8,
+    "atl": 52.5,
+    "tsb": -6.7,
     "status": "fatigued",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1463
+    "data_span_days": 1464
   },
   "hr_zones": {
-    "z1_recovery": 54.1,
-    "z2_aerobic_base": 18.6,
-    "z3_aerobic": 24.2,
-    "z4_threshold": 3.1,
+    "z1_recovery": 55.6,
+    "z2_aerobic_base": 18.0,
+    "z3_aerobic": 23.4,
+    "z4_threshold": 3.0,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 18.6,
-    "polarized_pct": 72.7,
-    "activities_with_hr": 47,
+    "z2_pct": 18.0,
+    "polarized_pct": 73.6,
+    "activities_with_hr": 48,
     "window_days": 90
   },
   "cadence": null,
@@ -124,11 +124,15 @@
     {
       "date": "2026-07-18",
       "trimp": 80.2
+    },
+    {
+      "date": "2026-07-19",
+      "trimp": 59.7
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-18",
-    "total_activities": 657
+    "latest": "2026-07-19",
+    "total_activities": 658
   }
 }
