@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T02:43:35",
+  "generated_at": "2026-07-23T02:49:17",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,50 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 405.3,
-    "chronic_28d_trimp": 337.5,
+    "acute_7d_trimp": 234.1,
+    "chronic_28d_trimp": 316.4,
     "acute_days_with_data": 4,
     "chronic_days_with_data": 12,
-    "ratio": 1.2,
-    "status": "sweet_spot",
-    "warning": null
+    "ratio": 0.74,
+    "status": "undertraining",
+    "warning": "ACWR < 0.8 训练不足, 可逐步加量"
   },
   "tsb": {
-    "ctl": 45.8,
-    "atl": 52.5,
-    "tsb": -6.7,
-    "status": "fatigued",
+    "ctl": 42.7,
+    "atl": 34.7,
+    "tsb": 8.0,
+    "status": "fresh",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1464
+    "data_span_days": 1467
   },
   "hr_zones": {
-    "z1_recovery": 55.6,
-    "z2_aerobic_base": 18.0,
-    "z3_aerobic": 23.4,
-    "z4_threshold": 3.0,
+    "z1_recovery": 49.7,
+    "z2_aerobic_base": 19.6,
+    "z3_aerobic": 27.2,
+    "z4_threshold": 3.5,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 18.0,
-    "polarized_pct": 73.6,
-    "activities_with_hr": 48,
+    "z2_pct": 19.6,
+    "polarized_pct": 69.3,
+    "activities_with_hr": 46,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-06-07",
-      "trimp": 70.4
-    },
-    {
-      "date": "2026-06-08",
-      "trimp": 11.4
-    },
-    {
-      "date": "2026-06-09",
-      "trimp": 132.7
-    },
     {
       "date": "2026-06-10",
       "trimp": 6.1
@@ -128,11 +116,15 @@
     {
       "date": "2026-07-19",
       "trimp": 59.7
+    },
+    {
+      "date": "2026-07-22",
+      "trimp": 4.0
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-19",
-    "total_activities": 658
+    "latest": "2026-07-22",
+    "total_activities": 663
   }
 }
