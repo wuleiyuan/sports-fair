@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-23T02:49:17",
+  "generated_at": "2026-07-24T02:45:00",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -36,7 +36,7 @@
   "data_window": {
     "earliest": "2019-05-25",
     "latest": "2026-07-22",
-    "total_activities": 663
+    "total_activities": 667
   },
   "config": {
     "hr_max": 197.0,
