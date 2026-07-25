@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-24T02:45:00",
+  "generated_at": "2026-07-25T02:43:22",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,46 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 234.1,
-    "chronic_28d_trimp": 316.4,
+    "acute_7d_trimp": 438.9,
+    "chronic_28d_trimp": 366.3,
     "acute_days_with_data": 4,
     "chronic_days_with_data": 12,
-    "ratio": 0.74,
-    "status": "undertraining",
-    "warning": "ACWR < 0.8 训练不足, 可逐步加量"
+    "ratio": 1.2,
+    "status": "sweet_spot",
+    "warning": null
   },
   "tsb": {
-    "ctl": 42.7,
-    "atl": 34.7,
-    "tsb": 8.0,
-    "status": "fresh",
+    "ctl": 47.7,
+    "atl": 65.3,
+    "tsb": -17.7,
+    "status": "overtraining",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1467
+    "data_span_days": 1469
   },
   "hr_zones": {
-    "z1_recovery": 49.7,
-    "z2_aerobic_base": 19.6,
-    "z3_aerobic": 27.2,
-    "z4_threshold": 3.5,
+    "z1_recovery": 56.2,
+    "z2_aerobic_base": 19.1,
+    "z3_aerobic": 21.4,
+    "z4_threshold": 3.4,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 19.6,
-    "polarized_pct": 69.3,
-    "activities_with_hr": 46,
+    "z2_pct": 19.1,
+    "polarized_pct": 75.3,
+    "activities_with_hr": 45,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-06-10",
-      "trimp": 6.1
-    },
-    {
-      "date": "2026-06-11",
-      "trimp": 91.6
-    },
     {
       "date": "2026-06-13",
       "trimp": 164.8
@@ -120,11 +112,15 @@
     {
       "date": "2026-07-22",
       "trimp": 4.0
+    },
+    {
+      "date": "2026-07-24",
+      "trimp": 295.0
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-22",
-    "total_activities": 667
+    "latest": "2026-07-24",
+    "total_activities": 668
   }
 }

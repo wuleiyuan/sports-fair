@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-24T02:45:00",
+  "generated_at": "2026-07-25T02:43:22",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -10,33 +10,33 @@
       "category": "intensity",
       "severity": "high",
       "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 19.6%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "description": "Z2 占比仅 19.1%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 49.7% + Z2 19.6% = polarized 69.3%"
+      "evidence": "Z1 56.2% + Z2 19.1% = polarized 75.3%"
     },
     {
-      "id": "acwr_undertraining",
+      "id": "acwr_sweet_spot",
       "category": "load",
-      "severity": "medium",
-      "title": "训练负荷不足",
-      "description": "ACWR 0.74 低于 0.8, 28d 慢性基数偏低。",
-      "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 234.1 TRIMP / 28d 慢性 316.4 TRIMP"
+      "severity": "low",
+      "title": "训练负荷合理",
+      "description": "ACWR 1.2 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
+      "action": "按计划训练, 保持当前负荷节奏。",
+      "evidence": "7d 急性 438.9 TRIMP / 28d 慢性 366.3 TRIMP"
     },
     {
-      "id": "polarized_off",
+      "id": "polarized_ok",
       "category": "intensity",
-      "severity": "medium",
-      "title": "训练分布偏离 polarized",
-      "description": "低强度占比 (Z1+Z2) 仅 69.3%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
-      "action": "把中等强度训练替换为轻松有氧。目前 Z4 3.5% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
-      "evidence": "Z1+Z2 = 69.3% (< 70% 阈值)"
+      "severity": "low",
+      "title": "训练分布符合 polarized",
+      "description": "低强度 (Z1+Z2) 占比 75.3%, 符合 polarized 训练 80/20 模型。",
+      "action": "保持当前训练分布, 无需调整。",
+      "evidence": "Z1+Z2 = 75.3% (≥ 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-22",
-    "total_activities": 667
+    "latest": "2026-07-24",
+    "total_activities": 668
   },
   "config": {
     "hr_max": 197.0,
