@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T03:00:09",
+  "generated_at": "2026-07-28T02:36:27",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,46 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 438.9,
-    "chronic_28d_trimp": 366.3,
-    "acute_days_with_data": 4,
-    "chronic_days_with_data": 12,
-    "ratio": 1.2,
+    "acute_7d_trimp": 436.8,
+    "chronic_28d_trimp": 361.0,
+    "acute_days_with_data": 3,
+    "chronic_days_with_data": 11,
+    "ratio": 1.21,
     "status": "sweet_spot",
     "warning": null
   },
   "tsb": {
-    "ctl": 47.7,
-    "atl": 65.3,
-    "tsb": -17.7,
-    "status": "overtraining",
+    "ctl": 46.6,
+    "atl": 55.3,
+    "tsb": -8.7,
+    "status": "fatigued",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1469
+    "data_span_days": 1473
   },
   "hr_zones": {
-    "z1_recovery": 56.2,
-    "z2_aerobic_base": 19.1,
-    "z3_aerobic": 21.4,
-    "z4_threshold": 3.4,
+    "z1_recovery": 53.3,
+    "z2_aerobic_base": 17.5,
+    "z3_aerobic": 25.4,
+    "z4_threshold": 3.8,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 19.1,
-    "polarized_pct": 75.3,
-    "activities_with_hr": 45,
+    "z2_pct": 17.5,
+    "polarized_pct": 70.8,
+    "activities_with_hr": 44,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-06-13",
-      "trimp": 164.8
-    },
-    {
-      "date": "2026-06-15",
-      "trimp": 134.3
-    },
     {
       "date": "2026-06-17",
       "trimp": 67.8
@@ -116,11 +108,15 @@
     {
       "date": "2026-07-24",
       "trimp": 295.0
+    },
+    {
+      "date": "2026-07-28",
+      "trimp": 137.9
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-24",
-    "total_activities": 668
+    "latest": "2026-07-28",
+    "total_activities": 673
   }
 }
