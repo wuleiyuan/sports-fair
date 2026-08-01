@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-31T02:54:34",
+  "generated_at": "2026-08-01T02:53:50",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -10,33 +10,33 @@
       "category": "intensity",
       "severity": "high",
       "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 17.5%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "description": "Z2 占比仅 15.7%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 53.3% + Z2 17.5% = polarized 70.8%"
+      "evidence": "Z1 53.3% + Z2 15.7% = polarized 69.0%"
     },
     {
-      "id": "acwr_sweet_spot",
+      "id": "acwr_caution",
       "category": "load",
-      "severity": "low",
-      "title": "训练负荷合理",
-      "description": "ACWR 1.21 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
-      "action": "按计划训练, 保持当前负荷节奏。",
-      "evidence": "7d 急性 436.8 TRIMP / 28d 慢性 361.0 TRIMP"
+      "severity": "medium",
+      "title": "训练负荷偏高",
+      "description": "ACWR 1.45 处于 1.3-1.5 caution 区, 接近伤病风险窗口。",
+      "action": "本周安排 1 天轻量训练（30 分钟以内轻松跑或交叉训练）。",
+      "evidence": "7d 急性 576.2 TRIMP / 28d 慢性 396.8 TRIMP"
     },
     {
-      "id": "polarized_ok",
+      "id": "polarized_off",
       "category": "intensity",
-      "severity": "low",
-      "title": "训练分布符合 polarized",
-      "description": "低强度 (Z1+Z2) 占比 70.8%, 符合 polarized 训练 80/20 模型。",
-      "action": "保持当前训练分布, 无需调整。",
-      "evidence": "Z1+Z2 = 70.8% (≥ 70% 阈值)"
+      "severity": "medium",
+      "title": "训练分布偏离 polarized",
+      "description": "低强度占比 (Z1+Z2) 仅 69.0%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
+      "action": "把中等强度训练替换为轻松有氧。目前 Z4 3.8% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
+      "evidence": "Z1+Z2 = 69.0% (< 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-28",
-    "total_activities": 673
+    "latest": "2026-07-31",
+    "total_activities": 676
   },
   "config": {
     "hr_max": 197.0,
