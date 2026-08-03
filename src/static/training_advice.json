@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T02:53:14",
+  "generated_at": "2026-08-03T02:54:02",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -15,15 +15,6 @@
       "evidence": "Z1 53.3% + Z2 15.7% = polarized 69.0%"
     },
     {
-      "id": "acwr_caution",
-      "category": "load",
-      "severity": "medium",
-      "title": "训练负荷偏高",
-      "description": "ACWR 1.45 处于 1.3-1.5 caution 区, 接近伤病风险窗口。",
-      "action": "本周安排 1 天轻量训练（30 分钟以内轻松跑或交叉训练）。",
-      "evidence": "7d 急性 576.2 TRIMP / 28d 慢性 396.8 TRIMP"
-    },
-    {
       "id": "polarized_off",
       "category": "intensity",
       "severity": "medium",
@@ -31,12 +22,21 @@
       "description": "低强度占比 (Z1+Z2) 仅 69.0%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
       "action": "把中等强度训练替换为轻松有氧。目前 Z4 3.8% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
       "evidence": "Z1+Z2 = 69.0% (< 70% 阈值)"
+    },
+    {
+      "id": "acwr_sweet_spot",
+      "category": "load",
+      "severity": "low",
+      "title": "训练负荷合理",
+      "description": "ACWR 1.02 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
+      "action": "按计划训练, 保持当前负荷节奏。",
+      "evidence": "7d 急性 392.9 TRIMP / 28d 慢性 386.4 TRIMP"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-31",
-    "total_activities": 676
+    "latest": "2026-08-02",
+    "total_activities": 679
   },
   "config": {
     "hr_max": 197.0,

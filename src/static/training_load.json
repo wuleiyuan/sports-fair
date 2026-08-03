@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T02:53:14",
+  "generated_at": "2026-08-03T02:54:02",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,22 +17,22 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 576.2,
-    "chronic_28d_trimp": 396.8,
+    "acute_7d_trimp": 392.9,
+    "chronic_28d_trimp": 386.4,
     "acute_days_with_data": 3,
     "chronic_days_with_data": 12,
-    "ratio": 1.45,
-    "status": "caution",
+    "ratio": 1.02,
+    "status": "sweet_spot",
     "warning": null
   },
   "tsb": {
-    "ctl": 46.7,
-    "atl": 55.1,
-    "tsb": -8.3,
+    "ctl": 47.2,
+    "atl": 56.2,
+    "tsb": -9.1,
     "status": "fatigued",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1476
+    "data_span_days": 1478
   },
   "hr_zones": {
     "z1_recovery": 53.3,
@@ -112,11 +112,15 @@
     {
       "date": "2026-07-31",
       "trimp": 143.3
+    },
+    {
+      "date": "2026-08-02",
+      "trimp": 111.6
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-07-31",
-    "total_activities": 676
+    "latest": "2026-08-02",
+    "total_activities": 679
   }
 }
