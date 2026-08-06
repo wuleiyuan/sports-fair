@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T02:36:14",
+  "generated_at": "2026-08-06T02:39:27",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,42 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 392.9,
-    "chronic_28d_trimp": 386.4,
-    "acute_days_with_data": 3,
+    "acute_7d_trimp": 504.9,
+    "chronic_28d_trimp": 370.7,
+    "acute_days_with_data": 4,
     "chronic_days_with_data": 12,
-    "ratio": 1.02,
-    "status": "sweet_spot",
+    "ratio": 1.36,
+    "status": "caution",
     "warning": null
   },
   "tsb": {
-    "ctl": 47.2,
-    "atl": 56.2,
-    "tsb": -9.1,
+    "ctl": 47.6,
+    "atl": 57.2,
+    "tsb": -9.5,
     "status": "fatigued",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1478
+    "data_span_days": 1480
   },
   "hr_zones": {
-    "z1_recovery": 53.3,
-    "z2_aerobic_base": 15.7,
-    "z3_aerobic": 27.3,
-    "z4_threshold": 3.8,
+    "z1_recovery": 48.7,
+    "z2_aerobic_base": 18.6,
+    "z3_aerobic": 28.8,
+    "z4_threshold": 4.0,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 15.7,
-    "polarized_pct": 69.0,
+    "z2_pct": 18.6,
+    "polarized_pct": 67.3,
     "activities_with_hr": 44,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-06-21",
-      "trimp": 88.6
-    },
     {
       "date": "2026-06-24",
       "trimp": 95.2
@@ -116,11 +112,15 @@
     {
       "date": "2026-08-02",
       "trimp": 111.6
+    },
+    {
+      "date": "2026-08-04",
+      "trimp": 112.0
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-02",
-    "total_activities": 679
+    "latest": "2026-08-04",
+    "total_activities": 680
   }
 }
