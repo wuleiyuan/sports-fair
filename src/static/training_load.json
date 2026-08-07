@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T02:39:27",
+  "generated_at": "2026-08-07T02:45:01",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,12 +17,12 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 504.9,
-    "chronic_28d_trimp": 370.7,
-    "acute_days_with_data": 4,
-    "chronic_days_with_data": 12,
-    "ratio": 1.36,
-    "status": "caution",
+    "acute_7d_trimp": 367.0,
+    "chronic_28d_trimp": 341.2,
+    "acute_days_with_data": 3,
+    "chronic_days_with_data": 11,
+    "ratio": 1.08,
+    "status": "sweet_spot",
     "warning": null
   },
   "tsb": {
@@ -35,15 +35,15 @@
     "data_span_days": 1480
   },
   "hr_zones": {
-    "z1_recovery": 48.7,
-    "z2_aerobic_base": 18.6,
-    "z3_aerobic": 28.8,
+    "z1_recovery": 49.6,
+    "z2_aerobic_base": 18.9,
+    "z3_aerobic": 27.4,
     "z4_threshold": 4.0,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 18.6,
-    "polarized_pct": 67.3,
-    "activities_with_hr": 44,
+    "z2_pct": 18.9,
+    "polarized_pct": 68.5,
+    "activities_with_hr": 43,
     "window_days": 90
   },
   "cadence": null,
@@ -120,7 +120,7 @@
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-04",
-    "total_activities": 680
+    "latest": "2026-08-05",
+    "total_activities": 685
   }
 }
