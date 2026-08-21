@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-20T01:18:49",
+  "generated_at": "2026-08-21T01:22:16",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,54 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 408.4,
-    "chronic_28d_trimp": 376.4,
-    "acute_days_with_data": 4,
-    "chronic_days_with_data": 13,
-    "ratio": 1.09,
-    "status": "sweet_spot",
-    "warning": null
+    "acute_7d_trimp": 75.6,
+    "chronic_28d_trimp": 293.0,
+    "acute_days_with_data": 1,
+    "chronic_days_with_data": 9,
+    "ratio": 0.26,
+    "status": "undertraining",
+    "warning": "ACWR < 0.8 训练不足, 可逐步加量"
   },
   "tsb": {
-    "ctl": 48.1,
-    "atl": 58.2,
-    "tsb": -10.1,
-    "status": "fatigued",
+    "ctl": 39.7,
+    "atl": 24.0,
+    "tsb": 15.7,
+    "status": "very_fresh",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1486
+    "data_span_days": 1496
   },
   "hr_zones": {
-    "z1_recovery": 51.7,
-    "z2_aerobic_base": 19.8,
-    "z3_aerobic": 24.6,
-    "z4_threshold": 3.8,
+    "z1_recovery": 50.0,
+    "z2_aerobic_base": 20.1,
+    "z3_aerobic": 25.5,
+    "z4_threshold": 4.4,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 19.8,
-    "polarized_pct": 71.5,
-    "activities_with_hr": 45,
+    "z2_pct": 20.1,
+    "polarized_pct": 70.1,
+    "activities_with_hr": 40,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-06-29",
-      "trimp": 153.2
-    },
-    {
-      "date": "2026-07-03",
-      "trimp": 153.1
-    },
-    {
-      "date": "2026-07-05",
-      "trimp": 174.9
-    },
-    {
-      "date": "2026-07-07",
-      "trimp": 117.8
-    },
     {
       "date": "2026-07-11",
       "trimp": 155.8
@@ -120,11 +104,15 @@
     {
       "date": "2026-08-10",
       "trimp": 122.3
+    },
+    {
+      "date": "2026-08-20",
+      "trimp": 75.6
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-10",
-    "total_activities": 693
+    "latest": "2026-08-20",
+    "total_activities": 698
   }
 }
