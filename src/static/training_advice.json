@@ -1,51 +1,51 @@
 {
-  "generated_at": "2026-08-23T01:24:17",
-  "overall_status": "caution",
-  "overall_severity": "medium",
-  "overall_summary": "建议关注: 训练负荷不足; Z2 有氧底座可加强; 数据完整度不足。",
+  "generated_at": "2026-08-24T01:21:33",
+  "overall_status": "high_risk",
+  "overall_severity": "high",
+  "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
   "advice_count": 4,
   "advice_items": [
+    {
+      "id": "z2_insufficient",
+      "category": "intensity",
+      "severity": "high",
+      "title": "Z2 有氧底座严重不足",
+      "description": "Z2 占比仅 19.6%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
+      "evidence": "Z1 50.3% + Z2 19.6% = polarized 69.9%"
+    },
     {
       "id": "acwr_undertraining",
       "category": "load",
       "severity": "medium",
       "title": "训练负荷不足",
-      "description": "ACWR 0.26 低于 0.8, 28d 慢性基数偏低。",
+      "description": "ACWR 0.64 低于 0.8, 28d 慢性基数偏低。",
       "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 75.6 TRIMP / 28d 慢性 293.0 TRIMP"
+      "evidence": "7d 急性 153.2 TRIMP / 28d 慢性 238.6 TRIMP"
     },
     {
-      "id": "z2_low",
+      "id": "polarized_off",
       "category": "intensity",
       "severity": "medium",
-      "title": "Z2 有氧底座可加强",
-      "description": "Z2 占比 20.1%, 有氧基础有提升空间。",
-      "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
-      "evidence": "Z1 50.0% + Z2 20.1% = polarized 70.1%"
+      "title": "训练分布偏离 polarized",
+      "description": "低强度占比 (Z1+Z2) 仅 69.9%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
+      "action": "把中等强度训练替换为轻松有氧。目前 Z4 4.5% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
+      "evidence": "Z1+Z2 = 69.9% (< 70% 阈值)"
     },
     {
       "id": "data_completeness",
       "category": "data",
       "severity": "medium",
       "title": "数据完整度不足",
-      "description": "以下数据缺口影响建议可信度: 7d 仅 1 天有数据 (目标 ≥ 3)。",
+      "description": "以下数据缺口影响建议可信度: 7d 仅 2 天有数据 (目标 ≥ 3)。",
       "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
-      "evidence": "7d 1 天 / 28d 9 天 / 90d HR 40 活动"
-    },
-    {
-      "id": "polarized_ok",
-      "category": "intensity",
-      "severity": "low",
-      "title": "训练分布符合 polarized",
-      "description": "低强度 (Z1+Z2) 占比 70.1%, 符合 polarized 训练 80/20 模型。",
-      "action": "保持当前训练分布, 无需调整。",
-      "evidence": "Z1+Z2 = 70.1% (≥ 70% 阈值)"
+      "evidence": "7d 2 天 / 28d 9 天 / 90d HR 40 活动"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-20",
-    "total_activities": 698
+    "latest": "2026-08-23",
+    "total_activities": 702
   },
   "config": {
     "hr_max": 197.0,
