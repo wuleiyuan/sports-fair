@@ -1,51 +1,42 @@
 {
-  "generated_at": "2026-08-26T01:23:05",
+  "generated_at": "2026-08-27T07:56:52",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
-  "advice_count": 4,
+  "advice_count": 3,
   "advice_items": [
     {
       "id": "z2_insufficient",
       "category": "intensity",
       "severity": "high",
       "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 19.6%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "description": "Z2 占比仅 17.4%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 50.3% + Z2 19.6% = polarized 69.9%"
-    },
-    {
-      "id": "acwr_undertraining",
-      "category": "load",
-      "severity": "medium",
-      "title": "训练负荷不足",
-      "description": "ACWR 0.64 低于 0.8, 28d 慢性基数偏低。",
-      "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 153.2 TRIMP / 28d 慢性 238.6 TRIMP"
+      "evidence": "Z1 50.6% + Z2 17.4% = polarized 68.0%"
     },
     {
       "id": "polarized_off",
       "category": "intensity",
       "severity": "medium",
       "title": "训练分布偏离 polarized",
-      "description": "低强度占比 (Z1+Z2) 仅 69.9%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
+      "description": "低强度占比 (Z1+Z2) 仅 68.0%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
       "action": "把中等强度训练替换为轻松有氧。目前 Z4 4.5% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
-      "evidence": "Z1+Z2 = 69.9% (< 70% 阈值)"
+      "evidence": "Z1+Z2 = 68.0% (< 70% 阈值)"
     },
     {
-      "id": "data_completeness",
-      "category": "data",
-      "severity": "medium",
-      "title": "数据完整度不足",
-      "description": "以下数据缺口影响建议可信度: 7d 仅 2 天有数据 (目标 ≥ 3)。",
-      "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
-      "evidence": "7d 2 天 / 28d 9 天 / 90d HR 40 活动"
+      "id": "acwr_sweet_spot",
+      "category": "load",
+      "severity": "low",
+      "title": "训练负荷合理",
+      "description": "ACWR 0.94 处于 0.8-1.3 sweet spot, 训练负荷与恢复匹配良好。",
+      "action": "按计划训练, 保持当前负荷节奏。",
+      "evidence": "7d 急性 247.6 TRIMP / 28d 慢性 262.2 TRIMP"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-23",
-    "total_activities": 702
+    "latest": "2026-08-25",
+    "total_activities": 706
   },
   "config": {
     "hr_max": 197.0,
