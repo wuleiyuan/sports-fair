@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T03:58:53",
+  "generated_at": "2026-09-02T03:19:34",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,32 +17,32 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 232.9,
-    "chronic_28d_trimp": 198.6,
-    "acute_days_with_data": 2,
-    "chronic_days_with_data": 8,
-    "ratio": 1.17,
-    "status": "sweet_spot",
+    "acute_7d_trimp": 330.3,
+    "chronic_28d_trimp": 223.0,
+    "acute_days_with_data": 3,
+    "chronic_days_with_data": 9,
+    "ratio": 1.48,
+    "status": "caution",
     "warning": null
   },
   "tsb": {
-    "ctl": 38.0,
-    "atl": 34.1,
-    "tsb": 3.9,
+    "ctl": 38.6,
+    "atl": 38.6,
+    "tsb": -0.1,
     "status": "optimal",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1506
+    "data_span_days": 1508
   },
   "hr_zones": {
-    "z1_recovery": 47.3,
-    "z2_aerobic_base": 17.8,
-    "z3_aerobic": 30.3,
-    "z4_threshold": 4.6,
+    "z1_recovery": 41.3,
+    "z2_aerobic_base": 19.2,
+    "z3_aerobic": 34.5,
+    "z4_threshold": 5.0,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 17.8,
-    "polarized_pct": 65.1,
+    "z2_pct": 19.2,
+    "polarized_pct": 60.5,
     "activities_with_hr": 40,
     "window_days": 90
   },
@@ -100,11 +100,15 @@
     {
       "date": "2026-08-30",
       "trimp": 138.5
+    },
+    {
+      "date": "2026-09-01",
+      "trimp": 97.5
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-08-31",
-    "total_activities": 718
+    "latest": "2026-09-01",
+    "total_activities": 721
   }
 }
