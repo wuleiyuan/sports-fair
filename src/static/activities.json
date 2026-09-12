@@ -1,5 +1,22 @@
 [
 {
+"run_id": 9223370247935799105,
+"name": "StairStepper from keep",
+"distance": 0.0,
+"moving_time": "0:56:33",
+"type": "StairStepper",
+"subtype": "StairStepper",
+"start_date": "2026-09-09 00:59:43",
+"start_date_local": "2026-09-09 08:59:43",
+"location_country": "{'latitude': 34.314941, 'longitude': 108.785315, 'country': '中国', 'nationCode': '156', 'province': '陕西省', 'city': '咸阳市', 'cityCode': '0910', 'district': None, 'districtCode': None, 'startLatitude': 0.0, 'startLongitude': 0.0}",
+"summary_polyline": null,
+"average_heartrate": 134.0,
+"average_speed": 0.0,
+"elevation_gain": 0.0,
+"reps": null,
+"streak": 1
+},
+{
 "run_id": 9223370248197105807,
 "name": "Run from keep",
 "distance": 5032.34423828125,
