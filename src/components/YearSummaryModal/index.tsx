@@ -40,7 +40,7 @@ const YearSummaryModal = ({ year, onClose }: YearSummaryModalProps) => {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button className={styles.closeButton} onClick={onClose} aria-label="关闭">
           ×
         </button>
         <Suspense fallback={<div className={styles.loading}>Loading...</div>}>
