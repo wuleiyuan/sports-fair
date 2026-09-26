@@ -25,6 +25,7 @@ export default function ShareModal({
   avgPace,
 }: ShareModalProps) {
   const posterRef = useRef<HTMLDivElement>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
   const [posterLoaded, setPosterLoaded] = useState(false);
@@ -38,9 +39,17 @@ export default function ShareModal({
     }
   }, [open]);
 
+  // Clear pending toast timer on unmount to avoid setState on unmounted component
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
+
   const showToast = useCallback((msg: string) => {
     setToast(msg);
-    setTimeout(() => setToast(''), 2000);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(''), 2000);
   }, []);
 
   const handleSave = useCallback(async () => {

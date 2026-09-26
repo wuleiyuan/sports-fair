@@ -30,6 +30,16 @@ import {
 } from '@/utils/utils';
 import { useTheme, useThemeChangeCounter } from '@/hooks/useTheme';
 
+// Static nav config — hoisted to module scope so it's not re-allocated on every render.
+// Equivalent to useMemo([]) but cheaper.
+const PAGE_LINKS = [
+  { href: '/summary', label: 'Stats', icon: '📊' },
+  { href: '/health', label: 'Health', icon: '❤️' },
+  { href: '/health-assess', label: 'AI Assess', icon: '🧠' },
+  { href: '/training', label: 'Training', icon: '⚡' },
+  { href: '/sports', label: 'Sports', icon: '🏅' },
+] as const;
+
 const Index = () => {
   const { siteTitle, siteUrl } = useSiteMetadata();
   const { activities, thisYear } = useActivities();
@@ -393,14 +403,6 @@ const Index = () => {
 
   const { theme } = useTheme();
 
-  const pageLinks = [
-    { href: '/summary', label: 'Stats', icon: '📊' },
-    { href: '/health', label: 'Health', icon: '❤️' },
-    { href: '/health-assess', label: 'AI Assess', icon: '🧠' },
-    { href: '/training', label: 'Training', icon: '⚡' },
-    { href: '/sports', label: 'Sports', icon: '🏅' },
-  ];
-
   return (
     <Layout>
       <Helmet>
@@ -415,7 +417,7 @@ const Index = () => {
               : 'Multi-source sports dashboard with map tracking, health assessment, and training load analysis. Self-hosted & open-source.'}
           </p>
           <nav className="k-landing-nav">
-            {pageLinks.map((link) => (
+            {PAGE_LINKS.map((link) => (
               <a key={link.href} href={link.href} className="k-landing-pill">
                 <span>{link.icon}</span>
                 <span>{link.label}</span>
