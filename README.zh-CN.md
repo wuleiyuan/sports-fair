@@ -14,8 +14,19 @@
 <p align="center">
   <a href="https://github.com/wuleiyuan/sports-fair/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-FF8800?style=flat-square" alt="许可证"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/releases"><img src="https://img.shields.io/github/v/release/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="版本"></a>
+  <a href="https://github.com/wuleiyuan/sports-fair/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow-status/wuleiyuan/sports-fair/ci.yml?branch=master&style=flat-square&color=FF8800" alt="CI"></a>
+  <a href="https://github.com/wuleiyuan/sports-fair/issues"><img src="https://img.shields.io/github/issues/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="Issues"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/pulls"><img src="https://img.shields.io/badge/欢迎-PR-FF8800?style=flat-square" alt="欢迎 PR"></a>
   <a href="https://github.com/yihong0618/running_page"><img src="https://img.shields.io/badge/Forked%20from-running__page-1a1a1a?style=flat-square" alt="Forked from running_page"></a>
+</p>
+
+<p align="center">
+  <a href="https://sports-fair.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_在线_Demo-sports--fair.vercel.app-FF8800?style=for-the-badge" alt="在线 Demo">
+  </a>
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwuleiyuan%2Fsports-fair" target="_blank">
+    <img src="https://img.shields.io/badge/一键_部署-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="部署到 Vercel">
+  </a>
 </p>
 
 ---
@@ -197,6 +208,20 @@ pnpm develop
 - GPX / TCX / FIT 导入管道
 
 感谢 [@yihong0618](https://github.com/yihong0618) 及所有 [running_page 贡献者](https://github.com/yihong0618/running_page/graphs/contributors)。
+
+---
+
+## ⭐ Show your support / 表达支持
+
+如果 Sports Fair 帮你省下了从零搭建的时间：
+
+- ⭐ **点 Star** — 让更多人发现它
+- 👁️ **Watch releases** — 新功能/修复第一手收到
+- 🐛 **提 Issue** — 遇到 bug 或想提建议
+- 🍴 **Fork** 改造成自己的训练面板，欢迎在 [Discussions](https://github.com/wuleiyuan/sports-fair/discussions) 里晒出来
+- 💬 **Discussions** — 提问 / 秀面板 / 提想法都欢迎
+
+每一颗 Star 都是下一轮迭代的燃料，谢谢你成为这个项目的一部分 🙏
 
 ---
 

@@ -14,8 +14,19 @@
 <p align="center">
   <a href="https://github.com/wuleiyuan/sports-fair/blob/master/LICENSE"><img src="https://img.shields.io/github/license/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="License"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/releases"><img src="https://img.shields.io/github/v/release/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="Release"></a>
+  <a href="https://github.com/wuleiyuan/sports-fair/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow-status/wuleiyuan/sports-fair/ci.yml?branch=master&style=flat-square&color=FF8800" alt="CI"></a>
+  <a href="https://github.com/wuleiyuan/sports-fair/issues"><img src="https://img.shields.io/github/issues/wuleiyuan/sports-fair?style=flat-square&color=FF8800" alt="Issues"></a>
   <a href="https://github.com/wuleiyuan/sports-fair/pulls"><img src="https://img.shields.io/badge/PRs-Welcome-FF8800?style=flat-square" alt="PRs Welcome"></a>
   <a href="https://github.com/yihong0618/running_page"><img src="https://img.shields.io/badge/Forked%20from-running__page-1a1a1a?style=flat-square" alt="Forked from running_page"></a>
+</p>
+
+<p align="center">
+  <a href="https://sports-fair.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-sports--fair.vercel.app-FF8800?style=for-the-badge" alt="Live Demo">
+  </a>
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwuleiyuan%2Fsports-fair" target="_blank">
+    <img src="https://img.shields.io/badge/One--click_Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Deploy to Vercel">
+  </a>
 </p>
 
 ---
@@ -198,6 +209,20 @@ Built on [yihong0618/running_page](https://github.com/yihong0618/running_page) (
 - GPX / TCX / FIT import pipeline
 
 Thanks to [@yihong0618](https://github.com/yihong0618) and all [running_page contributors](https://github.com/yihong0618/running_page/graphs/contributors).
+
+---
+
+## ⭐ Show your support
+
+If Sports Fair saved you from building your own:
+
+- ⭐ **Star** this repo — helps others discover it
+- 👁️ **Watch** releases to get notified about new features and fixes
+- 🐛 **Open an issue** if you hit a bug or want to suggest an improvement
+- 🍴 **Fork** it, customize for your own training, and [share what you built](https://github.com/wuleiyuan/sports-fair/discussions)
+- 💬 **Join Discussions** to ask questions or show off your dashboards
+
+Every star is fuel for the next iteration. Thanks for being part of this. 🙏
 
 ---
 
