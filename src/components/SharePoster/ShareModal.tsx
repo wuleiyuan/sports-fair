@@ -1,12 +1,13 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import Poster from './Poster';
+import { Activity } from '@/utils/utils';
 
 interface ShareModalProps {
   open: boolean;
   onClose: () => void;
   /** All activities (pass from parent so data is shared) */
-  activities: any[];
+  activities: Activity[];
   totalDistanceKm: number;
   totalTimeHours: number;
   totalRuns: number;
@@ -81,8 +82,6 @@ export default function ShareModal({
 
   if (!open) return null;
 
-  const rawActivities = activities.map((a: any) => a.activity || a);
-
   return (
     <div
       style={{
@@ -136,7 +135,7 @@ export default function ShareModal({
           <div style={{ transform: 'scale(0.333)', transformOrigin: 'top left', width: 3240, height: 5760 }}>
             <Poster
               ref={posterRef}
-              activities={rawActivities}
+              activities={activities}
               totalDistanceKm={totalDistanceKm}
               totalTimeHours={totalTimeHours}
               totalRuns={totalRuns}
