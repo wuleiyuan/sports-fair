@@ -1,6 +1,7 @@
 // 运动总览页 - 中等改造第二阶段
 // 显示所有运动类型的大卡片，统计每种运动的总量
 // 入口：/sports
+// 第六阶段: 加 elevation / 加权平均配速 聚合, 配合 SportCard 的 priorityMetrics 渲染
 
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,17 +18,31 @@ function activeSportsIn(stats: Record<string, { count: number }>): number {
   return Object.values(stats).filter((s) => s.count > 0).length;
 }
 
+interface SportStats {
+  count: number;
+  totalDistance: number;        // 米
+  totalTime: number;            // 秒
+  totalReps: number;            // 计数（跳绳次数 / 爬楼层数 等）
+  totalElevation: number;       // 米，海拔累计
+  totalSpeedWeighted: number;   // 加权平均速度 (m/s · m)；除以 totalDistance 得 m/s 平均，再换算配速
+  lastDate?: string;
+}
+
 const SportsOverview = () => {
   // 按运动类型分组统计
   const sportStats = useMemo(() => {
-    const stats: Record<
-      string,
-      { count: number; totalDistance: number; totalTime: number; totalReps: number; lastDate?: string }
-    > = {};
+    const stats: Record<string, SportStats> = {};
 
     // 先初始化所有运动类型
     SPORT_TYPES.forEach((s) => {
-      stats[s.key] = { count: 0, totalDistance: 0, totalTime: 0, totalReps: 0 };
+      stats[s.key] = {
+        count: 0,
+        totalDistance: 0,
+        totalTime: 0,
+        totalReps: 0,
+        totalElevation: 0,
+        totalSpeedWeighted: 0,
+      };
     });
 
     // 累加每条活动
@@ -35,10 +50,18 @@ const SportsOverview = () => {
     activities.forEach((act: Activity) => {
       const key = normalizeSportType(act.type, act.name);
       if (!stats[key]) {
-        stats[key] = { count: 0, totalDistance: 0, totalTime: 0, totalReps: 0 };
+        stats[key] = {
+          count: 0,
+          totalDistance: 0,
+          totalTime: 0,
+          totalReps: 0,
+          totalElevation: 0,
+          totalSpeedWeighted: 0,
+        };
       }
+      const dist = act.distance || 0;
       stats[key].count += 1;
-      stats[key].totalDistance += act.distance || 0;
+      stats[key].totalDistance += dist;
       // moving_time 格式："1970-01-01 HH:MM:SS.microseconds" 或 "HH:MM:SS" 或 "2 days, HH:MM:SS"
       // 用项目自带的 convertMovingTime2Sec 转换（utils.ts）
       const t = convertMovingTime2Sec((act.moving_time as string) || '0');
@@ -47,6 +70,17 @@ const SportsOverview = () => {
       const reps = (act as unknown as { reps?: number }).reps;
       if (typeof reps === 'number' && reps > 0) {
         stats[key].totalReps += reps;
+      }
+      // 海拔累计（米），数据缺失时为 0
+      const elev = act.elevation_gain;
+      if (typeof elev === 'number' && elev > 0) {
+        stats[key].totalElevation += elev;
+      }
+      // 加权平均配速原料：speed * distance 累加
+      // 最终配速 sec/km = 1000 / (totalSpeedWeighted / totalDistance) = 1000 * totalDistance / totalSpeedWeighted
+      const speed = act.average_speed;
+      if (typeof speed === 'number' && speed > 0 && dist > 0) {
+        stats[key].totalSpeedWeighted += speed * dist;
       }
       // 最近一次活动日期
       const date = act.start_date_local || act.start_date;
@@ -104,7 +138,12 @@ const SportsOverview = () => {
               totalDistance: 0,
               totalTime: 0,
               totalReps: 0,
+              totalElevation: 0,
+              totalSpeedWeighted: 0,
             };
+            // 加权平均配速 sec/km：1000 * totalDistance(m) / totalSpeedWeighted (m/s·m)
+            const avgSpeed = stat.totalDistance > 0 ? stat.totalSpeedWeighted / stat.totalDistance : 0;
+            const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
             return (
               <SportCard
                 key={sport.key}
@@ -113,6 +152,9 @@ const SportsOverview = () => {
                 totalDistance={stat.totalDistance}
                 totalTime={stat.totalTime}
                 totalReps={stat.totalReps}
+                totalElevation={stat.totalElevation}
+                avgPace={avgPace}
+                totalFloors={stat.totalReps /* StairStepper 用 reps 当楼层 */}
                 lastDate={stat.lastDate}
                 href={`/sports/${sport.key}`}
               />

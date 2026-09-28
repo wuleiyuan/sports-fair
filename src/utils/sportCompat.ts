@@ -50,6 +50,18 @@ export interface SportCompat {
    * - energy:   activity.calories / activity.kcal
    */
   unitLabel: string;
+  /**
+   * 优先级显示的指标顺序（2026-09-28 用户要求：不同运动类型显示不同优先数据）
+   *  - pace:      配速（跑步 / 徒步 / 步行 / 骑行 / 游泳）— 从 average_speed 推导
+   *  - distance:  距离
+   *  - duration:  时长
+   *  - elevation: 海拔累计 (m / ft)
+   *  - floors:    楼层累计
+   *  - reps:      计数（跳绳次数 / 力量训练组数 等）
+   *
+   * 第一个 = 大号主指标；其余 = 小号副指标（最多 3 个）
+   */
+  priorityMetrics: ('pace' | 'distance' | 'duration' | 'elevation' | 'floors' | 'reps')[];
 }
 
 /**
@@ -99,6 +111,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '从街道到山野的每一步',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['pace', 'distance', 'duration', 'elevation'],
   },
   {
     key: 'Hiking',
@@ -126,6 +139,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '翻过的每一座山、踩过的每一条路',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'elevation', 'duration'],
   },
   {
     key: 'Walk',
@@ -149,6 +163,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '日常的每一步',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'duration', 'pace'],
   },
   {
     key: 'Ride',
@@ -186,7 +201,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     unitLabel: 'km',
   },
   {
-    key: 'Swim',
+    priorityMetrics: ['distance', 'duration', 'pace'],
+  key: 'Swim',
     label: '游泳',
     emoji: '🏊',
     color: '#5ac8fa',
@@ -207,7 +223,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 力量 / 器械 / 健身 ===
   {
-    key: 'Strength',
+    priorityMetrics: ['duration', 'reps'],
+  key: 'Strength',
     label: '力量训练',
     emoji: '💪',
     color: '#f97316',
@@ -233,6 +250,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '肌肉的每一下收缩',
     displayMetric: 'duration',
     unitLabel: 'min',
+    priorityMetrics: ['duration'],
   },
   {
     key: 'Core',
@@ -258,6 +276,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '腰腹的稳定',
     displayMetric: 'duration',
     unitLabel: 'min',
+    priorityMetrics: ['duration'],
   },
   {
     key: 'Yoga',
@@ -282,7 +301,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 有氧器械 ===
   {
-    key: 'Elliptical',
+    priorityMetrics: ['distance', 'duration', 'pace'],
+  key: 'Elliptical',
     label: '椭圆机',
     emoji: '⭕',
     color: '#60a5fa',
@@ -298,6 +318,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '低冲击的有氧',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'duration', 'pace'],
   },
   {
     key: 'StairStepper',
@@ -321,6 +342,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '一步步向上',
     displayMetric: 'count',
     unitLabel: '层',
+    priorityMetrics: ['floors', 'elevation', 'duration'],
   },
   {
     key: 'Rowing',
@@ -339,6 +361,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '拉桨的力量',
     displayMetric: 'distance',
     unitLabel: 'm',
+    priorityMetrics: ['distance', 'duration', 'pace'],
   },
   // === 搏击 ===
   {
@@ -373,6 +396,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '出拳的瞬间',
     displayMetric: 'count',
     unitLabel: '组',
+    priorityMetrics: ['reps', 'duration'],
   },
   {
     key: 'RopeSkipping',
@@ -395,6 +419,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '节奏感的燃脂',
     displayMetric: 'count',
     unitLabel: '个',
+    priorityMetrics: ['reps', 'duration'],
   },
   {
     key: 'Soccer',
@@ -419,6 +444,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '11 个人的默契',
     displayMetric: 'count',
     unitLabel: '次',
+    priorityMetrics: ['reps', 'duration'],
   },
   {
     key: 'Basketball',
@@ -440,6 +466,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '空心入网的清脆',
     displayMetric: 'count',
     unitLabel: '次',
+    priorityMetrics: ['reps', 'duration'],
   },
   {
     key: 'Tennis',
@@ -475,7 +502,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 极限 / 水上 / 雪上 ===
   {
-    key: 'Skiing',
+    priorityMetrics: ['distance', 'elevation', 'duration'],
+  key: 'Skiing',
     label: '滑雪',
     emoji: '⛷️',
     color: '#0ea5e9',
@@ -501,6 +529,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '雪上的速度',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'elevation', 'duration'],
   },
   {
     key: 'Surfing',
@@ -534,7 +563,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     unitLabel: 'km',
   },
   {
-    key: 'Golf',
+    priorityMetrics: ['distance', 'duration'],
+  key: 'Golf',
     label: '高尔夫',
     emoji: '⛳',
     color: '#16a34a',
@@ -550,6 +580,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '一杆进洞的优雅',
     displayMetric: 'count',
     unitLabel: '洞',
+    priorityMetrics: ['reps', 'duration'],
   },
   // === 其它 ===
   {
@@ -569,6 +600,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '无障碍的运动',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'duration'],
   },
   {
     key: 'Other',
@@ -582,6 +614,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '其他运动记录',
     displayMetric: 'duration',
     unitLabel: 'min',
+    priorityMetrics: ['duration'],
   },
 ];
 
