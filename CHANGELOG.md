@@ -5,6 +5,30 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
+## [2.5.2] - 2026-09-28
+
+### 新增
+- **运动感知指标** + SportCard UI 重构 + CSS module 拆分 (`f6d8f53`)
+- **README hero** 加 Live Demo / Deploy CTA + Show your support 区 (`48434c9`)
+- **.nvmrc** 锁 Node 版本 (`48434c9`)
+
+### 变更
+- **Poster CSS module** 拆分 + **hero** 加"最爱运动"卡 + **RunMap/RunTable** React.memo (`bac8ef3`)
+- **ShareModal CSS module** 拆分 + **sport-detail** 运动感知 stats + **priorityMetrics** 顺序修正 (`73e906e`)
+- **Community 章节** + **sports-overview** 类型化 + 函数位置清理 (`9e573b5`)
+- **og-image.png** 复制到仓根，修 #1 引流坑（社交分享预览图）(`cc3c4e8`)
+
+### 修复 / 性能
+- **ShareModal toast 内存泄漏**修复 + pageLinks 提升到模块级（防重复创建）(`29de0b4`)
+- **LightsControl a11y** + **ShareModal.activities** 类型化 (`7bf7dec`)
+- 清理 11 处调试 `console.log` + close 按钮加 `aria-label` (`9898213`)
+
+### 维护
+- 11 次 `sync sports data` 提交（Keep 数据自动同步）
+- 1 次 profile stats SVG 自动更新 `[skip ci]`
+
+---
+
 ## [2.5.1] - 2026-06-21
 
 ### 修复
