@@ -12,6 +12,11 @@ import { convertMovingTime2Sec } from '@/utils/utils';
 import activities from '@/static/activities.json';
 import { Activity } from '@/utils/utils';
 
+// 辅助：有数据的运动类型数（提至模块级，避免函数声明位置反人类）
+function activeSportsIn(stats: Record<string, { count: number }>): number {
+  return Object.values(stats).filter((s) => s.count > 0).length;
+}
+
 const SportsOverview = () => {
   // 按运动类型分组统计
   const sportStats = useMemo(() => {
@@ -39,7 +44,7 @@ const SportsOverview = () => {
       const t = convertMovingTime2Sec((act.moving_time as string) || '0');
       stats[key].totalTime += t;
       // reps: 跳绳次数/爬楼层数（后端新字段，旧数据是 0/None）
-      const reps = (act as unknown as Record<string, unknown>).reps;
+      const reps = (act as unknown as { reps?: number }).reps;
       if (typeof reps === 'number' && reps > 0) {
         stats[key].totalReps += reps;
       }
@@ -123,10 +128,5 @@ const SportsOverview = () => {
     </Layout>
   );
 };
-
-// 辅助：有数据的运动类型数
-function activeSportsIn(stats: Record<string, { count: number }>): number {
-  return Object.values(stats).filter((s) => s.count > 0).length;
-}
 
 export default SportsOverview;

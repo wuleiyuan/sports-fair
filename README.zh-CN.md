@@ -196,6 +196,15 @@ pnpm develop
 
 ---
 
+## 社区
+
+- **想贡献代码？** 看 [CONTRIBUTING.md](CONTRIBUTING.md) —— fork → clone → install → PR。
+- **发现安全漏洞？** 看 [SECURITY.md](SECURITY.md) —— 请**不要**在公开 Issue 里提漏洞。
+- **有问题 / 新想法？** 开 [Discussion](https://github.com/wuleiyuan/sports-fair/discussions) 或 [Issue](https://github.com/wuleiyuan/sports-fair/issues)。
+- **行为准则** —— 见 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
+
+---
+
 ## 上游项目
 
 本项目基于 [yihong0618/running_page](https://github.com/yihong0618/running_page)（10k+ stars）构建。我们 fork 后重新设计了 UI 并大幅扩展了功能范围。

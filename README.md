@@ -197,6 +197,15 @@ See [Data Sync Guide](docs/DATA_SYNC.md) for per-source setup instructions.
 
 ---
 
+## Community
+
+- **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md) — fork → clone → install → PR.
+- **Found a security issue?** See [SECURITY.md](SECURITY.md) — please **do not** open a public issue for vulns.
+- **Have a question / feature idea?** Open a [Discussion](https://github.com/wuleiyuan/sports-fair/discussions) or [Issue](https://github.com/wuleiyuan/sports-fair/issues).
+- **Code of Conduct** — see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+---
+
 ## Upstream
 
 Built on [yihong0618/running_page](https://github.com/yihong0618/running_page) (10k+ stars). We forked, redesigned the UI, and expanded the feature scope.
