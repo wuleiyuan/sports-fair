@@ -6,39 +6,44 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ---- 暗色变量（Pornhub 橙黑风格） ---- */
+/* ---- 暗色变量（ Sport Glow · 深色运动仪表盘 ） ---- */
 [data-kinetic] {
-  /* 背景 */
-  --a-bg: #000000;
-  --a-bg-secondary: #0D0D0D;
-  background-color: #000 !important;
-  color: #ffffff;
+  /* 背景：深墨蓝黑 + 顶部双色辉光，避免纯黑死板 */
+  --a-bg: #0A0C10;
+  --a-bg-secondary: #11141B;
+  background-color: #0A0C10 !important;
+  background-image:
+    radial-gradient(1100px 560px at 82% -12%, rgba(255, 122, 69, 0.12), transparent 60%),
+    radial-gradient(900px 520px at -5% 0%, rgba(56, 189, 248, 0.10), transparent 55%);
+  background-attachment: fixed;
+  color: #ECEEF3;
 
   /* 毛玻璃卡片 */
-  --a-card-bg: rgba(255, 255, 255, 0.04);
-  --a-card-border: rgba(255, 255, 255, 0.06);
-  --a-card-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-  --a-card-radius: 16px;
+  --a-card-bg: rgba(255, 255, 255, 0.035);
+  --a-card-border: rgba(255, 255, 255, 0.08);
+  --a-card-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  --a-card-radius: 18px;
 
   /* 文字 */
-  --a-text-primary: #ffffff;
-  --a-text-secondary: rgba(255, 255, 255, 0.72);
-  --a-text-tertiary: rgba(255, 255, 255, 0.4);
+  --a-text-primary: #F2F4F8;
+  --a-text-secondary: rgba(255, 255, 255, 0.66);
+  --a-text-tertiary: rgba(255, 255, 255, 0.40);
 
-  /* Pornhub 橙黑色系 */
-  --a-orange: #FF8800;
-  --a-orange-bright: #FF9900;
-  --a-orange-dark: #CC6600;
-  --a-orange-light: #FFB347;
-  --a-red: #FF5500;
-  --a-green: #FF8800;
-  --a-blue: #FF9900;
-  --a-purple: #FFB347;
-  --a-mint: #CC6600;
-  --a-yellow: #FFCC00;
+  /* 品牌强调色：energetic 暖橙，克制不刺眼 */
+  --a-orange: #FF7A45;
+  --a-orange-bright: #FF9466;
+  --a-orange-dark: #E0612E;
+  --a-orange-light: #FFB38A;
+  /* 数据可视化色板：真实区分色（修复原版全部写成橘色的 bug） */
+  --a-red: #FF5A5F;
+  --a-green: #34D399;
+  --a-blue: #38BDF8;
+  --a-purple: #A78BFA;
+  --a-mint: #2DD4BF;
+  --a-yellow: #FBBF24;
 
   /* 字号 */
-  --a-title-1: 28px;
+  --a-title-1: 30px;
   --a-title-2: 22px;
   --a-title-3: 20px;
   --a-headline: 17px;
@@ -782,11 +787,11 @@
 }
 
 /* ===== Health Metric Colors ===== */
-[data-kinetic] .k-metric-hr { color: #FF5500; }
-[data-kinetic] .k-metric-rhr { color: #FF8800; }
-[data-kinetic] .k-metric-hrv { color: #FFB347; }
-[data-kinetic] .k-metric-sleep { color: #FF9900; }
-[data-kinetic] .k-metric-steps { color: #CC6600; }
+[data-kinetic] .k-metric-hr { color: #FF5A5F; }
+[data-kinetic] .k-metric-rhr { color: #FF7A45; }
+[data-kinetic] .k-metric-hrv { color: #A78BFA; }
+[data-kinetic] .k-metric-sleep { color: #38BDF8; }
+[data-kinetic] .k-metric-steps { color: #34D399; }
 
 [data-kinetic] .k-metric-dot {
   width: 10px;
