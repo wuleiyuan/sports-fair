@@ -199,10 +199,10 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '两轮上的距离',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'duration', 'pace'],
   },
   {
-  key: 'Swim',
-    priorityMetrics: ['distance', 'duration', 'pace'],
+    key: 'Swim',
     label: '游泳',
     emoji: '🏊',
     color: '#5ac8fa',
@@ -220,11 +220,11 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '泳池里的每一米',
     displayMetric: 'distance',
     unitLabel: 'm',
+    priorityMetrics: ['distance', 'duration', 'pace'],
   },
   // === 力量 / 器械 / 健身 ===
   {
-  key: 'Strength',
-    priorityMetrics: ['duration', 'reps'],
+    key: 'Strength',
     label: '力量训练',
     emoji: '💪',
     color: '#f97316',
@@ -250,7 +250,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '肌肉的每一下收缩',
     displayMetric: 'duration',
     unitLabel: 'min',
-    priorityMetrics: ['duration'],
+    priorityMetrics: ['duration', 'reps'],
   },
   {
     key: 'Core',
@@ -298,11 +298,11 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '身心合一的呼吸',
     displayMetric: 'duration',
     unitLabel: 'min',
+    priorityMetrics: ['duration'],
   },
   // === 有氧器械 ===
   {
-  key: 'Elliptical',
-    priorityMetrics: ['distance', 'duration', 'pace'],
+    key: 'Elliptical',
     label: '椭圆机',
     emoji: '⭕',
     color: '#60a5fa',
@@ -499,11 +499,11 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '挥拍的节奏',
     displayMetric: 'count',
     unitLabel: '次',
+    priorityMetrics: ['duration'],
   },
   // === 极限 / 水上 / 雪上 ===
   {
-  key: 'Skiing',
-    priorityMetrics: ['distance', 'elevation', 'duration'],
+    key: 'Skiing',
     label: '滑雪',
     emoji: '⛷️',
     color: '#0ea5e9',
@@ -561,10 +561,10 @@ export const SPORT_COMPAT: SportCompat[] = [
     desc: '浪尖的舞步',
     displayMetric: 'distance',
     unitLabel: 'km',
+    priorityMetrics: ['distance', 'duration'],
   },
   {
-  key: 'Golf',
-    priorityMetrics: ['distance', 'duration'],
+    key: 'Golf',
     label: '高尔夫',
     emoji: '⛳',
     color: '#16a34a',
