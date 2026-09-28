@@ -1,10 +1,14 @@
-// 运动卡片 - 第六阶段
-// 运动感知指标：每个 sport 按 priorityMetrics 显示最相关的数据
-// + CSS module 美化 UI + IntersectionObserver 进入视口渐入
+// 运动卡片 - 第七阶段（Apple Fitness Premium）
+// 改造点：
+//   1. 玻璃质感（backdrop-filter + 半透明白底 + sport-color glow）
+//   2. 顶部 mini-sparkline（30 天趋势）
+//   3. Locked 态：虚线边框 + 弱化内容（不再灰度去色）
+//   4. 主指标用 sport.color 大字，副指标横排小字
 
 import { Link } from 'react-router-dom';
 import type { SportCompat } from '@/utils/sportCompat';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import Sparkline from './Sparkline';
 import styles from './style.module.css';
 
 interface SportCardProps {
@@ -12,11 +16,12 @@ interface SportCardProps {
   count: number;
   totalDistance: number;          // 米
   totalTime: number;              // 秒
-  totalReps?: number;             // 总计数（跳绳次数/爬楼层数等），0/undefined=暂无
-  totalElevation?: number;        // 米（海拔累计）
-  avgPace?: number;               // 秒/公里（平均配速，0 = 无数据）
-  totalFloors?: number;           // 楼层累计（爬楼专用）
-  lastDate?: string;              // 最近一次活动日期 (ISO)
+  totalReps?: number;
+  totalElevation?: number;
+  avgPace?: number;               // 秒/公里
+  totalFloors?: number;
+  lastDate?: string;              // ISO
+  sparkline?: number[];           // 30 天每日聚合
   href: string;
 }
 
@@ -43,7 +48,6 @@ function formatUnit(unit: 'km' | 'mi' | 'm'): string {
   return 'km';
 }
 
-/** 配速格式化: 秒/公里 → "5:32" (无 /km 后缀, 由 caller 加) */
 function formatPace(secPerKm: number): string {
   if (!secPerKm || secPerKm <= 0) return '—';
   const m = Math.floor(secPerKm / 60);
@@ -51,17 +55,16 @@ function formatPace(secPerKm: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-/** 海拔: 米 → 整数 + "m" 后缀 (imperial 模式在 const 里有 ELEV_UNIT, 这里先按米) */
 function formatElevation(meters: number): string {
   if (!meters) return '0';
   if (meters >= 1000) return `${(meters / 1000).toFixed(1)}k`;
   return Math.round(meters).toString();
 }
 
-// ===== 单个 metric 的渲染数据 =====
+// ===== Metric =====
 
 interface MetricRow {
-  label: string;     // "距离" / "配速" / "时长" / "海拔" / "楼层"
+  label: string;
   value: string;
   unit: string;
 }
@@ -87,7 +90,6 @@ function buildMetricRows(
     rows.push(row);
   };
 
-  // 注意: 顺序按 priorityMetrics，不按下面的硬编码顺序
   if (sport.priorityMetrics.includes('distance')) {
     pushIfPresent('distance', {
       label: '距离',
@@ -146,6 +148,7 @@ export default function SportCard({
   avgPace,
   totalFloors,
   lastDate,
+  sparkline,
   href,
 }: SportCardProps) {
   const locked = count === 0;
@@ -167,17 +170,18 @@ export default function SportCard({
     once: true,
   });
 
-  const cardStyle: React.CSSProperties = {
-    backgroundColor: locked ? 'rgba(40, 40, 40, 0.4)' : sport.colorBg,
-    borderColor: locked ? 'rgba(148, 163, 184, 0.25)' : `${sport.color}33`,
-    boxShadow: locked
-      ? 'none'
-      : `0 1px 0 ${sport.color}11 inset, 0 4px 16px -8px ${sport.color}22`,
-    // 入场渐入
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
-    transition: 'opacity 400ms ease, transform 400ms ease',
-  };
+  // 玻璃质感背景：sport.color tint 渐变 + 半透明白底
+  const cardStyle: React.CSSProperties = locked
+    ? {
+        background: 'rgba(255, 255, 255, 0.03)',
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderStyle: 'dashed',
+      }
+    : {
+        background: `linear-gradient(135deg, ${sport.colorBg} 0%, rgba(255, 255, 255, 0.04) 60%, transparent 100%)`,
+        borderColor: `${sport.color}40`,
+        boxShadow: `0 1px 0 ${sport.color}1a inset, 0 4px 16px -8px ${sport.color}55, 0 0 0 1px rgba(255, 255, 255, 0.03)`,
+      };
 
   return (
     <Link
@@ -187,35 +191,60 @@ export default function SportCard({
         if (locked) e.preventDefault();
       }}
       className={`${styles.card} ${locked ? styles.cardLocked : styles.cardActive}`}
-      style={cardStyle}
+      style={{
+        ...cardStyle,
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 400ms ease, transform 400ms ease, box-shadow 280ms ease, border-color 280ms ease',
+      }}
       onMouseEnter={(e) => {
         if (locked) return;
-        e.currentTarget.style.borderColor = `${sport.color}88`;
-        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}22 inset, 0 12px 32px -8px ${sport.color}44`;
+        e.currentTarget.style.borderColor = `${sport.color}90`;
+        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}33 inset, 0 12px 32px -8px ${sport.color}80, 0 0 0 1px rgba(255, 255, 255, 0.06)`;
       }}
       onMouseLeave={(e) => {
         if (locked) return;
-        e.currentTarget.style.borderColor = `${sport.color}33`;
-        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}11 inset, 0 4px 16px -8px ${sport.color}22`;
+        e.currentTarget.style.borderColor = `${sport.color}40`;
+        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}1a inset, 0 4px 16px -8px ${sport.color}55, 0 0 0 1px rgba(255, 255, 255, 0.03)`;
       }}
     >
-      {/* Sport-color accent stripe */}
-      <div className={styles.accent} style={{ backgroundColor: sport.color }} />
+      {/* Sport-color 顶部装饰条 */}
+      <div
+        className={styles.accent}
+        style={{
+          background: locked
+            ? 'transparent'
+            : `linear-gradient(90deg, ${sport.color} 0%, ${sport.color}80 100%)`,
+        }}
+      />
 
       {/* Header: emoji + label + count badge */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
           <span className={styles.emoji}>{sport.emoji}</span>
-          <span className={styles.label} style={{ color: locked ? '#64748b' : sport.color }}>
+          <span
+            className={styles.label}
+            style={{ color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color }}
+          >
             {sport.label}
           </span>
         </div>
         {locked ? (
-          <span className={`${styles.badge} ${styles.badgeLocked}`}>未解锁</span>
+          <span className={`${styles.badge} ${styles.badgeLocked}`}>
+            <svg width="10" height="10" viewBox="0 0 10 10" style={{ marginRight: 4, verticalAlign: 'middle' }}>
+              <rect x="2" y="4.5" width="6" height="4.5" rx="1" fill="none" stroke="currentColor" strokeWidth="1"/>
+              <path d="M3 4.5 V3 a2 2 0 0 1 4 0 V4.5" fill="none" stroke="currentColor" strokeWidth="1"/>
+            </svg>
+            未解锁
+          </span>
         ) : (
           <span
             className={styles.badge}
-            style={{ backgroundColor: `${sport.color}22`, color: sport.color }}
+            style={{
+              backgroundColor: `${sport.color}26`,
+              color: sport.color,
+              borderColor: `${sport.color}55`,
+            }}
           >
             {count.toLocaleString()} 次
           </span>
@@ -226,10 +255,17 @@ export default function SportCard({
       {primary && (
         <div className={styles.metrics}>
           <div className={styles.primary}>
-            <span className={styles.primaryValue} style={{ color: locked ? '#475569' : sport.color }}>
+            <span
+              className={styles.primaryValue}
+              style={{ color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color }}
+            >
               {primary.value}
             </span>
-            {primary.unit && <span className={styles.primaryUnit}>{primary.unit}</span>}
+            {primary.unit && (
+              <span className={styles.primaryUnit} style={{ color: locked ? 'rgba(255, 255, 255, 0.4)' : sport.color }}>
+                {primary.unit}
+              </span>
+            )}
           </div>
           {secondary.length > 0 && (
             <div className={styles.secondary}>
@@ -245,14 +281,33 @@ export default function SportCard({
         </div>
       )}
 
-      {/* Description / unlock prompt */}
+      {/* Sparkline - 仅未解锁不渲染；空数据会自绘虚线占位 */}
+      {!locked && (
+        <div className={styles.sparkline}>
+          <Sparkline
+            values={sparkline ?? []}
+            color={sport.color}
+            unit={formatUnit(sport.unit)}
+            height={32}
+            width={120}
+          />
+          <span className={styles.sparklineLabel}>30 天趋势</span>
+        </div>
+      )}
+
+      {/* Description */}
       <p className={styles.desc}>
-        {locked ? `解锁 ${sport.label}，开启你的「${sport.desc.split('，')[0]}」` : sport.desc}
+        {locked
+          ? `解锁 ${sport.label}，开启你的「${sport.desc.split('，')[0]}」`
+          : sport.desc}
       </p>
 
-      {/* Last activity date */}
+      {/* Meta */}
       {!locked && lastDate && (
-        <div className={styles.meta}>{lastDate.slice(0, 10)}</div>
+        <div className={styles.meta}>
+          <span className={styles.metaDot} />
+          <span>{lastDate.slice(0, 10)}</span>
+        </div>
       )}
     </Link>
   );

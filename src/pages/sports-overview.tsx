@@ -1,9 +1,11 @@
-// 运动总览页 - 中等改造第二阶段
-// 显示所有运动类型的大卡片，统计每种运动的总量
-// 入口：/sports
-// 第六阶段: 加 elevation / 加权平均配速 聚合, 配合 SportCard 的 priorityMetrics 渲染
+// 运动总览页 - 第七阶段（Apple Fitness Premium）
+// 改造点：
+//   1. Hero KPI 卡 ×4：总距离 / 总时长 / 最长连击 / #1 运动
+//   2. 分类筛选 tab：按运动类别过滤
+//   3. SportCard 改造：mini-sparkline + 玻璃质感 + 虚线锁定态
+//   4. 配色：替换 Pornhub 橙黑 → Apple Fitness 深空渐变
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
@@ -11,29 +13,80 @@ import SportCard from '@/components/SportCard';
 import { SPORT_TYPES, normalizeSportType } from '@/utils/sportTypes';
 import { convertMovingTime2Sec } from '@/utils/utils';
 import activities from '@/static/activities.json';
-import { Activity } from '@/utils/utils';
+import type { Activity } from '@/utils/utils';
+import type { SportCompat } from '@/utils/sportCompat';
+import styles from './sports-overview.module.css';
 
-// 辅助：有数据的运动类型数（提至模块级，避免函数声明位置反人类）
-function activeSportsIn(stats: Record<string, { count: number }>): number {
-  return Object.values(stats).filter((s) => s.count > 0).length;
+// ====== 运动分类映射 ======
+// 注：分类不写入 sportCompat.ts（数据模型）—— 而在这里做单点映射，
+// 后续如要加 category 字段再迁。
+type Category = 'all' | 'aerobic' | 'strength' | 'ball' | 'extreme';
+const CATEGORY_TABS: { id: Category; label: string }[] = [
+  { id: 'all', label: '全部' },
+  { id: 'aerobic', label: '有氧' },
+  { id: 'strength', label: '力量/核心' },
+  { id: 'ball', label: '球类/搏击' },
+  { id: 'extreme', label: '水上/极限' },
+];
+
+const CATEGORY_BY_KEY: Record<string, Category> = {
+  // 有氧
+  Run: 'aerobic', Walk: 'aerobic', Ride: 'aerobic', Hiking: 'aerobic',
+  Elliptical: 'aerobic', Rowing: 'aerobic',
+  // 力量 / 核心
+  Strength: 'strength', Core: 'strength', Yoga: 'strength', StairStepper: 'strength',
+  RopeSkipping: 'strength',
+  // 球类 / 搏击
+  Soccer: 'ball', Basketball: 'ball', Tennis: 'ball', Boxing: 'ball', Golf: 'ball',
+  // 水上 / 极限
+  Swim: 'extreme', Skiing: 'extreme', Surfing: 'extreme', Wheelchair: 'extreme',
+  Other: 'extreme',
+};
+
+// ====== 格式化工具 ======
+
+function formatTotalTime(seconds: number): string {
+  if (!seconds) return '0m';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
 }
+
+function formatLongNumber(n: number): string {
+  if (n >= 10000) return `${(n / 10000).toFixed(1)}w`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return n.toString();
+}
+
+// ====== 类型 ======
 
 interface SportStats {
   count: number;
   totalDistance: number;        // 米
   totalTime: number;            // 秒
-  totalReps: number;            // 计数（跳绳次数 / 爬楼层数 等）
-  totalElevation: number;       // 米，海拔累计
-  totalSpeedWeighted: number;   // 加权平均速度 (m/s · m)；除以 totalDistance 得 m/s 平均，再换算配速
+  totalReps: number;
+  totalElevation: number;       // 米
+  totalSpeedWeighted: number;   // m/s · m
   lastDate?: string;
+  /** 最近 30 天按 displayMetric 的每日聚合 */
+  sparkline: number[];
 }
 
-const SportsOverview = () => {
-  // 按运动类型分组统计
-  const sportStats = useMemo(() => {
-    const stats: Record<string, SportStats> = {};
+const DAYS_IN_SPARK = 30;
+const REF_DATE_ISO = '2026-09-28'; // 用作"今天"的参考日期（mock 数据时间）
 
-    // 先初始化所有运动类型
+// ====== 主组件 ======
+
+const SportsOverview = () => {
+  const [activeCategory, setActiveCategory] = useState<Category>('all');
+
+  // === 核心聚合：每个运动的统计 + sparkline ===
+  const { sportStats, sparkByKey, longestStreak, topSportKey } = useMemo(() => {
+    const stats: Record<string, SportStats> = {};
+    const sparks: Record<string, number[]> = {};
+
+    // 先初始化
     SPORT_TYPES.forEach((s) => {
       stats[s.key] = {
         count: 0,
@@ -42,11 +95,14 @@ const SportsOverview = () => {
         totalReps: 0,
         totalElevation: 0,
         totalSpeedWeighted: 0,
+        sparkline: new Array(DAYS_IN_SPARK).fill(0),
       };
+      sparks[s.key] = new Array(DAYS_IN_SPARK).fill(0);
     });
 
-    // 累加每条活动
-    // 兼容层：type + name 双字段归一化（兼容 Strava/Keep/Apple HealthKit/GPX/中文）
+    // === 长连击：所有活动的活跃日期集合 ===
+    const activeDays = new Set<string>();
+
     activities.forEach((act: Activity) => {
       const key = normalizeSportType(act.type, act.name);
       if (!stats[key]) {
@@ -57,113 +113,277 @@ const SportsOverview = () => {
           totalReps: 0,
           totalElevation: 0,
           totalSpeedWeighted: 0,
+          sparkline: new Array(DAYS_IN_SPARK).fill(0),
         };
       }
+      if (!sparks[key]) {
+        sparks[key] = new Array(DAYS_IN_SPARK).fill(0);
+      }
+
       const dist = act.distance || 0;
       stats[key].count += 1;
       stats[key].totalDistance += dist;
-      // moving_time 格式："1970-01-01 HH:MM:SS.microseconds" 或 "HH:MM:SS" 或 "2 days, HH:MM:SS"
-      // 用项目自带的 convertMovingTime2Sec 转换（utils.ts）
       const t = convertMovingTime2Sec((act.moving_time as string) || '0');
       stats[key].totalTime += t;
-      // reps: 跳绳次数/爬楼层数（后端新字段，旧数据是 0/None）
       const reps = (act as unknown as { reps?: number }).reps;
       if (typeof reps === 'number' && reps > 0) {
         stats[key].totalReps += reps;
       }
-      // 海拔累计（米），数据缺失时为 0
       const elev = act.elevation_gain;
       if (typeof elev === 'number' && elev > 0) {
         stats[key].totalElevation += elev;
       }
-      // 加权平均配速原料：speed * distance 累加
-      // 最终配速 sec/km = 1000 / (totalSpeedWeighted / totalDistance) = 1000 * totalDistance / totalSpeedWeighted
       const speed = act.average_speed;
       if (typeof speed === 'number' && speed > 0 && dist > 0) {
         stats[key].totalSpeedWeighted += speed * dist;
       }
-      // 最近一次活动日期
       const date = act.start_date_local || act.start_date;
       if (!stats[key].lastDate || (date && date > stats[key].lastDate)) {
         stats[key].lastDate = date;
       }
+
+      // === sparkline 填充 ===
+      // 计算日期距 REF_DATE 的天数（0 = 今天，29 = 30 天前）
+      if (date) {
+        const dayStr = date.slice(0, 10);
+        const dayDate = new Date(dayStr);
+        const refDate = new Date(REF_DATE_ISO);
+        const diffDays = Math.floor((refDate.getTime() - dayDate.getTime()) / 86400000);
+        if (diffDays >= 0 && diffDays < DAYS_IN_SPARK) {
+          const idx = DAYS_IN_SPARK - 1 - diffDays; // 数组末位 = 今天
+          // 按 sport 的 displayMetric 决定聚合维度
+          const sportCfg = SPORT_TYPES.find((s) => s.key === key);
+          const metric = sportCfg?.displayMetric || 'distance';
+          let val = 0;
+          if (metric === 'distance') val = dist;
+          else if (metric === 'count') val = reps && reps > 0 ? reps : 0;
+          else if (metric === 'duration') val = t;
+          else if (metric === 'energy') val = 0; // 未采集
+          sparks[key][idx] += val;
+          // 同时累加到 stats 的 sparkline（同样的引用，后面会用）
+          stats[key].sparkline[idx] += val;
+        }
+        activeDays.add(dayStr);
+      }
     });
 
-    return stats;
+    // === 计算最长连击（按日期排序，连续日累加） ===
+    let longestStreak = 0;
+    let currentStreak = 0;
+    const sortedDays = Array.from(activeDays).sort();
+    let prevDate: Date | null = null;
+    sortedDays.forEach((d) => {
+      const cur = new Date(d);
+      if (prevDate && Math.floor((cur.getTime() - prevDate.getTime()) / 86400000) === 1) {
+        currentStreak += 1;
+      } else {
+        currentStreak = 1;
+      }
+      if (currentStreak > longestStreak) longestStreak = currentStreak;
+      prevDate = cur;
+    });
+
+    // === #1 运动（按 count 降序） ===
+    let topSportKey = '';
+    let topCount = 0;
+    Object.entries(stats).forEach(([k, v]) => {
+      if (v.count > topCount) {
+        topCount = v.count;
+        topSportKey = k;
+      }
+    });
+
+    return { sportStats: stats, sparkByKey: sparks, longestStreak, topSportKey };
   }, []);
 
-  // 总体统计
-  const totalStats = useMemo(() => {
+  // === 总体 KPI ===
+  const totalKPI = useMemo(() => {
     const totalCount = Object.values(sportStats).reduce((s, v) => s + v.count, 0);
     const totalDist = Object.values(sportStats).reduce((s, v) => s + v.totalDistance, 0);
+    const totalTime = Object.values(sportStats).reduce((s, v) => s + v.totalTime, 0);
     const activeSports = SPORT_TYPES.filter((s) => sportStats[s.key]?.count > 0).length;
-    return { totalCount, totalDist, activeSports };
+    return { totalCount, totalDist, totalTime, activeSports };
   }, [sportStats]);
 
-  // 排序后的桶：有数据在前（按 count 降序），空数据在后（按声明顺序）
+  // === 排序 + 分类过滤 ===
   const sortedSports = useMemo(() => {
     const withData = SPORT_TYPES.filter((s) => (sportStats[s.key]?.count || 0) > 0);
     const withoutData = SPORT_TYPES.filter((s) => (sportStats[s.key]?.count || 0) === 0);
-    // 有数据的按 count 降序
     withData.sort((a, b) => (sportStats[b.key].count - sportStats[a.key].count));
-    return [...withData, ...withoutData];
-  }, [sportStats]);
+    const combined = [...withData, ...withoutData];
+
+    if (activeCategory === 'all') return combined;
+    return combined.filter((s) => CATEGORY_BY_KEY[s.key] === activeCategory);
+  }, [sportStats, activeCategory]);
+
+  // === 各分类计数（用于 tab 角标） ===
+  const categoryCounts = useMemo(() => {
+    const counts: Record<Category, number> = {
+      all: 0, aerobic: 0, strength: 0, ball: 0, extreme: 0,
+    };
+    SPORT_TYPES.forEach((s) => {
+      counts.all += 1;
+      const cat = CATEGORY_BY_KEY[s.key];
+      if (cat) counts[cat] += 1;
+    });
+    return counts;
+  }, []);
+
+  // === top sport 配置（用于 Hero 第 4 张卡） ===
+  const topSportConfig = topSportKey ? SPORT_TYPES.find((s) => s.key === topSportKey) : null;
 
   return (
     <Layout>
       <Helmet>
-        <title>运动总览</title>
+        <title>运动总览 · Apple Fitness Premium</title>
       </Helmet>
 
-      <div data-kinetic className="mx-auto max-w-screen-2xl px-6 lg:px-16 py-8">
-        {/* 页头 */}
-        <header className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
-            <Link to="/" className="hover:text-white transition-colors">
-              ← 回到主页
-            </Link>
+      <div className={styles.page}>
+        {/* === 页头 === */}
+        <header className={styles.header}>
+          <div className={styles.crumbs}>
+            <Link to="/" className={styles.crumbLink}>← 回到主页</Link>
           </div>
-          <h1 className="text-3xl font-semibold text-white mb-2">运动总览</h1>
-          <p className="text-gray-400 text-sm">
-            {SPORT_TYPES.length} 种运动类型 · {activeSportsIn(sportStats)} 项有数据 · 共{' '}
-            {totalStats.totalCount.toLocaleString()} 次活动
-          </p>
+          <div className={styles.titleRow}>
+            <div>
+              <h1 className={styles.title}>运动总览</h1>
+              <p className={styles.subtitle}>
+                {REF_DATE_ISO} 的每一步 · {SPORT_TYPES.length} 种运动类型 · {totalKPI.activeSports} 项有数据 ·{' '}
+                共 {totalKPI.totalCount.toLocaleString()} 次活动
+              </p>
+            </div>
+            <div className={styles.titleBadge}>
+              <span className={styles.titleBadgeDot} />
+              <span>实时同步</span>
+            </div>
+          </div>
         </header>
 
-        {/* 运动卡片网格 - 已按 count 降序 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sortedSports.map((sport) => {
-            const stat = sportStats[sport.key] || {
-              count: 0,
-              totalDistance: 0,
-              totalTime: 0,
-              totalReps: 0,
-              totalElevation: 0,
-              totalSpeedWeighted: 0,
-            };
-            // 加权平均配速 sec/km：1000 * totalDistance(m) / totalSpeedWeighted (m/s·m)
-            const avgSpeed = stat.totalDistance > 0 ? stat.totalSpeedWeighted / stat.totalDistance : 0;
-            const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
-            return (
-              <SportCard
-                key={sport.key}
-                sport={sport}
-                count={stat.count}
-                totalDistance={stat.totalDistance}
-                totalTime={stat.totalTime}
-                totalReps={stat.totalReps}
-                totalElevation={stat.totalElevation}
-                avgPace={avgPace}
-                totalFloors={stat.totalReps /* StairStepper 用 reps 当楼层 */}
-                lastDate={stat.lastDate}
-                href={`/sports/${sport.key}`}
-              />
-            );
-          })}
-        </div>
+        {/* === Hero KPI 区 === */}
+        <section className={styles.hero} aria-label="运动总览 KPI">
+          {/* 1. 总距离 */}
+          <article className={`${styles.kpiCard} ${styles.kpiDistance}`}>
+            <div className={styles.kpiLabel}>总距离</div>
+            <div className={styles.kpiValue}>
+              <span className={styles.kpiNumber}>
+                {(totalKPI.totalDist / 1000).toFixed(1)}
+              </span>
+              <span className={styles.kpiUnit}>km</span>
+            </div>
+            <div className={styles.kpiFoot}>
+              <span className={styles.kpiIcon}>📏</span>
+              <span>累计移动距离</span>
+            </div>
+          </article>
 
-        {/* 底部说明 */}
-        <footer className="mt-12 text-center text-xs text-gray-500">
+          {/* 2. 总时长 */}
+          <article className={`${styles.kpiCard} ${styles.kpiDuration}`}>
+            <div className={styles.kpiLabel}>总时长</div>
+            <div className={styles.kpiValue}>
+              <span className={styles.kpiNumber}>
+                {formatTotalTime(totalKPI.totalTime)}
+              </span>
+            </div>
+            <div className={styles.kpiFoot}>
+              <span className={styles.kpiIcon}>⏱️</span>
+              <span>累计运动时长</span>
+            </div>
+          </article>
+
+          {/* 3. 最长连击 */}
+          <article className={`${styles.kpiCard} ${styles.kpiStreak}`}>
+            <div className={styles.kpiLabel}>最长连击</div>
+            <div className={styles.kpiValue}>
+              <span className={styles.kpiNumber}>{longestStreak}</span>
+              <span className={styles.kpiUnit}>天</span>
+            </div>
+            <div className={styles.kpiFoot}>
+              <span className={styles.kpiIcon}>🔥</span>
+              <span>坚持的轨迹</span>
+            </div>
+          </article>
+
+          {/* 4. #1 运动 */}
+          {topSportConfig && (
+            <article
+              className={styles.kpiCard}
+              style={{
+                background: `linear-gradient(135deg, ${topSportConfig.color}26 0%, ${topSportConfig.color}0a 100%)`,
+                borderColor: `${topSportConfig.color}55`,
+              }}
+            >
+              <div className={styles.kpiLabel} style={{ color: topSportConfig.color }}>
+                #1 运动
+              </div>
+              <div className={styles.kpiValue}>
+                <span className={styles.kpiEmoji}>{topSportConfig.emoji}</span>
+                <span className={styles.kpiNumber}>{topSportConfig.label}</span>
+              </div>
+              <div className={styles.kpiFoot}>
+                <span className={styles.kpiIcon}>⭐</span>
+                <span>{formatLongNumber(sportStats[topSportKey].count)} 次活动</span>
+              </div>
+            </article>
+          )}
+        </section>
+
+        {/* === 分类筛选 tab === */}
+        <nav className={styles.tabs} aria-label="运动分类">
+          {CATEGORY_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`${styles.tab} ${activeCategory === tab.id ? styles.tabActive : ''}`}
+              onClick={() => setActiveCategory(tab.id)}
+            >
+              <span>{tab.label}</span>
+              <span className={styles.tabCount}>{categoryCounts[tab.id]}</span>
+            </button>
+          ))}
+        </nav>
+
+        {/* === 运动卡片网格 === */}
+        <section className={styles.grid} aria-label="运动卡片列表">
+          {sortedSports.length === 0 ? (
+            <div className={styles.empty}>
+              <span className={styles.emptyIcon}>🔍</span>
+              <p>该分类下暂无运动</p>
+            </div>
+          ) : (
+            sortedSports.map((sport) => {
+              const stat = sportStats[sport.key] || {
+                count: 0,
+                totalDistance: 0,
+                totalTime: 0,
+                totalReps: 0,
+                totalElevation: 0,
+                totalSpeedWeighted: 0,
+                sparkline: new Array(DAYS_IN_SPARK).fill(0),
+              };
+              const avgSpeed = stat.totalDistance > 0 ? stat.totalSpeedWeighted / stat.totalDistance : 0;
+              const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
+              return (
+                <SportCard
+                  key={sport.key}
+                  sport={sport}
+                  count={stat.count}
+                  totalDistance={stat.totalDistance}
+                  totalTime={stat.totalTime}
+                  totalReps={stat.totalReps}
+                  totalElevation={stat.totalElevation}
+                  avgPace={avgPace}
+                  totalFloors={stat.totalReps}
+                  lastDate={stat.lastDate}
+                  sparkline={stat.sparkline}
+                  href={`/sports/${sport.key}`}
+                />
+              );
+            })
+          )}
+        </section>
+
+        {/* === 底部说明 === */}
+        <footer className={styles.footer}>
           <p>数据源：Strava + Keep + Apple HealthKit · 最近更新 {new Date().toLocaleDateString('zh-CN')}</p>
         </footer>
       </div>
