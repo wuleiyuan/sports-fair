@@ -118,4 +118,8 @@ const RunTable = ({
   );
 };
 
-export default RunTable;
+// React.memo 包裹：RunTable 每次渲染会迭代全部 runs
+// props 稳定（runs 来自 useMemo, callbacks 来自 useCallback）时, 浅比较能跳过整树重渲染
+const MemoizedRunTable = React.memo(RunTable);
+MemoizedRunTable.displayName = 'RunTable';
+export default MemoizedRunTable;

@@ -1,0 +1,133 @@
+/* Poster — html-to-image 渲染路径的样式
+   注意: 所有静态样式（layout/typography/color）放这里
+   动态值（width/height 等数字属性）继续用 style={{...}} 保留
+   这样既享受 CSS module 的可维护性，又保证 PNG 导出的样式捕获 */
+
+.posterRoot {
+  background: #0f0f0f;
+  color: #fff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.brandHeader {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.brandTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f59e0b;
+}
+
+.brandSubtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+}
+
+.bigNumberBlock {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 8px;
+}
+
+.bigNumber {
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+
+.bigNumberLabel {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
+
+.trackWrap {
+  height: 300px;
+  margin-top: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.dataCardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 600px;
+  margin-top: 28px;
+}
+
+.dataCard {
+  background: rgba(245, 158, 11, 0.15);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.dataCardLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 4px;
+}
+
+.dataCardValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.dataCardUnit {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 4px;
+}
+
+.qrSection {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.qrText1 {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.qrText2 {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 2px;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(245, 158, 11, 0.15);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+}

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Activity, pathForRun } from '@/utils/utils';
 import { QRCodeSVG } from 'qrcode.react';
+import styles from './poster.module.css';
 
 interface PosterProps {
   activities: Activity[];
@@ -127,100 +128,30 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
     return (
       <div
         ref={ref}
-        style={{
-          width: POSTER_W,
-          height: POSTER_H,
-          background: '#0f0f0f',
-          color: '#fff',
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: PAD,
-          boxSizing: 'border-box',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
+        className={styles.posterRoot}
+        style={{ width: POSTER_W, height: POSTER_H }}
       >
         {/* 1. Brand header */}
-        <div
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            paddingBottom: 20,
-            borderBottom: `1px solid ${ORANGE_DIM}`,
-          }}
-        >
-          <div style={{ fontSize: 28, fontWeight: 700, color: ORANGE }}>
-            SPORTS FAIR
-          </div>
-          <div
-            style={{
-              fontSize: 14,
-              color: 'rgba(255,255,255,0.4)',
-              marginTop: 4,
-            }}
-          >
-            运动 · 记录 · 成长
-          </div>
+        <div className={styles.brandHeader}>
+          <div className={styles.brandTitle}>SPORTS FAIR</div>
+          <div className={styles.brandSubtitle}>运动 · 记录 · 成长</div>
         </div>
 
         {/* 2. Main big number */}
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: 32,
-            marginBottom: 8,
-          }}
-        >
-          <div
-            style={{
-              fontSize: 80,
-              fontWeight: 800,
-              lineHeight: 1,
-              color: '#fff',
-            }}
-          >
-            {distText}
-          </div>
-          <div
-            style={{
-              fontSize: 18,
-              color: 'rgba(255,255,255,0.5)',
-              marginTop: 4,
-            }}
-          >
-            总跑量
-          </div>
+        <div className={styles.bigNumberBlock}>
+          <div className={styles.bigNumber}>{distText}</div>
+          <div className={styles.bigNumberLabel}>总跑量</div>
         </div>
 
         {/* 3. SVG track */}
-        <div
-          style={{
-            width: 600,
-            height: 300,
-            marginTop: 24,
-            borderRadius: 16,
-            overflow: 'hidden',
-            background: ORANGE_DIM,
-          }}
-        >
+        <div className={styles.trackWrap} style={{ width: 600 }}>
           <svg width={600} height={300} viewBox="0 0 600 300">
             {trackSvg}
           </svg>
         </div>
 
         {/* 4. 2×2 data cards */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 12,
-            width: 600,
-            marginTop: 28,
-          }}
-        >
+        <div className={styles.dataCardGrid}>
           {[
             { label: '总次数', value: `${totalRuns}`, unit: '次' },
             {
@@ -231,57 +162,18 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
             { label: '平均配速', value: avgPace, unit: '/km' },
             { label: '最佳配速', value: bestPace, unit: '/km' },
           ].map((item) => (
-            <div
-              key={item.label}
-              style={{
-                background: ORANGE_DIM,
-                borderRadius: 12,
-                padding: '16px 20px',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 12,
-                  color: 'rgba(255,255,255,0.4)',
-                  marginBottom: 4,
-                }}
-              >
-                {item.label}
-              </div>
-              <div
-                style={{
-                  fontSize: 28,
-                  fontWeight: 700,
-                  color: '#fff',
-                  lineHeight: 1.2,
-                }}
-              >
+            <div key={item.label} className={styles.dataCard}>
+              <div className={styles.dataCardLabel}>{item.label}</div>
+              <div className={styles.dataCardValue}>
                 {item.value}
-                <span
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 400,
-                    color: 'rgba(255,255,255,0.5)',
-                    marginLeft: 4,
-                  }}
-                >
-                  {item.unit}
-                </span>
+                <span className={styles.dataCardUnit}>{item.unit}</span>
               </div>
             </div>
           ))}
         </div>
 
         {/* 5. QR code */}
-        <div
-          style={{
-            marginTop: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-            paddingTop: 24,
-          }}
-        >
+        <div className={styles.qrSection}>
           <QRCodeSVG
             value="https://myselfup.top"
             size={80}
@@ -289,39 +181,13 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
             fgColor="#fff"
           />
           <div>
-            <div
-              style={{
-                fontSize: 13,
-                color: 'rgba(255,255,255,0.5)',
-                lineHeight: 1.5,
-              }}
-            >
-              扫码关注公众号
-            </div>
-            <div
-              style={{
-                fontSize: 11,
-                color: 'rgba(255,255,255,0.3)',
-                marginTop: 2,
-              }}
-            >
-              获取更多运动数据
-            </div>
+            <div className={styles.qrText1}>扫码关注公众号</div>
+            <div className={styles.qrText2}>获取更多运动数据</div>
           </div>
         </div>
 
         {/* 6. Footer */}
-        <div
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            paddingTop: 20,
-            marginTop: 16,
-            borderTop: `1px solid ${ORANGE_DIM}`,
-            fontSize: 11,
-            color: 'rgba(255,255,255,0.25)',
-          }}
-        >
+        <div className={styles.footer}>
           myselfup.top · {new Date().toLocaleDateString('zh-CN')}
         </div>
       </div>

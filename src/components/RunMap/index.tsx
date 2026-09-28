@@ -542,4 +542,9 @@ const RunMap = ({
   );
 };
 
-export default RunMap;
+// React.memo 包裹：RunMap 内部重渲染昂贵（mapbox-gl + 多组件）
+// 浅比较 props, 父组件传稳定引用时（useCallback 包裹）能跳过整树重渲染
+// 见 index.tsx 用 useCallback 包裹 locateActivity / setViewState
+const MemoizedRunMap = React.memo(RunMap);
+MemoizedRunMap.displayName = 'RunMap';
+export default MemoizedRunMap;

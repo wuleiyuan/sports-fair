@@ -29,6 +29,78 @@ import {
   RunIds,
 } from '@/utils/utils';
 import { useTheme, useThemeChangeCounter } from '@/hooks/useTheme';
+import SportCard from '@/components/SportCard';
+import { SPORT_BY_KEY, normalizeSportType } from '@/utils/sportTypes';
+import { convertMovingTime2Sec } from '@/utils/utils';
+import activitiesRaw from '@/static/activities.json';
+
+// 用户最爱运动：按 count 算最高；聚合 elevation + weighted pace 给 SportCard
+const favoriteSportStats = (() => {
+  const stats: Record<
+    string,
+    {
+      count: number;
+      totalDistance: number;
+      totalTime: number;
+      totalReps: number;
+      totalElevation: number;
+      totalSpeedWeighted: number;
+      lastDate?: string;
+    }
+  > = {};
+  (activitiesRaw as unknown[] as Array<Record<string, unknown>>).forEach((act) => {
+    const key = normalizeSportType((act.type as string) ?? '', (act.name as string) ?? '');
+    if (!stats[key]) {
+      stats[key] = {
+        count: 0,
+        totalDistance: 0,
+        totalTime: 0,
+        totalReps: 0,
+        totalElevation: 0,
+        totalSpeedWeighted: 0,
+      };
+    }
+    const dist = (act.distance as number) || 0;
+    stats[key].count++;
+    stats[key].totalDistance += dist;
+    stats[key].totalTime += convertMovingTime2Sec(((act.moving_time as string) || '0'));
+    const reps = act.reps as number | undefined;
+    if (typeof reps === 'number' && reps > 0) stats[key].totalReps += reps;
+    const elev = act.elevation_gain as number | undefined;
+    if (typeof elev === 'number' && elev > 0) stats[key].totalElevation += elev;
+    const speed = act.average_speed as number | undefined;
+    if (typeof speed === 'number' && speed > 0 && dist > 0) {
+      stats[key].totalSpeedWeighted += speed * dist;
+    }
+    const date = (act.start_date_local as string) || (act.start_date as string);
+    if (!stats[key].lastDate || (date && date > stats[key].lastDate)) {
+      stats[key].lastDate = date;
+    }
+  });
+  let maxKey: string | null = null;
+  let maxCount = 0;
+  for (const [k, v] of Object.entries(stats)) {
+    if (v.count > maxCount) {
+      maxCount = v.count;
+      maxKey = k;
+    }
+  }
+  if (!maxKey) return null;
+  const s = stats[maxKey];
+  const avgSpeed = s.totalDistance > 0 ? s.totalSpeedWeighted / s.totalDistance : 0;
+  const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
+  return {
+    sport: SPORT_BY_KEY[maxKey],
+    count: s.count,
+    totalDistance: s.totalDistance,
+    totalTime: s.totalTime,
+    totalReps: s.totalReps,
+    totalElevation: s.totalElevation,
+    avgPace,
+    totalFloors: s.totalReps,
+    lastDate: s.lastDate,
+  };
+})();
 
 // Static nav config — hoisted to module scope so it's not re-allocated on every render.
 // Equivalent to useMemo([]) but cheaper.
@@ -428,6 +500,27 @@ const Index = () => {
               <span>GitHub</span>
             </a>
           </nav>
+
+          {/* 用户最爱运动 — 用 SportCard 显示 priorityMetrics 优先级指标 */}
+          {favoriteSportStats && (
+            <div className="mt-6 max-w-md">
+              <div className="text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                {IS_CHINESE ? '你的最爱' : 'Your favorite'}
+              </div>
+              <SportCard
+                sport={favoriteSportStats.sport}
+                count={favoriteSportStats.count}
+                totalDistance={favoriteSportStats.totalDistance}
+                totalTime={favoriteSportStats.totalTime}
+                totalReps={favoriteSportStats.totalReps}
+                totalElevation={favoriteSportStats.totalElevation}
+                avgPace={favoriteSportStats.avgPace}
+                totalFloors={favoriteSportStats.totalFloors}
+                lastDate={favoriteSportStats.lastDate}
+                href={`/sports/${favoriteSportStats.sport.key}`}
+              />
+            </div>
+          )}
         </section>
 
         <div className="flex flex-wrap">
