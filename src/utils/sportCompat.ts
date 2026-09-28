@@ -201,8 +201,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     unitLabel: 'km',
   },
   {
-    priorityMetrics: ['distance', 'duration', 'pace'],
   key: 'Swim',
+    priorityMetrics: ['distance', 'duration', 'pace'],
     label: '游泳',
     emoji: '🏊',
     color: '#5ac8fa',
@@ -223,8 +223,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 力量 / 器械 / 健身 ===
   {
-    priorityMetrics: ['duration', 'reps'],
   key: 'Strength',
+    priorityMetrics: ['duration', 'reps'],
     label: '力量训练',
     emoji: '💪',
     color: '#f97316',
@@ -301,8 +301,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 有氧器械 ===
   {
-    priorityMetrics: ['distance', 'duration', 'pace'],
   key: 'Elliptical',
+    priorityMetrics: ['distance', 'duration', 'pace'],
     label: '椭圆机',
     emoji: '⭕',
     color: '#60a5fa',
@@ -502,8 +502,8 @@ export const SPORT_COMPAT: SportCompat[] = [
   },
   // === 极限 / 水上 / 雪上 ===
   {
-    priorityMetrics: ['distance', 'elevation', 'duration'],
   key: 'Skiing',
+    priorityMetrics: ['distance', 'elevation', 'duration'],
     label: '滑雪',
     emoji: '⛷️',
     color: '#0ea5e9',
@@ -563,8 +563,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     unitLabel: 'km',
   },
   {
-    priorityMetrics: ['distance', 'duration'],
   key: 'Golf',
+    priorityMetrics: ['distance', 'duration'],
     label: '高尔夫',
     emoji: '⛳',
     color: '#16a34a',

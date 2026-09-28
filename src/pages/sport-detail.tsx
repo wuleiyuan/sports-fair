@@ -205,29 +205,51 @@ const SportDetail = () => {
           ))}
         </div>
 
-        {/* 统计卡片行 - 6 个 */}
+        {/* 统计卡片行 - 按 priorityMetrics 显示（运动感知）*/}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
           <StatBox label="总次数" value={`${stats.count} 次`} color={sport.color} />
-          <StatBox
-            label="总距离"
-            value={`${(stats.totalDist / 1000).toFixed(1)} km`}
-            color={sport.color}
-          />
-          <StatBox
-            label="总时长"
-            value={formatTimeLong(stats.totalTime)}
-            color={sport.color}
-          />
-          <StatBox
-            label="平均距离"
-            value={`${stats.avgDist.toFixed(1)} km`}
-            color={sport.color}
-          />
-          <StatBox
-            label="平均配速"
-            value={stats.avgPace || '—'}
-            color={sport.color}
-          />
+          {sport.priorityMetrics.includes('distance') && (
+            <StatBox
+              label="总距离"
+              value={`${(stats.totalDist / 1000).toFixed(1)} km`}
+              color={sport.color}
+            />
+          )}
+          {sport.priorityMetrics.includes('duration') && (
+            <StatBox
+              label="总时长"
+              value={formatTimeLong(stats.totalTime)}
+              color={sport.color}
+            />
+          )}
+          {sport.priorityMetrics.includes('pace') && (
+            <StatBox
+              label="平均配速"
+              value={stats.avgPace || '—'}
+              color={sport.color}
+            />
+          )}
+          {sport.priorityMetrics.includes('elevation') && (
+            <StatBox
+              label="总海拔"
+              value={stats.totalElev ? `${Math.round(stats.totalElev)} m` : '—'}
+              color={sport.color}
+            />
+          )}
+          {sport.priorityMetrics.includes('floors') && (
+            <StatBox
+              label="总楼层"
+              value={stats.totalReps ? `${stats.totalReps} 层` : '—'}
+              color={sport.color}
+            />
+          )}
+          {sport.priorityMetrics.includes('reps') && (
+            <StatBox
+              label={`总${sport.unitLabel || '次数'}`}
+              value={stats.totalReps ? `${stats.totalReps}` : '—'}
+              color={sport.color}
+            />
+          )}
           <StatBox
             label="平均心率"
             value={stats.avgHR ? `${stats.avgHR} bpm` : '—'}
@@ -238,7 +260,13 @@ const SportDetail = () => {
         {/* 趋势图 */}
         {trendData.length > 0 && (
           <div className="mb-8 rounded-2xl p-5" style={{ backgroundColor: `${sport.color}0a`, border: `1px solid ${sport.color}22` }}>
-            <h2 className="text-lg font-medium text-white mb-3">距离趋势</h2>
+            <h2 className="text-lg font-medium text-white mb-3">
+              {sport.priorityMetrics.includes('elevation') && stats.totalElev
+                ? '海拔趋势'
+                : sport.priorityMetrics.includes('reps') && !sport.priorityMetrics.includes('distance')
+                ? `${sport.unitLabel || '次数'}趋势`
+                : '距离趋势'}
+            </h2>
             <div style={{ width: '100%', height: 200 }}>
               <ResponsiveContainer>
                 <AreaChart data={trendData} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>

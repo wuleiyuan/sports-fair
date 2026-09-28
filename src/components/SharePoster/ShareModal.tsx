@@ -2,6 +2,7 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import Poster from './Poster';
 import { Activity } from '@/utils/utils';
+import styles from './style.module.css';
 
 interface ShareModalProps {
   open: boolean;
@@ -83,56 +84,14 @@ export default function ShareModal({
   if (!open) return null;
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.7)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 9999,
-        padding: 16,
-      }}
-      onClick={onClose}
-    >
+    <div className={styles.overlay} onClick={onClose}>
       {/* Toast */}
-      {toast && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 20,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            background: '#333',
-            color: '#fff',
-            padding: '8px 20px',
-            borderRadius: 8,
-            fontSize: 14,
-            zIndex: 10001,
-          }}
-        >
-          {toast}
-        </div>
-      )}
+      {toast && <div className={styles.toast}>{toast}</div>}
 
       {/* Poster preview (scaled down) */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          maxWidth: 360,
-          width: '100%',
-          borderRadius: 12,
-          overflow: 'hidden',
-          boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
-          transform: 'scale(1)',
-          transformOrigin: 'center center',
-          marginBottom: 16,
-        }}
-      >
+      <div className={styles.posterFrame} onClick={(e) => e.stopPropagation()}>
         {posterLoaded && (
-          <div style={{ transform: 'scale(0.333)', transformOrigin: 'top left', width: 3240, height: 5760 }}>
+          <div className={styles.posterInner}>
             <Poster
               ref={posterRef}
               activities={activities}
@@ -147,53 +106,21 @@ export default function ShareModal({
       </div>
 
       {/* Buttons */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}
-      >
+      <div className={styles.buttons} onClick={(e) => e.stopPropagation()}>
         <button
           onClick={handleSave}
           disabled={saving}
-          style={{
-            padding: '12px 32px',
-            borderRadius: 10,
-            border: 'none',
-            background: '#F59E0B',
-            color: '#000',
-            fontSize: 16,
-            fontWeight: 600,
-            cursor: saving ? 'not-allowed' : 'pointer',
-            opacity: saving ? 0.6 : 1,
-          }}
+          className={styles.buttonPrimary}
         >
           {saving ? '生成中...' : '保存图片'}
         </button>
-        <button
-          onClick={handleCopyLink}
-          style={{
-            padding: '12px 32px',
-            borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.2)',
-            background: 'transparent',
-            color: '#fff',
-            fontSize: 16,
-            fontWeight: 600,
-            cursor: 'pointer',
-          }}
-        >
+        <button onClick={handleCopyLink} className={styles.buttonSecondary}>
           复制链接
         </button>
       </div>
 
       {/* Mobile hint */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          color: 'rgba(255,255,255,0.4)',
-          fontSize: 12,
-          marginTop: 12,
-        }}
-      >
+      <div className={styles.hint} onClick={(e) => e.stopPropagation()}>
         长按图片可保存 / 转发
       </div>
     </div>
