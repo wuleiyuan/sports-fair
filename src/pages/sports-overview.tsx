@@ -31,15 +31,29 @@ const CATEGORY_TABS: { id: Category; label: string }[] = [
 
 const CATEGORY_BY_KEY: Record<string, Category> = {
   // 有氧
-  Run: 'aerobic', Walk: 'aerobic', Ride: 'aerobic', Hiking: 'aerobic',
-  Elliptical: 'aerobic', Rowing: 'aerobic',
+  Run: 'aerobic',
+  Walk: 'aerobic',
+  Ride: 'aerobic',
+  Hiking: 'aerobic',
+  Elliptical: 'aerobic',
+  Rowing: 'aerobic',
   // 力量 / 核心
-  Strength: 'strength', Core: 'strength', Yoga: 'strength', StairStepper: 'strength',
+  Strength: 'strength',
+  Core: 'strength',
+  Yoga: 'strength',
+  StairStepper: 'strength',
   RopeSkipping: 'strength',
   // 球类 / 搏击
-  Soccer: 'ball', Basketball: 'ball', Tennis: 'ball', Boxing: 'ball', Golf: 'ball',
+  Soccer: 'ball',
+  Basketball: 'ball',
+  Tennis: 'ball',
+  Boxing: 'ball',
+  Golf: 'ball',
   // 水上 / 极限
-  Swim: 'extreme', Skiing: 'extreme', Surfing: 'extreme', Wheelchair: 'extreme',
+  Swim: 'extreme',
+  Skiing: 'extreme',
+  Surfing: 'extreme',
+  Wheelchair: 'extreme',
   Other: 'extreme',
 };
 
@@ -63,18 +77,45 @@ function formatLongNumber(n: number): string {
 
 interface SportStats {
   count: number;
-  totalDistance: number;        // 米
-  totalTime: number;            // 秒
+  totalDistance: number; // 米
+  totalTime: number; // 秒
   totalReps: number;
-  totalElevation: number;       // 米
-  totalSpeedWeighted: number;   // m/s · m
+  totalElevation: number; // 米
+  totalSpeedWeighted: number; // m/s · m
   lastDate?: string;
   /** 最近 30 天按 displayMetric 的每日聚合 */
   sparkline: number[];
 }
 
 const DAYS_IN_SPARK = 30;
-const REF_DATE_ISO = '2026-09-28'; // 用作"今天"的参考日期（mock 数据时间）
+
+// ====== 数据时效（从 activities.json 真实推导，不再硬编码） ======
+// 2026-09-28 修复：之前硬编码 REF_DATE_ISO='2026-09-28'，导致：
+//   - subtitle 显示"09-28 的每一步"但实际数据停在 09-15
+//   - Sparkline 锚定 09-28，13 天前的位置也会被填（看起来有数据其实是 gap）
+//   - footer 用 new Date() 显示"最近更新今天"——撒谎
+const DATA_LATEST_ISO: string = (() => {
+  let max = '';
+  (activities as Activity[]).forEach((a) => {
+    const d = a.start_date_local || a.start_date;
+    if (d) {
+      const day = d.slice(0, 10);
+      if (day > max) max = day;
+    }
+  });
+  return max;
+})();
+
+const NOW_ISO: string = new Date().toISOString().slice(0, 10);
+
+const STALE_DAYS: number = (() => {
+  if (!DATA_LATEST_ISO) return 0;
+  const ms = new Date(NOW_ISO).getTime() - new Date(DATA_LATEST_ISO).getTime();
+  return Math.max(0, Math.floor(ms / 86400000));
+})();
+
+const IS_STALE = STALE_DAYS >= 7; // 超过 7 天提示
+const IS_VERY_STALE = STALE_DAYS >= 14; // 超过 14 天强烈提示
 
 // ====== 主组件 ======
 
@@ -143,12 +184,15 @@ const SportsOverview = () => {
       }
 
       // === sparkline 填充 ===
-      // 计算日期距 REF_DATE 的天数（0 = 今天，29 = 30 天前）
+      // 计算日期距今天 (new Date()) 的天数（0 = 今天，29 = 30 天前）
+      // 改用真实今天而非硬编码 REF_DATE_ISO，让 stale 期的空缺如实呈现
       if (date) {
         const dayStr = date.slice(0, 10);
         const dayDate = new Date(dayStr);
-        const refDate = new Date(REF_DATE_ISO);
-        const diffDays = Math.floor((refDate.getTime() - dayDate.getTime()) / 86400000);
+        const refDate = new Date();
+        const diffDays = Math.floor(
+          (refDate.getTime() - dayDate.getTime()) / 86400000
+        );
         if (diffDays >= 0 && diffDays < DAYS_IN_SPARK) {
           const idx = DAYS_IN_SPARK - 1 - diffDays; // 数组末位 = 今天
           // 按 sport 的 displayMetric 决定聚合维度
@@ -174,7 +218,10 @@ const SportsOverview = () => {
     let prevDate: Date | null = null;
     sortedDays.forEach((d) => {
       const cur = new Date(d);
-      if (prevDate && Math.floor((cur.getTime() - prevDate.getTime()) / 86400000) === 1) {
+      if (
+        prevDate &&
+        Math.floor((cur.getTime() - prevDate.getTime()) / 86400000) === 1
+      ) {
         currentStreak += 1;
       } else {
         currentStreak = 1;
@@ -193,23 +240,43 @@ const SportsOverview = () => {
       }
     });
 
-    return { sportStats: stats, sparkByKey: sparks, longestStreak, topSportKey };
+    return {
+      sportStats: stats,
+      sparkByKey: sparks,
+      longestStreak,
+      topSportKey,
+    };
   }, []);
 
   // === 总体 KPI ===
   const totalKPI = useMemo(() => {
-    const totalCount = Object.values(sportStats).reduce((s, v) => s + v.count, 0);
-    const totalDist = Object.values(sportStats).reduce((s, v) => s + v.totalDistance, 0);
-    const totalTime = Object.values(sportStats).reduce((s, v) => s + v.totalTime, 0);
-    const activeSports = SPORT_TYPES.filter((s) => sportStats[s.key]?.count > 0).length;
+    const totalCount = Object.values(sportStats).reduce(
+      (s, v) => s + v.count,
+      0
+    );
+    const totalDist = Object.values(sportStats).reduce(
+      (s, v) => s + v.totalDistance,
+      0
+    );
+    const totalTime = Object.values(sportStats).reduce(
+      (s, v) => s + v.totalTime,
+      0
+    );
+    const activeSports = SPORT_TYPES.filter(
+      (s) => sportStats[s.key]?.count > 0
+    ).length;
     return { totalCount, totalDist, totalTime, activeSports };
   }, [sportStats]);
 
   // === 排序 + 分类过滤 ===
   const sortedSports = useMemo(() => {
-    const withData = SPORT_TYPES.filter((s) => (sportStats[s.key]?.count || 0) > 0);
-    const withoutData = SPORT_TYPES.filter((s) => (sportStats[s.key]?.count || 0) === 0);
-    withData.sort((a, b) => (sportStats[b.key].count - sportStats[a.key].count));
+    const withData = SPORT_TYPES.filter(
+      (s) => (sportStats[s.key]?.count || 0) > 0
+    );
+    const withoutData = SPORT_TYPES.filter(
+      (s) => (sportStats[s.key]?.count || 0) === 0
+    );
+    withData.sort((a, b) => sportStats[b.key].count - sportStats[a.key].count);
     const combined = [...withData, ...withoutData];
 
     if (activeCategory === 'all') return combined;
@@ -219,7 +286,11 @@ const SportsOverview = () => {
   // === 各分类计数（用于 tab 角标） ===
   const categoryCounts = useMemo(() => {
     const counts: Record<Category, number> = {
-      all: 0, aerobic: 0, strength: 0, ball: 0, extreme: 0,
+      all: 0,
+      aerobic: 0,
+      strength: 0,
+      ball: 0,
+      extreme: 0,
     };
     SPORT_TYPES.forEach((s) => {
       counts.all += 1;
@@ -230,7 +301,9 @@ const SportsOverview = () => {
   }, []);
 
   // === top sport 配置（用于 Hero 第 4 张卡） ===
-  const topSportConfig = topSportKey ? SPORT_TYPES.find((s) => s.key === topSportKey) : null;
+  const topSportConfig = topSportKey
+    ? SPORT_TYPES.find((s) => s.key === topSportKey)
+    : null;
 
   return (
     <Layout>
@@ -242,19 +315,54 @@ const SportsOverview = () => {
         {/* === 页头 === */}
         <header className={styles.header}>
           <div className={styles.crumbs}>
-            <Link to="/" className={styles.crumbLink}>← 回到主页</Link>
+            <Link to="/" className={styles.crumbLink}>
+              ← 回到主页
+            </Link>
           </div>
           <div className={styles.titleRow}>
             <div>
               <h1 className={styles.title}>运动总览</h1>
               <p className={styles.subtitle}>
-                {REF_DATE_ISO} 的每一步 · {SPORT_TYPES.length} 种运动类型 · {totalKPI.activeSports} 项有数据 ·{' '}
-                共 {totalKPI.totalCount.toLocaleString()} 次活动
+                截至 {DATA_LATEST_ISO || '暂无数据'} · {SPORT_TYPES.length}{' '}
+                种运动类型 · {totalKPI.activeSports} 项有数据 · 共{' '}
+                {totalKPI.totalCount.toLocaleString()} 次活动
+                {IS_STALE && (
+                  <span
+                    className={
+                      IS_VERY_STALE ? styles.staleWarn : styles.staleHint
+                    }
+                  >
+                    {' '}
+                    · 已 {STALE_DAYS} 天未更新
+                  </span>
+                )}
               </p>
             </div>
-            <div className={styles.titleBadge}>
-              <span className={styles.titleBadgeDot} />
-              <span>实时同步</span>
+            <div
+              className={`${styles.titleBadge} ${
+                IS_VERY_STALE
+                  ? styles.titleBadgeStale
+                  : IS_STALE
+                    ? styles.titleBadgeWarn
+                    : ''
+              }`}
+            >
+              <span
+                className={
+                  IS_VERY_STALE
+                    ? styles.titleBadgeDotStale
+                    : IS_STALE
+                      ? styles.titleBadgeDotWarn
+                      : styles.titleBadgeDot
+                }
+              />
+              <span>
+                {IS_VERY_STALE
+                  ? `数据滞后 ${STALE_DAYS} 天`
+                  : IS_STALE
+                    ? `待同步 · ${STALE_DAYS} 天前`
+                    : '实时同步'}
+              </span>
             </div>
           </div>
         </header>
@@ -312,7 +420,10 @@ const SportsOverview = () => {
                 borderColor: `${topSportConfig.color}55`,
               }}
             >
-              <div className={styles.kpiLabel} style={{ color: topSportConfig.color }}>
+              <div
+                className={styles.kpiLabel}
+                style={{ color: topSportConfig.color }}
+              >
                 #1 运动
               </div>
               <div className={styles.kpiValue}>
@@ -321,7 +432,9 @@ const SportsOverview = () => {
               </div>
               <div className={styles.kpiFoot}>
                 <span className={styles.kpiIcon}>⭐</span>
-                <span>{formatLongNumber(sportStats[topSportKey].count)} 次活动</span>
+                <span>
+                  {formatLongNumber(sportStats[topSportKey].count)} 次活动
+                </span>
               </div>
             </article>
           )}
@@ -360,7 +473,10 @@ const SportsOverview = () => {
                 totalSpeedWeighted: 0,
                 sparkline: new Array(DAYS_IN_SPARK).fill(0),
               };
-              const avgSpeed = stat.totalDistance > 0 ? stat.totalSpeedWeighted / stat.totalDistance : 0;
+              const avgSpeed =
+                stat.totalDistance > 0
+                  ? stat.totalSpeedWeighted / stat.totalDistance
+                  : 0;
               const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
               return (
                 <SportCard
@@ -384,7 +500,24 @@ const SportsOverview = () => {
 
         {/* === 底部说明 === */}
         <footer className={styles.footer}>
-          <p>数据源：Strava + Keep + Apple HealthKit · 最近更新 {new Date().toLocaleDateString('zh-CN')}</p>
+          <p>
+            数据源：Strava + Keep + Apple HealthKit ·{' '}
+            {IS_STALE ? (
+              <>
+                <span
+                  className={
+                    IS_VERY_STALE ? styles.staleWarn : styles.staleHint
+                  }
+                >
+                  最新活动 {DATA_LATEST_ISO}（{STALE_DAYS} 天前）
+                </span>{' '}
+                · 建议在本地执行 <code>pnpm run data:download:garmin</code> +{' '}
+                <code>python3 run_page/keep_sync.py</code> 拉取
+              </>
+            ) : (
+              <>最新活动 {DATA_LATEST_ISO}</>
+            )}
+          </p>
         </footer>
       </div>
     </Layout>

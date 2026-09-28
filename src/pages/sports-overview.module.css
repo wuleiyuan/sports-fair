@@ -8,9 +8,16 @@
   margin: 0 auto;
   padding: 1.5rem 1.5rem 3rem;
   color: rgba(255, 255, 255, 0.92);
-  background:
-    radial-gradient(1200px 600px at 0% 0%, rgba(94, 176, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(1200px 600px at 100% 0%, rgba(192, 132, 252, 0.06) 0%, transparent 50%),
+  background: radial-gradient(
+      1200px 600px at 0% 0%,
+      rgba(94, 176, 255, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      1200px 600px at 100% 0%,
+      rgba(192, 132, 252, 0.06) 0%,
+      transparent 50%
+    ),
     linear-gradient(180deg, #050505 0%, #0a0a0c 100%);
   border-radius: 0;
 }
@@ -89,9 +96,75 @@
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* 2026-09-28 新增：数据时效状态样式（避免"实时同步"撒谎） */
+.titleBadgeDotWarn {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff9f0a;
+  box-shadow: 0 0 0 3px rgba(255, 159, 10, 0.2);
+  animation: pulseWarn 2.4s ease-in-out infinite;
+}
+
+.titleBadgeDotStale {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff453a;
+  box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.22);
+  animation: pulseStale 1.6s ease-in-out infinite;
+}
+
+.titleBadgeWarn {
+  border-color: rgba(255, 159, 10, 0.32) !important;
+  background: rgba(255, 159, 10, 0.08) !important;
+  color: rgba(255, 200, 120, 0.85) !important;
+}
+
+.titleBadgeStale {
+  border-color: rgba(255, 69, 58, 0.42) !important;
+  background: rgba(255, 69, 58, 0.1) !important;
+  color: rgba(255, 130, 120, 0.92) !important;
+}
+
+@keyframes pulseWarn {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(255, 159, 10, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(255, 159, 10, 0.05);
+  }
+}
+
+@keyframes pulseStale {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.22);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 69, 58, 0.04);
+  }
+}
+
+.staleHint {
+  color: rgba(255, 200, 120, 0.78);
+  font-weight: 500;
+}
+
+.staleWarn {
+  color: rgba(255, 130, 120, 0.92);
+  font-weight: 600;
+}
+
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.2); }
-  50% { box-shadow: 0 0 0 5px rgba(48, 209, 88, 0.05); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(48, 209, 88, 0.05);
+  }
 }
 
 /* ===== Hero KPI 4 cards ===== */
@@ -112,7 +185,8 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   overflow: hidden;
   isolation: isolate;
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+  transition:
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 320ms ease,
     box-shadow 320ms ease;
   min-height: 130px;
@@ -147,11 +221,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    currentColor 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, currentColor 0%, transparent 70%);
   opacity: 0.12;
   z-index: -1;
   filter: blur(20px);
@@ -164,9 +234,15 @@
 }
 
 /* KPI 各卡自定义主色（via ::after color） */
-.kpiDistance { color: #5ac8fa; }
-.kpiDuration { color: #c084fc; }
-.kpiStreak   { color: #ff9f0a; }
+.kpiDistance {
+  color: #5ac8fa;
+}
+.kpiDuration {
+  color: #c084fc;
+}
+.kpiStreak {
+  color: #ff9f0a;
+}
 
 .kpiLabel {
   font-size: 0.75rem;
@@ -255,8 +331,9 @@
 .tabActive {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
-              0 4px 12px -6px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 4px 12px -6px rgba(0, 0, 0, 0.5);
 }
 
 .tabActive:hover {
