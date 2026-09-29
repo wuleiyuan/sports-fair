@@ -39,6 +39,16 @@ KEEP2STRAVA = {
     "mountaineering": "Hiking",
     "stairClimbing": "StairStepper",
 }
+# Keep API 不对称：stats 列表用长名 (outdoorRunning)，detail 日志用短名 (running)
+# R1 之后 stats 通 / detail 炸 ('NoneType' object is not subscriptable) — 因为
+# detail URL 拼出 outdoorRunninglog/... 是 Keep 不存在的 endpoint
+KEEP_SPORT_TYPE_FOR_LOG_API = {
+    "outdoorRunning": "running",
+    "mountaineering": "hiking",
+    "outdoorCycling": "cycling",
+    "outdoorWalking": "outdoorWalking",
+    "stairClimbing": "stairClimbing",
+}
 KEEP2TCX = {
     "outdoorWalking": "Walking",
     "outdoorRunning": "Running",
@@ -293,7 +303,9 @@ def get_all_keep_tracks(
         for run in runs:
             print(f"parsing keep id {run}")
             try:
-                run_data = get_single_run_data(s, headers, run, api)
+                # detail API 用短名 (Keep 不对称: outdoorRunninglog/... 不存在)
+                log_api = KEEP_SPORT_TYPE_FOR_LOG_API.get(api, api)
+                run_data = get_single_run_data(s, headers, run, log_api)
                 track = parse_raw_data_to_nametuple(
                     run_data, old_gpx_ids, old_tcx_ids, with_gpx, with_tcx
                 )
