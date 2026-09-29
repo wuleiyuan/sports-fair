@@ -61,6 +61,7 @@
 }
 
 .trackWrap {
+  width: 600px;
   height: 300px;
   margin-top: 24px;
   border-radius: 16px;

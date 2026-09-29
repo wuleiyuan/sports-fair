@@ -144,7 +144,7 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
         </div>
 
         {/* 3. SVG track */}
-        <div className={styles.trackWrap} style={{ width: 600 }}>
+        <div className={styles.trackWrap}>
           <svg width={600} height={300} viewBox="0 0 600 300">
             {trackSvg}
           </svg>

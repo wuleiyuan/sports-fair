@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 /* ===== Apple HIG 设计系统 =====
  * 灵感: Apple Fitness / Health / Weather
  * 字体: SF Pro (系统字体栈) + SF Pro Rounded (数字)
  * 核心: 毛玻璃卡片 · 大圆角 · 层次排版 · 健身环色彩
  */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ---- 暗色变量（Pornhub 橙黑风格） ---- */
 [data-kinetic] {
