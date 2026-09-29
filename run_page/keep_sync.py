@@ -27,7 +27,10 @@ from utils import adjust_time, http_get_with_retry, http_post_with_retry, safe_r
 import xml.etree.ElementTree as ET
 
 # 同步的运动类型列表
-KEEP_SPORT_TYPES = ["running", "hiking", "cycling", "outdoorWalking", "stairClimbing"]
+# 2026-09-29: Keep API 不再接受短名 (running/hiking/cycling),
+# 改为长名 (outdoorRunning/mountaineering/outdoorCycling)。
+# outdoorWalking/stairClimbing 已用长名不受影响。
+KEEP_SPORT_TYPES = ["outdoorRunning", "mountaineering", "outdoorCycling", "outdoorWalking", "stairClimbing"]
 KEEP2STRAVA = {
     "outdoorWalking": "Walk",
     "outdoorRunning": "Run",
