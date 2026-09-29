@@ -5,6 +5,28 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
+## [2.5.3] - 2026-09-29
+
+### 新增
+- **Sport-aware header banner** — `/sports/:key` 详情页根据运动类型动态显示关键指标：hiking 显海拔/坡度，ride 显功率，run 显配速 (`a576776`)
+- `/summary`（个人仪表盘）和 `/sports/:key`（按运动深挖）路由补全到 README 文档
+
+### 修复
+- **sports-overview** 不再撒谎显示数据时效 —— 14 天无新活动时正确显示红色警告而非误导用户 (`035adf4`)
+- **Apple HIG UI polish** —— 进一步打磨 UI 细节 (`5f01883`)
+- **Service Worker 缓存** 升级到 v2.3.1 —— 旧缓存命中检测更严格，避免 stale 响应；Vercel data-sync 触发器加固 (`3d6e0d2`)
+
+### 维护
+- 52 个文件 prettier 格式化 (`a576776`)
+- 2 次 `sync sports data` 自动同步 —— Keep 端无新增活动 (`434c16f`, `5ebe3ff`)
+- 1 次 profile stats SVG 自动更新 `[skip ci]` (`b3f214b`)
+
+### 文档
+- README（中英）Pages 表更新为实际路由 —— 修复错误的 `/stats`、`/activities`、`/recents`；补全 `/summary`、`/sports/:key`
+- `package.json` `repository.url` 修正 —— 由 `yihong0618/running_page` 改为 `wuleiyuan/sports-fair`
+
+---
+
 ## [2.5.2] - 2026-09-28
 
 ### 新增
@@ -42,12 +64,6 @@
 ### 变更
 - **README 重写**: 先展示截图和功能介绍，再放一键部署按钮（展示优先）
 - **中英文 README 同步**: 结构统一
-
-## [未发布]
-
-### 计划中
-- 2024-09~2025-08 缺失数据期（Apple Watch 漏戴根因）
-- `bump_version.sh -y` 自动从 git log 生成 CHANGELOG 段落（目前还要手填）
 
 ## [2.5.0] - 2026-06-20
 
@@ -617,7 +633,6 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - dependabot 关闭
 - Vercel buildCommand 修复
 
-[未发布]: https://github.com/wuleiyuan/sports-fair/compare/v2.5.0...HEAD
 [2.5.0]: https://github.com/wuleiyuan/sports-fair/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/wuleiyuan/sports-fair/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/wuleiyuan/sports-fair/compare/v2.3.5...v2.4.0

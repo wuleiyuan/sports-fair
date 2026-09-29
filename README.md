@@ -142,12 +142,12 @@ Fully automated: GitHub Actions fetches data → updates the database → trigge
 | Page | Path | Description |
 |------|------|-------------|
 | 🏠 Home | `/` | Activity map & timeline — browse all routes on MapLibre |
-| 📊 Stats | `/stats` | Yearly breakdown — distance, duration, elevation, count |
+| 📊 Summary | `/summary` | Personal dashboard — totals, recent activities, key metrics |
+| 📈 Stats | `/sports` | Yearly breakdown — distance, duration, elevation, count |
+| 🎯 Sport Detail | `/sports/:key` | Per-sport deep dive (hiking, ride, run, walk…) with sport-aware metrics |
 | ❤️ Health | `/health` | Apple HealthKit metrics — RHR, HRV, Sleep, Steps |
 | 🩺 Health Assess | `/health-assess` | AI 5-dimension health score & personalized advice |
 | 🏋️ Training | `/training` | ACWR / TSB / HR zone analysis with trend charts |
-| 📋 Activities | `/activities` | Full activity list with filters & search |
-| ⏱️ Recents | `/recents` | Recent activities at a glance |
 
 ---
 
