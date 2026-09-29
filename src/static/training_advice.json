@@ -1,51 +1,42 @@
 {
-  "generated_at": "2026-09-29T04:41:22",
+  "generated_at": "2026-09-29T14:47:58",
   "overall_status": "high_risk",
   "overall_severity": "high",
-  "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足; 数据完整度不足。",
-  "advice_count": 4,
+  "overall_summary": "⚠️ 重点关注: 训练负荷激增（伤病高危）。",
+  "advice_count": 3,
   "advice_items": [
     {
-      "id": "z2_insufficient",
-      "category": "intensity",
-      "severity": "high",
-      "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 15.5%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
-      "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 52.1% + Z2 15.5% = polarized 67.6%"
-    },
-    {
-      "id": "data_completeness",
-      "category": "data",
-      "severity": "high",
-      "title": "数据完整度不足",
-      "description": "以下数据缺口影响建议可信度: 7d 仅 0 天有数据 (目标 ≥ 3); 28d 仅 6 天有数据 (目标 ≥ 7)。",
-      "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
-      "evidence": "7d 0 天 / 28d 6 天 / 90d HR 28 活动"
-    },
-    {
-      "id": "acwr_undertraining",
+      "id": "acwr_high_risk",
       "category": "load",
-      "severity": "medium",
-      "title": "训练负荷不足",
-      "description": "ACWR 0.0 低于 0.8, 28d 慢性基数偏低。",
-      "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 0 TRIMP / 28d 慢性 182.1 TRIMP"
+      "severity": "high",
+      "title": "训练负荷激增（伤病高危）",
+      "description": "ACWR 1.58 超过 1.5 警戒线, 属高危伤病风险窗口。急/慢性训练负荷比偏离 sweet spot。",
+      "action": "立即安排 1-2 天全休或极轻松交叉训练（散步 / 瑜伽 / 拉伸）。本周不安排长距离或高强度间歇。",
+      "evidence": "7d 急性负荷 597.4 TRIMP / 28d 慢性 379.0 TRIMP (7d 5 天有数据 / 28d 13 天有数据)"
     },
     {
-      "id": "polarized_off",
+      "id": "z2_low",
       "category": "intensity",
       "severity": "medium",
-      "title": "训练分布偏离 polarized",
-      "description": "低强度占比 (Z1+Z2) 仅 67.6%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
-      "action": "把中等强度训练替换为轻松有氧。目前 Z4 8.1% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
-      "evidence": "Z1+Z2 = 67.6% (< 70% 阈值)"
+      "title": "Z2 有氧底座可加强",
+      "description": "Z2 占比 25.9%, 有氧基础有提升空间。",
+      "action": "每周增加 1-2 次纯 Z2 训练（45-60 分钟, 全程保持轻松对话配速）。",
+      "evidence": "Z1 51.9% + Z2 25.9% = polarized 77.8%"
+    },
+    {
+      "id": "polarized_ok",
+      "category": "intensity",
+      "severity": "low",
+      "title": "训练分布符合 polarized",
+      "description": "低强度 (Z1+Z2) 占比 77.8%, 符合 polarized 训练 80/20 模型。",
+      "action": "保持当前训练分布, 无需调整。",
+      "evidence": "Z1+Z2 = 77.8% (≥ 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-09-28",
-    "total_activities": 772
+    "latest": "2026-06-09",
+    "total_activities": 558
   },
   "config": {
     "hr_max": 197.0,
