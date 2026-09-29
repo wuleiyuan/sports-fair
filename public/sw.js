@@ -1,5 +1,5 @@
 /**
- * v2.3.0 — Service Worker
+ * v2.3.1 — Service Worker
  *
  * 策略：
  *   1. 静态资源 (HTML/JS/CSS/SVG/images) — stale-while-revalidate
@@ -10,10 +10,17 @@
  *   3. /api/* — network-only（LLM 调用不能 cache 死）
  *   4. 其他 — network-first，失败 fallback 到 cache
  *
- * 版本：sports-fair-v2.3.0
+ * 版本：sports-fair-v2.3.1
  * 升级时改 CACHE_VERSION 即可触发旧 cache 清理
+ *
+ * v2.3.1 (2026-09-29): 升级版本号强制清旧 cache。
+ *   现象：用户报告 activities.json 缓存了 09-15 数据, 但 git 上的 cron sync
+ *   commit (434c16f) 早在 09-28 推上去了。原因是 SW 的 cache-first + 24h TTL
+ *   把 stale 数据封住了, 即使 Vercel 重新 build + 部署新 bundle 也救不回
+ *   老 SW 的缓存。bump CACHE_VERSION 让 SW 检测到版本不匹配 → 删除整个
+ *   STATIC_CACHE + DATA_CACHE → 下次 fetch 拿到最新数据。
  */
-const CACHE_VERSION = 'sports-fair-v2.3.0';
+const CACHE_VERSION = 'sports-fair-v2.3.1';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 

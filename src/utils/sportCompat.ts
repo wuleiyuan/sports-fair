@@ -2,6 +2,13 @@
 // 同一个动作在 5+ 数据源（Strava / Apple HealthKit / Keep / Garmin / GPX / Nike / 中文名）下
 // 不同命名方式都映射到同一个桶。
 //
+// 数据时效说明（2026-09-29 修订）：
+// - 活动数据来自 src/static/activities.json
+// - keep_sync / garmin_sync cron 每天 UTC 0 点跑, 推到 master
+// - Vercel rebuild 时把最新 activities.json 编译进 bundle + 嵌入 SW
+// - SW 端 24h cache-first, 必须 bump CACHE_VERSION 才能强制清旧 cache
+// - 上一次 bump: 2026-09-29 v2.3.0 → v2.3.1 (修"数据卡在 09-15"问题)
+//
 // 数据源说明：
 // - Strava 标准 activity type: Run, Ride, Hike, Walk, Swim, VirtualRun, VirtualRide, ...
 // - Apple HealthKit workout activityType: Running, Walking, Cycling, Hiking, ...
