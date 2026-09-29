@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  type TSBResult,
-  TSB_STATUS_LABEL,
-  tsbStatusAdvice,
-} from './types';
+import { type TSBResult, TSB_STATUS_LABEL, tsbStatusAdvice } from './types';
 import styles from './style.module.css';
 
 interface Props {
@@ -23,7 +19,11 @@ const TSBCard: React.FC<Props> = ({ tsb, generatedAt }) => {
   const tsbPercent = ((tsbClamped - TSB_LOW) / (TSB_HIGH - TSB_LOW)) * 100;
 
   return (
-    <div className={`${styles.card} ${styles.tsbCard}`} role="region" aria-label="TSB 训练状态">
+    <div
+      className={`${styles.card} ${styles.tsbCard}`}
+      role="region"
+      aria-label="TSB 训练状态"
+    >
       <div className={styles.cardHeader}>
         <div>
           <div className={styles.cardKicker}>Coggan · CTL 42d / ATL 7d</div>
@@ -42,11 +42,9 @@ const TSBCard: React.FC<Props> = ({ tsb, generatedAt }) => {
       <div className={styles.tsbMain}>
         {hasData ? (
           <>
-            <div
-              className={styles.tsbNumber}
-              style={{ color: badge.color }}
-            >
-              {tsb.tsb > 0 ? '+' : ''}{tsb.tsb.toFixed(1)}
+            <div className={styles.tsbNumber} style={{ color: badge.color }}>
+              {tsb.tsb > 0 ? '+' : ''}
+              {tsb.tsb.toFixed(1)}
             </div>
             <div className={styles.tsbLabel}>
               <span>TSB</span>
@@ -56,9 +54,7 @@ const TSBCard: React.FC<Props> = ({ tsb, generatedAt }) => {
         ) : (
           <div className={styles.tsbEmpty}>
             <div className={styles.tsbNumberMuted}>—</div>
-            <div className={styles.tsbEmptyHint}>
-              数据不足以计算训练状态
-            </div>
+            <div className={styles.tsbEmptyHint}>数据不足以计算训练状态</div>
           </div>
         )}
       </div>
@@ -67,11 +63,26 @@ const TSBCard: React.FC<Props> = ({ tsb, generatedAt }) => {
       <div className={styles.tsbScaleWrap}>
         <div className={styles.tsbScaleLabel}>疲劳 ← 训练状态 → 恢复</div>
         <div className={styles.tsbScale}>
-          <div className={styles.tsbScaleSeg} style={{ flex: 3, backgroundColor: '#ef4444' }} />
-          <div className={styles.tsbScaleSeg} style={{ flex: 2, backgroundColor: '#f97316' }} />
-          <div className={styles.tsbScaleSeg} style={{ flex: 4, backgroundColor: '#6366f1' }} />
-          <div className={styles.tsbScaleSeg} style={{ flex: 2, backgroundColor: '#22c55e' }} />
-          <div className={styles.tsbScaleSeg} style={{ flex: 4, backgroundColor: '#22c55e' }} />
+          <div
+            className={styles.tsbScaleSeg}
+            style={{ flex: 3, backgroundColor: '#ef4444' }}
+          />
+          <div
+            className={styles.tsbScaleSeg}
+            style={{ flex: 2, backgroundColor: '#f97316' }}
+          />
+          <div
+            className={styles.tsbScaleSeg}
+            style={{ flex: 4, backgroundColor: '#6366f1' }}
+          />
+          <div
+            className={styles.tsbScaleSeg}
+            style={{ flex: 2, backgroundColor: '#22c55e' }}
+          />
+          <div
+            className={styles.tsbScaleSeg}
+            style={{ flex: 4, backgroundColor: '#22c55e' }}
+          />
         </div>
         <div className={styles.tsbScaleLabels}>
           <span style={{ color: '#ef4444' }}>-30</span>
@@ -122,7 +133,8 @@ const TSBCard: React.FC<Props> = ({ tsb, generatedAt }) => {
 
       {/* Footer */}
       <div className={styles.cardFooter}>
-        TSB 更新于 {new Date(generatedAt).toLocaleString('zh-CN', { hour12: false })}
+        TSB 更新于{' '}
+        {new Date(generatedAt).toLocaleString('zh-CN', { hour12: false })}
       </div>
     </div>
   );

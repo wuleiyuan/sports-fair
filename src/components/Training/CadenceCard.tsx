@@ -20,10 +20,19 @@ const CadenceCard: React.FC<Props> = ({ cadence, note, activityCount = 0 }) => {
 
   // 步频评估 (spm = steps per minute)
   // 跑步步频 < 170 风险 / 目标 175-180 spm / > 190 短步高频
-  const evalCadence = (spm: number): { text: string; color: string; hint: string } => {
-    if (spm < 165) return { text: '步频偏低', color: '#ef4444', hint: '风险：垂直振幅大、冲击高' };
-    if (spm < 175) return { text: '可提升', color: '#f59e0b', hint: '目标 175+ spm' };
-    if (spm < 185) return { text: '✓ 理想', color: '#22c55e', hint: '经济性最佳区间' };
+  const evalCadence = (
+    spm: number
+  ): { text: string; color: string; hint: string } => {
+    if (spm < 165)
+      return {
+        text: '步频偏低',
+        color: '#ef4444',
+        hint: '风险：垂直振幅大、冲击高',
+      };
+    if (spm < 175)
+      return { text: '可提升', color: '#f59e0b', hint: '目标 175+ spm' };
+    if (spm < 185)
+      return { text: '✓ 理想', color: '#22c55e', hint: '经济性最佳区间' };
     return { text: '偏高', color: '#3b82f6', hint: '可能步幅过小' };
   };
 
@@ -38,9 +47,7 @@ const CadenceCard: React.FC<Props> = ({ cadence, note, activityCount = 0 }) => {
           <div className={styles.cardKicker}>Cadence · spm</div>
           <h3 className={styles.cardTitle}>跑步步频</h3>
         </div>
-        <span className={styles.cadenceBadge}>
-          v2.3.2
-        </span>
+        <span className={styles.cadenceBadge}>v2.3.2</span>
       </div>
 
       {hasData ? (
@@ -55,7 +62,9 @@ const CadenceCard: React.FC<Props> = ({ cadence, note, activityCount = 0 }) => {
             </div>
             <div className={styles.cadenceLabel}>
               {evalCadence(cadence!).text}
-              <span className={styles.cadenceHint}>{evalCadence(cadence!).hint}</span>
+              <span className={styles.cadenceHint}>
+                {evalCadence(cadence!).hint}
+              </span>
             </div>
           </div>
           <div className={styles.cadenceStats}>
@@ -66,14 +75,14 @@ const CadenceCard: React.FC<Props> = ({ cadence, note, activityCount = 0 }) => {
         <div className={styles.cadenceEmpty}>
           <div className={styles.cadenceEmptyIcon}>🦶</div>
           <div className={styles.cadenceEmptyTitle}>步频数据待接入</div>
-          <div className={styles.cadenceEmptyHint}>
-            {note}
-          </div>
+          <div className={styles.cadenceEmptyHint}>{note}</div>
           <div className={styles.cadenceEmptyRoadmap}>
-            <strong>v2.3.2 计划</strong>：在 3 个 sync 源加 cadence 字段<br />
-            • <code>keep_sync.py</code> — Keep API 不返回 → 写 None<br />
-            • <code>apple_health_sync.py</code> — 读 AW HAE JSON <code>RunningCadence</code><br />
-            • <code>gpx_sync.py</code> — 从 trackpoint &lt;extensions&gt; 提取
+            <strong>v2.3.2 计划</strong>：在 3 个 sync 源加 cadence 字段
+            <br />• <code>keep_sync.py</code> — Keep API 不返回 → 写 None
+            <br />• <code>apple_health_sync.py</code> — 读 AW HAE JSON{' '}
+            <code>RunningCadence</code>
+            <br />• <code>gpx_sync.py</code> — 从 trackpoint &lt;extensions&gt;
+            提取
           </div>
         </div>
       )}

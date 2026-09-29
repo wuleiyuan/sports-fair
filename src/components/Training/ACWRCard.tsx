@@ -81,8 +81,10 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
           <div className={styles.acwrEmpty}>
             <div className={styles.acwrNumberMuted}>—</div>
             <div className={styles.acwrEmptyHint}>
-              近 28 天心率数据不足<br />
-              7d / 28d = {acwr.acute_days_with_data} / {acwr.chronic_days_with_data} 天
+              近 28 天心率数据不足
+              <br />
+              7d / 28d = {acwr.acute_days_with_data} /{' '}
+              {acwr.chronic_days_with_data} 天
             </div>
           </div>
         )}
@@ -90,12 +92,10 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
 
       {/* 区间色带 (0-2.0) */}
       <div className={styles.zoneBarWrap}>
-        <div className={styles.zoneBarLabel}>
-          ACWR 风险区间 (0 - 2.0)
-        </div>
+        <div className={styles.zoneBarLabel}>ACWR 风险区间 (0 - 2.0)</div>
         <div className={styles.zoneBar}>
           {ACWR_ZONES.map((z, i) => {
-            const span = z.max === 99 ? 0.5 : (z.max - z.min);
+            const span = z.max === 99 ? 0.5 : z.max - z.min;
             const widthPct = (span / ACWR_TOTAL_SPAN) * 100;
             return (
               <div
@@ -109,7 +109,7 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
         </div>
         <div className={styles.zoneLabels}>
           {ACWR_ZONES.map((z, i) => {
-            const span = z.max === 99 ? 0.5 : (z.max - z.min);
+            const span = z.max === 99 ? 0.5 : z.max - z.min;
             const widthPct = (span / ACWR_TOTAL_SPAN) * 100;
             return (
               <span
@@ -144,7 +144,9 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
             {Math.round(acwr.acute_7d_trimp).toLocaleString()}
             <span className={styles.acwrStatUnit}> TRIMP</span>
           </div>
-          <div className={styles.acwrStatSub}>{acwr.acute_days_with_data} 天有数据</div>
+          <div className={styles.acwrStatSub}>
+            {acwr.acute_days_with_data} 天有数据
+          </div>
         </div>
         <div className={styles.acwrStatItem}>
           <div className={styles.acwrStatLabel}>28d chronic</div>
@@ -152,7 +154,9 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
             {Math.round(acwr.chronic_28d_trimp).toLocaleString()}
             <span className={styles.acwrStatUnit}> TRIMP</span>
           </div>
-          <div className={styles.acwrStatSub}>{acwr.chronic_days_with_data} 天有数据</div>
+          <div className={styles.acwrStatSub}>
+            {acwr.chronic_days_with_data} 天有数据
+          </div>
         </div>
       </div>
 
@@ -160,14 +164,13 @@ const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
       <div className={styles.aiGuidance}>
         <span className={styles.aiBadge}>🤖 训练建议</span>
         <p className={styles.aiText}>{advice}</p>
-        {acwr.warning && (
-          <p className={styles.aiWarning}>⚠ {acwr.warning}</p>
-        )}
+        {acwr.warning && <p className={styles.aiWarning}>⚠ {acwr.warning}</p>}
       </div>
 
       {/* Footer: 数据时间戳 */}
       <div className={styles.cardFooter}>
-        训练负荷更新于 {new Date(generatedAt).toLocaleString('zh-CN', { hour12: false })}
+        训练负荷更新于{' '}
+        {new Date(generatedAt).toLocaleString('zh-CN', { hour12: false })}
       </div>
     </div>
   );

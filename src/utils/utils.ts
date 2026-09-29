@@ -204,7 +204,7 @@ const locationForRun = (
         // try to extract city coord from location_country info
         coordinate = extractCoordinate(location);
       }
-      
+
       if (province || city) {
         country = '中国';
       } else {
@@ -286,25 +286,44 @@ const colorForRun = (run: Activity): string => {
     case 'Run':
       if (run.subtype === 'trail') return RUN_TRAIL_COLOR;
       return dynamicRunColor;
-    case 'Ride': return CYCLING_COLOR;
-    case 'Hiking': return HIKING_COLOR;
-    case 'Walk': return WALKING_COLOR;
-    case 'Swim': return SWIMMING_COLOR;
-    case 'Yoga': return '#fb923c';       // 橙
-    case 'Strength': return '#f97316';   // 力量橙
-    case 'Core': return '#a78bfa';       // 紫
-    case 'StairStepper': return '#30d158'; // System Green
-    case 'Elliptical': return '#60a5fa'; // 蓝
-    case 'Rowing': return '#06b6d4';     // 青
-    case 'Boxing': return '#dc2626';     // 红
-    case 'Soccer': return '#10b981';     // 草绿
-    case 'Basketball': return '#f59e0b'; // 琥珀
-    case 'Tennis': return '#84cc16';     // 黄绿
-    case 'Skiing': return '#0ea5e9';     // 雪蓝
-    case 'Surfing': return '#0891b2';    // 海青
-    case 'Golf': return '#16a34a';       // 高尔夫绿
-    case 'Wheelchair': return '#a3a3a3'; // 灰
-    default: return MAIN_COLOR;          // 兜底 = 跑步色
+    case 'Ride':
+      return CYCLING_COLOR;
+    case 'Hiking':
+      return HIKING_COLOR;
+    case 'Walk':
+      return WALKING_COLOR;
+    case 'Swim':
+      return SWIMMING_COLOR;
+    case 'Yoga':
+      return '#fb923c'; // 橙
+    case 'Strength':
+      return '#f97316'; // 力量橙
+    case 'Core':
+      return '#a78bfa'; // 紫
+    case 'StairStepper':
+      return '#30d158'; // System Green
+    case 'Elliptical':
+      return '#60a5fa'; // 蓝
+    case 'Rowing':
+      return '#06b6d4'; // 青
+    case 'Boxing':
+      return '#dc2626'; // 红
+    case 'Soccer':
+      return '#10b981'; // 草绿
+    case 'Basketball':
+      return '#f59e0b'; // 琥珀
+    case 'Tennis':
+      return '#84cc16'; // 黄绿
+    case 'Skiing':
+      return '#0ea5e9'; // 雪蓝
+    case 'Surfing':
+      return '#0891b2'; // 海青
+    case 'Golf':
+      return '#16a34a'; // 高尔夫绿
+    case 'Wheelchair':
+      return '#a3a3a3'; // 灰
+    default:
+      return MAIN_COLOR; // 兜底 = 跑步色
   }
 };
 

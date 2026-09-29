@@ -10,7 +10,7 @@
 [data-kinetic] {
   /* 背景 */
   --a-bg: #000000;
-  --a-bg-secondary: #0D0D0D;
+  --a-bg-secondary: #0d0d0d;
   background-color: #000 !important;
   color: #ffffff;
 
@@ -26,16 +26,16 @@
   --a-text-tertiary: rgba(255, 255, 255, 0.4);
 
   /* Pornhub 橙黑色系 */
-  --a-orange: #FF8800;
-  --a-orange-bright: #FF9900;
-  --a-orange-dark: #CC6600;
-  --a-orange-light: #FFB347;
-  --a-red: #FF5500;
-  --a-green: #FF8800;
-  --a-blue: #FF9900;
-  --a-purple: #FFB347;
-  --a-mint: #CC6600;
-  --a-yellow: #FFCC00;
+  --a-orange: #ff8800;
+  --a-orange-bright: #ff9900;
+  --a-orange-dark: #cc6600;
+  --a-orange-light: #ffb347;
+  --a-red: #ff5500;
+  --a-green: #ff8800;
+  --a-blue: #ff9900;
+  --a-purple: #ffb347;
+  --a-mint: #cc6600;
+  --a-yellow: #ffcc00;
 
   /* 字号 */
   --a-title-1: 28px;
@@ -52,11 +52,23 @@
 }
 
 [data-kinetic] * {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'SF Pro Display',
+    'SF Pro Text',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 [data-kinetic] .k-number {
-  font-family: 'Inter', 'SF Pro Rounded', 'SF Pro Display', -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    'SF Pro Rounded',
+    'SF Pro Display',
+    -apple-system,
+    sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -120,7 +132,7 @@
 [data-kinetic] .k-landing-desc {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--a-text-secondary, rgba(255,255,255,0.72));
+  color: var(--a-text-secondary, rgba(255, 255, 255, 0.72));
   margin: 0 0 14px;
   max-width: 600px;
 }
@@ -150,8 +162,8 @@
 
 [data-kinetic] .k-landing-pill:hover {
   background: rgba(255, 136, 0, 0.12);
-  border-color: var(--a-orange, #FF8800);
-  color: var(--a-orange, #FF8800);
+  border-color: var(--a-orange, #ff8800);
+  color: var(--a-orange, #ff8800);
 }
 
 [data-kinetic] .k-landing-pill-gh {
@@ -182,13 +194,13 @@
 }
 
 [data-kinetic] .k-landing-title a:hover {
-  color: var(--a-orange, #FF8800);
+  color: var(--a-orange, #ff8800);
 }
 
 [data-kinetic] .k-landing-subtitle {
   margin: 4px 0 0;
   font-size: 13px;
-  color: var(--a-text-tertiary, rgba(255,255,255,0.4));
+  color: var(--a-text-tertiary, rgba(255, 255, 255, 0.4));
   font-weight: 400;
 }
 
@@ -334,11 +346,25 @@
 
 /* ===== Assessment Card ===== */
 [data-kinetic] .assessment-card {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'SF Pro Display',
+    'SF Pro Text',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 [data-kinetic] .assessment-card h3 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'SF Pro Display',
+    'SF Pro Text',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 [data-kinetic] .assessment-card .acwr-zone-bar {
@@ -368,7 +394,7 @@
 
 [data-kinetic] .assessment-card .acwr-status-en {
   font-size: 0.7rem;
-  color: var(--a-text-tertiary, rgba(255,255,255,0.4));
+  color: var(--a-text-tertiary, rgba(255, 255, 255, 0.4));
 }
 
 /* ===== Bento Grid ===== */
@@ -460,7 +486,11 @@
 
 /* ===== Data Number ===== */
 [data-kinetic] .k-data-number {
-  font-family: 'Inter', 'SF Pro Rounded', -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    'SF Pro Rounded',
+    -apple-system,
+    sans-serif;
   font-weight: 800;
   font-size: 34px;
   letter-spacing: -0.03em;
@@ -501,7 +531,11 @@
 }
 
 [data-kinetic] .k-stat-value {
-  font-family: 'Inter', 'SF Pro Rounded', -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    'SF Pro Rounded',
+    -apple-system,
+    sans-serif;
   font-weight: 700;
   font-size: 20px;
   color: var(--a-text-primary);
@@ -583,7 +617,7 @@
 [data-kinetic] .k-guidance-badge {
   font-size: 11px;
   font-weight: 700;
-  color: #FF9900;
+  color: #ff9900;
   display: block;
   margin-bottom: 4px;
 }
@@ -782,11 +816,21 @@
 }
 
 /* ===== Health Metric Colors ===== */
-[data-kinetic] .k-metric-hr { color: #FF5500; }
-[data-kinetic] .k-metric-rhr { color: #FF8800; }
-[data-kinetic] .k-metric-hrv { color: #FFB347; }
-[data-kinetic] .k-metric-sleep { color: #FF9900; }
-[data-kinetic] .k-metric-steps { color: #CC6600; }
+[data-kinetic] .k-metric-hr {
+  color: #ff5500;
+}
+[data-kinetic] .k-metric-rhr {
+  color: #ff8800;
+}
+[data-kinetic] .k-metric-hrv {
+  color: #ffb347;
+}
+[data-kinetic] .k-metric-sleep {
+  color: #ff9900;
+}
+[data-kinetic] .k-metric-steps {
+  color: #cc6600;
+}
 
 [data-kinetic] .k-metric-dot {
   width: 10px;

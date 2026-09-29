@@ -24,8 +24,23 @@ const Sparkline: React.FC<Props> = ({
 }) => {
   if (!data || data.length < 2) {
     return (
-      <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 11, color: '#6b6b6b' }}>—</span>
+      <div
+        style={{
+          height,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: 'ui-monospace, monospace',
+            fontSize: 11,
+            color: '#6b6b6b',
+          }}
+        >
+          —
+        </span>
       </div>
     );
   }
@@ -59,7 +74,16 @@ const Sparkline: React.FC<Props> = ({
   return (
     <div className={className}>
       {label && (
-        <div style={{ fontFamily: 'ui-monospace, monospace', fontSize: 10, fontWeight: 600, letterSpacing: '0.06em', color: '#6b6b6b', marginBottom: 6 }}>
+        <div
+          style={{
+            fontFamily: 'ui-monospace, monospace',
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: '0.06em',
+            color: '#6b6b6b',
+            marginBottom: 6,
+          }}
+        >
           {label}
         </div>
       )}
@@ -69,7 +93,13 @@ const Sparkline: React.FC<Props> = ({
         style={{ display: 'block', width: '100%', height }}
       >
         <defs>
-          <linearGradient id={`spark-fill-${color.replace('#', '')}`} x1="0" y1="0" x2="0" y2="1">
+          <linearGradient
+            id={`spark-fill-${color.replace('#', '')}`}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
             <stop offset="0%" stopColor={color} stopOpacity={0.2} />
             <stop offset="100%" stopColor={color} stopOpacity={0.01} />
           </linearGradient>

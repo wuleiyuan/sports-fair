@@ -14,14 +14,14 @@ import styles from './style.module.css';
 interface SportCardProps {
   sport: SportCompat;
   count: number;
-  totalDistance: number;          // 米
-  totalTime: number;              // 秒
+  totalDistance: number; // 米
+  totalTime: number; // 秒
   totalReps?: number;
   totalElevation?: number;
-  avgPace?: number;               // 秒/公里
+  avgPace?: number; // 秒/公里
   totalFloors?: number;
-  lastDate?: string;              // ISO
-  sparkline?: number[];           // 30 天每日聚合
+  lastDate?: string; // ISO
+  sparkline?: number[]; // 30 天每日聚合
   href: string;
 }
 
@@ -195,7 +195,8 @@ export default function SportCard({
         ...cardStyle,
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'opacity 400ms ease, transform 400ms ease, box-shadow 280ms ease, border-color 280ms ease',
+        transition:
+          'opacity 400ms ease, transform 400ms ease, box-shadow 280ms ease, border-color 280ms ease',
       }}
       onMouseEnter={(e) => {
         if (locked) return;
@@ -231,9 +232,28 @@ export default function SportCard({
         </div>
         {locked ? (
           <span className={`${styles.badge} ${styles.badgeLocked}`}>
-            <svg width="10" height="10" viewBox="0 0 10 10" style={{ marginRight: 4, verticalAlign: 'middle' }}>
-              <rect x="2" y="4.5" width="6" height="4.5" rx="1" fill="none" stroke="currentColor" strokeWidth="1"/>
-              <path d="M3 4.5 V3 a2 2 0 0 1 4 0 V4.5" fill="none" stroke="currentColor" strokeWidth="1"/>
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 10 10"
+              style={{ marginRight: 4, verticalAlign: 'middle' }}
+            >
+              <rect
+                x="2"
+                y="4.5"
+                width="6"
+                height="4.5"
+                rx="1"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              />
+              <path
+                d="M3 4.5 V3 a2 2 0 0 1 4 0 V4.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              />
             </svg>
             未解锁
           </span>
@@ -257,12 +277,19 @@ export default function SportCard({
           <div className={styles.primary}>
             <span
               className={styles.primaryValue}
-              style={{ color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color }}
+              style={{
+                color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color,
+              }}
             >
               {primary.value}
             </span>
             {primary.unit && (
-              <span className={styles.primaryUnit} style={{ color: locked ? 'rgba(255, 255, 255, 0.4)' : sport.color }}>
+              <span
+                className={styles.primaryUnit}
+                style={{
+                  color: locked ? 'rgba(255, 255, 255, 0.4)' : sport.color,
+                }}
+              >
                 {primary.unit}
               </span>
             )}
@@ -273,7 +300,9 @@ export default function SportCard({
                 <span key={i} className={styles.secondaryItem}>
                   <span className={styles.secondaryLabel}>{row.label}</span>
                   <span className={styles.secondaryValue}>{row.value}</span>
-                  {row.unit && <span className={styles.secondaryLabel}>{row.unit}</span>}
+                  {row.unit && (
+                    <span className={styles.secondaryLabel}>{row.unit}</span>
+                  )}
                 </span>
               ))}
             </div>

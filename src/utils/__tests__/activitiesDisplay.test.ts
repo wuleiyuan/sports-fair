@@ -152,7 +152,12 @@ describe('getDisplayMetric - distance dimension', () => {
   });
 
   it('Hiking shows distance + duration (no pace)', () => {
-    const hiking: Activity = { ...runActivity, type: 'Hiking', name: '徒步 Hiking', average_speed: 1.5 };
+    const hiking: Activity = {
+      ...runActivity,
+      type: 'Hiking',
+      name: '徒步 Hiking',
+      average_speed: 1.5,
+    };
     const m = getDisplayMetric(hiking);
     expect(m.label).toBe('距离');
     expect(m.value).toBe('5.21 km');
@@ -220,7 +225,10 @@ describe('getDisplayMetric - anomaly detection', () => {
 
 describe('aggregateDisplayMetric', () => {
   it('aggregates total distance for Run activities', () => {
-    const m = aggregateDisplayMetric([runActivity, { ...runActivity, run_id: 2, distance: 3000 }]);
+    const m = aggregateDisplayMetric([
+      runActivity,
+      { ...runActivity, run_id: 2, distance: 3000 },
+    ]);
     expect(m?.value).toBe('8.21 km');
     expect(m?.subValue).toBe('2 次');
   });

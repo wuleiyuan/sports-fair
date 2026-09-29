@@ -99,20 +99,38 @@ interface HealthStatsDaily {
 interface HealthStats {
   generated_at: string;
   top_stats: {
-    hr: { mean_all: number; median: number; max_ever: number; days_with_data: number };
-    rhr: { mean_all: number; median: number; min_ever: number; days_with_data: number };
+    hr: {
+      mean_all: number;
+      median: number;
+      max_ever: number;
+      days_with_data: number;
+    };
+    rhr: {
+      mean_all: number;
+      median: number;
+      min_ever: number;
+      days_with_data: number;
+    };
     hrv: { mean_all: number; median: number; days_with_data: number };
     sleep: { median_hours: number; days_with_data: number };
-    steps: { mean_daily: number; median_daily: number; total: number; days_with_data: number };
+    steps: {
+      mean_daily: number;
+      median_daily: number;
+      total: number;
+      days_with_data: number;
+    };
   };
-  by_year: Record<string, {
-    hr_mean?: number;
-    sleep_median_h?: number;
-    steps_mean_daily?: number;
-    steps_total?: number;
-    hrv_mean?: number;
-    days_with_data: number;
-  }>;
+  by_year: Record<
+    string,
+    {
+      hr_mean?: number;
+      sleep_median_h?: number;
+      steps_mean_daily?: number;
+      steps_total?: number;
+      hrv_mean?: number;
+      days_with_data: number;
+    }
+  >;
   daily: Record<string, HealthStatsDaily>;
 }
 
@@ -136,7 +154,10 @@ function calcTRIMP(
   hrRest: number
 ): number {
   if (!avgHR || hrMax <= hrRest) return durationMin; // fallback
-  const intensity = Math.max(0, Math.min(1, (avgHR - hrRest) / (hrMax - hrRest)));
+  const intensity = Math.max(
+    0,
+    Math.min(1, (avgHR - hrRest) / (hrMax - hrRest))
+  );
   return durationMin * 0.64 * Math.exp(1.92 * intensity);
 }
 
@@ -194,7 +215,9 @@ function getRecentActivities(days: number): Activity[] {
  * 算数组均值（忽略 null/undefined）
  */
 function mean(nums: (number | null | undefined)[]): number | null {
-  const valid = nums.filter((n): n is number => typeof n === 'number' && !isNaN(n));
+  const valid = nums.filter(
+    (n): n is number => typeof n === 'number' && !isNaN(n)
+  );
   if (valid.length === 0) return null;
   return valid.reduce((a, b) => a + b, 0) / valid.length;
 }
@@ -203,7 +226,9 @@ function mean(nums: (number | null | undefined)[]): number | null {
  * 算数组中位数
  */
 function median(nums: (number | null | undefined)[]): number | null {
-  const valid = nums.filter((n): n is number => typeof n === 'number' && !isNaN(n));
+  const valid = nums.filter(
+    (n): n is number => typeof n === 'number' && !isNaN(n)
+  );
   if (valid.length === 0) return null;
   const sorted = [...valid].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
@@ -250,10 +275,12 @@ function assessRHR(recent7: HealthStatsDaily[]): AssessmentCard {
     advice = 'RHR 稳定在基线附近，心肺功能保持良好。继续保持。';
   } else if (diff >= 3 && diff <= 7) {
     severity = 'watch';
-    advice = 'RHR 较基线上升 3-7 bpm，可能存在训练疲劳累积或睡眠不足。建议本周降低训练强度。';
+    advice =
+      'RHR 较基线上升 3-7 bpm，可能存在训练疲劳累积或睡眠不足。建议本周降低训练强度。';
   } else if (diff > 7) {
     severity = 'urgent';
-    advice = 'RHR 较基线上升超过 7 bpm，强烈建议休息 2-3 天。注意是否感冒、脱水或训练过度。';
+    advice =
+      'RHR 较基线上升超过 7 bpm，强烈建议休息 2-3 天。注意是否感冒、脱水或训练过度。';
   } else {
     // diff < -3 (RHR 下降)
     severity = 'good';
@@ -304,7 +331,8 @@ function assessHRV(windowDays: 7 | 30): AssessmentCard {
     sub: `全量均值 · ${days} 天`,
     severity,
     advice,
-    detail: 'HRV 暂未提供日级别数据,评估基于全量均值。建议在 Apple Watch "健康 App > 心脏 > HRV" 开启日级测量,以获得更精细的恢复建议。',
+    detail:
+      'HRV 暂未提供日级别数据,评估基于全量均值。建议在 Apple Watch "健康 App > 心脏 > HRV" 开启日级测量,以获得更精细的恢复建议。',
   };
 }
 
@@ -341,7 +369,10 @@ function assessSleep(recent7: HealthStatsDaily[]): AssessmentCard {
   if (recentMedian >= 7 && recentMedian <= 9) {
     severity = 'good';
     advice = '睡眠时长处于 NSF 建议范围 (7-9h)，恢复充分。';
-  } else if ((recentMedian >= 6 && recentMedian < 7) || (recentMedian > 9 && recentMedian <= 10)) {
+  } else if (
+    (recentMedian >= 6 && recentMedian < 7) ||
+    (recentMedian > 9 && recentMedian <= 10)
+  ) {
     severity = 'watch';
     advice =
       recentMedian < 7
@@ -404,7 +435,8 @@ function assessSteps(recent7: HealthStatsDaily[]): AssessmentCard {
     advice = '日均步数 7000-10000，活动量良好。';
   } else if (recentMean >= 4000) {
     severity = 'watch';
-    advice = '日均步数 4000-7000，活动量偏低。建议每天增加 2000 步（如步行通勤）。';
+    advice =
+      '日均步数 4000-7000，活动量偏低。建议每天增加 2000 步（如步行通勤）。';
   } else {
     severity = 'urgent';
     advice = '日均步数低于 4000，久坐风险较高。建议每小时起身活动 5 分钟。';
@@ -664,7 +696,11 @@ export interface AIGuidanceResponse {
   model?: string;
   /** v2.2.1: provider 标识 */
   provider?: LLMProvider;
-  usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };
+  usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  };
   generatedAt?: string;
   error?: string;
   /** v2.2.1: 调试用 requestId */
@@ -701,7 +737,11 @@ export async function fetchAIGuidance(
     }
 
     // aiGuidance 缺失但不是网络错 (200 但空) → 不重试
-    if (!result.error?.startsWith('HTTP 5') && !result.error?.startsWith('Network') && !result.error?.startsWith('Abort')) {
+    if (
+      !result.error?.startsWith('HTTP 5') &&
+      !result.error?.startsWith('Network') &&
+      !result.error?.startsWith('Abort')
+    ) {
       // 非 5xx/网络错 = 后端明确返回空, 不用重试
       // 但确保 error 字段有值
       if (!result.error) {
@@ -751,7 +791,10 @@ async function fetchAIGuidanceOnce(
 
     if (!resp.ok) {
       const errText = await resp.text();
-      return { aiGuidance: null, error: `HTTP ${resp.status}: ${errText.slice(0, 200)}` };
+      return {
+        aiGuidance: null,
+        error: `HTTP ${resp.status}: ${errText.slice(0, 200)}`,
+      };
     }
     return (await resp.json()) as AIGuidanceResponse;
   } catch (err: unknown) {
@@ -794,11 +837,19 @@ function bundleHash(bundle: AssessmentBundle): string {
   return `${h}_w${bundle.windowDays}_t${(bundle.trainingLoadTrend ?? []).length}`;
 }
 
-function buildCacheKey(windowDays: 7 | 30, provider: LLMProvider, bundle: AssessmentBundle): string {
+function buildCacheKey(
+  windowDays: 7 | 30,
+  provider: LLMProvider,
+  bundle: AssessmentBundle
+): string {
   return `${windowDays}_${provider}_${bundleHash(bundle)}`;
 }
 
-function readCache(windowDays: 7 | 30, provider: LLMProvider, bundle: AssessmentBundle): AIGuidanceResponse | null {
+function readCache(
+  windowDays: 7 | 30,
+  provider: LLMProvider,
+  bundle: AssessmentBundle
+): AIGuidanceResponse | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(CACHE_KEY);
@@ -814,7 +865,12 @@ function readCache(windowDays: 7 | 30, provider: LLMProvider, bundle: Assessment
   }
 }
 
-function writeCache(windowDays: 7 | 30, provider: LLMProvider, bundle: AssessmentBundle, response: AIGuidanceResponse): void {
+function writeCache(
+  windowDays: 7 | 30,
+  provider: LLMProvider,
+  bundle: AssessmentBundle,
+  response: AIGuidanceResponse
+): void {
   if (typeof window === 'undefined') return;
   try {
     const raw = localStorage.getItem(CACHE_KEY);
@@ -844,7 +900,10 @@ export async function fetchAIGuidanceWithCache(
   }
 
   // 2. 调 LLM
-  const response = await fetchAIGuidance(bundle, { provider: options.provider, retries: 1 });
+  const response = await fetchAIGuidance(bundle, {
+    provider: options.provider,
+    retries: 1,
+  });
 
   // 3. 写 cache (仅成功)
   if (response.aiGuidance && response.aiGuidance.trim().length > 0) {

@@ -12,13 +12,25 @@ const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (k: string) => store[k] ?? null,
-    setItem: (k: string, v: string) => { store[k] = v; },
-    removeItem: (k: string) => { delete store[k]; },
-    clear: () => { store = {}; },
+    setItem: (k: string, v: string) => {
+      store[k] = v;
+    },
+    removeItem: (k: string) => {
+      delete store[k];
+    },
+    clear: () => {
+      store = {};
+    },
   };
 })();
-Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock, writable: false });
-Object.defineProperty(globalThis, 'window', { value: { localStorage: localStorageMock }, writable: false });
+Object.defineProperty(globalThis, 'localStorage', {
+  value: localStorageMock,
+  writable: false,
+});
+Object.defineProperty(globalThis, 'window', {
+  value: { localStorage: localStorageMock },
+  writable: false,
+});
 
 // mock healthCheckClient
 vi.mock('../../../utils/healthCheckClient', () => ({
@@ -63,8 +75,20 @@ describe('AIDiagnosticsPanel', () => {
       activeModel: 'mimo-v2-flash',
       hint: 'OK',
       providers: [
-        { name: 'mimo', envKeyName: 'MIMO_API_KEY', hasKey: true, isActive: true, model: 'mimo-v2-flash' },
-        { name: 'openai', envKeyName: 'OPENAI_API_KEY', hasKey: false, isActive: false, model: 'gpt-4o-mini' },
+        {
+          name: 'mimo',
+          envKeyName: 'MIMO_API_KEY',
+          hasKey: true,
+          isActive: true,
+          model: 'mimo-v2-flash',
+        },
+        {
+          name: 'openai',
+          envKeyName: 'OPENAI_API_KEY',
+          hasKey: false,
+          isActive: false,
+          model: 'gpt-4o-mini',
+        },
       ],
       timestamp: '2026-06-13T00:00:00Z',
     });
@@ -80,7 +104,9 @@ describe('AIDiagnosticsPanel', () => {
   });
 
   it('fetch 失败时显示错误 + 重试按钮', async () => {
-    (fetchHealthCheck as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Network down'));
+    (fetchHealthCheck as ReturnType<typeof vi.fn>).mockRejectedValue(
+      new Error('Network down')
+    );
 
     render(<AIDiagnosticsPanel autoOpenOnError={true} />);
 
@@ -134,9 +160,27 @@ describe('AIDiagnosticsPanel', () => {
       activeModel: 'mimo-v2-flash',
       hint: 'OK',
       providers: [
-        { name: 'mimo', envKeyName: 'MIMO_API_KEY', hasKey: true, isActive: true, model: 'mimo-v2-flash' },
-        { name: 'openai', envKeyName: 'OPENAI_API_KEY', hasKey: false, isActive: false, model: 'gpt-4o-mini' },
-        { name: 'anthropic', envKeyName: 'ANTHROPIC_API_KEY', hasKey: false, isActive: false, model: 'claude-haiku-4-5' },
+        {
+          name: 'mimo',
+          envKeyName: 'MIMO_API_KEY',
+          hasKey: true,
+          isActive: true,
+          model: 'mimo-v2-flash',
+        },
+        {
+          name: 'openai',
+          envKeyName: 'OPENAI_API_KEY',
+          hasKey: false,
+          isActive: false,
+          model: 'gpt-4o-mini',
+        },
+        {
+          name: 'anthropic',
+          envKeyName: 'ANTHROPIC_API_KEY',
+          hasKey: false,
+          isActive: false,
+          model: 'claude-haiku-4-5',
+        },
       ],
       timestamp: '2026-06-13T00:00:00Z',
     });

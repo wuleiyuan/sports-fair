@@ -14,10 +14,28 @@ interface Props {
   advice: TrainingAdvice;
 }
 
-const SEVERITY_CONFIG: Record<AdviceSeverity, { label: string; color: string; icon: string; bg: string }> = {
-  info: { label: '提示', color: '#3b82f6', icon: 'ℹ', bg: 'rgba(59, 130, 246, 0.06)' },
-  low:  { label: '关注', color: '#f59e0b', icon: '⚠', bg: 'rgba(245, 158, 11, 0.06)' },
-  high: { label: '紧急', color: '#ef4444', icon: '✕', bg: 'rgba(239, 68, 68, 0.06)' },
+const SEVERITY_CONFIG: Record<
+  AdviceSeverity,
+  { label: string; color: string; icon: string; bg: string }
+> = {
+  info: {
+    label: '提示',
+    color: '#3b82f6',
+    icon: 'ℹ',
+    bg: 'rgba(59, 130, 246, 0.06)',
+  },
+  low: {
+    label: '关注',
+    color: '#f59e0b',
+    icon: '⚠',
+    bg: 'rgba(245, 158, 11, 0.06)',
+  },
+  high: {
+    label: '紧急',
+    color: '#ef4444',
+    icon: '✕',
+    bg: 'rgba(239, 68, 68, 0.06)',
+  },
 };
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -44,15 +62,17 @@ const AdviceListCard: React.FC<Props> = ({ advice }) => {
           <div className={styles.cardKicker}>Rule-Based 0 LLM</div>
           <h3 className={styles.cardTitle}>训练建议</h3>
         </div>
-        <span className={styles.adviceCount}>
-          {advice.advice_count} 条
-        </span>
+        <span className={styles.adviceCount}>{advice.advice_count} 条</span>
       </div>
 
       {/* 总览摘要 */}
       <div className={styles.adviceSummary}>
         <span className={styles.adviceSummaryIcon}>
-          {advice.overall_status === 'good' ? '✓' : advice.overall_status === 'urgent' ? '✕' : '⚠'}
+          {advice.overall_status === 'good'
+            ? '✓'
+            : advice.overall_status === 'urgent'
+              ? '✕'
+              : '⚠'}
         </span>
         <span className={styles.adviceSummaryText}>
           {advice.overall_summary}
@@ -84,11 +104,15 @@ const AdviceListCard: React.FC<Props> = ({ advice }) => {
                 <h4 className={styles.adviceItemTitle}>{item.title}</h4>
                 <p className={styles.adviceItemDesc}>{item.description}</p>
                 <div className={styles.adviceItemAction}>
-                  <span className={styles.adviceItemActionLabel}>建议:</span> {item.action}
+                  <span className={styles.adviceItemActionLabel}>建议:</span>{' '}
+                  {item.action}
                 </div>
                 {item.evidence && (
                   <div className={styles.adviceItemEvidence}>
-                    <span className={styles.adviceItemEvidenceLabel}>依据:</span> {item.evidence}
+                    <span className={styles.adviceItemEvidenceLabel}>
+                      依据:
+                    </span>{' '}
+                    {item.evidence}
                   </div>
                 )}
               </li>

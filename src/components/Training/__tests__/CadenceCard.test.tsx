@@ -8,7 +8,9 @@ import CadenceCard from '../CadenceCard';
 
 describe('CadenceCard', () => {
   it('无数据 (cadence=null): 显示 "待接入" 空态 + v2.3.2 路线图', () => {
-    render(<CadenceCard cadence={null} note="activities.json 无 cadence 字段" />);
+    render(
+      <CadenceCard cadence={null} note="activities.json 无 cadence 字段" />
+    );
     expect(screen.getByText('步频数据待接入')).toBeDefined();
     expect(screen.getByText(/activities.json 无 cadence 字段/)).toBeDefined();
     expect(screen.getByText(/v2.3.2 计划/)).toBeDefined();

@@ -48,14 +48,19 @@ export default function Sparkline({
     const points = values.map((v, i) => {
       const x = i * xStep;
       // 把 min..max 映射到 (padTop+usableH)..padTop
-      const y = v === 0
-        ? padTop + usableH // 0 永远在底部
-        : padTop + usableH * (1 - (v - min) / range);
+      const y =
+        v === 0
+          ? padTop + usableH // 0 永远在底部
+          : padTop + usableH * (1 - (v - min) / range);
       return { x, y };
     });
 
     const lineD = points
-      .map((p, i) => (i === 0 ? `M${p.x.toFixed(2)} ${p.y.toFixed(2)}` : `L${p.x.toFixed(2)} ${p.y.toFixed(2)}`))
+      .map((p, i) =>
+        i === 0
+          ? `M${p.x.toFixed(2)} ${p.y.toFixed(2)}`
+          : `L${p.x.toFixed(2)} ${p.y.toFixed(2)}`
+      )
       .join(' ');
 
     const baseline = padTop + usableH;
@@ -66,7 +71,10 @@ export default function Sparkline({
     return { linePath: lineD, areaPath: areaD, maxIndex: mIdx, maxVal: max };
   }, [values, hasData, height, width]);
 
-  const gradId = useMemo(() => `sl-grad-${Math.random().toString(36).slice(2, 9)}`, []);
+  const gradId = useMemo(
+    () => `sl-grad-${Math.random().toString(36).slice(2, 9)}`,
+    []
+  );
 
   if (!hasData) {
     // 空数据：单一基线，给人"暂无近期活动"的暗示

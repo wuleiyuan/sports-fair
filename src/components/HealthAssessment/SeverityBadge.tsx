@@ -14,7 +14,10 @@ interface Props {
  * - urgent: 红色 ✕
  */
 const SeverityBadge: React.FC<Props> = ({ severity, size = 'md' }) => {
-  const config: Record<Severity, { label: string; color: string; icon: string }> = {
+  const config: Record<
+    Severity,
+    { label: string; color: string; icon: string }
+  > = {
     good: { label: '良好', color: '#4caf50', icon: '✓' },
     watch: { label: '关注', color: '#ffc107', icon: '⚠' },
     warn: { label: '警告', color: '#ff9800', icon: '⚠' },

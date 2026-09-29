@@ -27,7 +27,8 @@ const ZONE_KEYS: HRZoneKey[] = ['z1', 'z2', 'z3', 'z4', 'z5'];
 
 const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
   const totalTime = ZONE_KEYS.reduce((sum, k) => {
-    const field = `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
+    const field =
+      `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
     return sum + ((hrZones[field] as number) || 0);
   }, 0);
 
@@ -40,11 +41,12 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
   const dominantZone = hrZones.dominant_zone || 'n/a';
 
   // 极化训练建议
-  const polarizedHint = polarizedPct >= 70
-    ? { text: '✓ 极化训练合理', color: '#22c55e' }
-    : polarizedPct >= 50
-      ? { text: '⚠ Z3+ 偏多', color: '#f97316' }
-      : { text: '? Z1+Z2 比例不足', color: '#9ca3af' };
+  const polarizedHint =
+    polarizedPct >= 70
+      ? { text: '✓ 极化训练合理', color: '#22c55e' }
+      : polarizedPct >= 50
+        ? { text: '⚠ Z3+ 偏多', color: '#f97316' }
+        : { text: '? Z1+Z2 比例不足', color: '#9ca3af' };
 
   return (
     <div
@@ -59,9 +61,15 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
         </div>
         <span
           className={styles.hrBadge}
-          style={{ backgroundColor: hasData ? HR_ZONE_META[dominantZone as HRZoneKey]?.color || '#9ca3af' : '#9ca3af' }}
+          style={{
+            backgroundColor: hasData
+              ? HR_ZONE_META[dominantZone as HRZoneKey]?.color || '#9ca3af'
+              : '#9ca3af',
+          }}
         >
-          {hasData ? `主导: ${HR_ZONE_META[dominantZone as HRZoneKey]?.label || dominantZone}` : '无 HR 数据'}
+          {hasData
+            ? `主导: ${HR_ZONE_META[dominantZone as HRZoneKey]?.label || dominantZone}`
+            : '无 HR 数据'}
         </span>
       </div>
 
@@ -70,7 +78,8 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
           {/* 5 区 stacked bar */}
           <div className={styles.zoneStack} aria-label="5 区时间占比">
             {ZONE_KEYS.map((k) => {
-              const field = `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
+              const field =
+                `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
               const v = (hrZones[field] as number) || 0;
               const pct = totalTime > 0 ? (v / totalTime) * 100 : 0;
               return (
@@ -90,14 +99,18 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
           {/* 5 区 label (对齐 stacked bar) */}
           <div className={styles.zoneStackLabels}>
             {ZONE_KEYS.map((k) => {
-              const field = `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
+              const field =
+                `${k}_${k === 'z1' ? 'recovery' : k === 'z2' ? 'aerobic_base' : k === 'z3' ? 'aerobic' : k === 'z4' ? 'threshold' : 'anaerobic'}` as keyof HRZones;
               const v = (hrZones[field] as number) || 0;
               const pct = totalTime > 0 ? (v / totalTime) * 100 : 0;
               return (
                 <div
                   key={k}
                   className={styles.zoneStackLabelItem}
-                  style={{ width: `${pct}%`, minWidth: pct < 8 ? '40px' : 'auto' }}
+                  style={{
+                    width: `${pct}%`,
+                    minWidth: pct < 8 ? '40px' : 'auto',
+                  }}
                 >
                   <span
                     className={styles.zoneStackDot}
@@ -105,7 +118,9 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
                   />
                   <span className={styles.zoneStackText}>
                     {HR_ZONE_META[k].label.split(' ')[0]}{' '}
-                    <span className={styles.zoneStackPct}>{pct.toFixed(0)}%</span>
+                    <span className={styles.zoneStackPct}>
+                      {pct.toFixed(0)}%
+                    </span>
                   </span>
                 </div>
               );
@@ -128,7 +143,14 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
               <div className={styles.hrKeyLabel}>Z2 有氧底座</div>
               <div
                 className={styles.hrKeyValue}
-                style={{ color: z2Pct >= 40 ? '#22c55e' : z2Pct >= 25 ? '#f97316' : '#9ca3af' }}
+                style={{
+                  color:
+                    z2Pct >= 40
+                      ? '#22c55e'
+                      : z2Pct >= 25
+                        ? '#f97316'
+                        : '#9ca3af',
+                }}
               >
                 {z2Pct.toFixed(1)}%
                 <span className={styles.hrKeyHint}>
@@ -141,7 +163,9 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
       ) : (
         <div className={styles.hrEmpty}>
           <div className={styles.hrEmptyIcon}>📊</div>
-          <div className={styles.hrEmptyTitle}>近 {windowDays} 天无 HR 数据</div>
+          <div className={styles.hrEmptyTitle}>
+            近 {windowDays} 天无 HR 数据
+          </div>
           <div className={styles.hrEmptyHint}>
             跑步时佩戴心率设备（AW / 心率带），HR 数据自动同步。
           </div>
@@ -149,7 +173,8 @@ const HRZonesCard: React.FC<Props> = ({ hrZones, windowDays = 90 }) => {
       )}
 
       <div className={styles.cardFooter}>
-        基于 {hrZones.activities_with_hr} 个有 HR 的活动（近 {hrZones.window_days || windowDays} 天）
+        基于 {hrZones.activities_with_hr} 个有 HR 的活动（近{' '}
+        {hrZones.window_days || windowDays} 天）
       </div>
     </div>
   );

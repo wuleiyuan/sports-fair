@@ -60,7 +60,9 @@ const AIDiagnosticsPanel: React.FC<Props> = ({ autoOpenOnError = false }) => {
         onClick={handleToggle}
         aria-expanded={open}
       >
-        <span className={styles.chevron} data-open={open}>▸</span>
+        <span className={styles.chevron} data-open={open}>
+          ▸
+        </span>
         <span>AI 配置诊断</span>
         {data && !loading && (
           <span
@@ -117,7 +119,9 @@ const AIDiagnosticsPanel: React.FC<Props> = ({ autoOpenOnError = false }) => {
                     >
                       <td>
                         {PROVIDER_DISPLAY_NAMES[p.name] ?? p.name}
-                        {p.isActive && <span className={styles.activeTag}>· 激活</span>}
+                        {p.isActive && (
+                          <span className={styles.activeTag}>· 激活</span>
+                        )}
                       </td>
                       <td>
                         <code className={styles.code}>{p.envKeyName}</code>
@@ -138,8 +142,8 @@ const AIDiagnosticsPanel: React.FC<Props> = ({ autoOpenOnError = false }) => {
               </table>
 
               <p className={styles.footer}>
-                切换 provider: 修改 Vercel 环境变量 <code className={styles.code}>LLM_PROVIDER</code> 即可，
-                详见{' '}
+                切换 provider: 修改 Vercel 环境变量{' '}
+                <code className={styles.code}>LLM_PROVIDER</code> 即可， 详见{' '}
                 <a
                   href="https://github.com/wuleiyuan/sports-fair#ai-health-assessment-llm--v220"
                   target="_blank"

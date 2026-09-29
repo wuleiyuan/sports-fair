@@ -63,7 +63,11 @@ function formatDistance(meters: number, unit: 'km' | 'mi' | 'm'): string {
   return `${Math.round(meters)} m`;
 }
 
-function formatPace(distance: number, seconds: number, unit: 'km' | 'mi'): string | null {
+function formatPace(
+  distance: number,
+  seconds: number,
+  unit: 'km' | 'mi'
+): string | null {
   if (distance <= 0 || seconds <= 0) return null;
   const unitDist = unit === 'km' ? 1000 : 1609.344;
   const paceSeconds = seconds / (distance / unitDist);
@@ -75,7 +79,9 @@ function formatPace(distance: number, seconds: number, unit: 'km' | 'mi'): strin
 /**
  * 检测异常数据（防御性：即使 generator.filter 漏过滤，UI 层也提示用户）
  */
-function detectAnomaly(activity: Activity): { anomaly: 'warning' | 'error'; reason: string } | null {
+function detectAnomaly(
+  activity: Activity
+): { anomaly: 'warning' | 'error'; reason: string } | null {
   // Backend 3σ anomaly detection takes priority
   if ('anomaly' in activity && activity.anomaly) {
     return { anomaly: 'error', reason: `⚡ ${activity.anomaly.detail}` };
@@ -90,12 +96,18 @@ function detectAnomaly(activity: Activity): { anomaly: 'warning' | 'error'; reas
   }
   // Run 速度异常（hard threshold fallback for non-flagged data）
   if (activity.type === 'Run' && distance > 0 && seconds > 60) {
-    const kmh = (distance / 1000) / (seconds / 3600);
+    const kmh = distance / 1000 / (seconds / 3600);
     if (kmh < 1.0 && seconds > 3600) {
-      return { anomaly: 'error', reason: `跑步速度 ${kmh.toFixed(2)} km/h 异常低` };
+      return {
+        anomaly: 'error',
+        reason: `跑步速度 ${kmh.toFixed(2)} km/h 异常低`,
+      };
     }
     if (kmh > 30.0 && seconds > 300) {
-      return { anomaly: 'error', reason: `跑步速度 ${kmh.toFixed(1)} km/h 异常高` };
+      return {
+        anomaly: 'error',
+        reason: `跑步速度 ${kmh.toFixed(1)} km/h 异常高`,
+      };
     }
   }
   return null;
@@ -120,7 +132,10 @@ function getCountFromActivity(activity: Activity): number {
  * 根据活动 type 返回显示指标
  */
 export function getDisplayMetric(activity: Activity): DisplayMetric {
-  const config: SportCompat = getSportCompatConfig(activity.type, activity.name);
+  const config: SportCompat = getSportCompatConfig(
+    activity.type,
+    activity.name
+  );
   const seconds = movingTimeToSecondsForTest(activity.moving_time);
   const anomalyInfo = detectAnomaly(activity);
 
@@ -132,9 +147,12 @@ export function getDisplayMetric(activity: Activity): DisplayMetric {
   if (config.displayMetric === 'distance') {
     const distance = activity.distance ?? 0;
     const distStr = formatDistance(distance, config.unit);
-    const paceStr = activity.type === 'Run' || activity.type === 'Walk' || activity.type === 'Hiking'
-      ? formatPace(distance, seconds, config.unit === 'mi' ? 'mi' : 'km')
-      : null;
+    const paceStr =
+      activity.type === 'Run' ||
+      activity.type === 'Walk' ||
+      activity.type === 'Hiking'
+        ? formatPace(distance, seconds, config.unit === 'mi' ? 'mi' : 'km')
+        : null;
     return {
       label: '距离',
       value: distStr,
@@ -149,7 +167,8 @@ export function getDisplayMetric(activity: Activity): DisplayMetric {
   // === count 维度 ===
   if (config.displayMetric === 'count') {
     const count = getCountFromActivity(activity);
-    const countStr = count > 0 ? `${count} ${config.unitLabel}` : `无${config.unitLabel}数据`;
+    const countStr =
+      count > 0 ? `${count} ${config.unitLabel}` : `无${config.unitLabel}数据`;
     // 副指标：时长（始终有意义）
     const duration = formatDuration(seconds);
     return {
@@ -169,7 +188,9 @@ export function getDisplayMetric(activity: Activity): DisplayMetric {
       label: '时长',
       value: formatDuration(seconds),
       subLabel: '平均心率',
-      subValue: activity.average_heartrate ? `${activity.average_heartrate.toFixed(0)} bpm` : '—',
+      subValue: activity.average_heartrate
+        ? `${activity.average_heartrate.toFixed(0)} bpm`
+        : '—',
       unit: 'min',
       anomaly,
       anomalyReason,
@@ -192,12 +213,17 @@ export function getDisplayMetric(activity: Activity): DisplayMetric {
  * 批量：按 sportKey 聚合显示指标
  * 用于 sidebar / 主页跑步卡片
  */
-export function aggregateDisplayMetric(activities: Activity[]): DisplayMetric | null {
+export function aggregateDisplayMetric(
+  activities: Activity[]
+): DisplayMetric | null {
   if (activities.length === 0) return null;
   // 用第一项的 config 代表（同一 sportKey 内 config 相同）
   const first = activities[0];
   const config = getSportCompatConfig(first.type, first.name);
-  const totalSeconds = activities.reduce((sum, a) => sum + movingTimeToSecondsForTest(a.moving_time), 0);
+  const totalSeconds = activities.reduce(
+    (sum, a) => sum + movingTimeToSecondsForTest(a.moving_time),
+    0
+  );
 
   if (config.displayMetric === 'distance') {
     const totalDist = activities.reduce((sum, a) => sum + (a.distance ?? 0), 0);
@@ -211,7 +237,10 @@ export function aggregateDisplayMetric(activities: Activity[]): DisplayMetric | 
   }
 
   if (config.displayMetric === 'count') {
-    const totalCount = activities.reduce((sum, a) => sum + getCountFromActivity(a), 0);
+    const totalCount = activities.reduce(
+      (sum, a) => sum + getCountFromActivity(a),
+      0
+    );
     return {
       label: `总${config.unitLabel}`,
       value: `${totalCount} ${config.unitLabel}`,

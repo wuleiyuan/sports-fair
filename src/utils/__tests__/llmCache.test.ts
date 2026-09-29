@@ -54,7 +54,14 @@ const fakeBundle: AssessmentBundle = {
   generatedAt: '2026-06-13T00:00:00Z',
   windowDays: 7,
   cards: [
-    { key: 'rhr', title: '静息心率', main: '60 bpm', sub: '稳定', severity: 'good', advice: '良好' },
+    {
+      key: 'rhr',
+      title: '静息心率',
+      main: '60 bpm',
+      sub: '稳定',
+      severity: 'good',
+      advice: '良好',
+    },
   ],
   overall: '整体良好',
   trainingLoadTrend: [10, 20, 30],
@@ -91,25 +98,32 @@ describe('fetchAIGuidance - 重试与空内容', () => {
 
   it('成功: aiGuidance 前后有空白 → 自动 trim', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: '  \n  本周重点是休息。\n  ', provider: 'mimo' })
+      mockFetchResponse({
+        aiGuidance: '  \n  本周重点是休息。\n  ',
+        provider: 'mimo',
+      })
     );
     const result = await fetchAIGuidance(fakeBundle);
     expect(result.aiGuidance).toBe('本周重点是休息。');
   });
 
   it('失败: 200 但 aiGuidance 缺失 → error 字段有值, 不抛', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: null, provider: 'mimo' })
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ aiGuidance: null, provider: 'mimo' })
+      );
     const result = await fetchAIGuidance(fakeBundle);
     expect(result.aiGuidance).toBeNull();
     expect(result.error).toBeTruthy();
   });
 
   it('失败: 200 但 aiGuidance 空字符串 → 归类 error, 不重试', async () => {
-    const fetchSpy = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: '   ', provider: 'mimo' })
-    );
+    const fetchSpy = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ aiGuidance: '   ', provider: 'mimo' })
+      );
     globalThis.fetch = fetchSpy;
     const result = await fetchAIGuidance(fakeBundle, { retries: 2 });
     expect(result.aiGuidance).toBeNull();
@@ -132,9 +146,9 @@ describe('fetchAIGuidance - 重试与空内容', () => {
   });
 
   it('重试: 全部 502 → 返回最后一次的 error', async () => {
-    const fetchSpy = vi.fn().mockResolvedValue(
-      mockFetchResponse({}, false, 502)
-    );
+    const fetchSpy = vi
+      .fn()
+      .mockResolvedValue(mockFetchResponse({}, false, 502));
     globalThis.fetch = fetchSpy;
     const result = await fetchAIGuidance(fakeBundle, { retries: 1 });
     expect(result.aiGuidance).toBeNull();
@@ -155,9 +169,11 @@ describe('fetchAIGuidance - 重试与空内容', () => {
   });
 
   it('400 客户端错: 不重试 (非 5xx)', async () => {
-    const fetchSpy = vi.fn().mockResolvedValue(
-      mockFetchResponse({ error: 'cards required' }, false, 400)
-    );
+    const fetchSpy = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ error: 'cards required' }, false, 400)
+      );
     globalThis.fetch = fetchSpy;
     const result = await fetchAIGuidance(fakeBundle, { retries: 2 });
     expect(result.aiGuidance).toBeNull();
@@ -191,7 +207,10 @@ describe('loadProviderPref / saveProviderPref', () => {
   });
 
   it('localStorage 被污染 (非法值) → fallback mimo', () => {
-    localStorageMock.setItem('sports-fair:llm-provider-pref:v1', 'hacker-value');
+    localStorageMock.setItem(
+      'sports-fair:llm-provider-pref:v1',
+      'hacker-value'
+    );
     expect(loadProviderPref()).toBe('mimo');
   });
 });
@@ -203,10 +222,14 @@ describe('fetchAIGuidanceWithCache', () => {
   });
 
   it('cache miss → 调 fetch → 写 cache', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: '新鲜出炉', provider: 'mimo' })
-    );
-    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ aiGuidance: '新鲜出炉', provider: 'mimo' })
+      );
+    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
     expect(response.aiGuidance).toBe('新鲜出炉');
     expect(fromCache).toBe(false);
     // cache 已写
@@ -233,16 +256,20 @@ describe('fetchAIGuidanceWithCache', () => {
     );
     const fetchSpy = vi.fn();
     globalThis.fetch = fetchSpy;
-    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
     expect(response.aiGuidance).toBe('缓存的内容');
     expect(fromCache).toBe(true);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it('失败响应不写 cache', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: null, error: 'failed' })
-    );
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ aiGuidance: null, error: 'failed' })
+      );
     await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
     const raw = localStorageMock.getItem('sports-fair:ai-guidance:v1');
     expect(raw).toBeNull();
@@ -256,13 +283,21 @@ describe('fetchAIGuidanceWithCache', () => {
     localStorageMock.setItem(
       'sports-fair:ai-guidance:v1',
       JSON.stringify({
-        '7_mimo_xxx': { key: '7_mimo_xxx', response: cacheBody, cachedAt: Date.now() },
+        '7_mimo_xxx': {
+          key: '7_mimo_xxx',
+          response: cacheBody,
+          cachedAt: Date.now(),
+        },
       })
     );
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      mockFetchResponse({ aiGuidance: 'openai 的建议', provider: 'openai' })
-    );
-    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'openai' });
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        mockFetchResponse({ aiGuidance: 'openai 的建议', provider: 'openai' })
+      );
+    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'openai',
+    });
     expect(fromCache).toBe(false);
     expect(response.aiGuidance).toBe('openai 的建议');
   });

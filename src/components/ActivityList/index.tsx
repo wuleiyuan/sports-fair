@@ -850,7 +850,8 @@ const ActivityList: React.FC = () => {
                         height: 220,
                         borderRadius: 12,
                         border: '1px solid rgba(0,0,0,0.06)',
-                        background: 'var(--color-run-row-hover-background, #fafafa)',
+                        background:
+                          'var(--color-run-row-hover-background, #fafafa)',
                         padding: 16,
                         display: 'flex',
                         flexDirection: 'column',
@@ -860,7 +861,9 @@ const ActivityList: React.FC = () => {
                       <Skeleton width="40%" height="1.1em" />
                       <Skeleton width="55%" height="1.6em" />
                       <Skeleton width="100%" height="120px" radius="8px" />
-                      <div style={{ display: 'flex', gap: 8, marginTop: 'auto' }}>
+                      <div
+                        style={{ display: 'flex', gap: 8, marginTop: 'auto' }}
+                      >
                         <Skeleton width="30%" height="0.8em" />
                         <Skeleton width="30%" height="0.8em" />
                       </div>

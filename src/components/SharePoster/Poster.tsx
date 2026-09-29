@@ -75,14 +75,18 @@ function coordsToSvgPath(
         )}
         {route.path.length > 1 && (
           <circle
-            cx={toSvg(
-              route.path[route.path.length - 1][0],
-              route.path[route.path.length - 1][1]
-            )[0]}
-            cy={toSvg(
-              route.path[route.path.length - 1][0],
-              route.path[route.path.length - 1][1]
-            )[1]}
+            cx={
+              toSvg(
+                route.path[route.path.length - 1][0],
+                route.path[route.path.length - 1][1]
+              )[0]
+            }
+            cy={
+              toSvg(
+                route.path[route.path.length - 1][0],
+                route.path[route.path.length - 1][1]
+              )[1]
+            }
             r={8}
             fill="#ef4444"
             stroke="#fff"
@@ -123,7 +127,6 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
       totalDistanceKm >= 1000
         ? `${(totalDistanceKm / 1000).toFixed(1)}k`
         : `${totalDistanceKm.toFixed(0)}`;
-    const distUnit = totalDistanceKm >= 1000 ? 'km' : 'km';
 
     return (
       <div

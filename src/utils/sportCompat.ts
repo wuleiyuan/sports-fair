@@ -61,7 +61,14 @@ export interface SportCompat {
    *
    * 第一个 = 大号主指标；其余 = 小号副指标（最多 3 个）
    */
-  priorityMetrics: ('pace' | 'distance' | 'duration' | 'elevation' | 'floors' | 'reps')[];
+  priorityMetrics: (
+    | 'pace'
+    | 'distance'
+    | 'duration'
+    | 'elevation'
+    | 'floors'
+    | 'reps'
+  )[];
 }
 
 /**
@@ -84,13 +91,27 @@ export const SPORT_COMPAT: SportCompat[] = [
     unit: 'km',
     // 跑步合一：户外跑/室内跑/跑步机/越野跑/轮椅跑 都归"跑步"（用户 2026-06-08 明确要求）
     typeMatches: [
-      'Run', 'run', 'Running', 'running',
-      'VirtualRun', 'virtualrun',
-      'TrailRun', 'trailrun', 'Trail',
-      'Treadmill', 'treadmill',
-      'IndoorRun', 'indoorrun', 'IndoorRunning', 'indoorrunning',
-      'OutdoorRun', 'outdoorrun', 'OutdoorRunning', 'outdoorrunning',
-      'WheelchairRunPace', 'wheelchairrunpace',
+      'Run',
+      'run',
+      'Running',
+      'running',
+      'VirtualRun',
+      'virtualrun',
+      'TrailRun',
+      'trailrun',
+      'Trail',
+      'Treadmill',
+      'treadmill',
+      'IndoorRun',
+      'indoorrun',
+      'IndoorRunning',
+      'indoorrunning',
+      'OutdoorRun',
+      'outdoorrun',
+      'OutdoorRunning',
+      'outdoorrunning',
+      'WheelchairRunPace',
+      'wheelchairrunpace',
     ],
     nameKeywords: [
       /run from gpx/i,
@@ -121,10 +142,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(125, 211, 168, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Hike', 'hike', 'Hiking', 'hiking',
-      'Mountaineering', 'mountaineering',
-      'Climbing', 'climbing',
-      'Trekking', 'trekking',
+      'Hike',
+      'hike',
+      'Hiking',
+      'hiking',
+      'Mountaineering',
+      'mountaineering',
+      'Climbing',
+      'climbing',
+      'Trekking',
+      'trekking',
     ],
     nameKeywords: [
       /hike\s*from\s*gpx/i,
@@ -149,9 +176,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(152, 152, 157, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Walk', 'walk', 'Walking', 'walking',
-      'OutdoorWalk', 'outdoorwalk', 'OutdoorWalking', 'outdoorwalking',
-      'WheelchairWalkPace', 'wheelchairwalkpace',
+      'Walk',
+      'walk',
+      'Walking',
+      'walking',
+      'OutdoorWalk',
+      'outdoorwalk',
+      'OutdoorWalking',
+      'outdoorwalking',
+      'WheelchairWalkPace',
+      'wheelchairwalkpace',
     ],
     nameKeywords: [
       /walk\s*from\s*gpx/i,
@@ -173,17 +207,28 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(192, 132, 252, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Ride', 'ride',
-      'Cycling', 'cycling',
-      'OutdoorCycling', 'outdoorcycling',
-      'IndoorCycling', 'indoorcycling',
-      'VirtualRide', 'virtualride',
-      'EBikeRide', 'ebikeride',
-      'EMountainBikeRide', 'emountainbikeride',
-      'Handcycle', 'handcycle',
-      'GravelRide', 'gravelride',
-      'MountainBikeRide', 'mountainbikeride',
-      'RoadRide', 'roadride',
+      'Ride',
+      'ride',
+      'Cycling',
+      'cycling',
+      'OutdoorCycling',
+      'outdoorcycling',
+      'IndoorCycling',
+      'indoorcycling',
+      'VirtualRide',
+      'virtualride',
+      'EBikeRide',
+      'ebikeride',
+      'EMountainBikeRide',
+      'emountainbikeride',
+      'Handcycle',
+      'handcycle',
+      'GravelRide',
+      'gravelride',
+      'MountainBikeRide',
+      'mountainbikeride',
+      'RoadRide',
+      'roadride',
     ],
     nameKeywords: [
       /ride\s*from\s*gpx/i,
@@ -209,14 +254,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(90, 200, 250, 0.12)',
     unit: 'm', // 游泳用米
     typeMatches: [
-      'Swim', 'swim', 'Swimming', 'swimming',
-      'OpenWaterSwim', 'openwaterswim',
-      'PoolSwim', 'poolswim',
+      'Swim',
+      'swim',
+      'Swimming',
+      'swimming',
+      'OpenWaterSwim',
+      'openwaterswim',
+      'PoolSwim',
+      'poolswim',
     ],
-    nameKeywords: [
-      /swim/i,
-      /游泳/,
-    ],
+    nameKeywords: [/swim/i, /游泳/],
     desc: '泳池里的每一米',
     displayMetric: 'distance',
     unitLabel: 'm',
@@ -231,12 +278,18 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(249, 115, 22, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Workout', 'workout',
-      'WeightTraining', 'weighttraining',
-      'FunctionalStrengthTraining', 'functionalstrengthtraining',
-      'TraditionalStrengthTraining', 'traditionalstrengthtraining',
-      'CrossTraining', 'crosstraining',
-      'Crossfit', 'crossfit',
+      'Workout',
+      'workout',
+      'WeightTraining',
+      'weighttraining',
+      'FunctionalStrengthTraining',
+      'functionalstrengthtraining',
+      'TraditionalStrengthTraining',
+      'traditionalstrengthtraining',
+      'CrossTraining',
+      'crosstraining',
+      'Crossfit',
+      'crossfit',
     ],
     nameKeywords: [
       /strength/i,
@@ -260,19 +313,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(167, 139, 250, 0.12)',
     unit: 'km',
     typeMatches: [
-      'CoreTraining', 'coretraining',
-      'Pilates', 'pilates',
-      'HIIT', 'hiit',
-      'MindBody', 'mindbody',
+      'CoreTraining',
+      'coretraining',
+      'Pilates',
+      'pilates',
+      'HIIT',
+      'hiit',
+      'MindBody',
+      'mindbody',
     ],
-    nameKeywords: [
-      /core/i,
-      /pilates/i,
-      /hiit/i,
-      /核心/,
-      /普拉提/,
-      /腹肌/,
-    ],
+    nameKeywords: [/core/i, /pilates/i, /hiit/i, /核心/, /普拉提/, /腹肌/],
     desc: '腰腹的稳定',
     displayMetric: 'duration',
     unitLabel: 'min',
@@ -285,16 +335,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#fb923c',
     colorBg: 'rgba(251, 146, 60, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Yoga', 'yoga',
-      'TaiChi', 'taichi',
-    ],
-    nameKeywords: [
-      /yoga/i,
-      /瑜伽/,
-      /冥想/,
-      /太极/,
-    ],
+    typeMatches: ['Yoga', 'yoga', 'TaiChi', 'taichi'],
+    nameKeywords: [/yoga/i, /瑜伽/, /冥想/, /太极/],
     desc: '身心合一的呼吸',
     displayMetric: 'duration',
     unitLabel: 'min',
@@ -308,13 +350,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#60a5fa',
     colorBg: 'rgba(96, 165, 250, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Elliptical', 'elliptical',
-    ],
-    nameKeywords: [
-      /elliptical/i,
-      /椭圆机/,
-    ],
+    typeMatches: ['Elliptical', 'elliptical'],
+    nameKeywords: [/elliptical/i, /椭圆机/],
     desc: '低冲击的有氧',
     displayMetric: 'distance',
     unitLabel: 'km',
@@ -328,17 +365,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(48, 209, 88, 0.12)',
     unit: 'km',
     typeMatches: [
-      'StairStepper', 'stairstepper',
-      'StairClimbing', 'stairclimbing',
-      'Stairs', 'stairs',
-      'StepTraining', 'steptraining',
+      'StairStepper',
+      'stairstepper',
+      'StairClimbing',
+      'stairclimbing',
+      'Stairs',
+      'stairs',
+      'StepTraining',
+      'steptraining',
     ],
-    nameKeywords: [
-      /stair/i,
-      /step\b/i,
-      /爬楼/,
-      /楼梯/,
-    ],
+    nameKeywords: [/stair/i, /step\b/i, /爬楼/, /楼梯/],
     desc: '一步步向上',
     displayMetric: 'count',
     unitLabel: '层',
@@ -351,11 +387,9 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#06b6d4',
     colorBg: 'rgba(6, 182, 212, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Rowing', 'rowing',
-    ],
+    typeMatches: ['Rowing', 'rowing'],
     nameKeywords: [
-      /row(?!ing_from| from)/i,  // 排除 "rowing from" 这种非主词
+      /row(?!ing_from| from)/i, // 排除 "rowing from" 这种非主词
       /划船/,
     ],
     desc: '拉桨的力量',
@@ -372,12 +406,18 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(220, 38, 38, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Boxing', 'boxing',
-      'Kickboxing', 'kickboxing',
-      'MartialArts', 'martialarts',
-      'Wrestling', 'wrestling',
-      'MMA', 'mma',
-      'Fencing', 'fencing',
+      'Boxing',
+      'boxing',
+      'Kickboxing',
+      'kickboxing',
+      'MartialArts',
+      'martialarts',
+      'Wrestling',
+      'wrestling',
+      'MMA',
+      'mma',
+      'Fencing',
+      'fencing',
     ],
     nameKeywords: [
       /box(?!ing_)/i,
@@ -406,16 +446,14 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(245, 158, 11, 0.12)',
     unit: 'min',
     typeMatches: [
-      'RopeSkipping', 'ropeskipping',
-      'JumpRope', 'jumprope',
-      'SkippingRope', 'skippingrope',
+      'RopeSkipping',
+      'ropeskipping',
+      'JumpRope',
+      'jumprope',
+      'SkippingRope',
+      'skippingrope',
     ],
-    nameKeywords: [
-      /跳绳/,
-      /rope.?skipp?/i,
-      /jump.?rope/i,
-      /skipping/i,
-    ],
+    nameKeywords: [/跳绳/, /rope.?skipp?/i, /jump.?rope/i, /skipping/i],
     desc: '节奏感的燃脂',
     displayMetric: 'count',
     unitLabel: '个',
@@ -429,18 +467,16 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(16, 185, 129, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Soccer', 'soccer',
-      'Football', 'football',
-      'Rugby', 'rugby',
-      'AustralianFootball', 'australianfootball',
+      'Soccer',
+      'soccer',
+      'Football',
+      'football',
+      'Rugby',
+      'rugby',
+      'AustralianFootball',
+      'australianfootball',
     ],
-    nameKeywords: [
-      /soccer/i,
-      /football/i,
-      /rugby/i,
-      /足球/,
-      /橄榄球/,
-    ],
+    nameKeywords: [/soccer/i, /football/i, /rugby/i, /足球/, /橄榄球/],
     desc: '11 个人的默契',
     displayMetric: 'count',
     unitLabel: '次',
@@ -453,16 +489,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#f59e0b',
     colorBg: 'rgba(245, 158, 11, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Basketball', 'basketball',
-      'Volleyball', 'volleyball',
-    ],
-    nameKeywords: [
-      /basketball/i,
-      /volleyball/i,
-      /篮球/,
-      /排球/,
-    ],
+    typeMatches: ['Basketball', 'basketball', 'Volleyball', 'volleyball'],
+    nameKeywords: [/basketball/i, /volleyball/i, /篮球/, /排球/],
     desc: '空心入网的清脆',
     displayMetric: 'count',
     unitLabel: '次',
@@ -476,13 +504,20 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(132, 204, 22, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Tennis', 'tennis',
-      'Badminton', 'badminton',
-      'Squash', 'squash',
-      'TableTennis', 'tabletennis',
-      'Racquetball', 'racquetball',
-      'Padel', 'padel',
-      'Pickleball', 'pickleball',
+      'Tennis',
+      'tennis',
+      'Badminton',
+      'badminton',
+      'Squash',
+      'squash',
+      'TableTennis',
+      'tabletennis',
+      'Racquetball',
+      'racquetball',
+      'Padel',
+      'padel',
+      'Pickleball',
+      'pickleball',
     ],
     nameKeywords: [
       /tennis/i,
@@ -510,22 +545,24 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(14, 165, 233, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Skiing', 'skiing',
-      'Snowboarding', 'snowboarding',
-      'AlpineSkiing', 'alpineskiing',
-      'BackcountrySkiing', 'backcountryskiing',
-      'CrossCountrySkiing', 'crosscountryskiing',
-      'DownhillSkiing', 'downhillskiing',
-      'NordicSkiing', 'nordicskiing',
-      'RollerSkiing', 'rollerskiing',
+      'Skiing',
+      'skiing',
+      'Snowboarding',
+      'snowboarding',
+      'AlpineSkiing',
+      'alpineskiing',
+      'BackcountrySkiing',
+      'backcountryskiing',
+      'CrossCountrySkiing',
+      'crosscountryskiing',
+      'DownhillSkiing',
+      'downhillskiing',
+      'NordicSkiing',
+      'nordicskiing',
+      'RollerSkiing',
+      'rollerskiing',
     ],
-    nameKeywords: [
-      /ski/i,
-      /snowboard/i,
-      /滑雪/,
-      /单板/,
-      /双板/,
-    ],
+    nameKeywords: [/ski/i, /snowboard/i, /滑雪/, /单板/, /双板/],
     desc: '雪上的速度',
     displayMetric: 'distance',
     unitLabel: 'km',
@@ -539,12 +576,18 @@ export const SPORT_COMPAT: SportCompat[] = [
     colorBg: 'rgba(8, 145, 178, 0.12)',
     unit: 'km',
     typeMatches: [
-      'Surfing', 'surfing',
-      'Kitesurf', 'kitesurf',
-      'Windsurf', 'windsurf',
-      'Sailing', 'sailing',
-      'Kayaking', 'kayaking',
-      'Canoeing', 'canoeing',
+      'Surfing',
+      'surfing',
+      'Kitesurf',
+      'kitesurf',
+      'Windsurf',
+      'windsurf',
+      'Sailing',
+      'sailing',
+      'Kayaking',
+      'kayaking',
+      'Canoeing',
+      'canoeing',
     ],
     nameKeywords: [
       /surf/i,
@@ -570,13 +613,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#16a34a',
     colorBg: 'rgba(22, 163, 74, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Golf', 'golf',
-    ],
-    nameKeywords: [
-      /golf/i,
-      /高尔夫/,
-    ],
+    typeMatches: ['Golf', 'golf'],
+    nameKeywords: [/golf/i, /高尔夫/],
     desc: '一杆进洞的优雅',
     displayMetric: 'count',
     unitLabel: '洞',
@@ -590,13 +628,8 @@ export const SPORT_COMPAT: SportCompat[] = [
     color: '#a3a3a3',
     colorBg: 'rgba(163, 163, 163, 0.12)',
     unit: 'km',
-    typeMatches: [
-      'Wheelchair', 'wheelchair',
-    ],
-    nameKeywords: [
-      /wheelchair/i,
-      /轮椅/,
-    ],
+    typeMatches: ['Wheelchair', 'wheelchair'],
+    nameKeywords: [/wheelchair/i, /轮椅/],
     desc: '无障碍的运动',
     displayMetric: 'distance',
     unitLabel: 'km',
@@ -619,13 +652,14 @@ export const SPORT_COMPAT: SportCompat[] = [
 ];
 
 /** URL key → SportCompat 快查 */
-export const SPORT_COMPAT_BY_KEY: Record<string, SportCompat> = SPORT_COMPAT.reduce(
-  (acc, s) => {
-    acc[s.key] = s;
-    return acc;
-  },
-  {} as Record<string, SportCompat>
-);
+export const SPORT_COMPAT_BY_KEY: Record<string, SportCompat> =
+  SPORT_COMPAT.reduce(
+    (acc, s) => {
+      acc[s.key] = s;
+      return acc;
+    },
+    {} as Record<string, SportCompat>
+  );
 
 /**
  * 归一化活动 type/name → 桶 key
@@ -651,7 +685,10 @@ export function normalizeSportTypeCompat(
   // 2. name 关键词正则
   if (name) {
     for (const sport of SPORT_COMPAT) {
-      if (sport.nameKeywords.length > 0 && sport.nameKeywords.some((re) => re.test(name))) {
+      if (
+        sport.nameKeywords.length > 0 &&
+        sport.nameKeywords.some((re) => re.test(name))
+      ) {
         return sport.key;
       }
     }

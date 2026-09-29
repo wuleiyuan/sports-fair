@@ -4,7 +4,10 @@
   "rewrites": [
     { "source": "/sw.js", "destination": "/api/sw.js" },
     { "source": "/manifest.json", "destination": "/api/manifest.json" },
-    { "source": "/((?!images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)", "destination": "/" }
+    {
+      "source": "/((?!images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)",
+      "destination": "/"
+    }
   ],
   "github": {
     "silent": false,

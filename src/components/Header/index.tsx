@@ -73,35 +73,35 @@ const Header = () => {
         <div className="flex w-3/4 items-center justify-end text-right">
           <Link
             to="/sports"
-            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
             style={{ textDecoration: 'none' }}
           >
             🏅 运动总览
           </Link>
           <Link
             to="/summary"
-            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
             style={{ textDecoration: 'none' }}
           >
             📊 旅程总览
           </Link>
           <Link
             to="/health"
-            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
             style={{ textDecoration: 'none' }}
           >
             💚 健康分析
           </Link>
           <Link
             to="/health-assess"
-            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
             style={{ textDecoration: 'none' }}
           >
             🩺 评估建议
           </Link>
           <Link
             to="/training"
-            className="mr-3 text-lg lg:mr-4 lg:text-base hover:opacity-80 transition-opacity"
+            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
             style={{ textDecoration: 'none' }}
           >
             🏋️ 训练负荷

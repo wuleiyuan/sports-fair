@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useState, useEffect, useMemo } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import Map, {
   Layer,
   Source,
@@ -87,7 +93,6 @@ const RunMap = ({
     () => getMapStyle(MAP_TILE_VENDOR, currentMapTheme, MAP_TILE_ACCESS_TOKEN),
     [currentMapTheme]
   );
-
 
   // Update map when theme changes
   useEffect(() => {

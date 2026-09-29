@@ -11,9 +11,7 @@ export default defineConfig({
       'api/**/__tests__/**/*.test.{ts,tsx}',
     ],
     // 允许 .tsx 组件测试走 happy-dom (更快)
-    environmentMatchGlobs: [
-      ['src/components/**/*.test.tsx', 'happy-dom'],
-    ],
+    environmentMatchGlobs: [['src/components/**/*.test.tsx', 'happy-dom']],
     setupFiles: ['./vitest.setup.ts'],
   },
 });

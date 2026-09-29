@@ -34,9 +34,7 @@ const HomePage = () => {
     }
 
     const avgPace =
-      totalTime > 0 && totalDist > 0
-        ? totalTime / 60 / totalDist
-        : 0;
+      totalTime > 0 && totalDist > 0 ? totalTime / 60 / totalDist : 0;
     const bestPaceMin = maxSpeed > 0 ? 60 / maxSpeed : 0;
 
     const fmtPace = (min: number) => {
@@ -60,7 +58,7 @@ const HomePage = () => {
         <html lang="en" />
       </Helmet>
       <div data-kinetic>
-        <div className="max-w-6xl mx-auto px-4 pt-6">
+        <div className="mx-auto max-w-6xl px-4 pt-6">
           <div
             style={{
               display: 'flex',

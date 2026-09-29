@@ -70,7 +70,9 @@ describe('assessHealth - 时间窗口可重放', () => {
     expect(a.generatedAt).toBe(b.generatedAt);
     // cards 结构相同
     expect(a.cards.map((c) => c.key)).toEqual(b.cards.map((c) => c.key));
-    expect(a.cards.map((c) => c.severity)).toEqual(b.cards.map((c) => c.severity));
+    expect(a.cards.map((c) => c.severity)).toEqual(
+      b.cards.map((c) => c.severity)
+    );
   });
 });
 

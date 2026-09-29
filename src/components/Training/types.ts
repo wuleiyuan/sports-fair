@@ -8,34 +8,40 @@
 
 /** ACWR 状态机 (5 态) — 跟 training_load.py 的 status 字段对应 */
 export type ACWRStatus =
-  | 'sweet_spot'      // 0.8-1.3 最佳提升
-  | 'undertrained'    // < 0.8 训练不足
-  | 'caution'         // 1.3-1.5 过度训练
-  | 'high_risk'       // > 1.5 高危伤病
-  | 'unknown';        // 数据不足
+  | 'sweet_spot' // 0.8-1.3 最佳提升
+  | 'undertrained' // < 0.8 训练不足
+  | 'caution' // 1.3-1.5 过度训练
+  | 'high_risk' // > 1.5 高危伤病
+  | 'unknown'; // 数据不足
 
 /** TSB 状态 (5 态) — Coggan 疲劳模型 */
 export type TSBStatus =
-  | 'fresh'           // > 15 充分恢复
-  | 'optimal'         // -5 ~ 15 最佳训练区
-  | 'fatigued'        // -15 ~ -5 疲劳累积
-  | 'overtraining'    // < -15 过度训练
-  | 'unknown';        // 数据不足
+  | 'fresh' // > 15 充分恢复
+  | 'optimal' // -5 ~ 15 最佳训练区
+  | 'fatigued' // -15 ~ -5 疲劳累积
+  | 'overtraining' // < -15 过度训练
+  | 'unknown'; // 数据不足
 
 /** HR 区间 5 区 — Karvonen HRR 公式 (跟 training_load.py 一致) */
 export type HRZoneKey = 'z1' | 'z2' | 'z3' | 'z4' | 'z5';
 
 /** 训练建议分类 */
-export type AdviceCategory = 'data' | 'load' | 'intensity' | 'recovery' | 'cadence' | 'other';
+export type AdviceCategory =
+  | 'data'
+  | 'load'
+  | 'intensity'
+  | 'recovery'
+  | 'cadence'
+  | 'other';
 
 /** 严重程度 (3 级) */
 export type AdviceSeverity = 'info' | 'low' | 'high';
 
 /** ACWR 配置 (from training_load.json.config.thresholds) */
 export interface ACWRConfig {
-  acwr_under: number;          // < this = undertrained
+  acwr_under: number; // < this = undertrained
   acwr_sweet_spot: [number, number]; // [low, high]
-  acwr_caution: number;        // > caution = high_risk
+  acwr_caution: number; // > caution = high_risk
 }
 
 /** ACWR 结果 (from training_load.json.acwr) */
@@ -129,25 +135,35 @@ export interface TrainingAdvice {
 /** ACWR 区间色带 (Apple HIG 风格 — 4 区) */
 export interface ACWRZone {
   min: number;
-  max: number;     // 99 = ∞
+  max: number; // 99 = ∞
   color: string;
-  label: string;   // 中文
-  cn: string;      // 英文
+  label: string; // 中文
+  cn: string; // 英文
 }
 
 export const ACWR_ZONES: readonly ACWRZone[] = [
-  { min: 0,    max: 0.8,  color: '#a855f7', label: '恢复期',     cn: 'Detraining' },
-  { min: 0.8,  max: 1.3,  color: '#22c55e', label: '最佳提升',   cn: 'Optimal' },
-  { min: 1.3,  max: 1.5,  color: '#f97316', label: '过度训练',   cn: 'Overreaching' },
-  { min: 1.5,  max: 99,   color: '#3b82f6', label: '高危预警',   cn: 'High Risk' },
+  { min: 0, max: 0.8, color: '#a855f7', label: '恢复期', cn: 'Detraining' },
+  { min: 0.8, max: 1.3, color: '#22c55e', label: '最佳提升', cn: 'Optimal' },
+  {
+    min: 1.3,
+    max: 1.5,
+    color: '#f97316',
+    label: '过度训练',
+    cn: 'Overreaching',
+  },
+  { min: 1.5, max: 99, color: '#3b82f6', label: '高危预警', cn: 'High Risk' },
 ] as const;
 
 /** 静态 AI 风格建议 — 跟 AssessmentCard.acwrZone() 保持一致 */
 export function acwrZoneAdvice(ratio: number | null): string {
-  if (ratio === null || ratio <= 0) return '近 28 天无训练记录。从低强度（步行 3km）开始恢复。';
-  if (ratio < 0.8) return '当前训练负荷偏低，长期维持可能影响体能提升。建议每周增加 1 次中等强度训练（30 分钟慢跑或骑行）。';
-  if (ratio <= 1.3) return '维持训练：当前处于伤病风险最低且体能提升最快的区间。建议保持周训练量稳定。';
-  if (ratio <= 1.5) return '建议本周减少 20% 训练量：增加 1-2 天主动恢复（散步/拉伸），高强度训练减半。';
+  if (ratio === null || ratio <= 0)
+    return '近 28 天无训练记录。从低强度（步行 3km）开始恢复。';
+  if (ratio < 0.8)
+    return '当前训练负荷偏低，长期维持可能影响体能提升。建议每周增加 1 次中等强度训练（30 分钟慢跑或骑行）。';
+  if (ratio <= 1.3)
+    return '维持训练：当前处于伤病风险最低且体能提升最快的区间。建议保持周训练量稳定。';
+  if (ratio <= 1.5)
+    return '建议本周减少 20% 训练量：增加 1-2 天主动恢复（散步/拉伸），高强度训练减半。';
   return '紧急减量：建议立即减量 50% 或完全休息 1-2 天。监测 RHR 与睡眠，警惕受伤信号。';
 }
 
@@ -161,30 +177,44 @@ export function getACWRZone(ratio: number | null): ACWRZone {
 }
 
 /** HR 区间元数据 */
-export const HR_ZONE_META: Record<HRZoneKey, { label: string; cn: string; color: string; hrr: string }> = {
-  z1: { label: 'Z1 恢复',   cn: 'Recovery',       color: '#60a5fa', hrr: '< 60%' },
-  z2: { label: 'Z2 有氧底座', cn: 'Aerobic Base', color: '#22c55e', hrr: '60-70%' },
-  z3: { label: 'Z3 有氧',   cn: 'Aerobic',        color: '#eab308', hrr: '70-80%' },
-  z4: { label: 'Z4 乳酸阈',  cn: 'Threshold',     color: '#f97316', hrr: '80-90%' },
-  z5: { label: 'Z5 无氧',   cn: 'Anaerobic',      color: '#ef4444', hrr: '90%+' },
+export const HR_ZONE_META: Record<
+  HRZoneKey,
+  { label: string; cn: string; color: string; hrr: string }
+> = {
+  z1: { label: 'Z1 恢复', cn: 'Recovery', color: '#60a5fa', hrr: '< 60%' },
+  z2: {
+    label: 'Z2 有氧底座',
+    cn: 'Aerobic Base',
+    color: '#22c55e',
+    hrr: '60-70%',
+  },
+  z3: { label: 'Z3 有氧', cn: 'Aerobic', color: '#eab308', hrr: '70-80%' },
+  z4: { label: 'Z4 乳酸阈', cn: 'Threshold', color: '#f97316', hrr: '80-90%' },
+  z5: { label: 'Z5 无氧', cn: 'Anaerobic', color: '#ef4444', hrr: '90%+' },
 };
 
 /** ACWR 状态徽章文案 (跟 getACWRZone + status 字段双验证) */
-export const ACWR_STATUS_LABEL: Record<ACWRStatus, { text: string; color: string }> = {
-  sweet_spot:   { text: '✓ 最佳区间', color: '#22c55e' },
+export const ACWR_STATUS_LABEL: Record<
+  ACWRStatus,
+  { text: string; color: string }
+> = {
+  sweet_spot: { text: '✓ 最佳区间', color: '#22c55e' },
   undertrained: { text: '⚠ 训练不足', color: '#a855f7' },
-  caution:      { text: '⚠ 注意减量', color: '#f97316' },
-  high_risk:    { text: '✕ 高危预警', color: '#3b82f6' },
-  unknown:      { text: '? 数据不足', color: '#9ca3af' },
+  caution: { text: '⚠ 注意减量', color: '#f97316' },
+  high_risk: { text: '✕ 高危预警', color: '#3b82f6' },
+  unknown: { text: '? 数据不足', color: '#9ca3af' },
 };
 
 /** TSB 状态徽章文案 (Coggan 疲劳模型) */
-export const TSB_STATUS_LABEL: Record<TSBStatus, { text: string; color: string }> = {
-  fresh:        { text: '✓ 充分恢复', color: '#22c55e' },
-  optimal:      { text: '✓ 最佳训练区', color: '#6366f1' },
-  fatigued:     { text: '⚠ 疲劳累积', color: '#f97316' },
+export const TSB_STATUS_LABEL: Record<
+  TSBStatus,
+  { text: string; color: string }
+> = {
+  fresh: { text: '✓ 充分恢复', color: '#22c55e' },
+  optimal: { text: '✓ 最佳训练区', color: '#6366f1' },
+  fatigued: { text: '⚠ 疲劳累积', color: '#f97316' },
   overtraining: { text: '✕ 过度训练', color: '#ef4444' },
-  unknown:      { text: '? 数据不足', color: '#9ca3af' },
+  unknown: { text: '? 数据不足', color: '#9ca3af' },
 };
 
 /** TSB 状态文案帮助函数 */

@@ -92,10 +92,7 @@ export const IconWalk: React.FC<IconProps> = (props) =>
 
 /** 闪电/能量 — bolt */
 export const IconBolt: React.FC<IconProps> = (props) =>
-  withDefaults(
-    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />,
-    props
-  );
+  withDefaults(<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />, props);
 
 /** 时钟 — clock */
 export const IconClock: React.FC<IconProps> = (props) =>
@@ -178,10 +175,7 @@ export const IconWarning: React.FC<IconProps> = (props) =>
 
 /** 箭头右 — chevron.right */
 export const IconChevronRight: React.FC<IconProps> = (props) =>
-  withDefaults(
-    <polyline points="9 18 15 12 9 6" />,
-    props
-  );
+  withDefaults(<polyline points="9 18 15 12 9 6" />, props);
 
 /** 箭头上 — arrow.up */
 export const IconArrowUp: React.FC<IconProps> = (props) =>

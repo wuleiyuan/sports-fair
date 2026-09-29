@@ -24,8 +24,12 @@ const PROVIDER_LABELS: Record<LLMProvider, string> = {
 const HealthAssessPage: React.FC = () => {
   const { theme } = useTheme();
   const [windowDays, setWindowDays] = useState<7 | 30>(7);
-  const [provider, setProviderState] = useState<LLMProvider>(() => loadProviderPref());
-  const [aiState, setAiState] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+  const [provider, setProviderState] = useState<LLMProvider>(() =>
+    loadProviderPref()
+  );
+  const [aiState, setAiState] = useState<'idle' | 'loading' | 'ok' | 'error'>(
+    'idle'
+  );
   const [aiResponse, setAiResponse] = useState<AIGuidanceResponse | null>(null);
   const [fromCache, setFromCache] = useState(false);
 
@@ -63,7 +67,11 @@ const HealthAssessPage: React.FC = () => {
       }
     } catch (e: any) {
       setAiState('error');
-      setAiResponse({ aiGuidance: '', error: e.message ?? 'unknown', requestId: '' });
+      setAiResponse({
+        aiGuidance: '',
+        error: e.message ?? 'unknown',
+        requestId: '',
+      });
     }
   };
 
@@ -120,7 +128,10 @@ const HealthAssessPage: React.FC = () => {
         {/* HealthKit 缺失提示 */}
         {bundle.healthKitMissing && (
           <div className="k-assess-banner">
-            <p><strong>Apple HealthKit 数据暂不可用</strong>。建议在 iPhone "健康" App 中检查数据同步状态。</p>
+            <p>
+              <strong>Apple HealthKit 数据暂不可用</strong>。建议在 iPhone
+              "健康" App 中检查数据同步状态。
+            </p>
             <p className="k-assess-banner-sub">
               {hasTrainingData
                 ? '运动训练数据可用，将继续显示训练负荷评估。'
@@ -140,15 +151,20 @@ const HealthAssessPage: React.FC = () => {
             </h2>
             {aiState === 'ok' && aiResponse?.model && (
               <span className="k-assess-ai-badge">
-                {PROVIDER_LABELS[aiResponse.provider ?? 'mimo']} · {aiResponse.model}
-                {fromCache && <span className="k-assess-cache-mark"> · cached</span>}
+                {PROVIDER_LABELS[aiResponse.provider ?? 'mimo']} ·{' '}
+                {aiResponse.model}
+                {fromCache && (
+                  <span className="k-assess-cache-mark"> · cached</span>
+                )}
               </span>
             )}
           </div>
 
           {aiState === 'loading' && (
             <div className="k-assess-text">
-              <p style={{ color: '#FF8800', marginBottom: 12, fontWeight: 600 }}>
+              <p
+                style={{ color: '#FF8800', marginBottom: 12, fontWeight: 600 }}
+              >
                 AI 教练正在分析你的数据…
               </p>
               <SkeletonText lines={3} />
@@ -157,9 +173,14 @@ const HealthAssessPage: React.FC = () => {
 
           {aiState === 'ok' && aiResponse?.aiGuidance && (
             <div className="k-assess-text">
-              {aiResponse.aiGuidance.split('\n').filter((l) => l.trim()).map((line, i) => (
-                <p key={i} style={{ margin: i === 0 ? 0 : '0.5em 0 0' }}>{line}</p>
-              ))}
+              {aiResponse.aiGuidance
+                .split('\n')
+                .filter((l) => l.trim())
+                .map((line, i) => (
+                  <p key={i} style={{ margin: i === 0 ? 0 : '0.5em 0 0' }}>
+                    {line}
+                  </p>
+                ))}
             </div>
           )}
 
@@ -168,7 +189,12 @@ const HealthAssessPage: React.FC = () => {
               <p className="k-assess-text">{bundle.overall}</p>
               <p className="k-assess-fallback">
                 AI 建议暂不可用
-                {aiResponse?.requestId && <code className="k-assess-code"> [{aiResponse.requestId.slice(0, 8)}]</code>}
+                {aiResponse?.requestId && (
+                  <code className="k-assess-code">
+                    {' '}
+                    [{aiResponse.requestId.slice(0, 8)}]
+                  </code>
+                )}
                 ：{aiResponse?.error || '未知错误'}，已显示静态建议。
               </p>
             </>
@@ -184,27 +210,42 @@ const HealthAssessPage: React.FC = () => {
         {/* 评估卡片网格 */}
         <div className="k-bento">
           {bundle.cards
-            .filter((card) => !(bundle.healthKitMissing && card.key !== 'training_load'))
+            .filter(
+              (card) =>
+                !(bundle.healthKitMissing && card.key !== 'training_load')
+            )
             .map((card) => {
-            const isTrainingLoad = card.key === 'training_load';
-            const acwrRatio = isTrainingLoad ? parseFloat(card.main) || 0 : 0;
-            return (
-              <div key={card.key} className="k-bento-narrow" style={{ minWidth: 0 }}>
-                <AssessmentCard
-                  card={card}
-                  acwrRatio={isTrainingLoad ? acwrRatio : undefined}
-                />
-              </div>
-            );
-          })}
+              const isTrainingLoad = card.key === 'training_load';
+              const acwrRatio = isTrainingLoad ? parseFloat(card.main) || 0 : 0;
+              return (
+                <div
+                  key={card.key}
+                  className="k-bento-narrow"
+                  style={{ minWidth: 0 }}
+                >
+                  <AssessmentCard
+                    card={card}
+                    acwrRatio={isTrainingLoad ? acwrRatio : undefined}
+                  />
+                </div>
+              );
+            })}
         </div>
 
         {/* 医学免责声明 */}
         <footer className="k-formula-footer" style={{ marginTop: 24 }}>
           <details>
             <summary>声明</summary>
-            <p style={{ margin: '8px 0', lineHeight: 1.6, color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>
-              本评估基于公开医学/运动科学文献区间（AHA / NSF / ACWR），仅作参考。不替代医生意见。如有健康疑虑，请咨询专业医生。
+            <p
+              style={{
+                margin: '8px 0',
+                lineHeight: 1.6,
+                color: 'rgba(255,255,255,0.5)',
+                fontSize: 13,
+              }}
+            >
+              本评估基于公开医学/运动科学文献区间（AHA / NSF /
+              ACWR），仅作参考。不替代医生意见。如有健康疑虑，请咨询专业医生。
             </p>
           </details>
         </footer>

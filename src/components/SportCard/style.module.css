@@ -70,7 +70,9 @@
   right: 0;
   height: 2px;
   opacity: 0.85;
-  transition: opacity 280ms ease, height 280ms ease;
+  transition:
+    opacity 280ms ease,
+    height 280ms ease;
 }
 
 .cardActive:hover .accent {

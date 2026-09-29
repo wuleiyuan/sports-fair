@@ -20,32 +20,49 @@ interface Props {
  * - 1.5+   蓝 = 高危预警 (High Risk)
  */
 const ACWR_ZONES = [
-  { min: 0,    max: 0.8,  color: '#a855f7', label: '恢复期',     cn: 'Detraining' },
-  { min: 0.8,  max: 1.3,  color: '#22c55e', label: '最佳提升',   cn: 'Optimal' },
-  { min: 1.3,  max: 1.5,  color: '#f97316', label: '过度训练',   cn: 'Overreaching' },
-  { min: 1.5,  max: 99,   color: '#3b82f6', label: '高危预警',   cn: 'High Risk' },
+  { min: 0, max: 0.8, color: '#a855f7', label: '恢复期', cn: 'Detraining' },
+  { min: 0.8, max: 1.3, color: '#22c55e', label: '最佳提升', cn: 'Optimal' },
+  {
+    min: 1.3,
+    max: 1.5,
+    color: '#f97316',
+    label: '过度训练',
+    cn: 'Overreaching',
+  },
+  { min: 1.5, max: 99, color: '#3b82f6', label: '高危预警', cn: 'High Risk' },
 ];
 
 /**
  * 根据 ACWR ratio 返回当前 zone + 静态 AI 风格建议
  */
 function acwrZone(ratio: number) {
-  if (ratio <= 0) return { zone: ACWR_ZONES[0], staticAdvice: '近 28 天无训练记录。从低强度（步行 3km）开始恢复。' };
-  if (ratio < 0.8) return {
-    zone: ACWR_ZONES[0],
-    staticAdvice: '当前训练负荷偏低，长期维持可能影响体能提升。建议每周增加 1 次中等强度训练（30 分钟慢跑或骑行）。',
-  };
-  if (ratio <= 1.3) return {
-    zone: ACWR_ZONES[1],
-    staticAdvice: '维持训练：当前处于伤病风险最低且体能提升最快的区间。建议保持周训练量稳定。',
-  };
-  if (ratio <= 1.5) return {
-    zone: ACWR_ZONES[2],
-    staticAdvice: '建议本周减少 20% 训练量：增加 1-2 天主动恢复（散步/拉伸），高强度训练减半。',
-  };
+  if (ratio <= 0)
+    return {
+      zone: ACWR_ZONES[0],
+      staticAdvice: '近 28 天无训练记录。从低强度（步行 3km）开始恢复。',
+    };
+  if (ratio < 0.8)
+    return {
+      zone: ACWR_ZONES[0],
+      staticAdvice:
+        '当前训练负荷偏低，长期维持可能影响体能提升。建议每周增加 1 次中等强度训练（30 分钟慢跑或骑行）。',
+    };
+  if (ratio <= 1.3)
+    return {
+      zone: ACWR_ZONES[1],
+      staticAdvice:
+        '维持训练：当前处于伤病风险最低且体能提升最快的区间。建议保持周训练量稳定。',
+    };
+  if (ratio <= 1.5)
+    return {
+      zone: ACWR_ZONES[2],
+      staticAdvice:
+        '建议本周减少 20% 训练量：增加 1-2 天主动恢复（散步/拉伸），高强度训练减半。',
+    };
   return {
     zone: ACWR_ZONES[3],
-    staticAdvice: '紧急减量：建议立即减量 50% 或完全休息 1-2 天。监测 RHR 与睡眠，警惕受伤信号。',
+    staticAdvice:
+      '紧急减量：建议立即减量 50% 或完全休息 1-2 天。监测 RHR 与睡眠，警惕受伤信号。',
   };
 }
 
@@ -57,17 +74,31 @@ function acwrZone(ratio: number) {
  * - 可折叠 detail（鼠标悬停展开）
  * - v2.1.9: 训练负荷卡片显示 ACWR 区间色带 + 静态 AI 建议
  */
-const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) => {
+const AssessmentCard: React.FC<Props> = ({
+  card,
+  trend,
+  trendMax,
+  acwrRatio,
+}) => {
   const isTrainingLoad = card.key === 'training_load';
   const showTrend = isTrainingLoad && trend && trend.length === 7;
   const maxBar = trendMax && trendMax > 0 ? trendMax : 1;
-  const trendLabels = ['6天前', '5天前', '4天前', '3天前', '2天前', '昨天', '今'];
+  const trendLabels = [
+    '6天前',
+    '5天前',
+    '4天前',
+    '3天前',
+    '2天前',
+    '昨天',
+    '今',
+  ];
 
   // ACWR 区间色带：固定 0-2.0 范围，position = ratio/2
   const acwrDisplayMax = 2.0;
-  const acwrPercent = isTrainingLoad && acwrRatio && acwrRatio > 0
-    ? Math.min(100, (acwrRatio / acwrDisplayMax) * 100)
-    : 0;
+  const acwrPercent =
+    isTrainingLoad && acwrRatio && acwrRatio > 0
+      ? Math.min(100, (acwrRatio / acwrDisplayMax) * 100)
+      : 0;
 
   return (
     <div
@@ -92,8 +123,23 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
         gap: 12,
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 600, color: 'var(--a-text-primary, #fff)' }}>{card.title}</h3>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+        }}
+      >
+        <h3
+          style={{
+            margin: 0,
+            fontSize: '1.05rem',
+            fontWeight: 600,
+            color: 'var(--a-text-primary, #fff)',
+          }}
+        >
+          {card.title}
+        </h3>
         <SeverityBadge severity={card.severity} size="sm" />
       </div>
 
@@ -122,112 +168,124 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
       </div>
 
       {/* v2.1.9: 训练负荷 ACWR 区间色带 + 状态评级 */}
-      {isTrainingLoad && acwrRatio !== undefined && acwrRatio > 0 && (() => {
-        const { zone, staticAdvice } = acwrZone(acwrRatio);
-        return (
-          <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--a-text-tertiary, rgba(255,255,255,0.4))', marginBottom: 6 }}>
-              ACWR 风险区间（0-2.0）
-            </div>
-            <div className="acwr-zone-bar">
-              {ACWR_ZONES.map((z, i) => {
-                const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5;
-                const span = z.max === 99 ? 0.5 : (z.max - z.min);
-                const widthPct = (span / TOTAL_SPAN) * 100;
-                return (
-                  <div
-                    key={i}
-                    className="acwr-zone"
-                    style={{ backgroundColor: z.color, width: `${widthPct}%` }}
-                  />
-                );
-              })}
-            </div>
-            <div className="acwr-zone-labels">
-              {ACWR_ZONES.map((z, i) => {
-                const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5;
-                const span = z.max === 99 ? 0.5 : (z.max - z.min);
-                const widthPct = (span / TOTAL_SPAN) * 100;
-                return (
-                  <span
-                    key={i}
-                    className="acwr-zone-label"
-                    style={{ color: z.color, width: `${widthPct}%` }}
-                  >
-                    {z.min}-{z.max === 99 ? '∞' : z.max}
-                  </span>
-                );
-              })}
-            </div>
-            <div
-              className="acwr-marker-wrap"
-              style={{
-                position: 'relative',
-                height: 14,
-                margin: '6px 0 10px',
-                borderTop: '1px dashed rgba(255,255,255,0.12)',
-              }}
-            >
+      {isTrainingLoad &&
+        acwrRatio !== undefined &&
+        acwrRatio > 0 &&
+        (() => {
+          const { zone, staticAdvice } = acwrZone(acwrRatio);
+          return (
+            <div>
               <div
-                className="acwr-marker-dot"
                 style={{
-                  position: 'absolute',
-                  left: `${acwrPercent}%`,
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: 14,
+                  fontSize: '0.75rem',
+                  color: 'var(--a-text-tertiary, rgba(255,255,255,0.4))',
+                  marginBottom: 6,
+                }}
+              >
+                ACWR 风险区间（0-2.0）
+              </div>
+              <div className="acwr-zone-bar">
+                {ACWR_ZONES.map((z, i) => {
+                  const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5;
+                  const span = z.max === 99 ? 0.5 : z.max - z.min;
+                  const widthPct = (span / TOTAL_SPAN) * 100;
+                  return (
+                    <div
+                      key={i}
+                      className="acwr-zone"
+                      style={{
+                        backgroundColor: z.color,
+                        width: `${widthPct}%`,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              <div className="acwr-zone-labels">
+                {ACWR_ZONES.map((z, i) => {
+                  const TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5;
+                  const span = z.max === 99 ? 0.5 : z.max - z.min;
+                  const widthPct = (span / TOTAL_SPAN) * 100;
+                  return (
+                    <span
+                      key={i}
+                      className="acwr-zone-label"
+                      style={{ color: z.color, width: `${widthPct}%` }}
+                    >
+                      {z.min}-{z.max === 99 ? '∞' : z.max}
+                    </span>
+                  );
+                })}
+              </div>
+              <div
+                className="acwr-marker-wrap"
+                style={{
+                  position: 'relative',
                   height: 14,
-                  borderRadius: '50%',
-                  backgroundColor: zone.color,
-                  border: '2px solid #000',
-                  boxShadow: '0 0 8px rgba(255,136,0,0.4)',
+                  margin: '6px 0 10px',
+                  borderTop: '1px dashed rgba(255,255,255,0.12)',
                 }}
-                title={`ACWR = ${acwrRatio.toFixed(2)}`}
-              />
-            </div>
-            <div className="acwr-status-row">
-              <span
-                className="acwr-status-label"
-                style={{ backgroundColor: zone.color }}
               >
-                {zone.label}
-              </span>
-              <span className="acwr-status-en">{zone.cn}</span>
-            </div>
-            {/* 静态 AI 建议（v2.2.0 替换为真实 LLM 输出） */}
-            <div
-              className="ai-guidance"
-              style={{
-                padding: '10px 12px',
-                marginTop: 8,
-                background: 'rgba(255, 136, 0, 0.06)',
-                borderRadius: 6,
-                borderLeft: '3px solid var(--a-orange, #FF8800)',
-                fontSize: '0.85rem',
-                color: 'var(--a-text-primary, #fff)',
-                lineHeight: 1.5,
-              }}
-            >
-              <span
-                className="ai-badge"
+                <div
+                  className="acwr-marker-dot"
+                  style={{
+                    position: 'absolute',
+                    left: `${acwrPercent}%`,
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 14,
+                    height: 14,
+                    borderRadius: '50%',
+                    backgroundColor: zone.color,
+                    border: '2px solid #000',
+                    boxShadow: '0 0 8px rgba(255,136,0,0.4)',
+                  }}
+                  title={`ACWR = ${acwrRatio.toFixed(2)}`}
+                />
+              </div>
+              <div className="acwr-status-row">
+                <span
+                  className="acwr-status-label"
+                  style={{ backgroundColor: zone.color }}
+                >
+                  {zone.label}
+                </span>
+                <span className="acwr-status-en">{zone.cn}</span>
+              </div>
+              {/* 静态 AI 建议（v2.2.0 替换为真实 LLM 输出） */}
+              <div
+                className="ai-guidance"
                 style={{
-                  display: 'inline-block',
-                  fontSize: '0.7rem',
-                  background: 'var(--a-orange, #FF8800)',
-                  color: '#000',
-                  padding: '1px 8px',
-                  borderRadius: 8,
-                  marginBottom: 4,
-                  fontWeight: 700,
+                  padding: '10px 12px',
+                  marginTop: 8,
+                  background: 'rgba(255, 136, 0, 0.06)',
+                  borderRadius: 6,
+                  borderLeft: '3px solid var(--a-orange, #FF8800)',
+                  fontSize: '0.85rem',
+                  color: 'var(--a-text-primary, #fff)',
+                  lineHeight: 1.5,
                 }}
               >
-                AI 教练建议
-              </span>
-              <p style={{ margin: 0 }}>{staticAdvice}</p>
+                <span
+                  className="ai-badge"
+                  style={{
+                    display: 'inline-block',
+                    fontSize: '0.7rem',
+                    background: 'var(--a-orange, #FF8800)',
+                    color: '#000',
+                    padding: '1px 8px',
+                    borderRadius: 8,
+                    marginBottom: 4,
+                    fontWeight: 700,
+                  }}
+                >
+                  AI 教练建议
+                </span>
+                <p style={{ margin: 0 }}>{staticAdvice}</p>
+              </div>
             </div>
-          </div>
-        );
-      })()}
+          );
+        })()}
 
       <div
         className="advice"
@@ -259,8 +317,18 @@ const AssessmentCard: React.FC<Props> = ({ card, trend, trendMax, acwrRatio }) =
             marginTop: 4,
           }}
         >
-          <summary style={{ cursor: 'pointer', userSelect: 'none' }}>说明 / 数据局限</summary>
-          <p style={{ marginTop: 8, lineHeight: 1.5, color: 'var(--a-text-secondary, rgba(255,255,255,0.72))' }}>{card.detail}</p>
+          <summary style={{ cursor: 'pointer', userSelect: 'none' }}>
+            说明 / 数据局限
+          </summary>
+          <p
+            style={{
+              marginTop: 8,
+              lineHeight: 1.5,
+              color: 'var(--a-text-secondary, rgba(255,255,255,0.72))',
+            }}
+          >
+            {card.detail}
+          </p>
         </details>
       )}
     </div>

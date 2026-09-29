@@ -128,7 +128,14 @@ export const SkeletonRow: React.FC<{ className?: string }> = ({
 }) => (
   <div className={`${styles.skeletonRow} ${className}`} aria-hidden="true">
     <Skeleton width="32px" height="32px" radius="50%" />
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4em' }}>
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.4em',
+      }}
+    >
       <Skeleton width="60%" height="0.9em" />
       <Skeleton width="40%" height="0.7em" />
     </div>
