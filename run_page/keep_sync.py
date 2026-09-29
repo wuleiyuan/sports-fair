@@ -89,6 +89,12 @@ def get_to_download_runs_ids(session, headers, sport_type):
     last_date = 0
     result = []
 
+    # 2026-09-29: 静默 0-record 失败导致 bootstrap DB 卡死在 06-09 不再前进.
+    # 强制打印首次请求 URL + 响应状态 + 顶层 data 字段, 让 GH Actions log
+    # 暴露"为什么 Keep API 返回空"而不是无声 noop.
+    first_url = RUN_DATA_API.format(sport_type=sport_type, last_date=last_date)
+    print(f"[KEEP-DIAG] GET {first_url}")
+
     while 1:
         r = http_get_with_retry(
             session,
@@ -96,7 +102,23 @@ def get_to_download_runs_ids(session, headers, sport_type):
             headers=headers,
         )
         if r.ok:
-            run_logs = r.json()["data"]["records"]
+            try:
+                payload = r.json()
+            except ValueError:
+                print(f"[KEEP-DIAG] {sport_type}: response not JSON, body[:200]={r.text[:200]!r}")
+                break
+            run_logs = payload.get("data", {}).get("records") or []
+            last_ts = payload.get("data", {}).get("lastTimestamp") or 0
+
+            if last_date == 0:
+                print(f"[KEEP-DIAG] {sport_type}: HTTP {r.status_code}, "
+                      f"records={len(run_logs)}, lastTimestamp={last_ts}")
+                if not run_logs:
+                    # 顶层 data 字段直接看一下 (Keep 可能改 schema)
+                    print(f"[KEEP-DIAG] {sport_type}: EMPTY first page — top-level data keys: "
+                          f"{list(payload.get('data', {}).keys()) if isinstance(payload.get('data'), dict) else type(payload.get('data')).__name__}")
+                    print(f"[KEEP-DIAG] {sport_type}: full payload[:300]={str(payload)[:300]!r}")
+
             if last_date == 0 and run_logs:
                 print(f"DEBUG {sport_type}: First page returned {len(run_logs)} records")
                 for rec in run_logs[:3]:
@@ -120,9 +142,10 @@ def get_to_download_runs_ids(session, headers, sport_type):
                     run_id = stats.get("id")
                     if run_id:
                         result.append(run_id)
-            last_date = r.json()["data"]["lastTimestamp"]
-            since_time = datetime.fromtimestamp(last_date // 1000, tz=timezone.utc)
-            print(f"pares keep ids data since {since_time}")
+            last_date = last_ts
+            if last_date:
+                since_time = datetime.fromtimestamp(last_date // 1000, tz=timezone.utc)
+                print(f"pares keep ids data since {since_time}")
             time.sleep(1)  # spider rule
             if not last_date:
                 break
