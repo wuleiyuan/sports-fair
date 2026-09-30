@@ -91,6 +91,34 @@ jobs:
           git tag "v${{ steps.bump.outputs.new }}"
           git push origin "v${{ steps.bump.outputs.new }}"
 
+      - name: Update CHANGELOG (auto-prepend placeholder section)
+        run: |
+          # 如果 CHANGELOG 还没有新版本段，自动插入占位段（避免 standards check 失败）
+          # 真实段可在 commit 之后手动补充，或由后续 PR 替换占位段
+          VERSION="${{ steps.bump.outputs.new }}"
+          if [[ -f CHANGELOG.md ]]; then
+            if ! grep -q "^## \[${VERSION}\]" CHANGELOG.md; then
+              # 找到第一个 ## [ 段并插入
+              awk -v ver="$VERSION" '
+                NR==1 { print; next }
+                /^## \[/ && !inserted {
+                  print "## [" ver "] - '"$(date -u +%Y-%m-%d)"'"
+                  print ""
+                  print "### 自动维护"
+                  print ""
+                  print "- 由 version-bump workflow 自动生成；提交者请手动补充真实变更"
+                  print ""
+                  inserted=1
+                }
+                { print }
+              ' CHANGELOG.md > CHANGELOG.md.new
+              mv CHANGELOG.md.new CHANGELOG.md
+              git add CHANGELOG.md
+              git commit -m "docs(changelog): auto-add v${VERSION} placeholder section [skip ci]" || true
+              git push
+            fi
+          fi
+
       - name: Extract CHANGELOG section
         id: changelog
         run: |

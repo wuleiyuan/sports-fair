@@ -5,6 +5,16 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
+## [2.5.6] - 2026-09-30
+
+### 修复
+
+- **`version-bump` workflow fatal 128** — 项目用 pnpm 但 workflow 硬编码 `git add package-lock.json` 导致 `pathspec did not match` 错误。改为动态检测 `package-lock.json` / `pnpm-lock.yaml` / `yarn.lock` 哪个存在，pnpm 项目下 lockfile 不变（npm version 只改 package.json）（`d4d05ff`）
+
+### 维护
+
+- **`version-bump` 自建 GitHub Release** — 原依赖 `tag push → release.yml` 触发链，但 Actions 偶发不触发，导致 v2.5.6 tag 已 push 但 GitHub Release 缺失。改为本 workflow 内用 `softprops/action-gh-release@v2` 直接建 release，确保每次 bump 必有 release（`6c9c795`）
+
 ## [2.5.5] - 2026-09-30
 
 ### 新增
