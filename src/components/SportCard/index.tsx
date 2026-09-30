@@ -1,10 +1,18 @@
-// 运动卡片 - 第七阶段（Apple Fitness Premium）
-// 改造点：
-//   1. 玻璃质感（backdrop-filter + 半透明白底 + sport-color glow）
-//   2. 顶部 mini-sparkline（30 天趋势）
-//   3. Locked 态：虚线边框 + 弱化内容（不再灰度去色）
-//   4. 主指标用 sport.color 大字，副指标横排小字
+// SportCard — 第八阶段 (Apple HIG 重设计)
+//
+// 设计原则 (与 theme-apple.css 一致):
+//   · 白底 + 1px hairline 边 + 16px 圆角 (Apple Card 标准)
+//   · 顶部 2px sport-color 装饰条 (从 2px → hover 升至 3px)
+//   · 主指标 sport-color 大字 + 副指标横排小字 + 30 天 sparkline
+//   · Locked 态：dashed border + 弱化内容
+//   · 文字色用 --sport-color CSS 变量, 由调用方注入
+//
+// 与 v2 区别:
+//   - 删除 backdrop-filter (玻璃态)
+//   - 删除 inline boxShadow / borderColor / background 渐变
+//   - 主指标色改用 CSS 变量, 避免 hardcoded rgba
 
+import React from 'react';
 import { Link } from 'react-router-dom';
 import type { SportCompat } from '@/utils/sportCompat';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
@@ -171,18 +179,14 @@ export default function SportCard({
     once: true,
   });
 
-  // 玻璃质感背景：sport.color tint 渐变 + 半透明白底
-  const cardStyle: React.CSSProperties = locked
-    ? {
-        background: 'rgba(255, 255, 255, 0.03)',
-        borderColor: 'rgba(255, 255, 255, 0.1)',
-        borderStyle: 'dashed',
-      }
-    : {
-        background: `linear-gradient(135deg, ${sport.colorBg} 0%, rgba(255, 255, 255, 0.04) 60%, transparent 100%)`,
-        borderColor: `${sport.color}40`,
-        boxShadow: `0 1px 0 ${sport.color}1a inset, 0 4px 16px -8px ${sport.color}55, 0 0 0 1px rgba(255, 255, 255, 0.03)`,
-      };
+  // 通过 CSS 变量将 sport color 传给 CSS module, 避免 inline 颜色硬编码
+  const rootStyle: React.CSSProperties = {
+    ['--sport-color' as string]: sport.color,
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
+    transition:
+      'opacity 400ms cubic-bezier(0.16, 1, 0.3, 1), transform 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+  };
 
   return (
     <Link
@@ -192,25 +196,9 @@ export default function SportCard({
         if (locked) e.preventDefault();
       }}
       className={`${styles.card} ${locked ? styles.cardLocked : styles.cardActive}`}
-      style={{
-        ...cardStyle,
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
-        transition:
-          'opacity 400ms ease, transform 400ms ease, box-shadow 280ms ease, border-color 280ms ease',
-      }}
-      onMouseEnter={(e) => {
-        if (locked) return;
-        e.currentTarget.style.borderColor = `${sport.color}90`;
-        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}33 inset, 0 12px 32px -8px ${sport.color}80, 0 0 0 1px rgba(255, 255, 255, 0.06)`;
-      }}
-      onMouseLeave={(e) => {
-        if (locked) return;
-        e.currentTarget.style.borderColor = `${sport.color}40`;
-        e.currentTarget.style.boxShadow = `0 1px 0 ${sport.color}1a inset, 0 4px 16px -8px ${sport.color}55, 0 0 0 1px rgba(255, 255, 255, 0.03)`;
-      }}
+      style={rootStyle}
     >
-      {/* Sport-color 顶部装饰条 */}
+      {/* Sport-color 顶部装饰条 — 由 CSS module ::before 控制 2px → 3px hover 动画 */}
       <div
         className={styles.accent}
         style={{
@@ -229,14 +217,20 @@ export default function SportCard({
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color,
+              color: locked
+                ? 'var(--color-secondary, rgba(60,60,67,0.45))'
+                : sport.color,
             }}
           >
             <SportIcon iconName={sport.iconName} size={20} />
           </span>
           <span
             className={styles.label}
-            style={{ color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color }}
+            style={{
+              color: locked
+                ? 'var(--color-secondary, rgba(60,60,67,0.45))'
+                : sport.color,
+            }}
           >
             {sport.label}
           </span>
@@ -272,9 +266,9 @@ export default function SportCard({
           <span
             className={styles.badge}
             style={{
-              backgroundColor: `${sport.color}26`,
+              backgroundColor: `${sport.color}14`,
               color: sport.color,
-              borderColor: `${sport.color}55`,
+              borderColor: 'transparent',
             }}
           >
             {count.toLocaleString()} 次
@@ -289,7 +283,9 @@ export default function SportCard({
             <span
               className={styles.primaryValue}
               style={{
-                color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color,
+                color: locked
+                  ? 'var(--color-secondary, rgba(60,60,67,0.45))'
+                  : sport.color,
               }}
             >
               {primary.value}
@@ -298,7 +294,9 @@ export default function SportCard({
               <span
                 className={styles.primaryUnit}
                 style={{
-                  color: locked ? 'rgba(255, 255, 255, 0.4)' : sport.color,
+                  color: locked
+                    ? 'var(--color-secondary, rgba(60,60,67,0.45))'
+                    : 'var(--color-secondary, rgba(60,60,67,0.6))',
                 }}
               >
                 {primary.unit}

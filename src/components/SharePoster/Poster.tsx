@@ -14,9 +14,15 @@ interface PosterProps {
 
 const POSTER_W = 1080;
 const POSTER_H = 1920;
-const PAD = 48;
-const ORANGE = '#F59E0B';
-const ORANGE_DIM = 'rgba(245,158,11,0.15)';
+const _PAD = 48; // 保留 padding 常量供未来扩展使用
+
+/* Apple HIG 配色令牌 (Apple Fitness Share Card 风格)
+ * 默认以跑步为主角, accent = System Green (#34C759)
+ * 兼容未来其他运动: 调用方可通过 CSS 变量覆盖 */
+const SPORT_COLOR = '#34C759'; // System Green (run)
+const SPORT_COLOR_2 = '#007AFF'; // System Blue (ride)
+const START_DOT = '#34C759'; // System Green (跑道起点)
+const END_DOT = '#FF3B30'; // System Red (跑道终点, 语义合适)
 
 /** Convert [lng, lat][] to SVG path commands, fitting to a viewBox */
 function coordsToSvgPath(
@@ -68,7 +74,7 @@ function coordsToSvgPath(
             cx={toSvg(route.path[0][0], route.path[0][1])[0]}
             cy={toSvg(route.path[0][0], route.path[0][1])[1]}
             r={8}
-            fill="#22c55e"
+            fill={START_DOT}
             stroke="#fff"
             strokeWidth={2}
           />
@@ -88,7 +94,7 @@ function coordsToSvgPath(
               )[1]
             }
             r={8}
-            fill="#ef4444"
+            fill={END_DOT}
             stroke="#fff"
             strokeWidth={2}
           />
@@ -111,7 +117,16 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
     ref
   ) => {
     const routes = useMemo(() => {
-      const colors = ['#F59E0B', '#3b82f6', '#22c55e', '#a855f7', '#ec4899'];
+      /* 多路线配色 — Apple HIG 调色板 (System 7 色循环) */
+      const colors = [
+        SPORT_COLOR, // System Green
+        SPORT_COLOR_2, // System Blue
+        '#5AC8FA', // System Teal
+        '#AF52DE', // System Purple
+        '#FF9500', // System Orange (克制用)
+        '#5856D6', // System Indigo
+        '#FF2D55', // System Pink
+      ];
       return activities
         .filter((a) => a.summary_polyline && a.type === 'Run')
         .slice(-10)
@@ -132,7 +147,14 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
       <div
         ref={ref}
         className={styles.posterRoot}
-        style={{ width: POSTER_W, height: POSTER_H }}
+        style={
+          {
+            width: POSTER_W,
+            height: POSTER_H,
+            '--poster-accent': SPORT_COLOR,
+            '--poster-accent-2': SPORT_COLOR_2,
+          } as React.CSSProperties
+        }
       >
         {/* 1. Brand header */}
         <div className={styles.brandHeader}>
@@ -181,7 +203,7 @@ const Poster = React.forwardRef<HTMLDivElement, PosterProps>(
             value="https://myselfup.top"
             size={80}
             bgColor="transparent"
-            fgColor="#fff"
+            fgColor="#1d1d1f"
           />
           <div>
             <div className={styles.qrText1}>扫码关注公众号</div>

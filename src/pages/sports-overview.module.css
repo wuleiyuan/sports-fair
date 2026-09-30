@@ -1,5 +1,9 @@
-/* sports-overview — Apple Fitness Premium page
- * 深空渐变背景 + 玻璃质感 Hero KPI + 圆润 tab + 4-col 卡片网格
+/* sports-overview — Apple HIG 重设计 (v2.5.9)
+ * 设计:
+ *   · 浅色 (#F5F5F7) 背景 + 白卡片 + 1px hairline + 16px 圆角
+ *   · KPI 卡片：白底 + sport-color 顶部 2px 条
+ *   · 数据时效状态用 System Green/Orange/Red, 不用随机橙红色
+ *   · pulse 动画保留, 但颜色绑定语义 token
  */
 
 .page {
@@ -7,18 +11,8 @@
   max-width: 1600px;
   margin: 0 auto;
   padding: 1.5rem 1.5rem 3rem;
-  color: rgba(255, 255, 255, 0.92);
-  background: radial-gradient(
-      1200px 600px at 0% 0%,
-      rgba(94, 176, 255, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      1200px 600px at 100% 0%,
-      rgba(192, 132, 252, 0.06) 0%,
-      transparent 50%
-    ),
-    linear-gradient(180deg, #050505 0%, #0a0a0c 100%);
+  color: var(--color-text-primary, #000000);
+  background: var(--color-bg, #f5f5f7);
   border-radius: 0;
 }
 
@@ -33,13 +27,13 @@
 }
 
 .crumbLink {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
   text-decoration: none;
-  transition: color 200ms ease;
+  transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .crumbLink:hover {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-selected, #007aff);
 }
 
 .titleRow {
@@ -56,21 +50,13 @@
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--color-text-primary, #000000);
 }
 
 .subtitle {
   margin: 0.5rem 0 0;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
   font-weight: 400;
 }
 
@@ -79,30 +65,31 @@
   align-items: center;
   gap: 0.375rem;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.55);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
+  background: var(--color-activity-card, #ffffff);
   padding: 0.375rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-hr, rgba(60, 60, 67, 0.12));
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .titleBadgeDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #30d158;
-  box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.2);
+  background: var(--color-success, #34c759);
+  box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2);
   animation: pulse 2s ease-in-out infinite;
 }
 
-/* 2026-09-28 新增：数据时效状态样式（避免"实时同步"撒谎） */
+/* 数据时效状态 — System Green / Orange / Red */
 .titleBadgeDotWarn {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ff9f0a;
-  box-shadow: 0 0 0 3px rgba(255, 159, 10, 0.2);
+  background: var(--color-warning, #ff9500);
+  box-shadow: 0 0 0 3px rgba(255, 149, 0, 0.2);
   animation: pulseWarn 2.4s ease-in-out infinite;
 }
 
@@ -110,60 +97,60 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ff453a;
-  box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.22);
+  background: var(--color-danger, #ff3b30);
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.22);
   animation: pulseStale 1.6s ease-in-out infinite;
 }
 
 .titleBadgeWarn {
-  border-color: rgba(255, 159, 10, 0.32) !important;
-  background: rgba(255, 159, 10, 0.08) !important;
-  color: rgba(255, 200, 120, 0.85) !important;
+  border-color: rgba(255, 149, 0, 0.32) !important;
+  background: rgba(255, 149, 0, 0.06) !important;
+  color: rgba(180, 100, 0, 0.95) !important;
 }
 
 .titleBadgeStale {
-  border-color: rgba(255, 69, 58, 0.42) !important;
-  background: rgba(255, 69, 58, 0.1) !important;
-  color: rgba(255, 130, 120, 0.92) !important;
+  border-color: rgba(255, 59, 48, 0.42) !important;
+  background: rgba(255, 59, 48, 0.06) !important;
+  color: rgba(180, 30, 30, 0.95) !important;
 }
 
 @keyframes pulseWarn {
   0%,
   100% {
-    box-shadow: 0 0 0 3px rgba(255, 159, 10, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 149, 0, 0.2);
   }
   50% {
-    box-shadow: 0 0 0 5px rgba(255, 159, 10, 0.05);
+    box-shadow: 0 0 0 5px rgba(255, 149, 0, 0.05);
   }
 }
 
 @keyframes pulseStale {
   0%,
   100% {
-    box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.22);
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.22);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(255, 69, 58, 0.04);
+    box-shadow: 0 0 0 6px rgba(255, 59, 48, 0.04);
   }
 }
 
 .staleHint {
-  color: rgba(255, 200, 120, 0.78);
+  color: rgba(180, 100, 0, 0.95);
   font-weight: 500;
 }
 
 .staleWarn {
-  color: rgba(255, 130, 120, 0.92);
+  color: rgba(180, 30, 30, 0.95);
   font-weight: 600;
 }
 
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 3px rgba(48, 209, 88, 0.2);
+    box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2);
   }
   50% {
-    box-shadow: 0 0 0 5px rgba(48, 209, 88, 0.05);
+    box-shadow: 0 0 0 5px rgba(52, 199, 89, 0.05);
   }
 }
 
@@ -177,12 +164,13 @@
 
 .kpiCard {
   position: relative;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 1.125rem 1.25rem 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: var(--color-activity-card, #ffffff);
+  border: 1px solid var(--color-hr, rgba(60, 60, 67, 0.12));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   isolation: isolate;
   transition:
@@ -195,59 +183,41 @@
   justify-content: space-between;
 }
 
+/* 顶部 2px sport-color 装饰条 */
 .kpiCard::before {
-  /* 顶部高光（玻璃边缘） */
   content: '';
   position: absolute;
   top: 0;
-  left: 16px;
-  right: 16px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 100%
-  );
-  z-index: 2;
-}
-
-.kpiCard::after {
-  /* 右下角 sport-color 装饰光晕 */
-  content: '';
-  position: absolute;
-  bottom: -40px;
-  right: -40px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, currentColor 0%, transparent 70%);
-  opacity: 0.12;
-  z-index: -1;
-  filter: blur(20px);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.95;
 }
 
 .kpiCard:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  border-color: rgba(60, 60, 67, 0.2);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* KPI 各卡自定义主色（via ::after color） */
+/* KPI 各卡自定义主色（via currentColor） */
 .kpiDistance {
-  color: #5ac8fa;
+  color: #5ac8fa; /* System Teal */
 }
 .kpiDuration {
-  color: #c084fc;
+  color: #af52de; /* System Purple */
 }
 .kpiStreak {
-  color: #ff9f0a;
+  color: #ff9500; /* System Orange (克制) */
 }
 
 .kpiLabel {
   font-size: 0.75rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  font-weight: 600;
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -260,24 +230,29 @@
 }
 
 .kpiNumber {
+  font-family:
+    'SF Pro Display',
+    'SF Pro Rounded',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.96);
+  color: var(--color-text-primary, #000000);
 }
 
 .kpiUnit {
   font-size: 0.875rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
 }
 
 .kpiEmoji {
   font-size: 1.75rem;
   line-height: 1;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
 }
 
 .kpiFoot {
@@ -285,7 +260,7 @@
   align-items: center;
   gap: 0.375rem;
   font-size: 0.6875rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.5));
   font-weight: 500;
 }
 
@@ -294,15 +269,15 @@
   opacity: 0.8;
 }
 
-/* ===== Tabs (分类筛选) ===== */
+/* ===== Tabs (System Segmented Control 风格) ===== */
 .tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   padding: 0.375rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--color-activity-card, #ffffff);
+  border: 1px solid var(--color-hr, rgba(60, 60, 67, 0.12));
   border-radius: 14px;
   width: fit-content;
 }
@@ -315,44 +290,43 @@
   border-radius: 10px;
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
   font-size: 0.8125rem;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tab:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 122, 255, 0.06);
+  color: var(--color-selected, #007aff);
 }
 
 .tabActive {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.96);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.06) inset,
-    0 4px 12px -6px rgba(0, 0, 0, 0.5);
+  background: var(--color-selected, #007aff);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
 }
 
 .tabActive:hover {
-  background: rgba(255, 255, 255, 0.13);
+  background: #0066cc;
+  color: #ffffff;
 }
 
 .tabCount {
   font-size: 0.6875rem;
   padding: 0.0625rem 0.375rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.45);
+  background: rgba(60, 60, 67, 0.08);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
   font-variant-numeric: tabular-nums;
   font-weight: 600;
 }
 
 .tabActive .tabCount {
-  background: rgba(255, 255, 255, 0.14);
-  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
 }
 
 /* ===== Grid (卡片) ===== */
@@ -382,7 +356,7 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.5));
   font-size: 0.875rem;
   text-align: center;
 }
@@ -401,10 +375,10 @@
 .footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--color-hr, rgba(60, 60, 67, 0.12));
   text-align: center;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.5));
 }
 
 .footer p {
