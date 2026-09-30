@@ -533,7 +533,7 @@ const isTouchDevice = () => {
  * @returns The map theme style to use
  */
 const getMapTheme = (): string => {
-  if (typeof window === 'undefined') return MAP_TILE_STYLE_DARK;
+  if (typeof window === 'undefined') return MAP_TILE_STYLE_LIGHT;
 
   // Check for explicit theme in DOM
   const dataTheme = document.documentElement.getAttribute('data-theme') as

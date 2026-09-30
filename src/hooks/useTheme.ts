@@ -122,10 +122,10 @@ export const useMapTheme = () => {
  * @returns Object with current theme and function to change theme
  */
 export const useTheme = () => {
-  // Initialize theme from localStorage or default to dark
+  // Initialize theme from localStorage; default to light (Apple HIG 一致性)
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return (localStorage.getItem('theme') as Theme) || 'dark';
+    if (typeof window === 'undefined') return 'light';
+    return (localStorage.getItem('theme') as Theme) || 'light';
   });
 
   /**
@@ -149,6 +149,22 @@ export const useTheme = () => {
     root.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // One-time migration: 老用户 localStorage 缓存的 'dark' → 强制迁到 'light' (Apple HIG 一致性)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const MIGRATION_KEY = 'theme-migrated-to-light-v1';
+    if (localStorage.getItem(MIGRATION_KEY)) return; // 已迁移过, 跳过
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      const root = window.document.documentElement;
+      // 强制迁到 light, 避免老用户继续看到黑底
+      setThemeState('light');
+      localStorage.setItem('theme', 'light');
+      root.setAttribute('data-theme', 'light');
+    }
+    localStorage.setItem(MIGRATION_KEY, '1');
+  }, []);
 
   return {
     theme,
