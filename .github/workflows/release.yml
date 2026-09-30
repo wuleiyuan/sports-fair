@@ -1,17 +1,45 @@
 name: Release
 
 # 2026-06-16 v2.2.6 重写:
-# 老版本两个 bug:
-#   (1) push tag 触发后又跑 mathieudutour/github-tag-action 再建一个 tag,
-#       结果 release 用的是 action 新建的 tag, 跟我们 push 的 vX.Y.Z 对不上;
-#   (2) actions/create-release@v1 已归档 (deprecated 2024+).
+#   老版本两个 bug:
+#     (1) push tag 触发后又跑 mathieudutour/github-tag-action 再建一个 tag,
+#         结果 release 用的是 action 新建的 tag, 跟我们 push 的 vX.Y.Z 对不上;
+#     (2) actions/create-release@v1 已归档 (deprecated 2024+).
 #
-# 新版本: push 'v*' tag → 直接用这个 tag 建 release, body 自动从 CHANGELOG.md
-# 抓对应版本段落, 用 softprops/action-gh-release@v2 (active maintained).
+# 新版本:
+#   - push 'v*' tag → 用这个 tag 建 release, body 自动从 CHANGELOG.md 抓对应段,
+#     用 softprops/action-gh-release@v2 (active maintained, idempotent).
+#   - 2026-09-30 加 workflow_dispatch: 让历史 release 也能 backfill / edit,
+#     复用同一套 CHANGELOG 提取逻辑, mode=create 时幂等, mode=edit 时强制更新.
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to create / update release for (e.g. v2.5.6 or 2.5.6 — auto-prefixed).'
+        required: false
+        default: ''
+        type: string
+      notes:
+        description: 'Optional release body. If empty, auto-extracted from CHANGELOG.md for that version.'
+        required: false
+        default: ''
+        type: string
+      mode:
+        description: 'create = auto (skip if exists), update = force rewrite body.'
+        required: false
+        default: 'create'
+        type: choice
+        options:
+          - create
+          - update
+      dry_run:
+        description: 'If true, print plan but do not touch GitHub Releases.'
+        required: false
+        default: 'false'
+        type: boolean
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
@@ -27,21 +55,64 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Extract version from tag
+      # ──────── 决定 tag 来源 ────────
+      - name: Resolve tag
         id: version
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"
+          set -euo pipefail
+          TRIGGER="${{ github.event_name }}"
+
+          if [[ "$TRIGGER" == "push" ]]; then
+            # push tag vX.Y.Z → GITHUB_REF = refs/tags/vX.Y.Z
+            TAG="${GITHUB_REF#refs/tags/}"
+          else
+            # workflow_dispatch → 读 inputs.tag
+            INPUT_TAG="${{ inputs.tag }}"
+            if [[ -z "$INPUT_TAG" ]]; then
+              INPUT_TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo '')"
+            fi
+            if [[ -z "$INPUT_TAG" ]]; then
+              echo "::error::inputs.tag is empty and no tag can be resolved via git describe."
+              echo "::error::请填入 tag (如 v2.5.6) 或确保仓库至少有一个 tag."
+              exit 1
+            fi
+            # 容错: 自动补 v 前缀
+            case "$INPUT_TAG" in
+              v*) TAG="$INPUT_TAG" ;;
+              *)  TAG="v$INPUT_TAG" ;;
+            esac
+          fi
+
+          # 校验 tag 格式 (vX.Y.Z 或 X.Y.Z, 含可选 -rc.1 等 pre-release)
+          if ! [[ "$TAG" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::tag '$TAG' 格式不合法 (期望 vX.Y.Z 或 X.Y.Z, 可选 -rc.1)."
+            exit 1
+          fi
+
           VERSION="${TAG#v}"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Tag: $TAG | Version: $VERSION"
+          echo "Trigger=$TRIGGER | Tag=$TAG | Version=$VERSION"
 
+      - name: Verify tag exists
+        id: verify
+        run: |
+          set -euo pipefail
+          if ! git rev-parse -q --verify "refs/tags/${{ steps.version.outputs.tag }}" >/dev/null; then
+            echo "::error::tag '${{ steps.version.outputs.tag }}' 在本地不存在."
+            echo "::error::现存 tag (前 20 个):"
+            git tag --sort=-v:refname | head -20 | sed 's/^/  - /'
+            exit 1
+          fi
+          echo "Tag verified."
+
+      # ──────── 决定 body ────────
       - name: Extract changelog section
         id: changelog
+        if: inputs.notes == '' && github.event_name == 'push'
         run: |
+          set -euo pipefail
           VERSION="${{ steps.version.outputs.version }}"
-          # 抓 CHANGELOG.md 里 ## [X.Y.Z] 到下一个 ## [ 之间的内容
-          # 没匹配上就用 fallback "Release vX.Y.Z (no changelog entry)"
           if [[ -f CHANGELOG.md ]]; then
             BODY=$(awk -v ver="$VERSION" '
               $0 ~ "^## \\[" ver "\\]" { found=1; next }
@@ -52,20 +123,87 @@ jobs:
           if [[ -z "${BODY:-}" ]]; then
             BODY="Release v$VERSION"
           fi
-          # multiline output
           {
             echo "body<<__EOF__"
             echo "$BODY"
             echo "__EOF__"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Create Release
+      - name: Use manual notes
+        id: notes
+        if: inputs.notes != '' && github.event_name == 'workflow_dispatch'
+        run: |
+          {
+            echo "body<<__EOF__"
+            echo "${{ inputs.notes }}"
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Extract from CHANGELOG (dispatch, notes empty)
+        id: extract_dispatch
+        if: inputs.notes == '' && github.event_name == 'workflow_dispatch'
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.version }}"
+          BODY=""
+          if [[ -f CHANGELOG.md ]]; then
+            BODY=$(awk -v ver="$VERSION" '
+              $0 ~ "^## \\[" ver "\\]" { found=1; next }
+              found && $0 ~ "^## \\[" { found=0 }
+              found { print }
+            ' CHANGELOG.md)
+          fi
+          if [[ -z "$BODY" ]]; then
+            BODY="Release v$VERSION (backfilled via workflow_dispatch on $(date -u +%Y-%m-%d))"
+          fi
+          {
+            echo "body<<__EOF__"
+            echo "$BODY"
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      # ──────── 决定 mode ────────
+      - name: Compute mode flag
+        id: mode
+        run: |
+          set -euo pipefail
+          TRIGGER="${{ github.event_name }}"
+          USER_MODE="${{ inputs.mode }}"
+          DRY="${{ inputs.dry_run }}"
+
+          if [[ "$TRIGGER" == "push" ]]; then
+            MODE="create"
+          else
+            MODE="$USER_MODE"
+          fi
+
+          echo "trigger=$TRIGGER" >> "$GITHUB_OUTPUT"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "dry=$DRY" >> "$GITHUB_OUTPUT"
+          echo "Mode: trigger=$TRIGGER | mode=$MODE | dry=$DRY"
+
+      - name: Dry-run summary
+        if: steps.mode.outputs.dry == 'true'
+        run: |
+          echo "==== DRY RUN ===="
+          echo "Tag:      ${{ steps.version.outputs.tag }}"
+          echo "Version:  ${{ steps.version.outputs.version }}"
+          echo "Mode:     ${{ steps.mode.outputs.mode }}"
+          echo "Trigger:  ${{ steps.mode.outputs.trigger }}"
+          echo "Body (preview, first 30 lines):"
+          echo "${{ steps.changelog.outputs.body || steps.notes.outputs.body || steps.extract_dispatch.outputs.body }}" | head -30
+
+      - name: Create / Update Release
+        if: steps.mode.outputs.dry != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: Release ${{ steps.version.outputs.tag }}
-          body: ${{ steps.changelog.outputs.body }}
+          body: ${{ steps.changelog.outputs.body || steps.notes.outputs.body || steps.extract_dispatch.outputs.body }}
           draft: false
           prerelease: false
+          # softprops 默认 idempotent (tag 已有 release 则跳过 create, 进入 update 路径).
+          # 我们通过 mode=update + force_update 让 backfill edit 一定能改 body.
+          force_update: ${{ steps.mode.outputs.mode == 'update' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
