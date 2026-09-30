@@ -8,6 +8,7 @@
 import { Link } from 'react-router-dom';
 import type { SportCompat } from '@/utils/sportCompat';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import SportIcon from '@/components/SportIcon';
 import Sparkline from './Sparkline';
 import styles from './style.module.css';
 
@@ -219,10 +220,20 @@ export default function SportCard({
         }}
       />
 
-      {/* Header: emoji + label + count badge */}
+      {/* Header: SVG sport icon + label + count badge */}
       <div className={styles.header}>
         <div className={styles.headerLeft}>
-          <span className={styles.emoji}>{sport.emoji}</span>
+          <span
+            className={styles.emoji}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color,
+            }}
+          >
+            <SportIcon iconName={sport.iconName} size={20} />
+          </span>
           <span
             className={styles.label}
             style={{ color: locked ? 'rgba(255, 255, 255, 0.5)' : sport.color }}

@@ -2,7 +2,24 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useSiteMetadata from '@/hooks/useSiteMetadata';
 import { useTheme, Theme } from '@/hooks/useTheme';
+import {
+  IconSportRun,
+  IconChart,
+  IconHeart,
+  IconClipboard,
+  IconBolt,
+} from '@/components/Icons';
 import styles from './style.module.css';
+
+// 顶部导航配置 — 用 SVG 矢量图标替代 emoji（ui-ux-pro-max 反模式："禁止用 emoji 作为结构图标"）
+// 图标统一 18px，描边跟随 currentColor（与文字同色）
+const NAV_ITEMS = [
+  { to: '/sports', label: '运动总览', Icon: IconSportRun },
+  { to: '/summary', label: '旅程总览', Icon: IconChart },
+  { to: '/health', label: '健康分析', Icon: IconHeart },
+  { to: '/health-assess', label: '评估建议', Icon: IconClipboard },
+  { to: '/training', label: '训练负荷', Icon: IconBolt },
+] as const;
 
 const Header = () => {
   const { logo, siteUrl, navLinks } = useSiteMetadata();
@@ -71,41 +88,17 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex w-3/4 items-center justify-end text-right">
-          <Link
-            to="/sports"
-            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            🏅 运动总览
-          </Link>
-          <Link
-            to="/summary"
-            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            📊 旅程总览
-          </Link>
-          <Link
-            to="/health"
-            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            💚 健康分析
-          </Link>
-          <Link
-            to="/health-assess"
-            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            🩺 评估建议
-          </Link>
-          <Link
-            to="/training"
-            className="mr-3 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            🏋️ 训练负荷
-          </Link>
+          {NAV_ITEMS.map(({ to, label, Icon }) => (
+            <Link
+              key={to}
+              to={to}
+              className="mr-3 flex items-center gap-1.5 text-lg transition-opacity hover:opacity-80 lg:mr-4 lg:text-base"
+              style={{ textDecoration: 'none' }}
+            >
+              <Icon size={18} aria-hidden="true" />
+              <span>{label}</span>
+            </Link>
+          ))}
           {navLinks.map((n, i) => (
             <a
               key={i}

@@ -10,6 +10,14 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import SportCard from '@/components/SportCard';
+import SportIcon from '@/components/SportIcon';
+import {
+  IconRuler,
+  IconClock,
+  IconBolt,
+  IconChevronRight,
+  IconInfo,
+} from '@/components/Icons';
 import { SPORT_TYPES, normalizeSportType } from '@/utils/sportTypes';
 import { convertMovingTime2Sec } from '@/utils/utils';
 import activities from '@/static/activities.json';
@@ -379,7 +387,16 @@ const SportsOverview = () => {
               <span className={styles.kpiUnit}>km</span>
             </div>
             <div className={styles.kpiFoot}>
-              <span className={styles.kpiIcon}>📏</span>
+              <span
+                className={styles.kpiIcon}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  color: 'inherit',
+                }}
+              >
+                <IconRuler size={14} aria-hidden="true" />
+              </span>
               <span>累计移动距离</span>
             </div>
           </article>
@@ -393,7 +410,16 @@ const SportsOverview = () => {
               </span>
             </div>
             <div className={styles.kpiFoot}>
-              <span className={styles.kpiIcon}>⏱️</span>
+              <span
+                className={styles.kpiIcon}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  color: 'inherit',
+                }}
+              >
+                <IconClock size={14} aria-hidden="true" />
+              </span>
               <span>累计运动时长</span>
             </div>
           </article>
@@ -406,7 +432,16 @@ const SportsOverview = () => {
               <span className={styles.kpiUnit}>天</span>
             </div>
             <div className={styles.kpiFoot}>
-              <span className={styles.kpiIcon}>🔥</span>
+              <span
+                className={styles.kpiIcon}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  color: 'inherit',
+                }}
+              >
+                <IconBolt size={14} aria-hidden="true" />
+              </span>
               <span>坚持的轨迹</span>
             </div>
           </article>
@@ -427,11 +462,30 @@ const SportsOverview = () => {
                 #1 运动
               </div>
               <div className={styles.kpiValue}>
-                <span className={styles.kpiEmoji}>{topSportConfig.emoji}</span>
+                <span
+                  className={styles.kpiEmoji}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: topSportConfig.color,
+                  }}
+                >
+                  <SportIcon iconName={topSportConfig.iconName} size={24} />
+                </span>
                 <span className={styles.kpiNumber}>{topSportConfig.label}</span>
               </div>
               <div className={styles.kpiFoot}>
-                <span className={styles.kpiIcon}>⭐</span>
+                <span
+                  className={styles.kpiIcon}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    color: topSportConfig.color,
+                  }}
+                >
+                  <IconChevronRight size={14} aria-hidden="true" />
+                </span>
                 <span>
                   {formatLongNumber(sportStats[topSportKey].count)} 次活动
                 </span>
@@ -459,7 +513,16 @@ const SportsOverview = () => {
         <section className={styles.grid} aria-label="运动卡片列表">
           {sortedSports.length === 0 ? (
             <div className={styles.empty}>
-              <span className={styles.emptyIcon}>🔍</span>
+              <span
+                className={styles.emptyIcon}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  color: 'rgba(148, 163, 184, 0.6)',
+                }}
+              >
+                <IconChevronRight size={32} aria-hidden="true" />
+              </span>
               <p>该分类下暂无运动</p>
             </div>
           ) : (

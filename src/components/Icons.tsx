@@ -220,3 +220,268 @@ export const IconCalendar: React.FC<IconProps> = (props) =>
     </>,
     props
   );
+
+// === 运动类型图标（替代 sport.emoji） ===
+
+/** 跑步 — figure.run */
+export const IconSportRun: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={4} r={2} />
+      <path d="M7 22l3-8 2 2 4-6" />
+      <path d="M14 8l4 4" />
+      <path d="M10 14l-3 4" />
+      <path d="M18 5l-3 3" />
+    </>,
+    props
+  );
+
+/** 徒步 / 登山 — mountain */
+export const IconSportHike: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 20l5-9 4 7 3-5 6 7H3z" />
+      <path d="M9 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+    </>,
+    props
+  );
+
+/** 步行 — figure.walk */
+export const IconSportWalk: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={13} cy={4} r={2} />
+      <path d="M7 22l3-7 4 1 2-6" />
+      <path d="M17 22l-2-6 5-4" />
+      <path d="M9 11l3 4" />
+    </>,
+    props
+  );
+
+/** 骑行 — bicycle */
+export const IconSportRide: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={6} cy={17} r={4} />
+      <circle cx={18} cy={17} r={4} />
+      <path d="M6 17l3-7h4l2 4" />
+      <path d="M14 10l-2-4h3" />
+    </>,
+    props
+  );
+
+/** 游泳 — swimmer */
+export const IconSportSwim: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={17} cy={5} r={2} />
+      <path d="M3 17c1-1 2-1 3 0s2 1 3 0 2-1 3 0 2 1 3 0 2-1 3 0" />
+      <path d="M3 21c1-1 2-1 3 0s2 1 3 0 2-1 3 0 2 1 3 0 2-1 3 0" />
+      <path d="M7 14l4-3 3 3 3-3" />
+    </>,
+    props
+  );
+
+/** 力量训练 — dumbbell */
+export const IconSportStrength: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 10v4M6 7v10M18 7v10M21 10v4" />
+      <path d="M6 12h12" />
+    </>,
+    props
+  );
+
+/** 核心训练 — person.circle（柔和） */
+export const IconSportCore: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={5} r={2} />
+      <path d="M8 22V12l4-3 4 3v10" />
+      <path d="M12 9v13" />
+    </>,
+    props
+  );
+
+/** 瑜伽 — figure.meditate */
+export const IconSportYoga: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={5} r={2} />
+      <path d="M5 22h14" />
+      <path d="M12 9c-3 4-5 7-7 13" />
+      <path d="M12 9c3 4 5 7 7 13" />
+    </>,
+    props
+  );
+
+/** 椭圆机 — figure.elliptical */
+export const IconSportElliptical: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={4} r={2} />
+      <ellipse cx={12} cy={15} rx={6} ry={4} />
+      <path d="M9 19l-2 3M15 19l2 3" />
+    </>,
+    props
+  );
+
+/** 爬楼 — stairs.up */
+export const IconSportStairs: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 21h4v-4h4v-4h4v-4h4V5h2" />
+      <path d="M9 9l-3-3 3-3" />
+    </>,
+    props
+  );
+
+/** 划船机 — boat */
+export const IconSportRowing: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 18l3 3h12l3-3" />
+      <path d="M5 15l7-7 7 7" />
+      <path d="M12 8V3" />
+      <path d="M9 3h6" />
+    </>,
+    props
+  );
+
+/** 拳击 — hand.point.up */
+export const IconSportBoxing: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M9 4c0-1 1-2 2-2s2 1 2 2v6" />
+      <path d="M13 4c0-1 1-2 2-2s2 1 2 2v6" />
+      <path d="M7 8c0-1 1-2 2-2s2 1 2 2v8" />
+      <path d="M5 12c0-1 1-2 2-2s2 1 2 2v6c0 2-1 4-4 4s-4-2-4-4v-6z" />
+      <path d="M17 10v8a4 4 0 0 1-4 4h-2" />
+    </>,
+    props
+  );
+
+/** 跳绳 — arrow.triangle.2.circlepath */
+export const IconSportRope: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M9 5a3 3 0 1 1 6 0v2a3 3 0 1 1-6 0" />
+      <path d="M9 13a3 3 0 1 1 6 0v3a3 3 0 1 1-6 0" />
+      <path d="M3 9l3 3M21 9l-3 3" />
+      <path d="M3 18l3-3M21 18l-3-3" />
+    </>,
+    props
+  );
+
+/** 足球 — soccer.ball */
+export const IconSportSoccer: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={12} r={9} />
+      <path d="M12 7l4 3-1.5 5h-5L8 10z" />
+      <path d="M12 3v4M3 12h5M16 12h5M7 5l3 4M17 5l-3 4M7 19l3-4M17 19l-3-4" />
+    </>,
+    props
+  );
+
+/** 篮球 — basketball */
+export const IconSportBasketball: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={12} r={9} />
+      <path d="M3 12h18" />
+      <path d="M12 3v18" />
+      <path d="M5 5c4 4 10 4 14 0M5 19c4-4 10-4 14 0" />
+    </>,
+    props
+  );
+
+/** 网球 — tennis.racket */
+export const IconSportTennis: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={15} cy={9} r={5} />
+      <path d="M20 4l-5 5" />
+      <path d="M14 10L4 20l1 1 10-10" />
+    </>,
+    props
+  );
+
+/** 滑雪 — snowflake */
+export const IconSportSkiing: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M12 2v20" />
+      <path d="M2 12h20" />
+      <path d="M5 5l14 14M19 5L5 19" />
+      <path d="M9 4l3-3 3 3M9 20l3 3 3-3M4 9l-3 3 3 3M20 9l3 3-3 3" />
+    </>,
+    props
+  );
+
+/** 冲浪 — wave */
+export const IconSportSurfing: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0" />
+      <path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0 4 2 6 0" />
+      <circle cx={16} cy={6} r={2} />
+      <path d="M14 7l-3 4h4l-2 4" />
+    </>,
+    props
+  );
+
+/** 高尔夫 — flag */
+export const IconSportGolf: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M5 21h14" />
+      <path d="M12 21V4" />
+      <path d="M12 4l6 2-6 2" />
+      <circle cx={12} cy={19} r={1.5} />
+    </>,
+    props
+  );
+
+/** 通用运动奖牌 — medal */
+export const IconSportMedal: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M7 4l5 8 5-8" />
+      <circle cx={12} cy={15} r={5} />
+      <path d="M10 14l2 2 3-3" />
+    </>,
+    props
+  );
+
+/** 海拔 / 爬升 — mountain.peak（细化版） */
+export const IconMountain: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 20l6-10 4 6 3-4 5 8H3z" />
+      <path d="M14 4l-2 2 2 2 2-2z" />
+    </>,
+    props
+  );
+
+/** 楼层 — layers */
+export const IconFloors: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <path d="M3 7l9-4 9 4-9 4z" />
+      <path d="M3 12l9 4 9-4" />
+      <path d="M3 17l9 4 9-4" />
+    </>,
+    props
+  );
+
+/** 通用运动（兜底） — figure.any */
+export const IconSportGeneric: React.FC<IconProps> = (props) =>
+  withDefaults(
+    <>
+      <circle cx={12} cy={5} r={2} />
+      <path d="M8 22l4-10 4 10" />
+      <path d="M12 12v10" />
+    </>,
+    props
+  );

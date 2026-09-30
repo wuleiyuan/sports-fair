@@ -38,9 +38,17 @@ import {
 } from '@/utils/utils';
 import { useTheme, useThemeChangeCounter } from '@/hooks/useTheme';
 import SportCard from '@/components/SportCard';
+import SportIcon from '@/components/SportIcon';
 import { SPORT_BY_KEY, normalizeSportType } from '@/utils/sportTypes';
 import { convertMovingTime2Sec } from '@/utils/utils';
 import activitiesRaw from '@/static/activities.json';
+import {
+  IconChart,
+  IconHeart,
+  IconClipboard,
+  IconBolt,
+  IconSportRun,
+} from '@/components/Icons';
 
 // 用户最爱运动：按 count 算最高；聚合 elevation + weighted pace 给 SportCard
 const favoriteSportStats = (() => {
@@ -122,12 +130,13 @@ const favoriteSportStats = (() => {
 
 // Static nav config — hoisted to module scope so it's not re-allocated on every render.
 // Equivalent to useMemo([]) but cheaper.
+// 用 SVG 图标组件替代 emoji（ui-ux-pro-max 反模式）
 const PAGE_LINKS = [
-  { href: '/summary', label: 'Stats', icon: '📊' },
-  { href: '/health', label: 'Health', icon: '❤️' },
-  { href: '/health-assess', label: 'AI Assess', icon: '🧠' },
-  { href: '/training', label: 'Training', icon: '⚡' },
-  { href: '/sports', label: 'Sports', icon: '🏅' },
+  { href: '/summary', label: 'Stats', Icon: IconChart },
+  { href: '/health', label: 'Health', Icon: IconHeart },
+  { href: '/health-assess', label: 'AI Assess', Icon: IconClipboard },
+  { href: '/training', label: 'Training', Icon: IconBolt },
+  { href: '/sports', label: 'Sports', Icon: IconSportRun },
 ] as const;
 
 const Index = () => {
@@ -509,17 +518,18 @@ const Index = () => {
               : 'Multi-source sports dashboard with map tracking, health assessment, and training load analysis. Self-hosted & open-source.'}
           </p>
           <nav className="k-landing-nav">
-            {PAGE_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="k-landing-pill">
-                <span>{link.icon}</span>
-                <span>{link.label}</span>
+            {PAGE_LINKS.map(({ href, label, Icon }) => (
+              <a key={href} href={href} className="k-landing-pill">
+                <Icon size={16} aria-hidden="true" />
+                <span>{label}</span>
               </a>
             ))}
             <a
               href="https://github.com/wuleiyuan/sports-fair"
               className="k-landing-pill k-landing-pill-gh"
             >
-              <span>⭐</span>
+              {/* ⭐ 是装饰性保留：作为 rating/repo 标识不算结构图标 */}
+              <span aria-hidden="true">⭐</span>
               <span>GitHub</span>
             </a>
           </nav>

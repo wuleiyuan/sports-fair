@@ -1,3 +1,4 @@
+import { IconSportMedal } from '@/components/Icons';
 import pbData from '@/static/pb.json';
 
 interface PBEntry {
@@ -15,7 +16,17 @@ export default function PersonalBests() {
 
   return (
     <div className="pb-section mb-8">
-      <h2 className="mb-3 text-lg font-semibold text-white/90">🏆 个人最佳</h2>
+      <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-white/90">
+        <span
+          style={{
+            display: 'inline-flex',
+            color: 'rgb(245, 158, 11)',
+          }}
+        >
+          <IconSportMedal size={20} />
+        </span>
+        个人最佳
+      </h2>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {pbs.map((pb) => {
           const mm = Math.floor(pb.time_sec / 60);

@@ -27,8 +27,33 @@ export interface SportCompat {
   key: string;
   /** 中文显示名 */
   label: string;
-  /** emoji */
+  /** emoji（保留以兼容旧 import，新代码请用 iconName + <SportIcon />） */
   emoji: string;
+  /**
+   * SVG 图标 key（对应 components/Icons.tsx 中 IconSportXxx）
+   * 22 个运动类型全覆盖，UI 渲染走 SportIcon 组件
+   */
+  iconName:
+    | 'run'
+    | 'hike'
+    | 'walk'
+    | 'ride'
+    | 'swim'
+    | 'strength'
+    | 'core'
+    | 'yoga'
+    | 'elliptical'
+    | 'stairs'
+    | 'rowing'
+    | 'boxing'
+    | 'rope'
+    | 'soccer'
+    | 'basketball'
+    | 'tennis'
+    | 'skiing'
+    | 'surfing'
+    | 'golf'
+    | 'generic';
   /** 主题色（hex） */
   color: string;
   /** 浅色背景（hex with alpha 或 rgba） */
@@ -93,6 +118,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Run',
     label: '跑步',
     emoji: '🏃',
+    iconName: 'run',
     color: '#5eb0ff',
     colorBg: 'rgba(94, 176, 255, 0.12)',
     unit: 'km',
@@ -145,6 +171,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Hiking',
     label: '徒步',
     emoji: '🥾',
+    iconName: 'hike',
     color: '#7dd3a8',
     colorBg: 'rgba(125, 211, 168, 0.12)',
     unit: 'km',
@@ -179,6 +206,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Walk',
     label: '步行',
     emoji: '🚶',
+    iconName: 'walk',
     color: '#98989d',
     colorBg: 'rgba(152, 152, 157, 0.12)',
     unit: 'km',
@@ -210,6 +238,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Ride',
     label: '骑行',
     emoji: '🚴',
+    iconName: 'ride',
     color: '#c084fc',
     colorBg: 'rgba(192, 132, 252, 0.12)',
     unit: 'km',
@@ -257,6 +286,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Swim',
     label: '游泳',
     emoji: '🏊',
+    iconName: 'swim',
     color: '#5ac8fa',
     colorBg: 'rgba(90, 200, 250, 0.12)',
     unit: 'm', // 游泳用米
@@ -281,6 +311,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Strength',
     label: '力量训练',
     emoji: '💪',
+    iconName: 'strength',
     color: '#f97316',
     colorBg: 'rgba(249, 115, 22, 0.12)',
     unit: 'km',
@@ -316,6 +347,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Core',
     label: '核心训练',
     emoji: '🧘‍♀️',
+    iconName: 'core',
     color: '#a78bfa',
     colorBg: 'rgba(167, 139, 250, 0.12)',
     unit: 'km',
@@ -339,6 +371,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Yoga',
     label: '瑜伽',
     emoji: '🧘',
+    iconName: 'yoga',
     color: '#fb923c',
     colorBg: 'rgba(251, 146, 60, 0.12)',
     unit: 'km',
@@ -354,6 +387,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Elliptical',
     label: '椭圆机',
     emoji: '⭕',
+    iconName: 'elliptical',
     color: '#60a5fa',
     colorBg: 'rgba(96, 165, 250, 0.12)',
     unit: 'km',
@@ -368,6 +402,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'StairStepper',
     label: '爬楼',
     emoji: '🪜',
+    iconName: 'stairs',
     color: '#30d158',
     colorBg: 'rgba(48, 209, 88, 0.12)',
     unit: 'km',
@@ -391,6 +426,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Rowing',
     label: '划船机',
     emoji: '🚣',
+    iconName: 'rowing',
     color: '#06b6d4',
     colorBg: 'rgba(6, 182, 212, 0.12)',
     unit: 'km',
@@ -409,6 +445,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Boxing',
     label: '拳击',
     emoji: '🥊',
+    iconName: 'boxing',
     color: '#dc2626',
     colorBg: 'rgba(220, 38, 38, 0.12)',
     unit: 'km',
@@ -449,6 +486,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'RopeSkipping',
     label: '跳绳',
     emoji: '🪢',
+    iconName: 'rope',
     color: '#f59e0b',
     colorBg: 'rgba(245, 158, 11, 0.12)',
     unit: 'min',
@@ -470,6 +508,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Soccer',
     label: '足球',
     emoji: '⚽',
+    iconName: 'soccer',
     color: '#10b981',
     colorBg: 'rgba(16, 185, 129, 0.12)',
     unit: 'km',
@@ -493,6 +532,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Basketball',
     label: '篮球',
     emoji: '🏀',
+    iconName: 'basketball',
     color: '#f59e0b',
     colorBg: 'rgba(245, 158, 11, 0.12)',
     unit: 'km',
@@ -507,6 +547,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Tennis',
     label: '网球',
     emoji: '🎾',
+    iconName: 'tennis',
     color: '#84cc16',
     colorBg: 'rgba(132, 204, 22, 0.12)',
     unit: 'km',
@@ -548,6 +589,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Skiing',
     label: '滑雪',
     emoji: '⛷️',
+    iconName: 'skiing',
     color: '#0ea5e9',
     colorBg: 'rgba(14, 165, 233, 0.12)',
     unit: 'km',
@@ -579,6 +621,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Surfing',
     label: '冲浪',
     emoji: '🏄',
+    iconName: 'surfing',
     color: '#0891b2',
     colorBg: 'rgba(8, 145, 178, 0.12)',
     unit: 'km',
@@ -617,6 +660,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Golf',
     label: '高尔夫',
     emoji: '⛳',
+    iconName: 'golf',
     color: '#16a34a',
     colorBg: 'rgba(22, 163, 74, 0.12)',
     unit: 'km',
@@ -632,6 +676,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Wheelchair',
     label: '轮椅',
     emoji: '♿',
+    iconName: 'generic',
     color: '#a3a3a3',
     colorBg: 'rgba(163, 163, 163, 0.12)',
     unit: 'km',
@@ -646,6 +691,7 @@ export const SPORT_COMPAT: SportCompat[] = [
     key: 'Other',
     label: '其他',
     emoji: '⚡',
+    iconName: 'generic',
     color: '#94a3b8',
     colorBg: 'rgba(148, 163, 184, 0.08)',
     unit: 'km',

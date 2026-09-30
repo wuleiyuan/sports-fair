@@ -5,6 +5,16 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
+import SportIcon from '@/components/SportIcon';
+import {
+  IconMountain,
+  IconSportRun,
+  IconClock,
+  IconChart,
+  IconCalendar,
+  IconFloors,
+  IconArrowUp,
+} from '@/components/Icons';
 import {
   SPORT_BY_KEY,
   SPORT_TYPES,
@@ -117,9 +127,14 @@ const SportDetail = () => {
   }, [sportActivities]);
 
   // 头部 sport-aware 数据 banner（按 sport.priorityMetrics 切换）
+  // 用 SVG 矢量图标替代 emoji（ui-ux-pro-max 反模式）
   const headerBanner = useMemo(() => {
     if (sportActivities.length === 0 || !sport) return null;
-    const items: { icon: string; label: string; value: string }[] = [];
+    const items: {
+      Icon: React.FC<{ size?: number; color?: string }>;
+      label: string;
+      value: string;
+    }[] = [];
 
     if (sport.priorityMetrics.includes('elevation') && stats.totalElev) {
       const totalElev = stats.totalElev ?? 0;
@@ -128,9 +143,13 @@ const SportDetail = () => {
         const e = (a.elevation_gain as number) || 0;
         return e > m ? e : m;
       }, 0);
-      items.push({ icon: '⛰️', label: '平均海拔', value: `${avgElev} m` });
       items.push({
-        icon: '⛰️',
+        Icon: IconMountain,
+        label: '平均海拔',
+        value: `${avgElev} m`,
+      });
+      items.push({
+        Icon: IconArrowUp,
         label: '最高爬升',
         value: `${Math.round(maxElev)} m`,
       });
@@ -151,7 +170,7 @@ const SportDetail = () => {
         const m = Math.floor(best);
         const s = Math.round(best - m * 60);
         items.push({
-          icon: '🏃',
+          Icon: IconSportRun,
           label: '最佳配速',
           value: `${m}:${s.toString().padStart(2, '0')} /km`,
         });
@@ -162,7 +181,7 @@ const SportDetail = () => {
       const h = Math.floor(avgSec / 3600);
       const m = Math.floor((avgSec % 3600) / 60);
       items.push({
-        icon: '⏱️',
+        Icon: IconClock,
         label: '平均时长',
         value: h > 0 ? `${h}h ${m}m` : `${m}m`,
       });
@@ -178,15 +197,31 @@ const SportDetail = () => {
       );
       const avg = Math.round(totalReps / sportActivities.length);
       items.push({
-        icon: '📊',
+        Icon: IconChart,
         label: `平均${sport.unitLabel || '次数'}`,
+        value: `${avg}`,
+      });
+    }
+    if (
+      sport.priorityMetrics.includes('floors') &&
+      !sport.priorityMetrics.includes('elevation')
+    ) {
+      const totalFloors = sportActivities.reduce(
+        (s: number, a: Activity) =>
+          s + ((a as Activity & { floors?: number }).floors ?? 0),
+        0
+      );
+      const avg = Math.round(totalFloors / sportActivities.length);
+      items.push({
+        Icon: IconFloors,
+        label: `平均楼层`,
         value: `${avg}`,
       });
     }
     if (items.length < 3 && sportActivities[0]) {
       const d = sportActivities[0];
       const dateStr = (d.start_date_local || d.start_date || '').slice(0, 10);
-      items.push({ icon: '📅', label: '最近一次', value: dateStr });
+      items.push({ Icon: IconCalendar, label: '最近一次', value: dateStr });
     }
     return items.length > 0 ? items : null;
   }, [sportActivities, stats, sport]);
@@ -259,16 +294,17 @@ const SportDetail = () => {
             <span>{sport.label}</span>
           </div>
 
-          {/* 头部：emoji + 标题 + 描述 */}
+          {/* 头部：SVG sport icon + 标题 + 描述 */}
           <header className="mb-8 flex items-start gap-4">
             <div
-              className="flex items-center justify-center rounded-2xl p-4 text-5xl"
+              className="flex items-center justify-center rounded-2xl p-4"
               style={{
                 backgroundColor: sport.colorBg,
                 border: `1px solid ${sport.color}33`,
+                color: sport.color,
               }}
             >
-              {sport.emoji}
+              <SportIcon iconName={sport.iconName} size={40} />
             </div>
             <div>
               <h1 className="mb-1 text-3xl font-semibold text-white">
@@ -296,7 +332,7 @@ const SportDetail = () => {
                     border: `1px solid ${sport.color}33`,
                   }}
                 >
-                  <span className="text-base leading-none">{item.icon}</span>
+                  <item.Icon size={16} color={sport.color} />
                   <span className="text-xs text-gray-400">{item.label}</span>
                   <span
                     className="text-sm font-semibold tabular-nums"
