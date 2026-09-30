@@ -126,7 +126,7 @@ const TrainingPage: React.FC = () => (
             </div>
             <span
               className="k-badge"
-              style={{ background: acwrBadge.color, color: '#000' }}
+              style={{ background: acwrBadge.color, color: '#fff' }}
             >
               {acwrBadge.text}
             </span>
@@ -258,7 +258,7 @@ const TrainingPage: React.FC = () => (
             </div>
             <span
               className="k-badge"
-              style={{ background: tsbBadge.color, color: '#000' }}
+              style={{ background: tsbBadge.color, color: '#fff' }}
             >
               {tsbBadge.text}
             </span>

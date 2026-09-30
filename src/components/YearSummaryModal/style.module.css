@@ -4,7 +4,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #222222;
+  /* Apple HIG: 浅色半透明遮罩, 而非深灰 */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +18,8 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #222222;
+  /* Apple HIG: 主体浅色, 与整站统一 */
+  background: var(--color-bg, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +31,7 @@
   right: 30px;
   background: none;
   border: none;
-  color: #888;
+  color: var(--color-text-secondary, #6b7280);
   font-size: 36px;
   cursor: pointer;
   transition: color 0.2s;
@@ -35,7 +39,7 @@
 }
 
 .closeButton:hover {
-  color: #fff;
+  color: var(--color-text-primary, #1a1a1a);
 }
 
 .svg {
@@ -46,7 +50,7 @@
 }
 
 .loading {
-  color: #888;
+  color: var(--color-text-secondary, #6b7280);
   padding: 40px;
   text-align: center;
 }

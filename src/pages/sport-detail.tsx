@@ -490,11 +490,13 @@ const SportDetail = () => {
                     <YAxis tick={{ fill: '#98989d', fontSize: 11 }} unit="km" />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#1e293b',
-                        border: '1px solid #334155',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid rgba(0,0,0,0.08)',
                         borderRadius: 8,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                       }}
-                      labelStyle={{ color: '#e2e8f0' }}
+                      labelStyle={{ color: '#1d1d1f' }}
+                      labelFormatter={(label: string) => `📅 ${label}`}
                       formatter={(value: number) => [
                         `${value.toFixed(1)} km`,
                         '距离',

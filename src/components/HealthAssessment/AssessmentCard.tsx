@@ -237,7 +237,7 @@ const AssessmentCard: React.FC<Props> = ({
                     height: 14,
                     borderRadius: '50%',
                     backgroundColor: zone.color,
-                    border: '2px solid #000',
+                    border: '2px solid #fff',
                     boxShadow: '0 0 8px rgba(255,136,0,0.4)',
                   }}
                   title={`ACWR = ${acwrRatio.toFixed(2)}`}
@@ -272,7 +272,7 @@ const AssessmentCard: React.FC<Props> = ({
                     display: 'inline-block',
                     fontSize: '0.7rem',
                     background: 'var(--a-orange, #FF8800)',
-                    color: '#000',
+                    color: '#fff',
                     padding: '1px 8px',
                     borderRadius: 8,
                     marginBottom: 4,
