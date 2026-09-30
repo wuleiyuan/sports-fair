@@ -5,23 +5,43 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
+## [2.5.4] - 2026-09-30
+
+### 新增
+
+- **SportCard 重构为 CSS 变量驱动** — 消除 `onMouseEnter`/`onMouseLeave` JS 副作用，inline style 只传 3 个 CSS 变量，hover 抬升 + sport-color 双层光晕 (`88fdcf2`)
+- **UI 不变量回归测试** — 新增 `scripts/ui-invariants.mjs` 守住 3 条契约：Icons.tsx 零硬编码颜色、至少 20 个图标、ShareModal 零 inline style。接入 `pnpm ui:check` (`88fdcf2`)
+- **自动版本号 bump workflow** — 新增 `.github/workflows/version-bump.yml`，每次 push master 自动 patch +1，写回 `package.json` + `package-lock.json`，打 tag 触发 `release.yml` 自动建 GitHub Release
+
+### 修复
+
+- **`package.json` repository.url 错误指向上游** — 从 `yihong0618/running_page` 改为 `wuleiyuan/sports-fair`，避免 npm install 错误提示与 GitHub 链接错位
+
+### 维护
+
+- 全面 emoji → SVG 矢量图标替换（`c832797`，详见 `Icons.tsx`）
+
 ## [2.5.3] - 2026-09-29
 
 ### 新增
+
 - **Sport-aware header banner** — `/sports/:key` 详情页根据运动类型动态显示关键指标：hiking 显海拔/坡度，ride 显功率，run 显配速 (`a576776`)
 - `/summary`（个人仪表盘）和 `/sports/:key`（按运动深挖）路由补全到 README 文档
 
 ### 修复
+
 - **sports-overview** 不再撒谎显示数据时效 —— 14 天无新活动时正确显示红色警告而非误导用户 (`035adf4`)
 - **Apple HIG UI polish** —— 进一步打磨 UI 细节 (`5f01883`)
 - **Service Worker 缓存** 升级到 v2.3.1 —— 旧缓存命中检测更严格，避免 stale 响应；Vercel data-sync 触发器加固 (`3d6e0d2`)
 
 ### 维护
+
 - 52 个文件 prettier 格式化 (`a576776`)
 - 2 次 `sync sports data` 自动同步 —— Keep 端无新增活动 (`434c16f`, `5ebe3ff`)
 - 1 次 profile stats SVG 自动更新 `[skip ci]` (`b3f214b`)
 
 ### 文档
+
 - README（中英）Pages 表更新为实际路由 —— 修复错误的 `/stats`、`/activities`、`/recents`；补全 `/summary`、`/sports/:key`
 - `package.json` `repository.url` 修正 —— 由 `yihong0618/running_page` 改为 `wuleiyuan/sports-fair`
 
@@ -30,22 +50,26 @@
 ## [2.5.2] - 2026-09-28
 
 ### 新增
+
 - **运动感知指标** + SportCard UI 重构 + CSS module 拆分 (`f6d8f53`)
 - **README hero** 加 Live Demo / Deploy CTA + Show your support 区 (`48434c9`)
 - **.nvmrc** 锁 Node 版本 (`48434c9`)
 
 ### 变更
+
 - **Poster CSS module** 拆分 + **hero** 加"最爱运动"卡 + **RunMap/RunTable** React.memo (`bac8ef3`)
 - **ShareModal CSS module** 拆分 + **sport-detail** 运动感知 stats + **priorityMetrics** 顺序修正 (`73e906e`)
 - **Community 章节** + **sports-overview** 类型化 + 函数位置清理 (`9e573b5`)
 - **og-image.png** 复制到仓根，修 #1 引流坑（社交分享预览图）(`cc3c4e8`)
 
 ### 修复 / 性能
+
 - **ShareModal toast 内存泄漏**修复 + pageLinks 提升到模块级（防重复创建）(`29de0b4`)
 - **LightsControl a11y** + **ShareModal.activities** 类型化 (`7bf7dec`)
 - 清理 11 处调试 `console.log` + close 按钮加 `aria-label` (`9898213`)
 
 ### 维护
+
 - 11 次 `sync sports data` 提交（Keep 数据自动同步）
 - 1 次 profile stats SVG 自动更新 `[skip ci]`
 
@@ -54,20 +78,24 @@
 ## [2.5.1] - 2026-06-21
 
 ### 修复
+
 - **Keep 运动类型映射**: outdoorWalking 从 Hiking 改为 Walk，解决徒步/步行数据混杂问题
 - **步行颜色**: 从徒步紫色改为青色 (`rgb(0,200,200)`)，地图上可区分
 
 ### 新增
+
 - **GitHub Profile 联动**: 自动生成 ACWR/TSB/HR zones SVG 统计卡片
 - **demo.gif**: README 添加页面动效演示
 
 ### 变更
+
 - **README 重写**: 先展示截图和功能介绍，再放一键部署按钮（展示优先）
 - **中英文 README 同步**: 结构统一
 
 ## [2.5.0] - 2026-06-20
 
 ### 新增
+
 - **Apple HIG 设计系统** — 替换 Velocity Kinetic 暗黑工业风，采用苹果 Human Interface Guidelines 风格
   - `theme-apple.css`: 毛玻璃卡片 (backdrop-filter blur + 20px 圆角)、SF Pro/Inter 字体栈、Fitness 环色系
   - 暗色沉浸背景 (#121212)，48px/34px 大数字层级排版
@@ -78,20 +106,24 @@
 - **health_trends.py** — 新脚本，输出每日健康指标序列 (HR/RHR/HRV/睡眠/步数) 供 sparkline 消费
 
 ### 变更
+
 - **Training 页** — 重写为 Apple HIG 布局：ACWR 主卡 (bento-wide)、TSB 卡、HR 5 区卡、训练建议卡
 - **Health 页** — 重写为 Apple HIG 布局：5 张 sparkline 指标卡 + 按年汇总表 + SVG Dashboard
 
 ### 移除
+
 - `theme-kinetic.css` — 被 `theme-apple.css` 取代
 
 ## [2.4.1] - 2026-06-20
 
 ### 修复
+
 - **训练页 404** — `fetch('/training_load.json')` 在生产构建中返回 404，因 Vite 不自动 serve `src/static/` 目录文件。改为使用 `import` 直接引 JSON（与项目中 `health.tsx` 等所有页面一致），JSON 内联至 JS bundle，消除额外网络请求
 
 ## [2.4.0] - 2026-06-20
 
 ### 新增
+
 - **TSB 训练状态模型** — Coggan TSB (2003) 基于 CTL 42d / ATL 7d 指数移动平均
   - `scripts/training_load.py`: 新增 `compute_ctl_atl()` + TSB 输出字段
   - 规律: TSB > 15 恢复 / -5~15 最佳 / -15~-5 疲劳 / < -15 过度
@@ -103,16 +135,19 @@
 - **训练负荷页算法说明** — training.tsx footer 增加 Coggan TSB 公式说明
 
 ### 修复
+
 - **TRIMP 公式修正** — `training_load.py` 中 `compute_trimp()` 的 Banister 公式错用 `delta_hr` (绝对差值) 替代 `hrr_ratio` (相对比例)，导致 TRIMP 数值高估约 100 倍
   - 修复后: ACWR 比值不变 (同比例缩放)，TSB 降至合理区间 (-2.1)
 - **导航栏重复链接** — Header 中 "📊 旅程总览" 和 site-metadata navLinks 中 "Summary" 均指向 `/summary`，现已删除 navLinks 中冗余条目
 
 ### 移除
+
 - **CadenceCard** — 从 training.tsx Bento grid 移除 (占位待后续 cadence 数据源就绪后再恢复)
 
 ## [2.3.5] - 2026-06-20
 
 ### 修复
+
 - **徒步/步行数据归类修复** — Keep 源 `outdoorWalking` 数据被 `keep_sync.py` 错误标记为 `Hiking`，现已重新归入 `Walk`
   - Hiking: 41→4（仅保留真正"徒步 Hiking"的 4 条）
   - Walk: 29→66（并入 37 条 Keep outdoorWalking）
@@ -121,6 +156,7 @@
 ## [2.3.2] - 2026-06-19
 
 ### 新增
+
 - **Training 页面** — v2.3.2 功能徽章显示在各卡片 footer
 - **ACWRCard** — 高危区间（ACWR > 1.5）显示 warning 文本 + 生成时间戳显示在 footer
 - **HRZonesCard** — 极化训练 >= 70% 时显示 "极化训练合理" 标签
@@ -128,6 +164,7 @@
 - **AdviceListCard** — 建议 action + evidence 渲染 + footer 显示 method + source
 
 ### 修复
+
 - 修复多元素文本选择器导致的测试失败（testing-library `getByText` → `getAllByText` + 长度检查）
 
 ## [2.3.0] - 2026-06-18
@@ -135,6 +172,7 @@
 ### 新增 (PWA 基础 + 骨架屏体感优化)
 
 #### PWA (渐进式 Web App) 基础支持
+
 - **`public/manifest.json`** — 标准 PWA manifest
   - `display: standalone` (iOS Safari "添加到主屏幕" 后秒开, 无浏览器边框)
   - `theme_color: #1a1a1a`, `background_color: #ffffff` (启动屏颜色)
@@ -152,6 +190,7 @@
 - **`src/main.tsx`** — SW 注册 (仅生产环境)
 
 #### Skeleton (骨架屏) 通用组件
+
 - **`src/components/Skeleton/`** — 纯 CSS 脉冲动画, 0 第三方依赖
   - `<Skeleton />` 通用矩形
   - `<SkeletonText lines={3} />` 文本行 (最后一行 70%, 更真实)
@@ -165,6 +204,7 @@
   3. **`RunMap`** — 中国边界数据加载时浮层骨架 (修复了 `isLoadingMapData` 状态之前没人用的 bug)
 
 ### 后续
+
 - v2.3.1 计划: Apple HIG Bento Box 训练看板前端卡片 (读 training_load.json + training_advice.json 渲染)
 - v2.3.2 计划: 在 sync 源加 cadence 字段, 激活 training_load.json 的 cadence 占位
 - v2.4.0 计划: LLM 周报 (等 mimo key 复活, 或换 DeepSeek/智谱 等 OpenAI 兼容接口)
@@ -173,6 +213,7 @@
 ## [2.2.9] - 2026-06-18
 
 ### 新增 (训练建议引擎 — rule-based, 0 LLM 依赖)
+
 - **`scripts/training_advice.py`** — 读 `training_load.json` (v2.2.8) → 输出 `training_advice.json` (~2 KB)
   - **5 类规则** (severity 排序: high > medium > low > info):
     1. **ACWR 风险等级** — 5 状态映射: high_risk (>1.5) / caution (1.3-1.5) / sweet_spot (0.8-1.3) / undertraining (<0.8) / unknown
@@ -198,6 +239,7 @@
   - 整体摘要: "⚠️ 重点关注: 训练负荷激增（伤病高危）。"
 
 ### 后续
+
 - v2.2.10 计划: 在 health-assess 页加训练负荷卡片, 读 training_load.json + training_advice.json 渲染
 - v2.2.11 计划: 在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段, 激活 training_load.json 的 cadence 占位
 - v2.2.12+ 评估: LLM 周报路径 (在 rule-based 跑通 + 验证价值后再决定要不要花 API 钱)
@@ -205,6 +247,7 @@
 ## [2.2.8] - 2026-06-17
 
 ### 新增 (训练负荷数据层)
+
 - **`scripts/training_load.py`** — 从 `activities.json` + `health_stats.json` 提炼训练负荷指标
   - **ACWR (7/28 急慢性训练负荷比)** — Gabbett 1998 公式，Banister TRIMP 算法
     - HRmax 来自 `health_stats.top_stats.hr.max_ever` (用户实测, 不用 220-age)
@@ -224,6 +267,7 @@
   - `on.push.paths` 加 `src/static/training_load.json` (改动触发重 sync)
 
 ### 验证 (本地实跑)
+
 - **ACWR 1.58 (high_risk)** — 7d acute 81838 TRIMP / 28d chronic 51924 TRIMP
   - 7d 5 天有数据 / 28d 13 天有数据
   - 触发: 2025 训练稀疏 + 2026 突然高强度 → 慢性基底低 → 急性飙
@@ -234,6 +278,7 @@
   - 32 个活动有 HR 数据
 
 ### 后续
+
 - 6/17 03:20 sync run 把 v2.2.7 activities.json 推到 master (675 条 / latest 6/15)
 - v2.2.8 是新功能 (数据层新增) — minor bump 更准，但项目用 patch bump 保持低噪，minor 留给 UI 层
 
@@ -266,12 +311,14 @@
 ## [2.2.6] - 2026-06-16
 
 ### 修复 (sync 致命崩溃)
+
 - **`run_page/keep_sync.py:91`** — `log.get('stats', {})` 当 `stats` 字段值为 `None` 时返回 `None` 不是 `{}`（Python 默认值只在 key 不存在时生效，key 存在但值 None 时不生效）
   - 改成 `log.get('stats') or {}` 兜住 None
   - 影响：6/16 outdoorWalking + stairClimbing 第一条新记录的 stats 字段是 None → 崩 → 整个 sync exit 1 → push step 跳过 → 6/09–6/15 已经 parse 成功的跑步数据没 commit 到 master
   - 之前没暴露：因为 v2.2.5 之前 `|| true` 把这种崩静默吞了 + 之前没有 outdoorWalking/stairClimbing 类型的 stats=None 数据进来
 
 ### 修复 (release 自动化)
+
 - **`.github/workflows/release.yml`** 重写
   - 老版本 push tag 触发后又跑 `mathieudutour/github-tag-action` 自己建一个新 tag → release 用的不是我们 push 的 tag（race condition）
   - 老版本用 `actions/create-release@v1`（已 deprecated 2024+）
@@ -280,6 +327,7 @@
 ## [2.2.5] - 2026-06-16
 
 ### 新增 (数据完整性保护)
+
 - **`scripts/check_activities_safety.py`**: sync workflow pre-commit gate
   - 对比 HEAD vs working tree 的 `src/static/activities.json`，下跌 ≥30% 且 ≥50 条 → exit 1
   - 双阈值（比例 + 绝对值）防止小数据集误判和大数据集漏报
@@ -289,6 +337,7 @@
   - 检测年份 gap，给出 `warning` / `hint`
 
 ### 修复
+
 - **`run_data_sync.yml` keep_sync 静默吞错** → `pipefail` + 关键字 grep（cookie 失效 / 风控 / 401 / 403 直接红）
   - 根因：6/09 之后 7 天 Keep 一条数据没同步上来，workflow 仍永远绿
 - **step-level `needs:` 是无效字段** → 改 step 顺序 + `set -e`，safety check 挂 = job 红 = push 不跑
@@ -299,11 +348,13 @@
   - 新版本：push `v*` tag → 直接用这个 tag 用 `softprops/action-gh-release@v2` 建 release，body 自动从 CHANGELOG.md 抓对应版本段
 
 ### 数据
+
 - `src/static/activities.json` 从 db regen，562 条 / 8 年（2019-2026）/ 6 类运动（Run 452 / RopeSkipping 37 / StairStepper 33 / Walk 29 / Ride 7 / Hiking 4）
 
 ## [2.2.0] - 2026-06-13
 
 ### 新增 (按用户 6/11 决策: 接入 LLM 替换静态 AI 建议)
+
 - **Vercel Function** `api/assess-ai.ts`: Edge runtime, 调小米 MiMo (`api.xiaomimimo.com`)
   - 10s 超时 + 60s CDN cache 兜底
   - 失败降级到 `bundle.overall` 静态建议
@@ -321,11 +372,13 @@
 - **依赖**: `@vercel/node` (devDep)
 
 ### 待用户配置
+
 - Vercel dashboard → Project → Settings → Environment Variables 加 `MIMO_API_KEY`
 
 ## [2.2.1] - 2026-06-13
 
 ### 新增 (按用户 6/13 反馈: "api 到时候可以更换")
+
 - **LLM Provider 抽象层** `api/providers/llm.ts`
   - 三家实现: **mimo** (默认, 小米 MiMo) / **openai** (gpt-4o-mini 等) / **anthropic** (claude-haiku 等)
   - 切换只改环境变量 `LLM_PROVIDER=openai` + 配对应 `OPENAI_API_KEY`
@@ -338,10 +391,12 @@
   (system 单独字段, `x-api-key` header, usage 字段 rename)
 
 ### 重构
+
 - `api/assess-ai.ts` 从直接调 MiMo 改为走 `buildProvider()` 工厂
 - `fetchAIGuidance()` 加可选 `options.provider` 参数
 
 ### 配置示例 (Vercel env)
+
 ```
 LLM_PROVIDER=mimo
 MIMO_API_KEY=sk-...
@@ -358,6 +413,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 ## [2.2.2] - 2026-06-13
 
 ### 新增 (可观察性 + 安全加固)
+
 - **`/api/health-check` GET 端点**: 用户自查 LLM provider 配置状态
   - 返回 `activeProvider` / `activeReady` / `providers[]` 状态表
   - 不暴露 key 内容, 只暴露 hasKey 布尔
@@ -377,11 +433,10 @@ ANTHROPIC_API_KEY=sk-ant-...
   - 单用户应用下主要是防恶意 prompt 浪费 token, 不防 data exfil
 - **README LLM 配置章节**: 完整 env 变量表 + 3 家 provider 注册链接 + 加新 provider 步骤
 
-
-
 ## [2.2.4] - 2026-06-13
 
 ### 新增 (health-check UI 化 + 测试覆盖加深)
+
 - **`AIDiagnosticsPanel` 折叠式组件** (`src/components/HealthAssessment/`)
   - 默认折叠, 点击展开
   - `autoOpenOnError={true}` 时 AI 错误自动展开 (用户场景优先)
@@ -400,12 +455,14 @@ ANTHROPIC_API_KEY=sk-ant-...
 - **devDep 装**: @testing-library/react / @testing-library/jest-dom / happy-dom
 
 ### 改 UX
+
 - 健康评估页错误时, health-check 链接替换为组件嵌入 (直接看到 provider 状态)
 - 错误文案微调: "请展开上方 'AI 配置诊断' 排查"
 
 ## [2.2.3] - 2026-06-13
 
 ### 新增 (前端韧性 + UX 优化)
+
 - **localStorage 24h 缓存** (`fetchAIGuidanceWithCache`)
   - key 维度: `windowDays_provider_bundleHash`, hash 基于 cards key/main/severity
   - 同 bundle 同 provider 24h 内复用, 节省 LLM 费用
@@ -428,6 +485,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 - **空白行过滤**: 渲染 AI 建议时 `.filter(l => l.trim())`
 
 ### 测试
+
 - 新增 `src/utils/__tests__/llmCache.test.ts` (8 cases)
   - fetchAIGuidance: 重试/空/网络错/4xx 不重试
   - loadProviderPref/saveProviderPref: 双向/污染 fallback
@@ -436,6 +494,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 ## [2.1.13] - 2026-06-12
 
 ### 新增 (按用户强烈反馈：标准 GitHub 流程)
+
 - **README.md** 更新：v2.1.12 + Releases 链接 + Vercel 徽章 + Features 列表 + 文档导航
 - **CONTRIBUTING.md** 完整重写：开发指南 + Conventional Commits + PR 流程（之前只有 16B 占位）
 - **CODE_OF_CONDUCT.md** 新增：Contributor Covenant 2.1 完整版
@@ -447,6 +506,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 - **.github/workflows/release.yml** trigger 改为 `push: tags: ['v*']`（让 tag push 自动 create release）
 
 ### 流程改进
+
 - 修根因：v2.1.1 之后 release 缺失是因为 workflow trigger 是 `workflow_dispatch`（手动），没人跑
 - 解法：tag push 自动 create release
 - 向后兼容：保留 `workflow_dispatch` 入口
@@ -454,12 +514,14 @@ ANTHROPIC_API_KEY=sk-ant-...
 ## [2.1.12] - 2026-06-12
 
 ### 新增 (按用户强烈反馈：release 自动化 + 一次性回填)
+
 - **scripts/release.sh** 一键 bump + commit + tag + push + create release（用 curl + GitHub API，不依赖 gh CLI）
 - **scripts/backfill_releases.sh** 一次性回填历史 release entry（v2.1.2-2.1.11 共 10 个）
 - **PROJECT_NOTES.md** §版本号流程升级为 5 必做步（含 create release 必做）
 - **scripts/bump_version.sh** 标"已废弃"（新功能用 release.sh）
 
 ### 用法
+
 ```bash
 # 平时 bump
 GITHUB_TOKEN=*** ./scripts/release.sh patch
@@ -471,15 +533,17 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.11] - 2026-06-12
 
 ### 修复 (色带塌陷根因 + 升级 sub)
+
 - **AssessmentCard.tsx** 色带 `flexGrow + flexBasis: 0` 浏览器渲染塌陷 → 改用 `width: ${pct}%` 百分比（v2.1.10 修复失败根因）
 - **AssessmentCard.tsx** 色带标签同步改 width 百分比
-- **AssessmentCard.tsx** 位置圆点改用 inline style（position absolute + left % + 14px 圆点）—— 摆脱 .acwr-position-* CSS 依赖
+- **AssessmentCard.tsx** 位置圆点改用 inline style（position absolute + left % + 14px 圆点）—— 摆脱 .acwr-position-\* CSS 依赖
 - **healthAssessment.ts** sub 升级为急性/慢性双显示：`急性 X TRIMP · 慢性 Y TRIMP/天`（替代原"近 7 天 X · 4 周均 Y"）
 - ACWR 色带比例：紫 0-0.8 (40%) / 绿 0.8-1.3 (25%) / 橙 1.3-1.5 (10%) / 蓝 1.5+ (25%)
 
 ## [2.1.10] - 2026-06-12
 
 ### 修复 (按用户截图反馈)
+
 - **AssessmentCard.tsx** ACWR 色带 `flex: 0.5` 不合法简写 → `flexGrow: span, flexBasis: 0`（之前色带塌陷 0 宽，截图里看不到）
 - **AssessmentCard.tsx** ACWR 标签同步修复 `flex` 简写问题（标签挤成一行 → 按比例分布）
 - ACWR 色带比例：紫 0-0.8 (40%) / 绿 0.8-1.3 (25%) / 橙 1.3-1.5 (10%) / 蓝 1.5+ (25%)
@@ -487,6 +551,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.9] - 2026-06-12
 
 ### 新增 (UI 重构：按 Gemini 设计稿)
+
 - **assessTrainingLoad** 改用 Banister TRIMP 替代单纯时长，TRIMP 优先用 average_heartrate 算强度权重，无则降级为 duration × 1.0
 - **assessTrainingLoad** 返回 { card, trend }，trend 数组保留供 v2.2.0 进一步使用
 - **AssessmentBundle** 新增 `trainingLoadTrend?: number[]` 字段
@@ -496,6 +561,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - 推翻前一版"7 天柱状图"设计（信息量低），改用 Gemini 设计稿的"区间色带 + 业务评级"方案
 
 ### 算法细节
+
 - TRIMP 公式: T = duration_min × 0.64 × exp(1.92 × intensity)
 - intensity = clamp((avgHR - hrRest) / (hrMax - hrRest), 0, 1)
 - hrMax 近似 = top_stats.hr.max_ever (fallback 190)
@@ -503,12 +569,14 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - ACWR = acute7d / chronic28d，chronic = 28 天日均 × 7
 
 ### 已知局限
+
 - TRIMP 强度依赖 average_heartrate，活动缺此字段时降级为 duration×1.0（保守）
 - hrMax / hrRest 是基于历史估算，不是个人精确值（理想需 Apple Watch 用户输入最大心率）
 
 ## [2.1.8] - 2026-06-12
 
 ### 修复
+
 - **scripts/bump_version.sh** 加 `-y/--yes` 自动模式：自动 git add + commit + tag + push
 - **scripts/bump_version.sh** 注释更新：明确说明"没 tag = GitHub Releases 看不到版本"
 - **scripts/bump_version.sh** 改后输出重写：手工模式只列 4 必做步 + 提示用 `-y` 自动化
@@ -516,12 +584,14 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - **PROJECT_NOTES.md** §版本号流程 加 "历史教训"段：v2.1.1-2.1.7 漏 tag 教训
 
 ### 回填
+
 - **git tag v2.1.2 / v2.1.3 / v2.1.4 / v2.1.5 / v2.1.6 / v2.1.7** 6 个 tag 全部补打 + push（不回填 release，按用户决策先修根因，下次 bump 自动）
 - **PROJECT_NOTES.md** §版本号流程注释明确："公开文档但本地不入仓"（避免误暴露异常数据现状）
 
 ## [2.1.7] - 2026-06-12
 
 ### 修复
+
 - **health_stats.py** HR / RHR / HRV 收集时过滤异常值（HR 30-220 / RHR 30-120 / HRV 10-200）
 - **health_stats.py** 睡眠过滤改为 1-14h（原本 16h 上限过松，午睡 < 1h 也过滤）
 - **health_stats.py** `compute_top_stats` 收集时同步加合理性过滤
@@ -531,6 +601,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.6] - 2026-06-12
 
 ### 修复
+
 - **assessHRV** 支持 7/30 天窗口 + 文案明确标注"全量均值"+ 提示开启 Apple Watch HRV 日级测量
 - **assessRHR** 过滤异常值（RHR < 30 数据缺失 / > 120 异常高）
 - **assessSleep** 过滤异常值（< 1h 手环未戴 / > 14h 未摘表）
@@ -541,6 +612,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.5] - 2026-06-12
 
 ### 新增 (Minor)
+
 - **健康评估建议模块 UI 完整** (路由 `/health-assess`)
   - `src/components/HealthAssessment/AssessmentCard.tsx` - 单卡片（5 个共用）
   - `src/components/HealthAssessment/SeverityBadge.tsx` - 严重程度徽章（良好/关注/警告/紧急）
@@ -557,6 +629,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - **文档 `HEALTH_ASSESSMENT.md`** - 用户视角 + 算法说明 + 数据局限 + 4 段医学/运动科学依据
 
 ### 算法依据
+
 - RHR：AHA 静息心率分级（优秀 < 60 / 良好 60-64 / 一般 65-69 / 偏高 70-79）
 - HRV：Apple Heart Rate Study + Kubios 公开数据（高 > 50ms / 中 30-50ms / 低 < 30ms）
 - 睡眠：NSF 建议（7-9h 充足 / 6-7h 略少 / < 6h 不足）
@@ -566,6 +639,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.4] - 2026-06-12
 
 ### 新增 (Minor)
+
 - **运动类型显示维度重构**：根据运动语义，UI 不再统一显示距离
   - `distance` (位移)：Run / Hiking / Walk / Ride / Swim / Elliptical / Skiing / Surfing / Wheelchair
   - `count` (计数)：StairStepper / RopeSkipping / Boxing / Soccer / Basketball / Tennis / Golf
@@ -580,6 +654,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 - **异常数据视觉提示**：`RunRow.tsx` 加 `warning` / `error` 样式（黄/红左边框 + tooltip）
 
 ### 修复 (Patch)
+
 - **异常数据 filter 加强** `run_page/generator/__init__.py`：
   - Run 速度 < 1 km/h 持续 > 1h 跳过（卡死/误触发）
   - Run 速度 > 30 km/h 持续 > 5min 跳过（接近短跑极限但持续不可能是跑步）
@@ -588,6 +663,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
   - 每次跑加 skipped 计数日志
 
 ### UI 改动
+
 - `RunTable/RunRow.tsx`：第二列从 "距离" 改为 `display.value`（距离/次数/时长自适应）
 - `RunTable/style.module.css`：加 `.warning` / `.error` 样式
 - `sportCompat.ts`：22 桶加 `displayMetric` + `unitLabel`
@@ -595,6 +671,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.3] - 2026-06-12
 
 ### 修复 (Patch)
+
 - **异常数据修复**：`run_page/generator/__init__.py` filter 强化
   - 防御 `distance IS NULL` 行漏过滤（`and_(distance > 0.1, distance.isnot(None))`）
   - 0 距离 Run 二次过滤（误触发 / Apple Watch 半路掉线）
@@ -605,19 +682,23 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
   - 用途：本地调试 / yml runner cache miss / db 已更新但 json 未更新时手动同步
 
 ### 文档
+
 - `.gitignore` 加 `src/static/activities.json.bak-*` 排除（regen 脚本会自动备份）
 
 ### 统计
+
 - db: 584 条 / 7 年份 / 6 类型 (Run 455, RopeSkipping 37, StairStepper 33, Walk 29, Workout 19, Ride 7, Hiking 4)
 - json: 562 条 / 7 年份 / 6 类型（filter 22 条：3 Run 0 距离 + 19 Workout 0 距离）
 
 ## [2.1.2] - 2026-06-12
 
 ### 修复 (Patch)
+
 - T1.1: `YearStat` 组件按 sportKey 过滤（之前用 useActivities 全集，sidebar Total Journey 错显示 562 而非 452 Run）
 - T1.3: `PeriodStat` 组件按 sportKey 过滤（之前跑步详情页时段分布混入爬楼/跳绳/步行/骑行/徒步条）
 
 ### 新增
+
 - `useSportActivities(sportKey)` hook
 - `getRunPeriodBySport(sportKey)` 函数
 - 4 组件加 `sportKey` prop（PeriodStat / YearStat / LocationStat / index.tsx）
@@ -626,6 +707,7 @@ GITHUB_TOKEN=*** ./scripts/backfill_releases.sh v2.1.2 v2.1.3 v2.1.4 v2.1.5 v2.1
 ## [2.1.1] - 2026-03-04
 
 ### 发布
+
 - Sports Fair 品牌重命名（fork of yihong0618/running_page）
 - Vercel 部署优化
 - 性能优化（Apple HIG 缓动曲线）

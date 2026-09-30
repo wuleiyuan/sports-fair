@@ -1,0 +1,82 @@
+# Auto bump patch version on master push
+#
+# 触发: push 到 master（CI 元 commit 跳过自身）
+# 行为:
+#   1) 读 package.json version
+#   2) patch +1
+#   3) 写回 package.json + package-lock.json
+#   4) 提交 chore(release): vX.Y.Z [skip ci]
+#   5) push tag vX.Y.Z → 触发 release.yml 自动建 GitHub Release
+#
+# 安全:
+#   - [skip ci] 防递归
+#   - permissions: contents: write 严格最小化
+#   - paths 过滤: 排除纯静态数据同步（如 assets/*.svg cron 同步）
+#
+# 注意:
+#   - npm version 会自动同步 package-lock.json
+#   - tag 触发 release.yml 已存在，无需重复
+name: Auto bump version
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'public/**'
+      - 'scripts/**'
+      - 'api/**'
+      - '.github/workflows/version-bump.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compute new patch version
+        id: bump
+        run: |
+          CURRENT=$(node -p "require('./package.json').version")
+          MAJOR=$(echo "$CURRENT" | cut -d. -f1)
+          MINOR=$(echo "$CURRENT" | cut -d. -f2)
+          PATCH=$(echo "$CURRENT" | cut -d. -f3)
+          NEW="$MAJOR.$MINOR.$((PATCH+1))"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          echo "Bumping $CURRENT → $NEW"
+
+      - name: Bump version (npm version 同步 package.json + package-lock.json)
+        run: npm version "${{ steps.bump.outputs.new }}" --no-git-tag-version --allow-same-version
+
+      - name: Commit bumped files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          # 如果没变更（极罕见: 同一 patch 重复 push）则跳过 commit
+          if git diff --cached --quiet; then
+            echo "No version change to commit, skipping."
+            exit 0
+          fi
+          git commit -m "chore(release): bump version to v${{ steps.bump.outputs.new }} [skip ci]"
+          git push
+
+      - name: Push tag (触发 release.yml 自动建 GitHub Release)
+        run: |
+          git tag "v${{ steps.bump.outputs.new }}"
+          git push origin "v${{ steps.bump.outputs.new }}"
