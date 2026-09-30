@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T05:22:24",
+  "generated_at": "2026-09-30T05:40:04",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -13,15 +13,6 @@
       "description": "Z2 占比仅 16.5%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
       "evidence": "Z1 50.4% + Z2 16.5% = polarized 66.9%"
-    },
-    {
-      "id": "acwr_undertraining",
-      "category": "load",
-      "severity": "medium",
-      "title": "训练负荷不足",
-      "description": "ACWR 0.69 低于 0.8, 28d 慢性基数偏低。",
-      "action": "可逐步加量: 本周增加 1-2 次中等强度训练, 或单次延长 10-15 分钟。",
-      "evidence": "7d 急性 150.9 TRIMP / 28d 慢性 219.8 TRIMP"
     },
     {
       "id": "polarized_off",
@@ -40,6 +31,15 @@
       "description": "以下数据缺口影响建议可信度: 7d 仅 2 天有数据 (目标 ≥ 3)。",
       "action": "建议: (1) 跑步时佩戴心率设备 (2) 训练后及时同步数据 (3) 1-2 周后再看建议会更准",
       "evidence": "7d 2 天 / 28d 8 天 / 90d HR 30 活动"
+    },
+    {
+      "id": "acwr_unknown",
+      "category": "load",
+      "severity": "info",
+      "title": "训练负荷数据不足",
+      "description": "无法计算 ACWR（缺少心率或时长数据）。",
+      "action": "继续训练积累心率数据, 几周后 ACWR 才能稳定。",
+      "evidence": "7d 2 天有数据 / 28d 8 天有数据"
     }
   ],
   "data_window": {
