@@ -133,12 +133,12 @@ jobs:
           if [[ -z "${BODY:-}" ]]; then
             BODY="Release v$VERSION
 
-See commits in https://github.com/${{ github.repository }}/compare/v${{ steps.bump.outputs.current }}...v$VERSION"
+            See commits in https://github.com/${{ github.repository }}/compare/v${{ steps.bump.outputs.current }}...v$VERSION"
           fi
           {
-            echo "body<<__EOF__"
-            echo "$BODY"
-            echo "__EOF__"
+            printf 'body<<__EOF__\n'
+            printf '%s\n' "$BODY"
+            printf '__EOF__\n'
           } >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
