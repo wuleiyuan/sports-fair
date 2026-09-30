@@ -4,7 +4,7 @@
 # 行为:
 #   1) 读 package.json version
 #   2) patch +1
-#   3) 写回 package.json + package-lock.json
+#   3) 写回 package.json（npm-only 项目额外同步 package-lock.json）
 #   4) 提交 chore(release): vX.Y.Z [skip ci]
 #   5) push tag vX.Y.Z → 触发 release.yml 自动建 GitHub Release
 #
@@ -14,7 +14,8 @@
 #   - paths 过滤: 排除纯静态数据同步（如 assets/*.svg cron 同步）
 #
 # 注意:
-#   - npm version 会自动同步 package-lock.json
+#   - pnpm 项目：npm version 只改 package.json，pnpm-lock.yaml 不动
+#   - 兼容 pnpm / npm / yarn 三种 lockfile（动态检测存在与否）
 #   - tag 触发 release.yml 已存在，无需重复
 name: Auto bump version
 
@@ -24,7 +25,7 @@ on:
     paths:
       - 'src/**'
       - 'package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - 'public/**'
       - 'scripts/**'
       - 'api/**'
@@ -60,14 +61,21 @@ jobs:
           echo "new=$NEW" >> "$GITHUB_OUTPUT"
           echo "Bumping $CURRENT → $NEW"
 
-      - name: Bump version (npm version 同步 package.json + package-lock.json)
+      - name: Bump version (npm version 同步 package.json；pnpm 项目下 lockfile 不变)
         run: npm version "${{ steps.bump.outputs.new }}" --no-git-tag-version --allow-same-version
 
       - name: Commit bumped files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
+          # 只 add 真实变更的文件，避免 pathspec 不匹配的 fatal
+          # 兼容 pnpm (pnpm-lock.yaml) / npm (package-lock.json) / yarn (yarn.lock)
+          git add package.json
+          for lockfile in package-lock.json pnpm-lock.yaml yarn.lock; do
+            if [ -f "$lockfile" ] && ! git diff --quiet -- "$lockfile"; then
+              git add "$lockfile"
+            fi
+          done
           # 如果没变更（极罕见: 同一 patch 重复 push）则跳过 commit
           if git diff --cached --quiet; then
             echo "No version change to commit, skipping."
