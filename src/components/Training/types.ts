@@ -6,10 +6,12 @@
  * 不引第三方库，结构跟生成器输出严格对齐。
  */
 
-/** ACWR 状态机 (5 态) — 跟 training_load.py 的 status 字段对应 */
+/** ACWR 状态机 (5 态) — 跟 training_load.py 的 status 字段对应
+ * 'undertraining' (with -ing) 是历史数据里的旧拼写, 仅兼容; 新生成器统一发 'undertrained' */
 export type ACWRStatus =
   | 'sweet_spot' // 0.8-1.3 最佳提升
-  | 'undertrained' // < 0.8 训练不足
+  | 'undertrained' // < 0.8 训练不足 (新生成器拼写, 2026-09-30 起)
+  | 'undertraining' // < 0.8 训练不足 (旧拼写, 仅兼容历史 JSON)
   | 'caution' // 1.3-1.5 过度训练
   | 'high_risk' // > 1.5 高危伤病
   | 'unknown'; // 数据不足
@@ -193,13 +195,15 @@ export const HR_ZONE_META: Record<
   z5: { label: 'Z5 无氧', cn: 'Anaerobic', color: '#ef4444', hrr: '90%+' },
 };
 
-/** ACWR 状态徽章文案 (跟 getACWRZone + status 字段双验证) */
+/** ACWR 状态徽章文案 (跟 getACWRZone + status 字段双验证)
+ * 'undertraining' 兼容旧拼写, 与 'undertrained' 共享同一份 label */
 export const ACWR_STATUS_LABEL: Record<
   ACWRStatus,
   { text: string; color: string }
 > = {
   sweet_spot: { text: '✓ 最佳区间', color: '#22c55e' },
   undertrained: { text: '⚠ 训练不足', color: '#a855f7' },
+  undertraining: { text: '⚠ 训练不足', color: '#a855f7' }, // 兼容历史拼写
   caution: { text: '⚠ 注意减量', color: '#f97316' },
   high_risk: { text: '✕ 高危预警', color: '#3b82f6' },
   unknown: { text: '? 数据不足', color: '#9ca3af' },

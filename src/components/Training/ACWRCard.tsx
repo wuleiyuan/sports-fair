@@ -32,7 +32,10 @@ const ACWR_TOTAL_SPAN = 0.8 + 0.5 + 0.2 + 0.5; // 跟 AssessmentCard 保持一�
 const ACWRCard: React.FC<Props> = ({ acwr, generatedAt }) => {
   const hasData = acwr.ratio !== null && acwr.ratio > 0;
   const currentZone = getACWRZone(acwr.ratio);
-  const badge = ACWR_STATUS_LABEL[acwr.status];
+  // 加 fallback: 兼容旧数据 "undertraining" (with -ing), 优雅降级到 unknown
+  const badge =
+    ACWR_STATUS_LABEL[acwr.status as keyof typeof ACWR_STATUS_LABEL] ||
+    ACWR_STATUS_LABEL.unknown;
   const advice = acwrZoneAdvice(acwr.ratio);
 
   // 指针位置 (0-100%)

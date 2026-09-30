@@ -49,8 +49,13 @@ const tsb = load.tsb;
 const hasAcwr = acwr.ratio !== null && acwr.ratio > 0;
 const hasTsb = tsb.tsb !== null && !isNaN(tsb.tsb);
 const acwrZone = getACWRZone(acwr.ratio);
-const acwrBadge = ACWR_STATUS_LABEL[acwr.status];
-const tsbBadge = TSB_STATUS_LABEL[tsb.status];
+// 加 fallback: 数据可能含旧拼写 "undertraining" (with -ing), 优雅降级到 unknown
+const acwrBadge =
+  ACWR_STATUS_LABEL[acwr.status as keyof typeof ACWR_STATUS_LABEL] ||
+  ACWR_STATUS_LABEL.unknown;
+const tsbBadge =
+  TSB_STATUS_LABEL[tsb.status as keyof typeof TSB_STATUS_LABEL] ||
+  TSB_STATUS_LABEL.unknown;
 const acwrPercent = hasAcwr
   ? Math.min(100, ((acwr.ratio as number) / ACWR_DISPLAY_MAX) * 100)
   : 0;

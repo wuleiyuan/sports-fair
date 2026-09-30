@@ -140,10 +140,12 @@ def compute_trimp(hr_avg, duration_min, hr_rest, hr_max):
 
 
 def classify_acwr(ratio):
+    """ACWR 5 态分类 — 与 TS 端 ACWRStatus 严格对齐
+    * 不要拼错! 改了这里同步改 src/components/Training/types.ts"""
     if ratio is None:
         return "unknown"
     if ratio < ACWR_UNDER:
-        return "undertraining"
+        return "undertrained"  # 之前误拼为 "undertraining", TS 端无对应 label, 触发 .color undefined
     if ratio < ACWR_SWEET_HIGH:
         return "sweet_spot"
     if ratio < ACWR_CAUTION:
