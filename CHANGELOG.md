@@ -5,17 +5,21 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范。
 
-## [2.5.4] - 2026-09-30
+## [2.5.5] - 2026-09-30
 
 ### 新增
 
 - **SportCard 重构为 CSS 变量驱动** — 消除 `onMouseEnter`/`onMouseLeave` JS 副作用，inline style 只传 3 个 CSS 变量，hover 抬升 + sport-color 双层光晕 (`88fdcf2`)
 - **UI 不变量回归测试** — 新增 `scripts/ui-invariants.mjs` 守住 3 条契约：Icons.tsx 零硬编码颜色、至少 20 个图标、ShareModal 零 inline style。接入 `pnpm ui:check` (`88fdcf2`)
 - **自动版本号 bump workflow** — 新增 `.github/workflows/version-bump.yml`，每次 push master 自动 patch +1，写回 `package.json` + `package-lock.json`，打 tag 触发 `release.yml` 自动建 GitHub Release
+- **正式采用 C4 + OpenSSF Best Practices Badge 规范** — 新增 `docs/standards/` 收录 C4 协作合约全文 + OpenSSF 达标度评估 + AI 助手自约束政策 `AGENT-POLICY.md`
+- **项目级 standards 静态检查脚本** — `scripts/standards-check.mjs` 自动校验 11 条不变量（LICENSE / SECURITY / CONTRIBUTING / CHANGELOG↔package.json 对齐 / repository.url / `.gitignore` 屏蔽 `.env`+`data.db` / 无硬编码 secrets / ShareModal 零 inline style / Icons.tsx ≥20 图标 / docs/standards 完整）。接入 `pnpm standards:check` 与 `.github/workflows/standards.yml` CI gate
+- **CI gate `.github/workflows/standards.yml`** — 每次 push 与 PR 自动跑 `standards-check.mjs`，任何一条失败 → CI 红 → PR 不允许合并（满足 OpenSSF `static_analysis` + `static_analysis_fixed` + `static_analysis_often` 三条）
 
 ### 修复
 
 - **`package.json` repository.url 错误指向上游** — 从 `yihong0618/running_page` 改为 `wuleiyuan/sports-fair`，避免 npm install 错误提示与 GitHub 链接错位
+- **`package.json` version 与 CHANGELOG 漂移** — 之前 `[2.5.4]` 段存在但 `package.json` 还是 `2.5.3`，被 `standards-check.mjs` 自动捕获。本次合并到 `2.5.5` 一次到位
 
 ### 维护
 

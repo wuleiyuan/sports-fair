@@ -2,6 +2,10 @@
 
 Thank you for your interest in contributing to Sports Fair! 🎉
 
+> 📋 **Before you start**, please read our development standards:
+> [C4](docs/standards/C4.md) · [OpenSSF Best Practices Badge](docs/standards/OpenSSF-Best-Practices.md).
+> These are enforced automatically by `.github/workflows/standards.yml`.
+
 ## Quick Start
 
 1. **Fork** the repository on GitHub

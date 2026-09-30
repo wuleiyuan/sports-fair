@@ -203,6 +203,16 @@ pnpm develop
 - **有问题 / 新想法？** 开 [Discussion](https://github.com/wuleiyuan/sports-fair/discussions) 或 [Issue](https://github.com/wuleiyuan/sports-fair/issues)。
 - **行为准则** —— 见 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
 
+## 📋 开发规范
+
+Sports Fair 自 v2.5.5 起正式采用以下开源规范作为开发基线：
+
+- **[C4（Collective Code Construction Contract）](docs/standards/C4.md)** — 协作流程：fork + PR + 短小补丁 + Trunk-based + 维护者中立
+- **[OpenSSF Best Practices Badge](docs/standards/OpenSSF-Best-Practices.md)** — 安全 + 质量基线；当前目标 🥉 **Passing** 等级
+- **[AGENT-POLICY](docs/standards/AGENT-POLICY.md)** — AI 开发助手在本仓库的自约束守则
+
+每次 push 与 PR 自动跑 `standards-check.mjs`（11 条不变量），任何一条失败 → CI 红 → PR 不允许合并。
+
 ---
 
 ## 上游项目
