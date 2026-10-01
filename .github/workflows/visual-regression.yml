@@ -1,0 +1,132 @@
+name: Visual Regression
+
+# 触发条件：
+# - PR：每次 push 跑一次（拿 base 分支 baseline 对比）
+# - master push：每次合并后跑一次（防 master 退化）
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+# 全局环境变量：与项目其它 workflow 保持一致
+# - 2026-06-16 后 GitHub 默认切 Node24，提前开启强制 JS actions 走 Node24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+# 同一 PR / commit 上多次 push 时，自动取消旧 run
+concurrency:
+  group: visual-regression-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual:
+    name: Playwright Visual Regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    permissions:
+      # PR 自动 comment 需要
+      pull-requests: write
+      # 读 GITHUB_TOKEN 默认权限即可，无写仓库需求
+      contents: read
+
+    steps:
+      # 1) 拉代码：fetch-depth:0 拿全 git 历史
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2) pnpm + Node 20 (用户指定) + pnpm 缓存
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      # 3) 装依赖：与本地约定一致——unset NODE_ENV 避免 production 模式跳过 devDeps
+      - name: Install dependencies
+        run: unset NODE_ENV && pnpm install --frozen-lockfile
+
+      # 4) 装 Playwright 浏览器（带系统依赖，仅 chromium）
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      # 5) 构建（Playwright 用 vite preview 启动产物）
+      - name: Build
+        run: pnpm run build
+
+      # 6) 跑视觉回归对比 baseline
+      - name: Visual regression test
+        id: visual-test
+        run: pnpm run visual:test
+        env:
+          CI: 'true'
+
+      # 7) 失败时上传产物（actual / diff / test-results）
+      - name: Upload visual diff artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-${{ github.event.pull_request.number || github.sha }}
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            tests/visual/**/test-results/**
+            tests/visual/**/*-actual.png
+            tests/visual/**/*-diff.png
+
+      # 8) PR 上自动 comment 失败原因
+      - name: Comment on PR with failure summary
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // 收集 diff PNG 列表
+            const glob = (dir, pattern) => {
+              const out = [];
+              try {
+                for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                  const full = path.join(dir, entry.name);
+                  if (entry.isDirectory()) out.push(...glob(full, pattern));
+                  else if (pattern.test(entry.name)) out.push(full);
+                }
+              } catch (e) { /* dir may not exist */ }
+              return out;
+            };
+
+            const diffs = glob('tests/visual', /-diff\.png$/);
+            const actuals = glob('tests/visual', /-actual\.png$/);
+            const reportHtml = fs.existsSync('playwright-report/index.html');
+
+            const lines = [
+              '## ❌ Visual regression failed',
+              '',
+              'Playwright 视觉回归检测到 UI 差异。可能是基线漂移或真实回归：',
+              '',
+              `- Diff 图片: **${diffs.length}** 张`,
+              `- Actual 图片: **${actuals.length}** 张`,
+              `- HTML 报告: ${reportHtml ? '✅ 已上传到 artifacts' : '❌ 未生成'}`,
+              '',
+              '### 排查步骤',
+              '1. 下载下方 `visual-regression-*` artifact 看 diff/actual 图',
+              '2. 若变更符合预期，本地跑 `pnpm run visual:update` 更新 baseline 再 push',
+              '3. 若不符合预期，修复 UI 后重 push',
+              '',
+              '> 自动 comment · 由 `.github/workflows/visual-regression.yml` 生成',
+            ];
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: lines.join('\n'),
+            });
