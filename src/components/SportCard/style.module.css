@@ -5,6 +5,7 @@
  *   · 主指标 sport-color 大字 + 副指标横排小字 + 30 天 sparkline
  *   · 文字色用 CSS 变量, 自动适配亮/暗主题
  *   · 缓动 cubic-bezier(0.16, 1, 0.3, 1) — iOS 系统级
+ *   · sport-aware banner: 按 sport key 自动切专属 metric pill
  */
 
 .card {
@@ -16,7 +17,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-activity-card, #ffffff);
+  background: var(--color-activity-card);
   border: 1px solid var(--color-activity-card-border, rgba(60, 60, 67, 0.12));
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.04),
@@ -37,7 +38,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--sport-color, #34c759);
+  background: var(--sport-color, var(--k-sport-run));
   opacity: 0.95;
   transition:
     opacity 280ms ease,
@@ -81,7 +82,7 @@
   transition:
     opacity 280ms ease,
     height 280ms ease;
-  background: var(--sport-color, #34c759);
+  background: var(--sport-color, var(--k-sport-run));
 }
 
 .cardActive:hover .accent {
@@ -110,6 +111,11 @@
   font-size: 1.5rem;
   line-height: 1;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sport-color, var(--k-sport-run));
+  transition: color 200ms ease;
 }
 
 .label {
@@ -120,7 +126,26 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 200ms ease;
-  color: var(--color-text-primary, #000000);
+  color: var(--sport-color, var(--k-sport-run));
+}
+
+/* Locked 态弱化所有 sport-color 元素 (CSS 级联覆盖) */
+.cardLocked .emoji,
+.cardLocked .label,
+.cardLocked .primaryValue,
+.cardLocked .accent,
+.cardLocked .badge,
+.cardLocked .sportBanner {
+  color: var(--color-secondary, rgba(60, 60, 67, 0.45));
+}
+
+.cardLocked .accent {
+  background: transparent;
+}
+
+.cardLocked .badge {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: transparent;
 }
 
 .badge {
@@ -134,14 +159,52 @@
   font-variant-numeric: tabular-nums;
   display: inline-flex;
   align-items: center;
-  background: var(--color-run-row-hover-background, rgba(0, 0, 0, 0.04));
-  color: var(--color-text-primary, #000000);
+  background: var(--sport-color-bg, rgba(0, 0, 0, 0.04));
+  color: var(--sport-color, var(--k-text-primary));
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
 }
 
 .badgeLocked {
   background: rgba(0, 0, 0, 0.04);
   color: rgba(60, 60, 67, 0.45);
   border-color: transparent;
+}
+
+/* ===== Sport-aware banner (按 sport key 自动切专属 metric) ===== */
+.sportBanner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  margin-bottom: 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  background: var(--sport-color-bg, rgba(0, 0, 0, 0.04));
+  color: var(--sport-color, var(--k-sport-run));
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent;
+  width: fit-content;
+  max-width: 100%;
+  transition:
+    color 200ms ease,
+    background-color 200ms ease;
+}
+
+.sportBannerEmoji {
+  font-size: 0.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sportBannerText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ===== Metrics ===== */
@@ -165,14 +228,15 @@
   letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
   line-height: 1.05;
-  color: var(--sport-color, #34c759);
+  color: var(--sport-color, var(--k-sport-run));
+  transition: color 200ms ease;
 }
 
 .primaryUnit {
   font-size: 0.875rem;
   font-weight: 600;
   opacity: 0.65;
-  color: var(--color-text-primary, #000000);
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
 }
 
 .secondary {
@@ -197,7 +261,7 @@
 .secondaryValue {
   font-variant-numeric: tabular-nums;
   font-weight: 500;
-  color: var(--color-text-primary, #000000);
+  color: var(--color-text-primary);
 }
 
 /* ===== Sparkline ===== */
@@ -249,4 +313,24 @@
   border-radius: 50%;
   background: currentColor;
   opacity: 0.6;
+}
+
+/* ===== Intersection observer 动画状态 (CSS-only, 不需 inline style) ===== */
+.cardHidden {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Locked badge 内联 SVG 排版修正 (替代 inline style) */
+.badgeLocked svg {
+  margin-right: 4px;
+  vertical-align: middle;
 }

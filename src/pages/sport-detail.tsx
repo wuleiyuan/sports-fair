@@ -1,23 +1,26 @@
-// 单运动类型详情页 - 中等改造第四阶段
+// 单运动类型详情页 - 中等改造第四阶段 + Sport-aware 头部
 // 时间范围筛选 + 趋势图 + 完整活动列表（心率/海拔/源）
+// 2026-09-28: 重构 sport-aware header（按 sport.key 切换 headline 主指标）+ 0 inline styles
 
-import { useMemo, useState } from 'react';
+import { CSSProperties, FC, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import SportIcon from '@/components/SportIcon';
 import {
-  IconMountain,
-  IconSportRun,
+  IconBolt,
   IconClock,
-  IconChart,
+  IconGauge,
+  IconHeart,
+  IconMountain,
+  IconRuler,
+  IconSportRide,
+  IconSportRun,
+  IconSportStrength,
   IconCalendar,
-  IconFloors,
-  IconArrowUp,
 } from '@/components/Icons';
 import {
   SPORT_BY_KEY,
-  SPORT_TYPES,
   normalizeSportType,
 } from '@/utils/sportTypes';
 import { convertMovingTime2Sec } from '@/utils/utils';
@@ -25,15 +28,14 @@ import activities from '@/static/activities.json';
 import { Activity } from '@/utils/utils';
 import {
   ResponsiveContainer,
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
-  AreaChart,
-  Area,
 } from 'recharts';
+import styles from './sport-detail.module.css';
 
 type TimeRange = '7' | '30' | '90' | '365' | 'all';
 
@@ -46,6 +48,20 @@ const TIME_RANGES: { key: TimeRange; label: string; days: number | null }[] = [
 ];
 
 const PAGE_SIZE = 20;
+
+/** Sport-aware 头部主指标 — 不同运动类型切换 headline */
+type IconComponent = FC<{
+  size?: number;
+  color?: string;
+  className?: string;
+}>;
+interface HeadlineMetric {
+  Icon: IconComponent;
+  label: string;
+  value: string;
+  unit: string;
+  sub?: string;
+}
 
 const SportDetail = () => {
   const { key } = useParams<{ key: string }>();
@@ -80,10 +96,20 @@ const SportDetail = () => {
     });
   }, [allSportActivities, range]);
 
-  // 统计数据（基于筛选后的）
+  // 通用统计
   const stats = useMemo(() => {
     if (sportActivities.length === 0) {
-      return { count: 0, totalDist: 0, totalTime: 0, avgDist: 0, avgPace: '' };
+      return {
+        count: 0,
+        totalDist: 0,
+        totalTime: 0,
+        avgDist: 0,
+        avgPace: '',
+        avgHR: null,
+        totalElev: 0,
+        avgSpeedKmh: 0,
+        avgGrade: 0,
+      };
     }
     const totalDist = sportActivities.reduce(
       (s: number, a: Activity) => s + (a.distance || 0),
@@ -100,7 +126,6 @@ const SportDetail = () => {
     const avgPace =
       avgDistKm > 0 ? `${(avgTimeMin / avgDistKm).toFixed(2)} /km` : '—';
 
-    // 最高心率
     const validHR = sportActivities
       .map((a) => a.average_heartrate)
       .filter((hr): hr is number => typeof hr === 'number' && hr > 0);
@@ -109,11 +134,23 @@ const SportDetail = () => {
         ? Math.round(validHR.reduce((s, v) => s + v, 0) / validHR.length)
         : null;
 
-    // 总海拔
     const totalElev = sportActivities.reduce(
       (s: number, a: Activity) => s + ((a.elevation_gain as number) || 0),
       0
     );
+
+    // 平均速度（m/s → km/h），用于骑行头部
+    const validSpeed = sportActivities
+      .map((a) => a.average_speed)
+      .filter((v): v is number => typeof v === 'number' && v > 0);
+    const avgSpeedKmh =
+      validSpeed.length > 0
+        ? (validSpeed.reduce((s, v) => s + v, 0) / validSpeed.length) * 3.6
+        : 0;
+
+    // 平均坡度 (%) — elevation_gain / distance * 100，仅 hiking 显示
+    const avgGrade =
+      totalDist > 0 ? ((totalElev / sportActivities.length) / totalDist) * 100 : 0;
 
     return {
       count: sportActivities.length,
@@ -123,113 +160,208 @@ const SportDetail = () => {
       avgPace,
       avgHR,
       totalElev,
+      avgSpeedKmh,
+      avgGrade,
     };
   }, [sportActivities]);
 
-  // 头部 sport-aware 数据 banner（按 sport.priorityMetrics 切换）
-  // 用 SVG 矢量图标替代 emoji（ui-ux-pro-max 反模式）
-  const headerBanner = useMemo(() => {
-    if (sportActivities.length === 0 || !sport) return null;
+  // ===== Sport-aware 头部主指标（按 sport.key 切换） =====
+  const headline = useMemo<HeadlineMetric | null>(() => {
+    if (!sport || sportActivities.length === 0) return null;
+
+    switch (sport.key) {
+      case 'Run': {
+        // 最佳配速（最快 min/km）
+        const paces = sportActivities
+          .map((a) => {
+            const distKm = (a.distance || 0) / 1000;
+            return distKm > 0
+              ? convertMovingTime2Sec((a.moving_time as string) || '0') /
+                  60 /
+                  distKm
+              : 0;
+          })
+          .filter((p) => p > 0);
+        if (paces.length === 0) return null;
+        const best = Math.min(...paces);
+        const m = Math.floor(best);
+        const s = Math.round(best - m * 60);
+        const avgDistKm = (stats.totalDist / 1000).toFixed(1);
+        return {
+          Icon: IconSportRun,
+          label: '最佳配速',
+          value: `${m}:${s.toString().padStart(2, '0')}`,
+          unit: 'min/km',
+          sub: `共 ${sportActivities.length} 次 · 累计 ${avgDistKm} km`,
+        };
+      }
+
+      case 'Ride': {
+        // 平均速度（km/h）— Activity 没有 watt 数据，速度即骑行核心指标
+        if (!stats.avgSpeedKmh) return null;
+        return {
+          Icon: IconSportRide,
+          label: '平均速度',
+          value: stats.avgSpeedKmh.toFixed(1),
+          unit: 'km/h',
+          sub: `${sportActivities.length} 次骑行 · 平均配速 ${
+            stats.avgPace || '—'
+          }`,
+        };
+      }
+
+      case 'Hiking': {
+        // 累计爬升（米）
+        if (!stats.totalElev) return null;
+        const avgElev = Math.round(stats.totalElev / sportActivities.length);
+        const maxElev = sportActivities.reduce((m: number, a: Activity) => {
+          const e = (a.elevation_gain as number) || 0;
+          return e > m ? e : m;
+        }, 0);
+        return {
+          Icon: IconMountain,
+          label: '累计爬升',
+          value: Math.round(stats.totalElev).toLocaleString(),
+          unit: 'm',
+          sub: `最高 ${maxElev} m · 平均 ${avgElev} m/次`,
+        };
+      }
+
+      case 'Strength':
+      case 'Workout': {
+        // 总训练时长
+        const totalMin = Math.round(stats.totalTime / 60);
+        const h = Math.floor(totalMin / 60);
+        const m = totalMin % 60;
+        return {
+          Icon: IconSportStrength,
+          label: '总训练时长',
+          value: h > 0 ? `${h}h ${m}m` : `${m}m`,
+          unit: '',
+          sub: stats.avgHR ? `平均心率 ${stats.avgHR} bpm` : `${sportActivities.length} 次训练`,
+        };
+      }
+
+      default: {
+        // 兜底：用 priorityMetrics 第一项
+        const primary = sport.priorityMetrics[0];
+        if (primary === 'pace' && stats.avgPace) {
+          return {
+            Icon: IconSportRun,
+            label: '平均配速',
+            value: stats.avgPace.split(' ')[0],
+            unit: '/km',
+            sub: `${sportActivities.length} 次`,
+          };
+        }
+        if (primary === 'elevation' && stats.totalElev) {
+          return {
+            Icon: IconMountain,
+            label: '总海拔',
+            value: Math.round(stats.totalElev).toLocaleString(),
+            unit: 'm',
+            sub: `${sportActivities.length} 次`,
+          };
+        }
+        if (primary === 'duration') {
+          const totalMin = Math.round(stats.totalTime / 60);
+          const h = Math.floor(totalMin / 60);
+          const m = totalMin % 60;
+          return {
+            Icon: IconClock,
+            label: '总时长',
+            value: h > 0 ? `${h}h ${m}m` : `${m}m`,
+            unit: '',
+            sub: `${sportActivities.length} 次`,
+          };
+        }
+        // 距离兜底
+        return {
+          Icon: IconRuler,
+          label: '总距离',
+          value: (stats.totalDist / 1000).toFixed(1),
+          unit: 'km',
+          sub: `${sportActivities.length} 次`,
+        };
+      }
+    }
+  }, [sport, sportActivities, stats]);
+
+  // ===== Sport-aware 副指标（3 个 pill） =====
+  const submetrics = useMemo(() => {
+    if (!sport || sportActivities.length === 0) return [];
     const items: {
-      Icon: React.FC<{ size?: number; color?: string }>;
+      Icon: IconComponent;
       label: string;
       value: string;
     }[] = [];
 
-    if (sport.priorityMetrics.includes('elevation') && stats.totalElev) {
-      const totalElev = stats.totalElev ?? 0;
-      const avgElev = Math.round(totalElev / sportActivities.length);
-      const maxElev = sportActivities.reduce((m: number, a: Activity) => {
-        const e = (a.elevation_gain as number) || 0;
-        return e > m ? e : m;
-      }, 0);
-      items.push({
-        Icon: IconMountain,
-        label: '平均海拔',
-        value: `${avgElev} m`,
-      });
-      items.push({
-        Icon: IconArrowUp,
-        label: '最高爬升',
-        value: `${Math.round(maxElev)} m`,
-      });
-    }
-    if (sport.priorityMetrics.includes('pace')) {
-      const paces = sportActivities
-        .map((a) => {
-          const distKm = (a.distance || 0) / 1000;
-          return distKm > 0
-            ? convertMovingTime2Sec((a.moving_time as string) || '0') /
-                60 /
-                distKm
-            : 0;
-        })
-        .filter((p) => p > 0);
-      if (paces.length > 0) {
-        const best = Math.min(...paces);
-        const m = Math.floor(best);
-        const s = Math.round(best - m * 60);
-        items.push({
-          Icon: IconSportRun,
-          label: '最佳配速',
-          value: `${m}:${s.toString().padStart(2, '0')} /km`,
-        });
+    const push = (
+      Icon: IconComponent,
+      label: string,
+      value: string
+    ) => {
+      if (value && value !== '—') items.push({ Icon, label, value });
+    };
+
+    if (sport.key === 'Run') {
+      push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
+      push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
+      push(
+        IconClock,
+        '总时长',
+        formatTimeShort(stats.totalTime)
+      );
+    } else if (sport.key === 'Ride') {
+      push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
+      push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
+      push(
+        IconClock,
+        '总时长',
+        formatTimeShort(stats.totalTime)
+      );
+    } else if (sport.key === 'Hiking') {
+      push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
+      push(
+        IconGauge,
+        '平均坡度',
+        stats.avgGrade > 0 ? `${stats.avgGrade.toFixed(1)}%` : ''
+      );
+      push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
+    } else if (sport.key === 'Strength' || sport.key === 'Workout') {
+      push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
+      push(IconBolt, '训练次数', `${sportActivities.length} 次`);
+      const lastDate = sportActivities[0]?.start_date_local?.slice(0, 10) || '';
+      push(IconCalendar, '最近一次', lastDate);
+    } else {
+      // 通用兜底 — 走 priorityMetrics
+      if (stats.avgHR) push(IconHeart, '平均心率', `${stats.avgHR} bpm`);
+      if (sport.priorityMetrics.includes('distance')) {
+        push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
+      }
+      if (sport.priorityMetrics.includes('duration')) {
+        push(IconClock, '总时长', formatTimeShort(stats.totalTime));
+      }
+      if (sport.priorityMetrics.includes('elevation') && stats.totalElev) {
+        push(IconMountain, '总海拔', `${Math.round(stats.totalElev)} m`);
       }
     }
-    if (sport.priorityMetrics.includes('duration')) {
-      const avgSec = stats.totalTime / sportActivities.length;
-      const h = Math.floor(avgSec / 3600);
-      const m = Math.floor((avgSec % 3600) / 60);
-      items.push({
-        Icon: IconClock,
-        label: '平均时长',
-        value: h > 0 ? `${h}h ${m}m` : `${m}m`,
-      });
-    }
-    if (
-      sport.priorityMetrics.includes('reps') &&
-      !sport.priorityMetrics.includes('distance')
-    ) {
-      const totalReps = sportActivities.reduce(
-        (s: number, a: Activity) =>
-          s + ((a as Activity & { reps?: number }).reps ?? 0),
-        0
-      );
-      const avg = Math.round(totalReps / sportActivities.length);
-      items.push({
-        Icon: IconChart,
-        label: `平均${sport.unitLabel || '次数'}`,
-        value: `${avg}`,
-      });
-    }
-    if (
-      sport.priorityMetrics.includes('floors') &&
-      !sport.priorityMetrics.includes('elevation')
-    ) {
-      const totalFloors = sportActivities.reduce(
-        (s: number, a: Activity) =>
-          s + ((a as Activity & { floors?: number }).floors ?? 0),
-        0
-      );
-      const avg = Math.round(totalFloors / sportActivities.length);
-      items.push({
-        Icon: IconFloors,
-        label: `平均楼层`,
-        value: `${avg}`,
-      });
-    }
-    if (items.length < 3 && sportActivities[0]) {
-      const d = sportActivities[0];
-      const dateStr = (d.start_date_local || d.start_date || '').slice(0, 10);
-      items.push({ Icon: IconCalendar, label: '最近一次', value: dateStr });
-    }
-    return items.length > 0 ? items : null;
-  }, [sportActivities, stats, sport]);
 
-  // 趋势图数据：按月聚合（如果全部跨度大，按年聚合）
+    // 不足 3 个时补 "最近一次"
+    if (items.length < 3 && sportActivities[0]) {
+      const dateStr = sportActivities[0].start_date_local?.slice(0, 10) || '';
+      const hasDate = items.some((it) => it.label === '最近一次');
+      if (!hasDate && dateStr) {
+        push(IconCalendar, '最近一次', dateStr);
+      }
+    }
+
+    return items.slice(0, 4);
+  }, [sport, sportActivities, stats]);
+
+  // 趋势图数据
   const trendData = useMemo(() => {
     if (sportActivities.length === 0) return [];
-    // 决定粒度
     const first = sportActivities[sportActivities.length - 1];
     const last = sportActivities[0];
     const days =
@@ -247,10 +379,10 @@ const SportDetail = () => {
       const period = byMonth ? dateStr.slice(0, 7) : dateStr;
       if (!buckets[period])
         buckets[period] = { period, distance: 0, count: 0, time: 0 };
-      buckets[period].distance += (a.distance || 0) / 1000; // km
+      buckets[period].distance += (a.distance || 0) / 1000;
       buckets[period].count += 1;
       buckets[period].time +=
-        convertMovingTime2Sec((a.moving_time as string) || '0') / 60; // min
+        convertMovingTime2Sec((a.moving_time as string) || '0') / 60;
     });
     return Object.values(buckets).sort((a, b) =>
       a.period.localeCompare(b.period)
@@ -261,14 +393,9 @@ const SportDetail = () => {
     return (
       <Layout>
         <div data-kinetic className="k-page">
-          <div className="mx-auto max-w-2xl px-6 py-16 text-center">
-            <h1
-              className="k-page-title"
-              style={{ fontSize: 28, marginBottom: 16 }}
-            >
-              未找到运动类型
-            </h1>
-            <Link to="/sports" style={{ color: '#FF8800' }}>
+          <div className={styles.notFoundWrap}>
+            <h1 className={styles.notFoundTitle}>未找到运动类型</h1>
+            <Link to="/sports" className={styles.notFoundLink}>
               ← 回到运动总览
             </Link>
           </div>
@@ -277,6 +404,13 @@ const SportDetail = () => {
     );
   }
 
+  // 注入 sport-color CSS 变量（hex8 透明度变体）
+  const sportStyle = {
+    '--sport-color': sport.color,
+    '--sport-color-soft': `${sport.color}0d`,
+    '--sport-color-border': `${sport.color}33`,
+  } as CSSProperties;
+
   return (
     <Layout>
       <div data-kinetic>
@@ -284,70 +418,71 @@ const SportDetail = () => {
           <title>{sport.label} · 运动详情</title>
         </Helmet>
 
-        <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-16">
+        <div className={styles.page}>
           {/* 面包屑 */}
-          <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
-            <Link to="/sports" className="transition-colors hover:text-white">
+          <div className={styles.crumbs}>
+            <Link to="/sports" className={styles.crumbLink}>
               ← 运动总览
             </Link>
             <span>·</span>
             <span>{sport.label}</span>
           </div>
 
-          {/* 头部：SVG sport icon + 标题 + 描述 */}
-          <header className="mb-8 flex items-start gap-4">
-            <div
-              className="flex items-center justify-center rounded-2xl p-4"
-              style={{
-                backgroundColor: sport.colorBg,
-                border: `1px solid ${sport.color}33`,
-                color: sport.color,
-              }}
-            >
+          {/* Hero — Sport Icon + 标题 + 描述 */}
+          <header className={styles.hero} style={sportStyle}>
+            <div className={styles.heroIconBg}>
               <SportIcon iconName={sport.iconName} size={40} />
             </div>
-            <div>
-              <h1 className="mb-1 text-3xl font-semibold text-white">
-                {sport.label}
-              </h1>
-              <p className="text-sm text-gray-400">{sport.desc}</p>
+            <div className={styles.heroBody}>
+              <h1 className={styles.heroTitle}>{sport.label}</h1>
+              <p className={styles.heroDesc}>{sport.desc}</p>
             </div>
           </header>
 
-          {/* Sport-aware 数据 banner - 按 priorityMetrics 切专属指标 */}
-          {headerBanner && (
-            <div
-              className="mb-6 flex flex-wrap gap-2 rounded-2xl p-3"
-              style={{
-                backgroundColor: `${sport.color}0d`,
-                border: `1px solid ${sport.color}22`,
-              }}
-            >
-              {headerBanner.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 rounded-xl px-3 py-2"
-                  style={{
-                    backgroundColor: `${sport.color}1a`,
-                    border: `1px solid ${sport.color}33`,
-                  }}
-                >
-                  <item.Icon size={16} color={sport.color} />
-                  <span className="text-xs text-gray-400">{item.label}</span>
-                  <span
-                    className="text-sm font-semibold tabular-nums"
-                    style={{ color: sport.color }}
-                  >
-                    {item.value}
+          {/* Sport-aware 数据 banner — headline + 副指标 */}
+          {headline && (
+            <div className={styles.banner} style={sportStyle}>
+              <div className={styles.headline}>
+                <span className={styles.headlineLabel}>
+                  <headline.Icon size={14} color={sport.color} />
+                  {headline.label}
+                </span>
+                <div>
+                  <span className={styles.headlineValue}>
+                    {headline.value}
                   </span>
+                  {headline.unit && (
+                    <span className={styles.headlineUnit}>{headline.unit}</span>
+                  )}
                 </div>
-              ))}
+                {headline.sub && (
+                  <span className={styles.headlineSub}>{headline.sub}</span>
+                )}
+              </div>
+
+              <div className={styles.submetrics}>
+                {submetrics.map((item, i) => (
+                  <div key={i} className={styles.submetric}>
+                    <span className={styles.submetricIcon}>
+                      <item.Icon size={14} color={sport.color} />
+                    </span>
+                    <div className={styles.submetricText}>
+                      <span className={styles.submetricLabel}>
+                        {item.label}
+                      </span>
+                      <span className={styles.submetricValue}>
+                        {item.value}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
           {/* 时间范围选择器 */}
-          <div className="mb-6 flex flex-wrap items-center gap-2">
-            <span className="mr-1 text-xs text-gray-500">时间范围：</span>
+          <div className={styles.rangeRow}>
+            <span className={styles.rangeLabel}>时间范围：</span>
             {TIME_RANGES.map((r) => (
               <button
                 key={r.key}
@@ -355,55 +490,42 @@ const SportDetail = () => {
                   setRange(r.key);
                   setPageSize(PAGE_SIZE);
                 }}
-                className={`rounded-full px-3 py-1 text-xs transition-all ${
-                  range === r.key
-                    ? 'font-medium'
-                    : 'text-gray-400 hover:text-white'
+                className={`${styles.rangeButton} ${
+                  range === r.key ? styles.rangeButtonActive : ''
                 }`}
-                style={
-                  range === r.key
-                    ? {
-                        backgroundColor: `${sport.color}22`,
-                        color: sport.color,
-                        border: `1px solid ${sport.color}66`,
-                      }
-                    : {
-                        backgroundColor: 'transparent',
-                        border: '1px solid rgba(148, 163, 184, 0.2)',
-                      }
-                }
+                style={range === r.key ? sportStyle : undefined}
               >
                 {r.label}
               </button>
             ))}
           </div>
 
-          {/* 统计卡片行 - 按 priorityMetrics 显示（运动感知）*/}
-          <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {/* 统计卡片行 — 按 priorityMetrics 显示 */}
+          <div className={styles.statsGrid} style={sportStyle}>
             <StatBox
               label="总次数"
               value={`${stats.count} 次`}
-              color={sport.color}
+              style={sportStyle}
             />
             {sport.priorityMetrics.includes('distance') && (
               <StatBox
                 label="总距离"
                 value={`${(stats.totalDist / 1000).toFixed(1)} km`}
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             {sport.priorityMetrics.includes('duration') && (
               <StatBox
                 label="总时长"
                 value={formatTimeLong(stats.totalTime)}
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             {sport.priorityMetrics.includes('pace') && (
               <StatBox
                 label="平均配速"
                 value={stats.avgPace || '—'}
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             {sport.priorityMetrics.includes('elevation') && (
@@ -412,40 +534,34 @@ const SportDetail = () => {
                 value={
                   stats.totalElev ? `${Math.round(stats.totalElev)} m` : '—'
                 }
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             {sport.priorityMetrics.includes('floors') && (
               <StatBox
                 label="总楼层"
                 value={stats.totalReps ? `${stats.totalReps} 层` : '—'}
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             {sport.priorityMetrics.includes('reps') && (
               <StatBox
                 label={`总${sport.unitLabel || '次数'}`}
                 value={stats.totalReps ? `${stats.totalReps}` : '—'}
-                color={sport.color}
+                style={sportStyle}
               />
             )}
             <StatBox
               label="平均心率"
               value={stats.avgHR ? `${stats.avgHR} bpm` : '—'}
-              color={sport.color}
+              style={sportStyle}
             />
           </div>
 
           {/* 趋势图 */}
           {trendData.length > 0 && (
-            <div
-              className="mb-8 rounded-2xl p-5"
-              style={{
-                backgroundColor: `${sport.color}0a`,
-                border: `1px solid ${sport.color}22`,
-              }}
-            >
-              <h2 className="mb-3 text-lg font-medium text-white">
+            <div className={styles.chartCard} style={sportStyle}>
+              <h2 className={styles.chartTitle}>
                 {sport.priorityMetrics.includes('elevation') && stats.totalElev
                   ? '海拔趋势'
                   : sport.priorityMetrics.includes('reps') &&
@@ -453,7 +569,7 @@ const SportDetail = () => {
                     ? `${sport.unitLabel || '次数'}趋势`
                     : '距离趋势'}
               </h2>
-              <div style={{ width: '100%', height: 200 }}>
+              <div className={styles.chartContainer}>
                 <ResponsiveContainer>
                   <AreaChart
                     data={trendData}
@@ -487,7 +603,10 @@ const SportDetail = () => {
                       dataKey="period"
                       tick={{ fill: '#98989d', fontSize: 11 }}
                     />
-                    <YAxis tick={{ fill: '#98989d', fontSize: 11 }} unit="km" />
+                    <YAxis
+                      tick={{ fill: '#98989d', fontSize: 11 }}
+                      unit="km"
+                    />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#ffffff',
@@ -513,40 +632,50 @@ const SportDetail = () => {
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
-              <p className="mt-2 text-center text-xs text-gray-500">
+              <p className={styles.chartFooter}>
                 共 {trendData.length} 个时段 · {stats.count} 次活动
               </p>
             </div>
           )}
 
           {/* 活动列表 */}
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-medium text-white">活动记录</h2>
-            <span className="text-xs text-gray-500">
+          <div className={styles.tableHeader}>
+            <h2 className={styles.tableTitle}>活动记录</h2>
+            <span className={styles.tableCount}>
               {sportActivities.length} 条
             </span>
           </div>
           {sportActivities.length === 0 ? (
-            <div className="py-12 text-center text-gray-500">
+            <div className={styles.tableEmpty}>
               还没有 {sport.label} 活动
-              <div className="mt-2 text-xs text-gray-600">
+              <div className={styles.tableEmptyHint}>
                 试试切换时间范围到「全部」或去 Keep/Apple Health 同步
               </div>
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-800 text-left text-gray-400">
-                      <th className="px-2 py-3">日期</th>
-                      <th className="px-2 py-3">名称</th>
-                      <th className="px-2 py-3 text-right">距离</th>
-                      <th className="px-2 py-3 text-right">时长</th>
-                      <th className="px-2 py-3 text-right">配速</th>
-                      <th className="px-2 py-3 text-right">心率</th>
-                      <th className="px-2 py-3 text-right">海拔</th>
-                      <th className="px-2 py-3">数据源</th>
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead className={styles.tableThead}>
+                    <tr>
+                      <th className={styles.tableTh}>日期</th>
+                      <th className={styles.tableTh}>名称</th>
+                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                        距离
+                      </th>
+                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                        时长
+                      </th>
+                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                        配速
+                      </th>
+                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                        心率
+                      </th>
+                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                        海拔
+                      </th>
+                      <th className={styles.tableTh}>数据源</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -569,43 +698,45 @@ const SportDetail = () => {
                       ).slice(0, 10);
                       const source = detectSource(act.name);
                       return (
-                        <tr
-                          key={act.run_id}
-                          className="border-b border-gray-800/50 transition-colors hover:bg-gray-800/30"
-                        >
-                          <td className="whitespace-nowrap px-2 py-2.5 text-gray-300">
+                        <tr key={act.run_id} className={styles.tableRow}>
+                          <td
+                            className={`${styles.tableTd} ${styles.tableTdMuted}`}
+                          >
                             {dateStr}
                           </td>
                           <td
-                            className="max-w-xs truncate px-2 py-2.5 text-gray-300"
+                            className={`${styles.tableTd} ${styles.tableTdName}`}
                             title={act.name}
                           >
                             {act.name}
                           </td>
-                          <td
-                            className="px-2 py-2.5 text-right tabular-nums"
-                            style={{ color: sport.color }}
-                          >
-                            {distKm}{' '}
-                            <span className="text-xs text-gray-500">km</span>
+                          <td className={styles.tableTdColored}>
+                            {distKm}
+                            <span className={styles.tableUnit}>km</span>
                           </td>
-                          <td className="px-2 py-2.5 text-right tabular-nums text-gray-300">
+                          <td
+                            className={`${styles.tableTd} ${styles.tableTdRight}`}
+                          >
                             {timeMin < 60
                               ? `${timeMin}m`
                               : `${Math.floor(timeMin / 60)}h ${timeMin % 60}m`}
                           </td>
-                          <td className="px-2 py-2.5 text-right tabular-nums text-gray-400">
+                          <td
+                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                          >
                             {pace}
                           </td>
-                          <td className="px-2 py-2.5 text-right tabular-nums text-gray-400">
+                          <td
+                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                          >
                             {hr ? `${hr}` : '—'}
                           </td>
-                          <td className="px-2 py-2.5 text-right tabular-nums text-gray-400">
+                          <td
+                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                          >
                             {elev != null ? `${Math.round(elev)}m` : '—'}
                           </td>
-                          <td className="whitespace-nowrap px-2 py-2.5 text-xs text-gray-500">
-                            {source}
-                          </td>
+                          <td className={styles.tableSource}>{source}</td>
                         </tr>
                       );
                     })}
@@ -613,22 +744,18 @@ const SportDetail = () => {
                 </table>
               </div>
               {sportActivities.length > pageSize && (
-                <div className="mt-4 text-center">
+                <div className={styles.loadMoreRow}>
                   <button
                     onClick={() => setPageSize((n) => n + PAGE_SIZE)}
-                    className="rounded-full px-4 py-2 text-sm transition-colors"
-                    style={{
-                      backgroundColor: `${sport.color}22`,
-                      color: sport.color,
-                      border: `1px solid ${sport.color}44`,
-                    }}
+                    className={styles.loadMoreButton}
+                    style={sportStyle}
                   >
                     加载更多（还有 {sportActivities.length - pageSize} 条）
                   </button>
                 </div>
               )}
               {pageSize > PAGE_SIZE && sportActivities.length <= pageSize && (
-                <p className="mt-3 text-center text-xs text-gray-500">
+                <p className={styles.loadMoreDone}>
                   已显示全部 {sportActivities.length} 条
                 </p>
               )}
@@ -643,23 +770,26 @@ const SportDetail = () => {
 interface StatBoxProps {
   label: string;
   value: string;
-  color: string;
+  style?: CSSProperties;
 }
 
-const StatBox = ({ label, value, color }: StatBoxProps) => (
-  <div
-    className="rounded-xl p-4"
-    style={{ backgroundColor: `${color}11`, border: `1px solid ${color}33` }}
-  >
-    <div className="mb-1 text-xs text-gray-400">{label}</div>
-    <div className="text-xl font-semibold tabular-nums" style={{ color }}>
-      {value}
-    </div>
+const StatBox = ({ label, value, style }: StatBoxProps) => (
+  <div className={styles.statBox} style={style}>
+    <div className={styles.statLabel}>{label}</div>
+    <div className={styles.statValue}>{value}</div>
   </div>
 );
 
 function formatTimeLong(seconds: number): string {
   if (!seconds) return '0m';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
+function formatTimeShort(seconds: number): string {
+  if (!seconds) return '';
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   if (h > 0) return `${h}h ${m}m`;

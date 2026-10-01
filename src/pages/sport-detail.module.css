@@ -1,0 +1,556 @@
+/* sport-detail.module.css — Sport-aware 详情页
+ * 设计语言: Apple HIG Activity app
+ *   · 顶部 Hero (icon + 标题 + 描述) — 沿用 SportCard 的 2px sport-color 装饰条
+ *   · Sport-aware 头条数据卡: 按 sport.key 选 "headline metric" 大字 + 副指标 pills
+ *   · 时间范围 / 统计 / 趋势图 / 活动表 — Apple Card 风格
+ *
+ * 所有颜色取自 data-kinetic 主题令牌 (theme-apple.css):
+ *   --k-bg, --k-card-bg, --k-card-border, --k-card-shadow, --k-text-primary/secondary
+ *   --sport-color (由调用方 inline 注入, sport.color)
+ */
+
+/* ===== 外层容器 ===== */
+.page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 1rem 2rem;
+  }
+}
+
+/* ===== 面包屑 ===== */
+.crumbs {
+  font-size: 0.8125rem;
+  margin-bottom: 0.75rem;
+  color: var(--k-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.crumbLink {
+  color: var(--k-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-ios);
+}
+
+.crumbLink:hover {
+  color: var(--k-text-primary);
+}
+
+/* ===== Hero — Sport Icon + 标题 + 描述 ===== */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--k-card-bg);
+  border: 1px solid var(--k-card-border);
+  border-radius: var(--k-card-radius);
+  box-shadow: var(--k-card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部 2px sport-color 装饰条 (与 SportCard 一致) */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--sport-color, var(--k-accent));
+}
+
+.heroIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--k-radius-md);
+  flex-shrink: 0;
+}
+
+.heroIconBg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--k-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sport-color-soft, var(--k-accent-soft));
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  color: var(--sport-color, var(--k-accent));
+}
+
+.heroBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.heroTitle {
+  margin: 0 0 0.25rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--k-text-primary);
+}
+
+.heroDesc {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--k-text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 0.875rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .heroIcon,
+  .heroIconBg {
+    width: 52px;
+    height: 52px;
+  }
+
+  .heroTitle {
+    font-size: 1.5rem;
+  }
+
+  .heroDesc {
+    font-size: 0.8125rem;
+  }
+}
+
+/* ===== Sport-aware 数据 banner ===== */
+.banner {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.25rem 1rem;
+  background: var(--sport-color-soft, var(--k-accent-soft));
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  border-radius: var(--k-card-radius-lg);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .banner {
+    grid-template-columns: minmax(160px, 1fr) 2fr;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+/* 头条主指标 — 按 sport 切换 */
+.headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-right: 0;
+}
+
+@media (min-width: 640px) {
+  .headline {
+    padding-right: 1.25rem;
+    border-right: 1px solid var(--sport-color-border, var(--k-card-border));
+  }
+}
+
+.headlineLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sport-color, var(--k-accent));
+}
+
+.headlineValue {
+  font-family: var(--k-font-num);
+  font-variant-numeric: tabular-nums;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--k-text-primary);
+}
+
+.headlineUnit {
+  margin-left: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--k-text-secondary);
+}
+
+.headlineSub {
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+  margin-top: 0.125rem;
+}
+
+@media (max-width: 640px) {
+  .headlineValue {
+    font-size: 1.75rem;
+  }
+}
+
+/* 副指标 pills — grid 2-3 列 */
+.submetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.submetric {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--k-card-bg);
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  border-radius: var(--k-radius-md);
+}
+
+.submetricIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.submetricText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.0625rem;
+  min-width: 0;
+}
+
+.submetricLabel {
+  font-size: 0.6875rem;
+  color: var(--k-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submetricValue {
+  font-family: var(--k-font-num);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--sport-color, var(--k-text-primary));
+  line-height: 1.2;
+}
+
+/* ===== 时间范围选择器 ===== */
+.rangeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.rangeLabel {
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+  margin-right: 0.25rem;
+}
+
+.rangeButton {
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  border: 1px solid var(--k-card-border);
+  background: transparent;
+  color: var(--k-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-ios);
+  font-family: inherit;
+}
+
+.rangeButton:hover {
+  color: var(--k-text-primary);
+}
+
+.rangeButtonActive {
+  font-weight: 600;
+  background: var(--sport-color-soft, var(--k-accent-soft));
+  color: var(--sport-color, var(--k-accent));
+  border-color: var(--sport-color, var(--k-accent));
+}
+
+/* ===== 统计卡片 6 列网格 ===== */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.statBox {
+  border-radius: var(--k-card-radius);
+  padding: 1rem;
+  background: var(--sport-color-soft, var(--k-card-bg));
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+}
+
+.statValue {
+  font-family: var(--k-font-num);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sport-color, var(--k-text-primary));
+  line-height: 1.2;
+}
+
+/* ===== 趋势图卡片 ===== */
+.chartCard {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--sport-color-soft, var(--k-card-bg));
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  border-radius: var(--k-card-radius-lg);
+}
+
+.chartTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--k-text-primary);
+}
+
+.chartContainer {
+  width: 100%;
+  height: 200px;
+}
+
+.chartFooter {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.6875rem;
+  color: var(--k-text-secondary);
+}
+
+/* ===== 活动列表表头 ===== */
+.tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.tableTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--k-text-primary);
+}
+
+.tableCount {
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--k-card-border);
+  border-radius: var(--k-card-radius);
+  background: var(--k-card-bg);
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.tableThead {
+  border-bottom: 1px solid var(--k-card-border);
+  text-align: left;
+  color: var(--k-text-secondary);
+  background: var(--k-bg-secondary);
+}
+
+.tableTh {
+  padding: 0.75rem 0.5rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+  white-space: nowrap;
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--k-card-border);
+  transition: background-color 0.15s var(--ease-ios);
+}
+
+.tableRow:hover {
+  background: var(--k-bg-secondary);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableTd {
+  padding: 0.625rem 0.5rem;
+  color: var(--k-text-primary);
+  white-space: nowrap;
+}
+
+.tableTdMuted {
+  color: var(--k-text-secondary);
+}
+
+.tableTdRight {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tableTdColored {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--sport-color, var(--k-accent));
+  font-weight: 600;
+}
+
+.tableTdName {
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tableUnit {
+  font-size: 0.6875rem;
+  color: var(--k-text-secondary);
+  margin-left: 0.125rem;
+}
+
+.tableSource {
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+}
+
+.tableEmpty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--k-text-secondary);
+}
+
+.tableEmptyHint {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--k-text-tertiary);
+}
+
+.loadMoreRow {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.loadMoreButton {
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--sport-color-border, var(--k-card-border));
+  background: var(--sport-color-soft, transparent);
+  color: var(--sport-color, var(--k-accent));
+  cursor: pointer;
+  transition: all 0.2s var(--ease-ios);
+  font-family: inherit;
+}
+
+.loadMoreButton:hover {
+  background: var(--sport-color, var(--k-accent-soft));
+  color: var(--k-text-primary);
+}
+
+.loadMoreDone {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--k-text-secondary);
+}
+
+/* ===== 未找到状态 ===== */
+.notFoundWrap {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.notFoundTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--k-text-primary);
+  margin: 0 0 1rem;
+  letter-spacing: -0.025em;
+}
+
+.notFoundLink {
+  color: var(--sport-color, var(--k-accent));
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.notFoundLink:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive 兜底 ===== */
+@media (max-width: 640px) {
+  .submetrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statValue {
+    font-size: 1.125rem;
+  }
+
+  .chartCard {
+    padding: 1rem;
+  }
+
+  .chartContainer {
+    height: 180px;
+  }
+}

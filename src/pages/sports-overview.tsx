@@ -90,6 +90,7 @@ interface SportStats {
   totalReps: number;
   totalElevation: number; // 米
   totalSpeedWeighted: number; // m/s · m
+  totalHeartrateWeighted: number; // bpm · s (HR × 时长 加权和)
   lastDate?: string;
   /** 最近 30 天按 displayMetric 的每日聚合 */
   sparkline: number[];
@@ -144,6 +145,7 @@ const SportsOverview = () => {
         totalReps: 0,
         totalElevation: 0,
         totalSpeedWeighted: 0,
+        totalHeartrateWeighted: 0,
         sparkline: new Array(DAYS_IN_SPARK).fill(0),
       };
       sparks[s.key] = new Array(DAYS_IN_SPARK).fill(0);
@@ -162,6 +164,7 @@ const SportsOverview = () => {
           totalReps: 0,
           totalElevation: 0,
           totalSpeedWeighted: 0,
+          totalHeartrateWeighted: 0,
           sparkline: new Array(DAYS_IN_SPARK).fill(0),
         };
       }
@@ -170,9 +173,9 @@ const SportsOverview = () => {
       }
 
       const dist = act.distance || 0;
+      const t = convertMovingTime2Sec((act.moving_time as string) || '0');
       stats[key].count += 1;
       stats[key].totalDistance += dist;
-      const t = convertMovingTime2Sec((act.moving_time as string) || '0');
       stats[key].totalTime += t;
       const reps = (act as unknown as { reps?: number }).reps;
       if (typeof reps === 'number' && reps > 0) {
@@ -185,6 +188,11 @@ const SportsOverview = () => {
       const speed = act.average_speed;
       if (typeof speed === 'number' && speed > 0 && dist > 0) {
         stats[key].totalSpeedWeighted += speed * dist;
+      }
+      const hr = act.average_heartrate;
+      if (typeof hr === 'number' && hr > 0 && t > 0) {
+        // 时长加权心率: 避免短时高心率样本过度影响
+        stats[key].totalHeartrateWeighted += hr * t;
       }
       const date = act.start_date_local || act.start_date;
       if (!stats[key].lastDate || (date && date > stats[key].lastDate)) {
@@ -534,6 +542,7 @@ const SportsOverview = () => {
                 totalReps: 0,
                 totalElevation: 0,
                 totalSpeedWeighted: 0,
+                totalHeartrateWeighted: 0,
                 sparkline: new Array(DAYS_IN_SPARK).fill(0),
               };
               const avgSpeed =
@@ -541,6 +550,11 @@ const SportsOverview = () => {
                   ? stat.totalSpeedWeighted / stat.totalDistance
                   : 0;
               const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
+              // 时长加权平均心率
+              const avgHeartrate =
+                stat.totalTime > 0
+                  ? stat.totalHeartrateWeighted / stat.totalTime
+                  : 0;
               return (
                 <SportCard
                   key={sport.key}
@@ -551,6 +565,7 @@ const SportsOverview = () => {
                   totalReps={stat.totalReps}
                   totalElevation={stat.totalElevation}
                   avgPace={avgPace}
+                  avgHeartrate={avgHeartrate}
                   totalFloors={stat.totalReps}
                   lastDate={stat.lastDate}
                   sparkline={stat.sparkline}

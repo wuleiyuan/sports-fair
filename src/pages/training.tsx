@@ -22,6 +22,7 @@ import {
 } from '@/components/Training';
 import trainingLoadData from '@/static/training_load.json';
 import trainingAdviceData from '@/static/training_advice.json';
+import styles from './training.module.css';
 
 const load = trainingLoadData as TrainingLoad;
 const advice = trainingAdviceData as TrainingAdvice;
@@ -72,25 +73,30 @@ const zoneEntries = [
 const totalPct = zoneEntries.reduce((s, z) => s + z.pct, 0) || 1;
 const trimpSeries: SparklinePoint[] = (load as any).daily_trimp_series || [];
 
-const statsGridStyle: React.CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: 8,
-};
+// ===== 动态样式 helper (E1: 移除 inline style 对象字面量, 改走 style={fn(...)} 引用) =====
+/** 给指定 CSS 自定义属性赋值 — 用于 data-driven 颜色注入到 CSS module class */
+const cssVar = (name: string, value: string | number): React.CSSProperties =>
+  ({ [name]: value } as React.CSSProperties);
 
-const statItemStyle: React.CSSProperties = {
-  background: 'rgba(0,0,0,0.2)',
-  borderRadius: 12,
-  padding: '12px 14px',
-};
+/** ACWR scale 段: 动态背景 + 动态百分比宽度 */
+const acwrScaleSegStyle = (bg: string, widthPct: number): React.CSSProperties =>
+  ({ background: bg, width: `${widthPct}%` } as React.CSSProperties);
 
-const scaleLabelsStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginTop: 4,
-  fontSize: 10,
-  fontWeight: 600,
-};
+/** ACWR scale label: 动态颜色 + 动态百分比宽度 */
+const acwrScaleLabelStyle = (color: string, widthPct: number): React.CSSProperties =>
+  ({ color: color, width: `${widthPct}%` } as React.CSSProperties);
+
+/** ACWR / TSB scale marker: 动态位置 + 动态颜色 */
+const scaleMarkerStyle = (leftPct: number, bg: string): React.CSSProperties =>
+  ({ left: `${leftPct}%`, background: bg } as React.CSSProperties);
+
+/** HR 区间段: 动态 flex (占比) + 动态背景 + 动态 minWidth */
+const hrSegStyle = (
+  flex: number,
+  bg: string | undefined,
+  minWidth: number
+): React.CSSProperties =>
+  ({ flex, background: bg, minWidth } as React.CSSProperties);
 
 const TrainingPage: React.FC = () => (
   <Layout>
@@ -125,8 +131,8 @@ const TrainingPage: React.FC = () => (
               </div>
             </div>
             <span
-              className="k-badge"
-              style={{ background: acwrBadge.color, color: '#fff' }}
+              className={`k-badge ${styles.badgeColored}`}
+              style={cssVar('--badge-bg', acwrBadge.color)}
             >
               {acwrBadge.text}
             </span>
@@ -135,8 +141,8 @@ const TrainingPage: React.FC = () => (
           {hasAcwr ? (
             <>
               <div
-                className="k-data-number k-data-number-lg"
-                style={{ color: acwrZone.color, textAlign: 'center' }}
+                className={`k-data-number k-data-number-lg ${styles.dataNumberColored}`}
+                style={cssVar('--num-color', acwrZone.color)}
               >
                 {acwr.ratio!.toFixed(2)}
               </div>
@@ -151,7 +157,7 @@ const TrainingPage: React.FC = () => (
                       <div
                         key={i}
                         className="k-scale-seg"
-                        style={{ background: z.color, width: `${widthPct}%` }}
+                        style={acwrScaleSegStyle(z.color, widthPct)}
                       />
                     );
                   })}
@@ -163,7 +169,7 @@ const TrainingPage: React.FC = () => (
                     return (
                       <span
                         key={i}
-                        style={{ color: z.color, width: `${widthPct}%` }}
+                        style={acwrScaleLabelStyle(z.color, widthPct)}
                       >
                         {z.min}–{z.max === 99 ? '∞' : z.max}
                       </span>
@@ -173,16 +179,13 @@ const TrainingPage: React.FC = () => (
                 <div className="k-scale-marker-wrap">
                   <div
                     className="k-scale-marker"
-                    style={{
-                      left: `${acwrPercent}%`,
-                      background: acwrZone.color,
-                    }}
+                    style={scaleMarkerStyle(acwrPercent, acwrZone.color)}
                   />
                 </div>
               </div>
 
-              <div style={statsGridStyle}>
-                <div style={statItemStyle}>
+              <div className={styles.statsGrid}>
+                <div className={styles.statItem}>
                   <div className="k-stat-label">7d acute</div>
                   <div className="k-stat-value">
                     {Math.round(acwr.acute_7d_trimp).toLocaleString()}
@@ -192,7 +195,7 @@ const TrainingPage: React.FC = () => (
                     {acwr.acute_days_with_data} 天有数据
                   </div>
                 </div>
-                <div style={statItemStyle}>
+                <div className={styles.statItem}>
                   <div className="k-stat-label">28d chronic</div>
                   <div className="k-stat-value">
                     {Math.round(acwr.chronic_28d_trimp).toLocaleString()}
@@ -219,17 +222,7 @@ const TrainingPage: React.FC = () => (
             <span className="k-guidance-badge">训练建议</span>
             <p className="k-guidance-text">{acwrZoneAdvice(acwr.ratio)}</p>
             {acwr.warning && (
-              <p
-                className="k-guidance-text"
-                style={{
-                  borderTop: '1px solid rgba(255,255,255,0.06)',
-                  paddingTop: 10,
-                  marginTop: 8,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                }}
-              >
+              <p className={`k-guidance-text ${styles.warning}`}>
                 <IconWarning size={16} color="#FF8800" />
                 {acwr.warning}
               </p>
@@ -257,8 +250,8 @@ const TrainingPage: React.FC = () => (
               </div>
             </div>
             <span
-              className="k-badge"
-              style={{ background: tsbBadge.color, color: '#fff' }}
+              className={`k-badge ${styles.badgeColored}`}
+              style={cssVar('--badge-bg', tsbBadge.color)}
             >
               {tsbBadge.text}
             </span>
@@ -266,8 +259,8 @@ const TrainingPage: React.FC = () => (
 
           {hasTsb ? (
             <div
-              className="k-data-number"
-              style={{ color: tsbBadge.color, textAlign: 'center' }}
+              className={`k-data-number ${styles.dataNumberColored}`}
+              style={cssVar('--num-color', tsbBadge.color)}
             >
               {tsb.tsb > 0 ? '+' : ''}
               {tsb.tsb.toFixed(1)}
@@ -278,47 +271,32 @@ const TrainingPage: React.FC = () => (
 
           <div>
             <div className="k-label">疲劳 ← 状态 → 恢复</div>
-            <div className="k-scale">
-              <div
-                className="k-scale-seg"
-                style={{ flex: 3, background: '#FF5500' }}
-              />
-              <div
-                className="k-scale-seg"
-                style={{ flex: 2, background: '#FF8800' }}
-              />
-              <div
-                className="k-scale-seg"
-                style={{ flex: 4, background: '#FFB347' }}
-              />
-              <div
-                className="k-scale-seg"
-                style={{ flex: 2, background: '#FF9900' }}
-              />
-              <div
-                className="k-scale-seg"
-                style={{ flex: 4, background: '#FF9900' }}
-              />
+            <div className={`k-scale ${styles.tsbScale}`}>
+              <div className="k-scale-seg" />
+              <div className="k-scale-seg" />
+              <div className="k-scale-seg" />
+              <div className="k-scale-seg" />
+              <div className="k-scale-seg" />
             </div>
-            <div className="k-scale-labels">
-              <span style={{ color: '#FF5500' }}>–30</span>
-              <span style={{ color: '#FF8800' }}>–15</span>
-              <span style={{ color: '#FFB347' }}>–5</span>
-              <span style={{ color: '#FF9900' }}>15</span>
-              <span style={{ color: '#FF9900' }}>30</span>
+            <div className={`k-scale-labels ${styles.tsbLabels}`}>
+              <span>–30</span>
+              <span>–15</span>
+              <span>–5</span>
+              <span>15</span>
+              <span>30</span>
             </div>
             <div className="k-scale-marker-wrap">
               {hasTsb && (
                 <div
                   className="k-scale-marker"
-                  style={{ left: `${tsbPercent}%`, background: tsbBadge.color }}
+                  style={scaleMarkerStyle(tsbPercent, tsbBadge.color)}
                 />
               )}
             </div>
           </div>
 
-          <div style={statsGridStyle}>
-            <div style={statItemStyle}>
+          <div className={styles.statsGrid}>
+            <div className={styles.statItem}>
               <div className="k-stat-label">CTL 体能</div>
               <div className="k-stat-value">
                 {tsb.ctl.toFixed(1)}
@@ -326,7 +304,7 @@ const TrainingPage: React.FC = () => (
               </div>
               <div className="k-stat-sub">42d 指数平均</div>
             </div>
-            <div style={statItemStyle}>
+            <div className={styles.statItem}>
               <div className="k-stat-label">ATL 疲劳</div>
               <div className="k-stat-value">
                 {tsb.atl.toFixed(1)}
@@ -360,28 +338,22 @@ const TrainingPage: React.FC = () => (
                 <h3 className="k-card-title">HR 5 区间</h3>
               </div>
             </div>
-            <span
-              className="k-badge"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                color: 'rgba(255,255,255,0.7)',
-              }}
-            >
+            <span className={`k-badge ${styles.hrBadge}`}>
               Z{hrZones.dominant_zone.slice(-1)} 主导
             </span>
           </div>
 
           <div>
-            <div className="k-scale" style={{ height: 28 }}>
+            <div className={`k-scale ${styles.hrScale}`}>
               {zoneEntries.map((z) => (
                 <div
                   key={z.key}
                   className="k-scale-seg"
-                  style={{
-                    flex: z.pct,
-                    background: HR_ZONE_META[z.key]?.color,
-                    minWidth: z.pct > 0 ? 4 : 0,
-                  }}
+                  style={hrSegStyle(
+                    z.pct,
+                    HR_ZONE_META[z.key]?.color,
+                    z.pct > 0 ? 4 : 0
+                  )}
                 />
               ))}
             </div>
@@ -393,8 +365,8 @@ const TrainingPage: React.FC = () => (
                   return (
                     <div key={z.key} className="k-hr-legend-item">
                       <span
-                        className="k-hr-legend-dot"
-                        style={{ background: meta?.color }}
+                        className={`k-hr-legend-dot ${styles.legendDot}`}
+                        style={cssVar('--dot-bg', meta?.color)}
                       />
                       <span className="k-hr-legend-label">{meta?.label}</span>
                       <span className="k-hr-legend-value">
@@ -406,12 +378,15 @@ const TrainingPage: React.FC = () => (
             </div>
           </div>
 
-          <div style={statsGridStyle}>
-            <div style={statItemStyle}>
+          <div className={styles.statsGrid}>
+            <div className={styles.statItem}>
               <div className="k-stat-label">Z2 占比</div>
               <div
-                className="k-stat-value"
-                style={{ color: hrZones.z2_pct >= 60 ? '#FF9900' : '#FF8800' }}
+                className={`k-stat-value ${styles.z2Value}`}
+                style={cssVar(
+                  '--z2-color',
+                  hrZones.z2_pct >= 60 ? '#FF9900' : '#FF8800'
+                )}
               >
                 {hrZones.z2_pct.toFixed(1)}
                 <span className="k-data-unit">%</span>
@@ -420,7 +395,7 @@ const TrainingPage: React.FC = () => (
                 {hrZones.z2_pct >= 60 ? '✓ 合理' : '需加强'}
               </div>
             </div>
-            <div style={statItemStyle}>
+            <div className={styles.statItem}>
               <div className="k-stat-label">极化指数</div>
               <div className="k-stat-value">
                 {hrZones.polarized_pct.toFixed(0)}
@@ -451,20 +426,13 @@ const TrainingPage: React.FC = () => (
               </div>
             </div>
             <span
-              className="k-badge"
-              style={{
-                background:
-                  advice.overall_severity === 'high'
-                    ? '#FF5500'
-                    : advice.overall_severity === 'low'
-                      ? '#FF8800'
-                      : 'rgba(255,255,255,0.08)',
-                color:
-                  advice.overall_severity === 'high' ||
-                  advice.overall_severity === 'low'
-                    ? '#fff'
-                    : 'rgba(255,255,255,0.7)',
-              }}
+              className={`k-badge ${
+                advice.overall_severity === 'high'
+                  ? styles.adviceCountHigh
+                  : advice.overall_severity === 'low'
+                    ? styles.adviceCountLow
+                    : styles.adviceCountInfo
+              }`}
             >
               {advice.advice_count} 条
             </span>
@@ -479,16 +447,16 @@ const TrainingPage: React.FC = () => (
             {advice.advice_items.map((item) => (
               <li
                 key={item.id}
-                className="k-advice-item"
-                style={{ borderLeftColor: sevColor(item.severity) }}
+                className={`k-advice-item ${styles.adviceItem}`}
+                style={cssVar('--item-border-color', sevColor(item.severity))}
               >
                 <div className="k-advice-item-header">
                   <span className="k-advice-item-category">
                     {item.category}
                   </span>
                   <span
-                    className="k-advice-item-badge"
-                    style={{ background: sevColor(item.severity) }}
+                    className={`k-advice-item-badge ${styles.adviceBadge}`}
+                    style={cssVar('--badge-bg', sevColor(item.severity))}
                   >
                     {sevLabel(item.severity)}
                   </span>

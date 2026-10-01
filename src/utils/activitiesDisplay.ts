@@ -16,7 +16,7 @@
 import activitiesJson from '@/static/activities.json';
 import { getSportCompatConfig, type SportCompat } from './sportCompat';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 type _AnyRecord = any;
 
 /** 活动记录类型（从 activities.json 推断） */

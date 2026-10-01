@@ -50,7 +50,7 @@ import {
   IconSportRun,
 } from '@/components/Icons';
 
-// 用户最爱运动：按 count 算最高；聚合 elevation + weighted pace 给 SportCard
+// 用户最爱运动：按 count 算最高；聚合 elevation + weighted pace + weighted HR 给 SportCard
 const favoriteSportStats = (() => {
   const stats: Record<
     string,
@@ -61,6 +61,7 @@ const favoriteSportStats = (() => {
       totalReps: number;
       totalElevation: number;
       totalSpeedWeighted: number;
+      totalHeartrateWeighted: number; // bpm · s (HR × 时长 加权和)
       lastDate?: string;
     }
   > = {};
@@ -78,14 +79,16 @@ const favoriteSportStats = (() => {
           totalReps: 0,
           totalElevation: 0,
           totalSpeedWeighted: 0,
+          totalHeartrateWeighted: 0,
         };
       }
       const dist = (act.distance as number) || 0;
-      stats[key].count++;
-      stats[key].totalDistance += dist;
-      stats[key].totalTime += convertMovingTime2Sec(
+      const dur = convertMovingTime2Sec(
         (act.moving_time as string) || '0'
       );
+      stats[key].count++;
+      stats[key].totalDistance += dist;
+      stats[key].totalTime += dur;
       const reps = act.reps as number | undefined;
       if (typeof reps === 'number' && reps > 0) stats[key].totalReps += reps;
       const elev = act.elevation_gain as number | undefined;
@@ -94,6 +97,11 @@ const favoriteSportStats = (() => {
       const speed = act.average_speed as number | undefined;
       if (typeof speed === 'number' && speed > 0 && dist > 0) {
         stats[key].totalSpeedWeighted += speed * dist;
+      }
+      const hr = act.average_heartrate as number | undefined;
+      if (typeof hr === 'number' && hr > 0 && dur > 0) {
+        // 时长加权: 跑得越久的活动权重越大
+        stats[key].totalHeartrateWeighted += hr * dur;
       }
       const date =
         (act.start_date_local as string) || (act.start_date as string);
@@ -115,6 +123,9 @@ const favoriteSportStats = (() => {
   const avgSpeed =
     s.totalDistance > 0 ? s.totalSpeedWeighted / s.totalDistance : 0;
   const avgPace = avgSpeed > 0 ? 1000 / avgSpeed : 0;
+  // 时长加权平均心率 (避免短时间高心率污染统计)
+  const avgHeartrate =
+    s.totalTime > 0 ? s.totalHeartrateWeighted / s.totalTime : 0;
   return {
     sport: SPORT_BY_KEY[maxKey],
     count: s.count,
@@ -123,6 +134,7 @@ const favoriteSportStats = (() => {
     totalReps: s.totalReps,
     totalElevation: s.totalElevation,
     avgPace,
+    avgHeartrate,
     totalFloors: s.totalReps,
     lastDate: s.lastDate,
   };
@@ -548,6 +560,7 @@ const Index = () => {
                 totalReps={favoriteSportStats.totalReps}
                 totalElevation={favoriteSportStats.totalElevation}
                 avgPace={favoriteSportStats.avgPace}
+                avgHeartrate={favoriteSportStats.avgHeartrate}
                 totalFloors={favoriteSportStats.totalFloors}
                 lastDate={favoriteSportStats.lastDate}
                 href={`/sports/${favoriteSportStats.sport.key}`}

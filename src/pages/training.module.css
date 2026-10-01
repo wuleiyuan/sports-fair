@@ -1,0 +1,142 @@
+/* Training 页面专用样式 (E1 重构)
+ * 目的: 把 inline style={{...}} 全部迁出, 统一走 design token / CSS module.
+ * 设计原则:
+ *   · 颜色优先用 CSS 变量 (--color-*, --k-*) — 自动适配 light/dark
+ *   · Data-driven 颜色 (sport.color / acwrZone.color / tsbBadge.color / etc.)
+ *     通过 CSS 自定义属性 (--xxx-color) 在 className 上设置, 类只负责形态
+ *   · 静态色阶 (TSB 5 段 ramp) 直接落到 class, 不引入 token
+ *     (这些是训练数据专属的色阶, 不属于通用 token 范畴)
+ */
+
+/* ===== 通用 stat grid + item ===== */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.statItem {
+  background: var(--color-run-row-hover-background, rgba(0, 0, 0, 0.02));
+  border-radius: var(--k-radius-md, 12px);
+  padding: 12px 14px;
+}
+
+/* ===== Badge: 动态 bg + 固定白字 ===== */
+.badgeColored {
+  background: var(--badge-bg, var(--color-secondary));
+  color: var(--color-on-primary);
+}
+
+/* ===== HR badge: 半透明 — 替换原 rgba(255,255,255,...) 硬编码 ===== */
+.hrBadge {
+  background: var(--color-run-row-hover-background, rgba(0, 0, 0, 0.04));
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
+}
+
+/* ===== Data number 大字: 动态色 ===== */
+.dataNumberColored {
+  color: var(--num-color, var(--color-text-primary));
+  text-align: center;
+}
+
+/* ===== Scale 段: 动态 bg + width ===== */
+.scaleSeg {
+  background: var(--seg-bg, var(--color-selected));
+}
+
+.scaleMarker {
+  background: var(--marker-bg, var(--color-selected));
+}
+
+/* ===== TSB scale 5 段 (静态色阶) ===== */
+.tsbScale > :nth-child(1) {
+  flex: 3;
+  background: var(--color-tsb-1);
+}
+.tsbScale > :nth-child(2) {
+  flex: 2;
+  background: var(--color-tsb-2);
+}
+.tsbScale > :nth-child(3) {
+  flex: 4;
+  background: var(--color-tsb-3);
+}
+.tsbScale > :nth-child(4) {
+  flex: 2;
+  background: var(--color-tsb-4);
+}
+.tsbScale > :nth-child(5) {
+  flex: 4;
+  background: var(--color-tsb-4);
+}
+
+/* ===== TSB scale labels (静态色阶) ===== */
+.tsbLabels > :nth-child(1) {
+  color: var(--color-tsb-1);
+}
+.tsbLabels > :nth-child(2) {
+  color: var(--color-tsb-2);
+}
+.tsbLabels > :nth-child(3) {
+  color: var(--color-tsb-3);
+}
+.tsbLabels > :nth-child(4) {
+  color: var(--color-tsb-4);
+}
+.tsbLabels > :nth-child(5) {
+  color: var(--color-tsb-4);
+}
+
+/* ===== HR scale 容器高度 ===== */
+.hrScale {
+  height: 28px;
+}
+
+/* ===== HR 区间段: 动态 bg + flex/minWidth ===== */
+.hrSeg {
+  background: var(--seg-bg, var(--color-selected));
+}
+
+/* ===== HR legend dot: 动态 bg ===== */
+.legendDot {
+  background: var(--dot-bg, var(--color-selected));
+}
+
+/* ===== Z2 value: 三元动态色 ===== */
+.z2Value {
+  color: var(--z2-color, var(--color-text-primary));
+}
+
+/* ===== Advice count badge (按 severity 三态) ===== */
+.adviceCountHigh {
+  background: var(--color-tsb-1);
+  color: var(--color-on-primary);
+}
+.adviceCountLow {
+  background: var(--color-tsb-2);
+  color: var(--color-on-primary);
+}
+.adviceCountInfo {
+  background: var(--color-run-row-hover-background, rgba(0, 0, 0, 0.04));
+  color: var(--color-secondary, rgba(60, 60, 67, 0.6));
+}
+
+/* ===== Advice item: 动态 border-left-color ===== */
+.adviceItem {
+  border-left-color: var(--item-border-color, var(--color-selected));
+}
+
+/* ===== Advice badge bg: 动态 ===== */
+.adviceBadge {
+  background: var(--badge-bg, var(--color-selected));
+}
+
+/* ===== Warning paragraph: 上分隔线 + 弹性布局 ===== */
+.warning {
+  border-top: 1px solid var(--color-hr-primary, rgba(0, 0, 0, 0.08));
+  padding-top: 10px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
