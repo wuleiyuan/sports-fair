@@ -54,6 +54,10 @@ export interface Activity {
   elevation_gain: number | null;
   average_speed: number;
   streak: number;
+  // ----- 扩展：可选物理指标，向后兼容 -----
+  average_watts?: number; // 平均功率 (W)，主要用于骑行
+  slope?: number;          // 平均坡度 (%)，主要用于徒步/跑步
+  max_heartrate?: number;  // 最大心率 (bpm)
   anomaly?: { type: string; detail: string } | null;
 }
 

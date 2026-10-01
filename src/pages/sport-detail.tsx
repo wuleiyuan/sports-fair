@@ -152,6 +152,33 @@ const SportDetail = () => {
     const avgGrade =
       totalDist > 0 ? ((totalElev / sportActivities.length) / totalDist) * 100 : 0;
 
+    // 平均功率 (W) — 仅骑行需要；优先取 activity.average_watts，否则 0
+    const validWatts = sportActivities
+      .map((a) => a.average_watts)
+      .filter((v): v is number => typeof v === 'number' && v > 0);
+    const avgWatts =
+      validWatts.length > 0
+        ? Math.round(validWatts.reduce((s, v) => s + v, 0) / validWatts.length)
+        : 0;
+
+    // 平均坡度 (%) — 优先取 activity.slope（外部源如 Strava 已计算），否则回落到 avgGrade
+    const validSlope = sportActivities
+      .map((a) => a.slope)
+      .filter((v): v is number => typeof v === 'number' && v > 0);
+    const avgSlope =
+      validSlope.length > 0
+        ? validSlope.reduce((s, v) => s + v, 0) / validSlope.length
+        : avgGrade;
+
+    // 平均最大心率 (bpm) — 仅在有 max_heartrate 时显示
+    const validMaxHR = sportActivities
+      .map((a) => a.max_heartrate)
+      .filter((v): v is number => typeof v === 'number' && v > 0);
+    const avgMaxHR =
+      validMaxHR.length > 0
+        ? Math.round(validMaxHR.reduce((s, v) => s + v, 0) / validMaxHR.length)
+        : 0;
+
     return {
       count: sportActivities.length,
       totalDist,
@@ -162,6 +189,9 @@ const SportDetail = () => {
       totalElev,
       avgSpeedKmh,
       avgGrade,
+      avgWatts,
+      avgSlope,
+      avgMaxHR,
     };
   }, [sportActivities]);
 
@@ -197,7 +227,20 @@ const SportDetail = () => {
       }
 
       case 'Ride': {
-        // 平均速度（km/h）— Activity 没有 watt 数据，速度即骑行核心指标
+        // 优先用功率（average_watts）；没有则回落平均速度
+        if (stats.avgWatts > 0) {
+          return {
+            Icon: IconSportRide,
+            label: '平均功率',
+            value: `${stats.avgWatts}`,
+            unit: 'W',
+            sub: `${sportActivities.length} 次骑行 · 配速 ${
+              stats.avgPace || '—'
+            }${
+              stats.avgHR ? ` · 心率 ${stats.avgHR} bpm` : ''
+            }`,
+          };
+        }
         if (!stats.avgSpeedKmh) return null;
         return {
           Icon: IconSportRide,
@@ -206,7 +249,7 @@ const SportDetail = () => {
           unit: 'km/h',
           sub: `${sportActivities.length} 次骑行 · 平均配速 ${
             stats.avgPace || '—'
-          }`,
+          }${stats.avgHR ? ` · 心率 ${stats.avgHR} bpm` : ''}`,
         };
       }
 
@@ -325,7 +368,7 @@ const SportDetail = () => {
       push(
         IconGauge,
         '平均坡度',
-        stats.avgGrade > 0 ? `${stats.avgGrade.toFixed(1)}%` : ''
+        stats.avgSlope > 0 ? `${stats.avgSlope.toFixed(1)}%` : ''
       );
       push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
     } else if (sport.key === 'Strength' || sport.key === 'Workout') {

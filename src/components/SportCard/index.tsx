@@ -40,6 +40,7 @@ interface SportCardProps {
   totalFloors?: number;
   lastDate?: string; // ISO
   sparkline?: number[]; // 30 天每日聚合
+  avgSlope?: number; // 平均坡度 (%)，用于徒步 banner
   href: string;
 }
 
@@ -195,7 +196,8 @@ function buildSportBanner(
   totalElevation: number | undefined,
   avgPace: number | undefined,
   avgHeartrate: number | undefined,
-  lastDate: string | undefined
+  lastDate: string | undefined,
+  avgSlope: number | undefined
 ): SportBanner | null {
   const distUnit = formatUnit(sport.unit);
   const segments: BannerSegment[] = [];
@@ -239,6 +241,9 @@ function buildSportBanner(
           value: `${formatDistance(totalDistance, sport.unit)} ${distUnit}`,
         });
       }
+      if (avgSlope && avgSlope > 0) {
+        segments.push({ label: '坡度', value: `${avgSlope.toFixed(1)}%` });
+      }
       return { emoji: '🏔', segments };
     }
 
@@ -279,6 +284,7 @@ export default function SportCard({
   totalFloors,
   lastDate,
   sparkline,
+  avgSlope,
   href,
 }: SportCardProps) {
   const locked = count === 0;
@@ -308,7 +314,8 @@ export default function SportCard({
         totalElevation,
         avgPace,
         avgHeartrate,
-        lastDate
+        lastDate,
+        avgSlope
       )
     : null;
 
