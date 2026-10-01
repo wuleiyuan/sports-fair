@@ -43,3 +43,10 @@ route.svg
 
 # Local notes
 PROJECT_NOTES.md
+
+# Playwright visual regression —— baseline 进仓库；test-results / report / 浏览器缓存不进
+tests/visual/test-results/
+playwright-report/
+/test-results/
+/blob-report/
+.playwright/
