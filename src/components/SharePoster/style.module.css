@@ -17,8 +17,8 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: #333;
-  color: #fff;
+  background: var(--color-text-muted);
+  color: var(--color-on-primary);
   padding: 8px 20px;
   border-radius: 8px;
   font-size: 14px;
@@ -54,8 +54,8 @@
   padding: 12px 32px;
   border-radius: 10px;
   border: none;
-  background: #f59e0b;
-  color: #000;
+  background: var(--color-warning-amber);
+  color: var(--k-text-primary);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -72,7 +72,7 @@
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
-  color: #fff;
+  color: var(--color-on-primary);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;

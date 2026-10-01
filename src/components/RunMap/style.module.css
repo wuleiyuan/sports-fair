@@ -95,8 +95,8 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: #ff4444;
-  color: white;
+  background: var(--color-danger-strong);
+  color: var(--color-on-primary);
   padding: 12px 20px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -109,8 +109,8 @@
 
 .mapErrorNotification button,
 .mapErrorNotification a {
-  background: white;
-  color: #ff4444;
+  background: var(--color-bg-card);
+  color: var(--color-danger-strong);
   border: none;
   padding: 6px 12px;
   border-radius: 4px;

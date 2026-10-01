@@ -2,7 +2,7 @@
 
 /* ========== 通用卡片 ========== */
 .card {
-  background-color: var(--color-card-bg, #ffffff);
+  background-color: var(--color-card-bg);
   border-radius: 18px;
   padding: 24px;
   box-shadow:
@@ -35,7 +35,7 @@
 .cardKicker {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 4px;
@@ -45,12 +45,12 @@
   margin: 0;
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .cardFooter {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-top: auto;
   padding-top: 8px;
   border-top: 1px solid rgba(0, 0, 0, 0.04);
@@ -77,7 +77,7 @@
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-on-primary);
   white-space: nowrap;
 }
 
@@ -101,7 +101,7 @@
 .acwrNumberMuted {
   font-size: 3.5rem;
   font-weight: 300;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1;
 }
 
@@ -111,7 +111,7 @@
 
 .acwrEmptyHint {
   font-size: 0.85rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   margin-top: 12px;
   line-height: 1.5;
 }
@@ -127,12 +127,12 @@
 .acwrZoneLabel {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .acwrZoneEn {
   font-size: 0.75rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -145,7 +145,7 @@
 
 .zoneBarLabel {
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
@@ -192,7 +192,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  border: 2px solid var(--color-on-primary);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   transition: left 0.3s ease;
 }
@@ -214,7 +214,7 @@
 
 .acwrStatLabel {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   font-weight: 500;
   margin-bottom: 4px;
 }
@@ -222,20 +222,20 @@
 .acwrStatValue {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .acwrStatUnit {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-left: 2px;
 }
 
 .acwrStatSub {
   font-size: 0.65rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-top: 2px;
 }
 
@@ -247,7 +247,7 @@
     rgba(168, 85, 247, 0.06) 100%
   );
   border-radius: 10px;
-  border-left: 3px solid #6366f1;
+  border-left: 3px solid var(--color-indigo);
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
@@ -257,8 +257,8 @@
 .aiBadge {
   display: inline-block;
   font-size: 0.7rem;
-  background-color: #6366f1;
-  color: white;
+  background-color: var(--color-indigo);
+  color: var(--color-on-primary);
   padding: 2px 8px;
   border-radius: 8px;
   font-weight: 500;
@@ -268,14 +268,14 @@
 .aiText {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   line-height: 1.5;
 }
 
 .aiWarning {
   margin: 0;
   font-size: 0.8rem;
-  color: #ef4444;
+  color: var(--color-danger-soft);
   font-weight: 500;
   padding-top: 4px;
   border-top: 1px dashed rgba(239, 68, 68, 0.2);
@@ -293,7 +293,7 @@
   border-radius: 12px;
   font-size: 0.72rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-on-primary);
   white-space: nowrap;
 }
 
@@ -342,12 +342,12 @@
 }
 
 .zoneStackText {
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
 .zoneStackPct {
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   font-weight: 700;
   margin-left: 2px;
   font-variant-numeric: tabular-nums;
@@ -368,7 +368,7 @@
 
 .hrKeyLabel {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-bottom: 4px;
   font-weight: 500;
 }
@@ -385,7 +385,7 @@
 .hrKeyHint {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
 }
 
 .hrEmpty {
@@ -405,12 +405,12 @@
 .hrEmptyTitle {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
 }
 
 .hrEmptyHint {
   font-size: 0.8rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.5;
   max-width: 240px;
 }
@@ -428,7 +428,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   background-color: rgba(99, 102, 241, 0.1);
-  color: #6366f1;
+  color: var(--color-indigo);
   white-space: nowrap;
 }
 
@@ -440,7 +440,7 @@
   background-color: rgba(0, 0, 0, 0.02);
   border-radius: 10px;
   font-size: 0.85rem;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   line-height: 1.4;
 }
 
@@ -500,13 +500,13 @@
   border-radius: 8px;
   font-size: 0.65rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-on-primary);
   white-space: nowrap;
 }
 
 .adviceItemCategory {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   font-weight: 500;
 }
 
@@ -514,19 +514,19 @@
   margin: 0;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .adviceItemDesc {
   margin: 0;
   font-size: 0.78rem;
-  color: var(--color-text-secondary, #4b5563);
+  color: var(--color-text-secondary, var(--color-text-faint));
   line-height: 1.5;
 }
 
 .adviceItemAction {
   font-size: 0.75rem;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   line-height: 1.5;
   padding-top: 4px;
   border-top: 1px dashed rgba(0, 0, 0, 0.06);
@@ -535,12 +535,12 @@
 .adviceItemActionLabel,
 .adviceItemEvidenceLabel {
   font-weight: 600;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
 }
 
 .adviceItemEvidence {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.4;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -562,12 +562,12 @@
 .adviceEmptyTitle {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
 }
 
 .adviceEmptyHint {
   font-size: 0.8rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.5;
 }
 
@@ -584,7 +584,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   background-color: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
+  color: var(--color-warning-amber);
   white-space: nowrap;
 }
 
@@ -604,7 +604,7 @@
 .cadenceUnit {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-left: 6px;
 }
 
@@ -619,18 +619,18 @@
 .cadenceLabel > :first-child {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .cadenceHint {
   font-size: 0.75rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
 }
 
 .cadenceStats {
   text-align: center;
   font-size: 0.8rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
 }
 
 .cadenceEmpty {
@@ -650,18 +650,18 @@
 .cadenceEmptyTitle {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
 }
 
 .cadenceEmptyHint {
   font-size: 0.75rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.5;
 }
 
 .cadenceEmptyRoadmap {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.6;
   text-align: left;
   background-color: rgba(0, 0, 0, 0.02);
@@ -677,7 +677,7 @@
   background-color: rgba(0, 0, 0, 0.04);
   padding: 1px 4px;
   border-radius: 3px;
-  color: var(--color-text-secondary, #4b5563);
+  color: var(--color-text-secondary, var(--color-text-faint));
 }
 
 /* ========== TSB 卡片 ========== */
@@ -701,7 +701,7 @@
 .tsbNumberMuted {
   font-size: 3.2rem;
   font-weight: 400;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1;
 }
 
@@ -713,13 +713,13 @@
   gap: 8px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .tsbUnit {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
 }
 
 .tsbEmpty {
@@ -733,7 +733,7 @@
 
 .tsbEmptyHint {
   font-size: 0.8rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   line-height: 1.5;
 }
 
@@ -744,7 +744,7 @@
 
 .tsbScaleLabel {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   text-align: center;
   margin-bottom: 6px;
   font-weight: 500;
@@ -806,7 +806,7 @@
 
 .tsbStatLabel {
   font-size: 0.7rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   font-weight: 500;
   margin-bottom: 4px;
 }
@@ -814,19 +814,19 @@
 .tsbStatValue {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .tsbStatUnit {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-left: 2px;
 }
 
 .tsbStatSub {
   font-size: 0.65rem;
-  color: var(--color-text-tertiary, #9ca3af);
+  color: var(--color-text-tertiary);
   margin-top: 2px;
 }

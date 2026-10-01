@@ -1013,3 +1013,150 @@
   height: auto;
   border-radius: 12px;
 }
+
+/* ===== Extended --color-* / --sport-color-* tokens (Apple HIG style) =====
+ * 为组件 CSS module 提供完整的颜色令牌, 避免硬编码 hex。
+ * - --color-*    通用语义色 (背景/文字/边框)
+ * - --sport-color-*  运动专属色 (run/ride/swim/...)
+ * 与 --k-* (data-kinetic 仪表盘专用) 并行, 不冲突。
+ * 暗色模式: 通过上面的 @media (prefers-color-scheme: dark) 自动接管。
+ */
+
+[data-kinetic] {
+  /* ===== 文本色阶 (Apple HIG) ===== */
+  --color-text-primary: #1a1a1a; /* 强对比文本, 在白底上用 */
+  --color-text-strong: #1a1a1a;
+  --color-text-muted: #333333; /* 弱化文本但仍可读 */
+  --color-text-secondary: #6b7280; /* iOS-style 灰 */
+  --color-text-tertiary: #9ca3af; /* 更浅灰 */
+  --color-text-faint: #4b5563; /* 中间灰 (Tailwind gray-700) */
+  --color-text-disabled: #666666;
+  --color-text-faded: #999999;
+
+  /* ===== 背景色 ===== */
+  --color-bg: #ffffff; /* 页面主背景 */
+  --color-bg-page: #f5f5f7; /* Apple systemGroupedBackground */
+  --color-bg-card: #ffffff; /* 卡片底 */
+  --color-bg-soft: #fafafa; /* 极淡灰底 (SharePoster 之类) */
+  --color-bg-surface: #ffffff;
+  --color-bg-muted: #f5f5f7;
+  --color-bg-elevated: #ffffff;
+
+  /* ===== 边框色 ===== */
+  --color-border: #e5e7eb; /* Tailwind gray-200 */
+  --color-border-soft: rgba(60, 60, 67, 0.08);
+  --color-border-medium: rgba(60, 60, 67, 0.18);
+  --color-border-strong: rgba(60, 60, 67, 0.34);
+
+  /* ===== 选中 / 强调 (alias of --k-*) ===== */
+  --color-selected: var(--k-accent);
+  --color-selected-hover: var(--k-accent-hover);
+
+  /* ===== 语义色 ===== */
+  --color-success: var(--k-success);
+  --color-warning: var(--k-warning);
+  --color-danger: var(--k-danger);
+  --color-info: var(--k-info);
+
+  /* 警告色 (amber/yellow) — 非 Apple 严格 HIG, 用于训练强度色阶 */
+  --color-warning-amber: #f59e0b;
+  --color-warning-soft: #ffc107;
+
+  /* 危险红系列 */
+  --color-danger-soft: #ef4444;
+  --color-danger-mid: #f44336;
+  --color-danger-strong: #ff4444;
+
+  /* ===== Indigo / Tailwind 风格 ===== */
+  --color-indigo: #6366f1; /* Tailwind indigo-500 — AI 建议强调 */
+  --color-indigo-soft: rgba(99, 102, 241, 0.06);
+  --color-indigo-hover: rgba(99, 102, 241, 0.1);
+
+  /* ===== Badge 浅色背景 / 深色文字 (status indicator) ===== */
+  --color-success-bg: #d1fae5;
+  --color-success-text: #065f46;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #92400e;
+  --color-warning-text-strong: #78350f;
+  --color-danger-bg: #fee2e2;
+  --color-danger-bg-soft: #fecaca;
+  --color-danger-border: #fca5a5;
+  --color-danger-text: #b91c1c;
+
+  /* ===== TSB / 训练负荷色阶 (5 段 ramp) ===== */
+  --color-tsb-1: #ff5500;
+  --color-tsb-2: #ff8800;
+  --color-tsb-3: #ffb347;
+  --color-tsb-4: #ff9900;
+  --color-tsb-5: #ff9900;
+
+  /* ===== 运动专属色 (alias of --k-sport-*) ===== */
+  --sport-color-run: var(--k-sport-run);
+  --sport-color-ride: var(--k-sport-ride);
+  --sport-color-swim: var(--k-sport-swim);
+  --sport-color-walk: var(--k-sport-walk);
+  --sport-color-hike: var(--k-sport-hike);
+  --sport-color-workout: var(--k-sport-workout);
+  --sport-color-yoga: var(--k-sport-yoga);
+
+  /* ===== Sport-card 装饰色 ===== */
+  --sport-color-default: #34c759; /* 默认绿色 (无 sport.color 时) */
+
+  /* ===== 实用黑 / 白 ===== */
+  --color-on-primary: #ffffff; /* 在主色按钮上的文字 */
+  --color-on-accent: #ffffff;
+  --color-on-dark: #000000; /* 在浅色背景上的文字 */
+}
+
+/* ===== Dark mode 自动覆盖 (跟随 prefers-color-scheme: dark) ===== */
+@media (prefers-color-scheme: dark) {
+  [data-kinetic]:not([data-theme='light']) {
+    /* 暗色模式文本色: 用白色系取代黑色系 */
+    --color-text-primary: #f2f2f7;
+    --color-text-strong: #ffffff;
+    --color-text-muted: #cccccc;
+    --color-text-secondary: rgba(235, 235, 245, 0.6);
+    --color-text-tertiary: rgba(235, 235, 245, 0.3);
+    --color-text-faint: #d1d1d6;
+    --color-text-disabled: #8e8e93;
+    --color-text-faded: #636366;
+
+    --color-bg: #000000;
+    --color-bg-page: #000000;
+    --color-bg-card: #1c1c1e;
+    --color-bg-soft: #1c1c1e;
+    --color-bg-surface: #1c1c1e;
+    --color-bg-muted: #1c1c1e;
+    --color-bg-elevated: #2c2c2e;
+
+    --color-border: rgba(84, 84, 88, 0.34);
+    --color-border-soft: rgba(255, 255, 255, 0.06);
+    --color-border-medium: rgba(255, 255, 255, 0.18);
+    --color-border-strong: rgba(255, 255, 255, 0.34);
+  }
+}
+
+/* 显式 dark 主题覆盖 (与 prefers-color-scheme: dark 等效) */
+[data-kinetic][data-theme='dark'] {
+  --color-text-primary: #f2f2f7;
+  --color-text-strong: #ffffff;
+  --color-text-muted: #cccccc;
+  --color-text-secondary: rgba(235, 235, 245, 0.6);
+  --color-text-tertiary: rgba(235, 235, 245, 0.3);
+  --color-text-faint: #d1d1d6;
+  --color-text-disabled: #8e8e93;
+  --color-text-faded: #636366;
+
+  --color-bg: #000000;
+  --color-bg-page: #000000;
+  --color-bg-card: #1c1c1e;
+  --color-bg-soft: #1c1c1e;
+  --color-bg-surface: #1c1c1e;
+  --color-bg-muted: #1c1c1e;
+  --color-bg-elevated: #2c2c2e;
+
+  --color-border: rgba(84, 84, 88, 0.34);
+  --color-border-soft: rgba(255, 255, 255, 0.06);
+  --color-border-medium: rgba(255, 255, 255, 0.18);
+  --color-border-strong: rgba(255, 255, 255, 0.34);
+}

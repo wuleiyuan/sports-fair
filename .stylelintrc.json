@@ -1,0 +1,43 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-hex": true,
+    "color-named": "never",
+    "selector-class-pattern": null,
+    "media-feature-range-notation": null,
+    "custom-property-pattern": null,
+    "keyframes-name-pattern": null,
+    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "shorthand-property-no-redundant-values": null,
+    "value-keyword-case": null,
+    "property-no-vendor-prefix": null,
+    "comment-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "color-hex-length": null,
+    "length-zero-no-unit": null,
+    "selector-pseudo-class-no-unknown": null,
+    "no-duplicate-selectors": null,
+    "import-notation": null,
+    "comment-whitespace-inside": null,
+    "selector-no-vendor-prefix": null,
+    "custom-property-empty-line-before": null
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/**"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null
+      }
+    }
+  ],
+  "ignoreFiles": [
+    "node_modules/**",
+    "dist/**",
+    "src/components/RunMap/mapbox.css"
+  ]
+}

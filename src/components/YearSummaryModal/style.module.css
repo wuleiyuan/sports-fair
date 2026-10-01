@@ -19,7 +19,7 @@
   width: 100vw;
   height: 100vh;
   /* Apple HIG: 主体浅色, 与整站统一 */
-  background: var(--color-bg, #ffffff);
+  background: var(--color-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,7 @@
   right: 30px;
   background: none;
   border: none;
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   font-size: 36px;
   cursor: pointer;
   transition: color 0.2s;
@@ -39,7 +39,7 @@
 }
 
 .closeButton:hover {
-  color: var(--color-text-primary, #1a1a1a);
+  color: var(--color-text-primary);
 }
 
 .svg {
@@ -50,7 +50,7 @@
 }
 
 .loading {
-  color: var(--color-text-secondary, #6b7280);
+  color: var(--color-text-secondary);
   padding: 40px;
   text-align: center;
 }

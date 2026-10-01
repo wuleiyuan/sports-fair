@@ -9,8 +9,8 @@
 
 /* === Light (默认) === */
 .posterRoot {
-  background: #fafafa;
-  color: #1d1d1f;
+  background: var(--color-bg-soft);
+  color: var(--color-text-strong);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
     'SF Pro Text', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
   display: flex;
@@ -35,9 +35,9 @@
   height: 12px;
   background: linear-gradient(
     90deg,
-    var(--poster-accent, #34c759) 0%,
-    var(--poster-accent-2, #007aff) 50%,
-    var(--poster-accent, #34c759) 100%
+    var(--poster-accent, var(--k-sport-run)) 0%,
+    var(--poster-accent-2, var(--k-accent)) 50%,
+    var(--poster-accent, var(--k-sport-run)) 100%
   );
   opacity: 0.95;
 }
@@ -54,7 +54,7 @@
 .brandTitle {
   font-size: 28px;
   font-weight: 700;
-  color: var(--poster-accent, #34c759);
+  color: var(--poster-accent, var(--k-sport-run));
   letter-spacing: -0.02em;
 }
 
@@ -83,7 +83,7 @@
   font-size: 120px;
   font-weight: 800;
   line-height: 1;
-  color: var(--poster-accent, #34c759);
+  color: var(--poster-accent, var(--k-sport-run));
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
@@ -121,7 +121,7 @@
 }
 
 .dataCard {
-  background: #ffffff;
+  background: var(--color-bg-card);
   border-radius: 16px;
   padding: 20px 24px;
   border: 1px solid rgba(60, 60, 67, 0.08);
@@ -148,7 +148,7 @@
     sans-serif;
   font-size: 32px;
   font-weight: 700;
-  color: #1d1d1f;
+  color: var(--color-text-strong);
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
@@ -198,8 +198,8 @@
 
 /* === Dark theme override (导出 PNG 时如启用暗色) === */
 [data-theme='dark'] .posterRoot {
-  background: #000000;
-  color: #ffffff;
+  background: var(--k-text-primary);
+  color: var(--color-on-primary);
 }
 
 [data-theme='dark'] .brandSubtitle,
@@ -228,5 +228,5 @@
 }
 
 [data-theme='dark'] .dataCardValue {
-  color: #ffffff;
+  color: var(--color-on-primary);
 }
