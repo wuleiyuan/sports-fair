@@ -37,6 +37,7 @@
     "data:clean": "rm -f run_page/data.db {GPX,TCX,FIT}_OUT/* activities/* src/static/activities.json",
     "data:download:garmin": "python3 run_page/garmin_sync.py",
     "data:analysis": "python3 run_page/gen_svg.py --from-db --type github --output assets/github.svg",
+    "prepare": "husky",
     "build": "node scripts/embed-sw.js && vite build",
     "develop": "vite dev",
     "dev": "vite dev",
@@ -51,6 +52,8 @@
     "test:watch": "vitest",
     "visual:test": "pnpm exec playwright test",
     "visual:update": "pnpm exec playwright test --update-snapshots",
+    "chromatic:test": "chromatic --exit-zero-on-changes",
+    "chromatic:ci": "chromatic",
     "standards:check": "node scripts/standards-check.mjs",
     "ui:check": "node scripts/standards-check.mjs",
     "ci": "pnpm run format && pnpm run lint && pnpm run test && pnpm run build && pnpm run standards:check"
@@ -80,6 +83,7 @@
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
     "@vercel/node": "^5.8.17",
+    "chromatic": "^18.10.1",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
@@ -87,6 +91,8 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "globals": "^16.3.0",
     "happy-dom": "^20.10.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
     "stylelint": "^17.15.0",
@@ -99,5 +105,18 @@
     "overrides": {
       "@types/node": "^24.2.1"
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,module.css}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx}": [
+      "prettier --write"
+    ]
   }
 }
