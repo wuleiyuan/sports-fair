@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T04:34:30",
+  "generated_at": "2026-10-03T04:16:01",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -35,24 +35,20 @@
     "data_span_days": 1537
   },
   "hr_zones": {
-    "z1_recovery": 49.1,
-    "z2_aerobic_base": 16.1,
-    "z3_aerobic": 27.2,
-    "z4_threshold": 7.6,
+    "z1_recovery": 50.4,
+    "z2_aerobic_base": 16.5,
+    "z3_aerobic": 25.3,
+    "z4_threshold": 7.8,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 16.1,
-    "polarized_pct": 65.2,
-    "activities_with_hr": 31,
+    "z2_pct": 16.5,
+    "polarized_pct": 66.9,
+    "activities_with_hr": 30,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-08-20",
-      "trimp": 75.6
-    },
     {
       "date": "2026-08-23",
       "trimp": 77.6
@@ -104,7 +100,7 @@
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-10-01",
-    "total_activities": 784
+    "latest": "2026-10-02",
+    "total_activities": 785
   }
 }

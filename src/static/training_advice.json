@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T04:34:31",
+  "generated_at": "2026-10-03T04:16:01",
   "overall_status": "high_risk",
   "overall_severity": "high",
   "overall_summary": "⚠️ 重点关注: Z2 有氧底座严重不足。",
@@ -10,9 +10,9 @@
       "category": "intensity",
       "severity": "high",
       "title": "Z2 有氧底座严重不足",
-      "description": "Z2 占比仅 16.1%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
+      "description": "Z2 占比仅 16.5%, 远低于 polarized 训练 60-80% 的目标。长期高强度训练易积劳, 增加伤病风险。",
       "action": "未来 4 周把 80% 的训练严格控制在轻松区间（心率 < 65% HRR）。学会压住心率慢下来, 配速自然会提高。",
-      "evidence": "Z1 49.1% + Z2 16.1% = polarized 65.2%"
+      "evidence": "Z1 50.4% + Z2 16.5% = polarized 66.9%"
     },
     {
       "id": "acwr_caution",
@@ -28,15 +28,15 @@
       "category": "intensity",
       "severity": "medium",
       "title": "训练分布偏离 polarized",
-      "description": "低强度占比 (Z1+Z2) 仅 65.2%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
-      "action": "把中等强度训练替换为轻松有氧。目前 Z4 7.6% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
-      "evidence": "Z1+Z2 = 65.2% (< 70% 阈值)"
+      "description": "低强度占比 (Z1+Z2) 仅 66.9%, 中强度 (Z3 + Z4) 占比过高。polarized 训练模型建议 80/20 分配。",
+      "action": "把中等强度训练替换为轻松有氧。目前 Z4 7.8% + Z5 0.0% 高强度刺激充足, 问题在中间区。",
+      "evidence": "Z1+Z2 = 66.9% (< 70% 阈值)"
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-10-01",
-    "total_activities": 784
+    "latest": "2026-10-02",
+    "total_activities": 785
   },
   "config": {
     "hr_max": 197.0,
