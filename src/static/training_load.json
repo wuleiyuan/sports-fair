@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-03T04:16:01",
+  "generated_at": "2026-10-04T04:48:40",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,12 +17,12 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 307.9,
-    "chronic_28d_trimp": 234.7,
-    "acute_days_with_data": 3,
-    "chronic_days_with_data": 8,
-    "ratio": 1.31,
-    "status": "caution",
+    "acute_7d_trimp": 241.0,
+    "chronic_28d_trimp": 197.0,
+    "acute_days_with_data": 2,
+    "chronic_days_with_data": 7,
+    "ratio": 1.22,
+    "status": "sweet_spot",
     "warning": null
   },
   "tsb": {
@@ -100,7 +100,7 @@
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-10-02",
-    "total_activities": 785
+    "latest": "2026-10-03",
+    "total_activities": 819
   }
 }
