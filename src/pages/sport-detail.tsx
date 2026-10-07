@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import SportIcon from '@/components/SportIcon';
 import PersonalBests from '@/components/PB';
+import RoutePreview from '@/components/RoutePreview';
 import {
   IconBolt,
   IconClock,
@@ -66,6 +67,7 @@ const SportDetail = () => {
   const sport = key ? SPORT_BY_KEY[key] : null;
   const [range, setRange] = useState<TimeRange>('all');
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   // 该运动类型的所有活动
   const allSportActivities = useMemo(() => {
@@ -739,46 +741,70 @@ const SportDetail = () => {
                       ).slice(0, 10);
                       const source = detectSource(act.name);
                       return (
-                        <tr key={act.run_id} className={styles.tableRow}>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdMuted}`}
+                        <>
+                          <tr
+                            key={`row-${act.run_id}`}
+                            className={styles.tableRow}
+                            onClick={() =>
+                              setExpandedId(
+                                expandedId === act.run_id ? null : act.run_id
+                              )
+                            }
+                            style={{ cursor: 'pointer' }}
                           >
-                            {dateStr}
-                          </td>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdName}`}
-                            title={act.name}
-                          >
-                            {act.name}
-                          </td>
-                          <td className={styles.tableTdColored}>
-                            {distKm}
-                            <span className={styles.tableUnit}>km</span>
-                          </td>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdRight}`}
-                          >
-                            {timeMin < 60
-                              ? `${timeMin}m`
-                              : `${Math.floor(timeMin / 60)}h ${timeMin % 60}m`}
-                          </td>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
-                          >
-                            {pace}
-                          </td>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
-                          >
-                            {hr ? `${hr}` : '—'}
-                          </td>
-                          <td
-                            className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
-                          >
-                            {elev != null ? `${Math.round(elev)}m` : '—'}
-                          </td>
-                          <td className={styles.tableSource}>{source}</td>
-                        </tr>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdMuted}`}
+                            >
+                              {dateStr}
+                            </td>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdName}`}
+                              title={act.name}
+                            >
+                              {act.name}
+                            </td>
+                            <td className={styles.tableTdColored}>
+                              {distKm}
+                              <span className={styles.tableUnit}>km</span>
+                            </td>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdRight}`}
+                            >
+                              {timeMin < 60
+                                ? `${timeMin}m`
+                                : `${Math.floor(timeMin / 60)}h ${timeMin % 60}m`}
+                            </td>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                            >
+                              {pace}
+                            </td>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                            >
+                              {hr ? `${hr}` : '—'}
+                            </td>
+                            <td
+                              className={`${styles.tableTd} ${styles.tableTdRight} ${styles.tableTdMuted}`}
+                            >
+                              {elev != null ? `${Math.round(elev)}m` : '—'}
+                            </td>
+                            <td className={styles.tableSource}>{source}</td>
+                          </tr>
+                          {expandedId === act.run_id && (
+                            <tr
+                              key={`expand-${act.run_id}`}
+                              className={styles.tableExpandRow}
+                            >
+                              <td
+                                colSpan={8}
+                                className={styles.tableExpandCell}
+                              >
+                                <RoutePreview activities={[act]} />
+                              </td>
+                            </tr>
+                          )}
+                        </>
                       );
                     })}
                   </tbody>

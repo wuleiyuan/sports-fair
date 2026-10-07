@@ -428,6 +428,20 @@
   border-bottom: none;
 }
 
+.tableExpandRow {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tableExpandCell {
+  padding: 16px !important;
+  border-top: 1px dashed rgba(255, 255, 255, 0.06) !important;
+}
+
+.tableExpandCell > div {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .tableTd {
   padding: 0.625rem 0.5rem;
   color: var(--k-text-primary);
