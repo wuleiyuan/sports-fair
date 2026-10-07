@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/Layout';
 import SportIcon from '@/components/SportIcon';
+import PersonalBests from '@/components/PB';
 import {
   IconBolt,
   IconClock,
@@ -19,10 +20,7 @@ import {
   IconSportStrength,
   IconCalendar,
 } from '@/components/Icons';
-import {
-  SPORT_BY_KEY,
-  normalizeSportType,
-} from '@/utils/sportTypes';
+import { SPORT_BY_KEY, normalizeSportType } from '@/utils/sportTypes';
 import { convertMovingTime2Sec } from '@/utils/utils';
 import activities from '@/static/activities.json';
 import { Activity } from '@/utils/utils';
@@ -150,7 +148,9 @@ const SportDetail = () => {
 
     // 平均坡度 (%) — elevation_gain / distance * 100，仅 hiking 显示
     const avgGrade =
-      totalDist > 0 ? ((totalElev / sportActivities.length) / totalDist) * 100 : 0;
+      totalDist > 0
+        ? (totalElev / sportActivities.length / totalDist) * 100
+        : 0;
 
     // 平均功率 (W) — 仅骑行需要；优先取 activity.average_watts，否则 0
     const validWatts = sportActivities
@@ -236,9 +236,7 @@ const SportDetail = () => {
             unit: 'W',
             sub: `${sportActivities.length} 次骑行 · 配速 ${
               stats.avgPace || '—'
-            }${
-              stats.avgHR ? ` · 心率 ${stats.avgHR} bpm` : ''
-            }`,
+            }${stats.avgHR ? ` · 心率 ${stats.avgHR} bpm` : ''}`,
           };
         }
         if (!stats.avgSpeedKmh) return null;
@@ -281,7 +279,9 @@ const SportDetail = () => {
           label: '总训练时长',
           value: h > 0 ? `${h}h ${m}m` : `${m}m`,
           unit: '',
-          sub: stats.avgHR ? `平均心率 ${stats.avgHR} bpm` : `${sportActivities.length} 次训练`,
+          sub: stats.avgHR
+            ? `平均心率 ${stats.avgHR} bpm`
+            : `${sportActivities.length} 次训练`,
         };
       }
 
@@ -339,30 +339,18 @@ const SportDetail = () => {
       value: string;
     }[] = [];
 
-    const push = (
-      Icon: IconComponent,
-      label: string,
-      value: string
-    ) => {
+    const push = (Icon: IconComponent, label: string, value: string) => {
       if (value && value !== '—') items.push({ Icon, label, value });
     };
 
     if (sport.key === 'Run') {
       push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
       push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
-      push(
-        IconClock,
-        '总时长',
-        formatTimeShort(stats.totalTime)
-      );
+      push(IconClock, '总时长', formatTimeShort(stats.totalTime));
     } else if (sport.key === 'Ride') {
       push(IconHeart, '平均心率', stats.avgHR ? `${stats.avgHR} bpm` : '');
       push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
-      push(
-        IconClock,
-        '总时长',
-        formatTimeShort(stats.totalTime)
-      );
+      push(IconClock, '总时长', formatTimeShort(stats.totalTime));
     } else if (sport.key === 'Hiking') {
       push(IconRuler, '总距离', `${(stats.totalDist / 1000).toFixed(1)} km`);
       push(
@@ -491,9 +479,7 @@ const SportDetail = () => {
                   {headline.label}
                 </span>
                 <div>
-                  <span className={styles.headlineValue}>
-                    {headline.value}
-                  </span>
+                  <span className={styles.headlineValue}>{headline.value}</span>
                   {headline.unit && (
                     <span className={styles.headlineUnit}>{headline.unit}</span>
                   )}
@@ -646,10 +632,7 @@ const SportDetail = () => {
                       dataKey="period"
                       tick={{ fill: '#98989d', fontSize: 11 }}
                     />
-                    <YAxis
-                      tick={{ fill: '#98989d', fontSize: 11 }}
-                      unit="km"
-                    />
+                    <YAxis tick={{ fill: '#98989d', fontSize: 11 }} unit="km" />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#ffffff',
@@ -681,6 +664,11 @@ const SportDetail = () => {
             </div>
           )}
 
+          {/* 徒步 PB 区块（仅 Hiking 页显示） */}
+          {sport.key === 'Hiking' && sportActivities.length > 0 && (
+            <PersonalBests sportKey="Hiking" />
+          )}
+
           {/* 活动列表 */}
           <div className={styles.tableHeader}>
             <h2 className={styles.tableTitle}>活动记录</h2>
@@ -703,19 +691,29 @@ const SportDetail = () => {
                     <tr>
                       <th className={styles.tableTh}>日期</th>
                       <th className={styles.tableTh}>名称</th>
-                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                      <th
+                        className={`${styles.tableTh} ${styles.tableTdRight}`}
+                      >
                         距离
                       </th>
-                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                      <th
+                        className={`${styles.tableTh} ${styles.tableTdRight}`}
+                      >
                         时长
                       </th>
-                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                      <th
+                        className={`${styles.tableTh} ${styles.tableTdRight}`}
+                      >
                         配速
                       </th>
-                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                      <th
+                        className={`${styles.tableTh} ${styles.tableTdRight}`}
+                      >
                         心率
                       </th>
-                      <th className={`${styles.tableTh} ${styles.tableTdRight}`}>
+                      <th
+                        className={`${styles.tableTh} ${styles.tableTdRight}`}
+                      >
                         海拔
                       </th>
                       <th className={styles.tableTh}>数据源</th>

@@ -1,0 +1,32 @@
+[
+  {
+    "label": "最长距离",
+    "distance_km": 23.99,
+    "moving_time": "4:36:00",
+    "pace_str": "5.21 km/h",
+    "date": "2026-06-02",
+    "activity_id": 1780376620623,
+    "activity_name": "徒步 Hiking",
+    "elev_gain": 0
+  },
+  {
+    "label": "最长时长",
+    "distance_km": 11.31,
+    "moving_time": "6:26:18",
+    "pace_str": "1.76 km/h",
+    "date": "2026-09-15",
+    "activity_id": 9223370247389722807,
+    "activity_name": "Hiking from keep",
+    "elev_gain": 819
+  },
+  {
+    "label": "最快配速",
+    "distance_km": 23.99,
+    "moving_time": "4:36:00",
+    "pace_str": "5.21 km/h",
+    "date": "2026-06-02",
+    "activity_id": 1780376620623,
+    "activity_name": "徒步 Hiking",
+    "elev_gain": 0
+  }
+]

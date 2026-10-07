@@ -83,6 +83,7 @@ const HomePage = () => {
             </button>
           </div>
           <PersonalBests />
+          <PersonalBests sportKey="Hiking" />
         </div>
         <ActivityList />
       </div>
