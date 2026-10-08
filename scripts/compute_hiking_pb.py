@@ -29,6 +29,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_ACTIVITIES = PROJECT_ROOT / "src" / "static" / "activities.json"
 DEFAULT_OUTPUT = PROJECT_ROOT / "src" / "static" / "hiking_pb.json"
 
+# 同步时刻 hiking_sync.py 也要能跑：HIKING_GPXS/ 在 sports-fair repo 根目录
+DEFAULT_HIKING_GPX_DIR = PROJECT_ROOT / "HIKING_GPXS"
+
 CN_TZ = timedelta(hours=8)
 
 

@@ -38,7 +38,9 @@ from haversine import Unit, haversine
 
 # 默认路径
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_HIKES_DIR = Path("/Users/wuleiyuan/WorkBuddy/hiking-tools/output/2bulu/hikes")
+# 默认从 repo 内 HIKING_GPXS/ 读（GitHub Actions 也能访问）。
+# 本地开发可指向 /Users/wuleiyuan/WorkBuddy/hiking-tools/output/2bulu/hikes/
+DEFAULT_HIKES_DIR = PROJECT_ROOT / "HIKING_GPXS"
 DEFAULT_DB = PROJECT_ROOT / "run_page" / "data.db"
 DEFAULT_JSON = PROJECT_ROOT / "src" / "static" / "activities.json"
 

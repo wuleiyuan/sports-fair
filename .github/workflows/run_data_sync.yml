@@ -160,6 +160,27 @@ jobs:
             exit 1
           fi
 
+      - name: Sync hiking GPX from HIKING_GPXS/ into data.db
+        # 2026-10-08: hiking_tools 体系中的 13 条徒步 GPX 提交到本 repo 的 HIKING_GPXS/
+        # hiking_sync.py 写 SQL 进 data.db(独立 ORM,避开 schema 不一致)
+        # 必须在 keep_sync 之前跑,否则 keep_sync 完全重写 activities.json 会丢失 SQL 里的 Hiking
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Syncing hiking GPX into data.db ==="
+          python3 run_page/hiking_sync.py
+
+      - name: Rewrite activities.json + compute hiking PB
+        # hiking_sync 写完 SQL,这里从 SQL 重写 activities.json 让 Hiking 出现在前端数据
+        # 同时算徒步 PB 输出 src/static/hiking_pb.json
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Rewriting activities.json from data.db (含 hiking) ==="
+          python3 run_page/hiking_sync.py --rewrite-json
+          echo "=== Computing hiking PB ==="
+          python3 scripts/compute_hiking_pb.py
+
       - name: Deduplicate activities
         # 2026-06-21 v2.5.1: Keep + bootstrap 可能产生同日期+同 moving_time 的重复
         # 按 (start_date, moving_time) 分组，保留公里数更长的
@@ -299,7 +320,7 @@ jobs:
           echo "=== Git status before add ==="
           git status
           echo "=== Git add (data files only) ==="
-          git add src/static/activities.json src/static/training_load.json src/static/training_advice.json assets/*.svg
+          git add src/static/activities.json src/static/hiking_pb.json src/static/training_load.json src/static/training_advice.json assets/*.svg
           echo "=== Git diff --cached --stat ==="
           git diff --cached --stat || true
           if git diff --cached --quiet; then
