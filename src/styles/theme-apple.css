@@ -1156,7 +1156,7 @@
 
   --color-bg: #000000;
   --color-bg-page: #000000;
-  --color-bg-card: #1c1c1e;
+  --color-bg-card: #000000; /* 暗色卡片底（与外层同色，与 prefers-color-scheme:dark 对齐） */
   --color-bg-soft: #1c1c1e;
   --color-bg-surface: #1c1c1e;
   --color-bg-muted: #1c1c1e;

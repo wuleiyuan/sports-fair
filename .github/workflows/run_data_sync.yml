@@ -9,6 +9,10 @@ on:
       - master
     paths:
       - run_page/keep_sync.py
+      - run_page/hiking_sync.py
+      - scripts/dedup_hiking.py
+      - scripts/compute_hiking_pb.py
+      - HIKING_GPXS/**
       - src/static/activities.json
       - src/static/training_load.json
       - src/static/training_advice.json
@@ -170,14 +174,29 @@ jobs:
           echo "=== Syncing hiking GPX into data.db ==="
           python3 run_page/hiking_sync.py
 
-      - name: Rewrite activities.json + compute hiking PB
+      - name: Rewrite activities.json from data.db
         # hiking_sync 写完 SQL,这里从 SQL 重写 activities.json 让 Hiking 出现在前端数据
-        # 同时算徒步 PB 输出 src/static/hiking_pb.json
         run: |
           set -e
           cd /home/runner/work/sports-fair/sports-fair
           echo "=== Rewriting activities.json from data.db (含 hiking) ==="
           python3 run_page/hiking_sync.py --rewrite-json
+
+      - name: Deduplicate same-day hiking (keep longest, merge fields)
+        # 2026-10-10: 同一天可能同时有 Keep 版（有距离/心率，无轨迹）和 GPX 版
+        # （有轨迹/爬升，无心率）。这里一天只留一条：距离取最长，其余字段从同日
+        # 另一条补齐 —— 轨迹 / 爬升 / 心率一个都不丢。
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
+          echo "=== Deduplicating same-day hiking ==="
+          python3 scripts/dedup_hiking.py
+
+      - name: Compute hiking PB
+        # 徒步 PB 必须在去重之后算，否则同一趟会被算两次
+        run: |
+          set -e
+          cd /home/runner/work/sports-fair/sports-fair
           echo "=== Computing hiking PB ==="
           python3 scripts/compute_hiking_pb.py
 

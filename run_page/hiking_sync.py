@@ -150,20 +150,25 @@ def make_run_id(path: Path) -> int:
 # ─────────────────────────────────────────────────────────────
 
 def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
-    """把 hikes/ 里的 GPX 写进 SQLite"""
+    """把 hikes/ 里的 GPX 写进 SQLite。
+
+    返回：
+      >= 0  成功，值为本次新增（或 dry-run 下将新增）的条数
+      -1    硬错误（库/目录/GPX 缺失、写入失败）——调用方应据此返回非零退出码
+    """
     if not db_path.exists():
         print(f"❌ 数据库不存在: {db_path}", file=sys.stderr)
         print("   先跑 keep_sync.py 创建数据库", file=sys.stderr)
-        return 0
+        return -1
 
     if not hikes_dir.is_dir():
         print(f"❌ hikes 目录不存在: {hikes_dir}", file=sys.stderr)
-        return 0
+        return -1
 
     gpx_files = sorted(hikes_dir.glob("*.gpx"))
     if not gpx_files:
         print(f"❌ hikes 目录里没 GPX: {hikes_dir}", file=sys.stderr)
-        return 0
+        return -1
 
     print(f"📂 hikes 目录: {hikes_dir}")
     print(f"📂 数据库: {db_path}")
@@ -283,7 +288,7 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
         except Exception as e:
             print(f"❌ commit 失败: {e}", file=sys.stderr)
             conn.rollback()
-            return 0
+            return -1
 
     conn.close()
 
@@ -374,11 +379,21 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     added = sync_hikes(args.hikes_dir, args.db, args.dry_run)
+    if added < 0:
+        return 1
+
     if args.rewrite_json:
         print()
         print("━━━ 重写 activities.json ━━━")
         rewrite_activities_json(args.db, args.json_path)
-    return added
+
+    # ⚠️ 退出码必须是 0/1，绝不能返回"新增条数"。
+    # 2026-10-10 事故：本函数原样 `return added` + `sys.exit(main())`，
+    # CI 每次在干净 runner 上 13 条 GPX 全是新增 → 退出码 13 → `set -e`
+    # 把 "Sync hiking GPX into data.db" 这一步判成失败 → 后面的
+    # 重写 activities.json / safety check / push 全部不执行 →
+    # 10-08 起每天 0 点定时同步连续失败，网站徒步数据再没更新过。
+    return 0
 
 
 if __name__ == "__main__":

@@ -34,6 +34,7 @@ const PRECACHE_URLS = [
   '/',
   '/manifest.json',
   '/images/favicon.png',
+  '/images/favicon-1024.png', // v2.5.26: 1024x1024 主图
   '/images/og-image.png',
 ];
 

@@ -12,14 +12,8 @@
   "categories": ["fitness", "health", "lifestyle"],
   "icons": [
     {
-      "src": "/images/favicon.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/images/favicon.png",
-      "sizes": "512x512",
+      "src": "/images/favicon-1024.png",
+      "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any maskable"
     }
@@ -30,18 +24,14 @@
       "short_name": "评估",
       "description": "查看近 7/30 天的健康评估与建议",
       "url": "/health-assess",
-      "icons": [
-        { "src": "/images/favicon.png", "sizes": "192x192" }
-      ]
+      "icons": [{ "src": "/images/favicon-1024.png", "sizes": "1024x1024" }]
     },
     {
       "name": "运动总览",
       "short_name": "总览",
       "description": "查看运动总览与历史记录",
       "url": "/summary",
-      "icons": [
-        { "src": "/images/favicon.png", "sizes": "192x192" }
-      ]
+      "icons": [{ "src": "/images/favicon-1024.png", "sizes": "1024x1024" }]
     }
   ],
   "prefer_related_applications": false

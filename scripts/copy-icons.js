@@ -27,6 +27,7 @@ const COPIES = [
   { from: 'favicon.png', to: 'favicon.png' },
   { from: 'apple-touch-icon.png', to: 'apple-touch-icon.png' },
   { from: 'favicon-192.png', to: 'images/favicon.png' },
+  { from: 'favicon-1024.png', to: 'images/favicon-1024.png' }, // v2.5.26: 1024x1024 主图 (LANCZOS 上采样)
   { from: 'logo-512.png', to: 'images/logo-512.png' },
   { from: 'og-image.png', to: 'images/og-image.png' },
 ];
