@@ -28,6 +28,7 @@ import datetime as dt
 from datetime import datetime, timedelta
 import hashlib
 import json
+import re
 import sqlite3
 import sys
 from collections import Counter
@@ -302,6 +303,49 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
     return added
 
 
+_SENTINEL_TIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2} (\d+):(\d+):(\d+)")
+
+
+def _duration_to_hhmmss(value):
+    """把 DB 里取出的 moving_time / elapsed_time 归一到 "H:MM:SS"。
+
+    从 SQLite 里读出来的时长有三种形态：
+      1. 整数秒          —— GPX 写进去的（本脚本自己插的行）
+      2. "1970-01-01 HH:MM:SS.ffffff" —— SQLAlchemy 把 timedelta 存成的哨兵
+      3. "H:MM:SS" / "X days, H:MM:SS" —— 已经是字符串的
+
+    直接 str() 会产生 "22764" 这种纯数字串，跟 activities.json 其余行
+    （全部是 "H:MM:SS"）不一致 —— 前端 convertMovingTime2Sec 和
+    scripts/compute_hiking_pb.py 都会解析失败（后者直接 ValueError 崩掉，
+    2026-10-10 CI 的第 12 步就是这么挂的）。所以这里统一成 "H:MM:SS"。
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, (int, float)):
+        total = int(value)
+    else:
+        s = str(value).strip()
+        if s == "":
+            return None
+        m = _SENTINEL_TIME_RE.match(s)
+        if m:
+            h, mn, sec = (int(g) for g in m.groups())
+            total = h * 3600 + mn * 60 + sec
+        elif ":" in s:
+            # 已经是 "H:MM:SS" / "X days, H:MM:SS"，原样保留
+            return s
+        else:
+            try:
+                total = int(float(s))
+            except ValueError:
+                return s
+
+    h, rem = divmod(total, 3600)
+    mn, sec = divmod(rem, 60)
+    return f"{h}:{mn:02d}:{sec:02d}"
+
+
 def rewrite_activities_json(db_path: Path, json_path: Path) -> int:
     """从 SQLite 数据库读取所有活动，写到 activities.json
 
@@ -319,8 +363,7 @@ def rewrite_activities_json(db_path: Path, json_path: Path) -> int:
     for row in cur:
         r = dict(row)
         for k in ("moving_time", "elapsed_time"):
-            if r.get(k) is not None:
-                r[k] = str(r[k])
+            r[k] = _duration_to_hhmmss(r.get(k))
 
         distance = r.get("distance")
         act_type = r.get("type")

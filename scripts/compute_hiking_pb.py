@@ -54,6 +54,14 @@ def parse_moving_time_to_seconds(s) -> int:
         h, mn, sec = int(m.group(1)), int(m.group(2)), int(m.group(3))
         return h * 3600 + mn * 60 + sec
 
+    # 纯秒数（hiking_sync.py 早期版本会写成 str(整数)，例如 "22764"）
+    # 不加这个分支，"22764".split(":") 只有 1 段 → 下面解包直接 ValueError
+    if ":" not in s:
+        try:
+            return int(float(s))
+        except ValueError:
+            return 0
+
     # "X days, H:MM:SS" / "H:MM:SS" 格式（Keep）
     parts = s.split(", ")
     days = 0
