@@ -43,6 +43,14 @@ public/
 # 2026-06-20 v2.3.3: scripts/embed-sw.js build 时要读 public/sw.js, 反向 include
 !public/sw.js
 !public/manifest.json
+# 2026-10-10 v2.5.23: 修复 favicon/apple-touch-icon 404 长期 bug — public/ 被 ignore
+# 排除后 vite 复制 public/ → dist/ 时这些 PNG 没了, 上线后 404。
+# 反向 include 5 个图标资产, Vercel 会上传到 build context, vite 才能复制到 dist/。
+!public/favicon.png
+!public/apple-touch-icon.png
+!public/images/favicon.png
+!public/images/logo-512.png
+!public/images/og-image.png
 
 # ---- IDE / OS ----
 .DS_Store
