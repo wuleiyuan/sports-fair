@@ -4,6 +4,11 @@
   "rewrites": [
     { "source": "/sw.js", "destination": "/api/sw.js" },
     { "source": "/manifest.json", "destination": "/api/manifest.json" },
+    { "source": "/favicon.png", "destination": "/api/icon/favicon.png" },
+    { "source": "/apple-touch-icon.png", "destination": "/api/icon/apple-touch-icon.png" },
+    { "source": "/images/favicon.png", "destination": "/api/icon/images/favicon.png" },
+    { "source": "/images/logo-512.png", "destination": "/api/icon/images/logo-512.png" },
+    { "source": "/images/og-image.png", "destination": "/api/icon/images/og-image.png" },
     {
       "source": "/((?!images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)",
       "destination": "/"
