@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """
-gen_favicon.py — 生成 sports-fair 网站 favicon + apple-touch-icon
+gen_favicon.py — 生成 sports-fair 网站 favicon + apple-touch-icon (v2)
 
-设计:徒步路线风格
-- 圆角橙色背景 (#f59e0b → #f97316 渐变,符合网站 Run 主色)
-- 底部山形剪影 (绿色 #16a34a,符合 Hiking 色)
-- 蜿蜒白色轨迹线 (从左下到右上)
-- 起点: 红色圆点 (运动开始)
-- 终点: 白色五角星 (完成/成就)
+设计:多元素运动 + 户外 + 数据
+- 圆角橙色渐变背景 (#f59e0b → #ea580c, Run 主色)
+- 白色蜿蜒轨迹线 (从左下到右上)
+- 起点: 红色圆点 + 旁边小跑步人剪影 (运动)
+- 终点: 白色五角星 (成就)
+- 山形 (缩小, Hiking 色)
+- 天空: 2 朵白云 (户外)
+- 山脚: 3 棵三角小树 (户外)
+- 左侧: 心率波纹图标 (数据)
+- 右上: 指南针指针 (数据 / 户外)
 
 输出:
 - public/favicon.png (256x256)
@@ -23,17 +27,23 @@ except ImportError:
     print("需要 pillow: pip install pillow")
     raise
 
-# sports-fair 现有主题色（从 src/components/Stat 颜色推断,跟 Hiking 联动）
+# sports-fair 现有主题色
 BG_TOP = (245, 158, 11)        # #f59e0b amber-500
 BG_BOTTOM = (234, 88, 12)      # #ea580c orange-600
-MOUNTAIN = (22, 163, 74)       # #16a34a green-600 (Hiking)
+MOUNTAIN = (22, 163, 74)       # #16a34a green-600
+MOUNTAIN_FAR = (132, 204, 22)  # #84cc16 green-400 远山
+TREE_DARK = (20, 83, 45)       # #14532d dark green
 TRACK = (255, 255, 255)        # 白色轨迹线
-START = (220, 38, 38)          # #dc2626 red-600 (起点强调)
+START = (220, 38, 38)          # #dc2626 red-600
 STAR = (255, 255, 255)         # 白色终点星
+CLOUD = (255, 255, 255)         # 白色云
+CLOUD_SHADOW = (255, 247, 230)  # 微黄云底
+HEART = (244, 63, 94)          # #f43f5e rose-500 心率
+RUNNER = (255, 255, 255)        # 白色跑步人
+TREE_TRUNK = (101, 67, 33)      # 棕色树干
 
 
-def vertical_gradient(size: tuple[int, int], top: tuple[int, int, int], bottom: tuple[int, int, int]) -> Image.Image:
-    """生成垂直渐变背景"""
+def vertical_gradient(size, top, bottom):
     img = Image.new("RGB", size, top)
     pixels = img.load()
     w, h = size
@@ -47,67 +57,32 @@ def vertical_gradient(size: tuple[int, int], top: tuple[int, int, int], bottom: 
     return img
 
 
-def rounded_rectangle_mask(size: tuple[int, int], radius: int) -> Image.Image:
-    """生成圆角矩形 alpha mask (白色 = 透明? — 实际是白色可见)"""
+def rounded_rectangle_mask(size, radius):
     mask = Image.new("L", size, 0)
     draw = ImageDraw.Draw(mask)
     draw.rounded_rectangle([(0, 0), size], radius=radius, fill=255)
     return mask
 
 
-def draw_mountains(draw: ImageDraw.ImageDraw, size: tuple[int, int]) -> None:
-    """画底部山形"""
+def draw_mountains(draw, size):
     w, h = size
-    # 主峰 1 - 左中
-    p1 = [(0, h * 0.78), (w * 0.30, h * 0.42), (w * 0.55, h * 0.72), (w * 0.45, h * 0.72), (0, h * 0.72)]
-    # 主峰 2 - 中右
-    p2 = [(w * 0.35, h * 0.70), (w * 0.65, h * 0.35), (w * 0.92, h * 0.68), (w * 0.92, h), (w * 0.35, h)]
-    # 远山 - 浅色,做层次
-    p3 = [(0, h * 0.88), (w * 0.18, h * 0.62), (w * 0.40, h * 0.88)]
-    p4 = [(w * 0.55, h * 0.88), (w * 0.80, h * 0.58), (w, h * 0.85), (w, h), (w * 0.55, h)]
-    draw.polygon(p3, fill=(132, 204, 22))  # green-400 远山
-    draw.polygon(p4, fill=(132, 204, 22))
-    draw.polygon(p1, fill=MOUNTAIN)
-    draw.polygon(p2, fill=MOUNTAIN)
+    # 远山 (浅绿,层次感)
+    far_left = [(0, h * 0.80), (w * 0.22, h * 0.55), (w * 0.42, h * 0.78), (w * 0.30, h * 0.78), (0, h * 0.78)]
+    far_right = [(w * 0.55, h * 0.78), (w * 0.78, h * 0.50), (w, h * 0.75), (w, h), (w * 0.55, h)]
+    draw.polygon(far_left, fill=MOUNTAIN_FAR)
+    draw.polygon(far_right, fill=MOUNTAIN_FAR)
+    # 主山 (深绿)
+    main_left = [(0, h * 0.92), (w * 0.28, h * 0.50), (w * 0.55, h * 0.88), (0, h * 0.88)]
+    main_right = [(w * 0.40, h * 0.88), (w * 0.68, h * 0.42), (w * 0.95, h * 0.82), (w * 0.95, h), (w * 0.40, h)]
+    draw.polygon(main_left, fill=MOUNTAIN)
+    draw.polygon(main_right, fill=MOUNTAIN)
 
 
-def draw_track(draw: ImageDraw.ImageDraw, size: tuple[int, int], seed: int = 42) -> None:
-    """画蜿蜒轨迹线(从左下到右上,带自然的曲率)"""
+def draw_track(draw_main, draw_shadow, size, seed=42):
     w, h = size
     rng = random.Random(seed)
-    # 起点(左下)到终点(右上)
-    p0 = (w * 0.10, h * 0.75)
-    p1 = (w * 0.92, h * 0.22)
-    n = 40
-    pts = []
-    for i in range(n + 1):
-        t = i / n
-        # 直线插值
-        x = p0[0] + (p1[0] - p0[0]) * t
-        y = p0[1] + (p1[1] - p0[1]) * t
-        # 加正弦扰动
-        amp = 0.10 * w * (1 - 0.7 * abs(2 * t - 1))  # 中间幅度大,两端小
-        offset = math.sin(t * math.pi * 2.5) * amp
-        x += offset * 0.6
-        y += offset * 0.4
-        # 微微随机扰动
-        x += rng.uniform(-2, 2)
-        y += rng.uniform(-2, 2)
-        pts.append((x, y))
-    # 主轨迹线
-    line_w = max(4, int(w / 64))
-    draw.line(pts, fill=TRACK, width=line_w, joint="curve")
-    # 描边(深色)— 让白色在橙色背景上更立体
-    draw.line(pts, fill=(0, 0, 0, 80), width=line_w + 2, joint="curve")  # alpha 80 在 RGBA 模式下失效,需换法
-
-
-def draw_track_with_shadow(draw_main, draw_shadow, size, seed=42):
-    """带阴影的轨迹线"""
-    import math, random
-    w, h = size
-    rng = random.Random(seed)
-    p0 = (w * 0.10, h * 0.75)
-    p1 = (w * 0.92, h * 0.22)
+    p0 = (w * 0.12, h * 0.78)
+    p1 = (w * 0.88, h * 0.20)
     n = 40
     pts = []
     for i in range(n + 1):
@@ -122,64 +97,177 @@ def draw_track_with_shadow(draw_main, draw_shadow, size, seed=42):
         y += rng.uniform(-2, 2)
         pts.append((x, y))
     line_w = max(4, int(w / 64))
-    # 先画阴影(粗一点的半透明)
-    draw_shadow.line(pts, fill=(120, 53, 15, 180), width=line_w + 2, joint="curve")
-    # 再画主轨迹
+    draw_shadow.line(pts, fill=(120, 53, 15, 220), width=line_w + 3, joint="curve")
     draw_main.line(pts, fill=TRACK, width=line_w, joint="curve")
+    return pts
 
 
-def draw_start_marker(draw: ImageDraw.ImageDraw, size: tuple[int, int]) -> None:
-    """起点圆点(左下)"""
+def draw_clouds(draw, size):
+    w, h = size
+    # 云 1 - 左上
+    c1_cx, c1_cy = w * 0.25, h * 0.18
+    cr1 = w * 0.06
+    for cx_off, cy_off, r in [
+        (-0.8, 0.0, 0.7),
+        (-0.2, 0.3, 0.9),
+        (0.5, 0.2, 0.8),
+        (0.9, 0.0, 0.6),
+    ]:
+        cx = c1_cx + cx_off * cr1
+        cy = c1_cy + cy_off * cr1
+        r = r * cr1
+        draw.ellipse([(cx - r + 2, cy - r + 2), (cx + r + 2, cy + r + 2)], fill=CLOUD_SHADOW)
+        draw.ellipse([(cx - r, cy - r), (cx + r, cy + r)], fill=CLOUD)
+    # 云 2 - 右上偏下
+    c2_cx, c2_cy = w * 0.70, h * 0.32
+    cr2 = w * 0.04
+    for cx_off, cy_off, r in [
+        (-0.8, 0.0, 0.7),
+        (0.0, 0.4, 0.8),
+        (0.8, 0.1, 0.7),
+    ]:
+        cx = c2_cx + cx_off * cr2
+        cy = c2_cy + cy_off * cr2
+        r = r * cr2
+        draw.ellipse([(cx - r + 1, cy - r + 1), (cx + r + 1, cy + r + 1)], fill=CLOUD_SHADOW)
+        draw.ellipse([(cx - r, cy - r), (cx + r, cy + r)], fill=CLOUD)
+
+
+def draw_trees(draw, size):
+    w, h = size
+    for tx, ty, scale in [(w * 0.10, h * 0.85, 1.0),
+                          (w * 0.78, h * 0.82, 0.8),
+                          (w * 0.93, h * 0.88, 0.7)]:
+        trunk_w = max(2, int(w / 80 * scale))
+        tree_h = h * 0.10 * scale
+        tree_w = w * 0.05 * scale
+        # 树冠 (三角)
+        draw.polygon([
+            (tx, ty - tree_h),
+            (tx - tree_w, ty),
+            (tx + tree_w, ty),
+        ], fill=TREE_DARK)
+        # 树干
+        draw.rectangle([
+            (tx - trunk_w, ty),
+            (tx + trunk_w, ty + tree_h * 0.2),
+        ], fill=TREE_TRUNK)
+
+
+def draw_heart_icon(draw, size):
+    w, h = size
+    cx, cy = w * 0.15, h * 0.55
+    r = w * 0.04
+    line_w = max(2, int(w / 100))
+    pts = [
+        (cx - r * 2, cy),
+        (cx - r * 1.2, cy),
+        (cx - r * 0.8, cy - r * 0.4),
+        (cx - r * 0.4, cy + r * 0.6),
+        (cx, cy - r * 0.8),
+        (cx + r * 0.4, cy + r * 0.4),
+        (cx + r * 0.8, cy - r * 0.2),
+        (cx + r * 1.2, cy),
+        (cx + r * 2, cy),
+    ]
+    draw.line(pts, fill=HEART, width=line_w, joint="curve")
+
+
+def draw_compass(draw, size):
+    w, h = size
+    cx, cy = w * 0.78, h * 0.13
+    r_outer = w * 0.04
+    r_inner = r_outer * 0.35
+    # 外圈
+    draw.ellipse([(cx - r_outer, cy - r_outer), (cx + r_outer, cy + r_outer)],
+                 outline=TRACK, width=max(1, int(w / 200)))
+    # 指针 (北, 白色三角)
+    draw.polygon([
+        (cx, cy - r_outer * 0.85),
+        (cx - r_outer * 0.25, cy),
+        (cx + r_outer * 0.25, cy),
+    ], fill=TRACK)
+    # 指针 (南, 暗红)
+    draw.polygon([
+        (cx, cy + r_outer * 0.85),
+        (cx - r_outer * 0.25, cy),
+        (cx + r_outer * 0.25, cy),
+    ], fill=START)
+    # 中心点
+    draw.ellipse([(cx - 2, cy - 2), (cx + 2, cy + 2)], fill=TRACK)
+
+
+def draw_runner_silhouette(draw, size):
+    w, h = size
+    cx, cy = w * 0.22, h * 0.78  # 起点圆点右上
+    s = w * 0.012
+    head_r = s * 1.2
+    # 头
+    draw.ellipse([(cx - head_r, cy - head_r * 2.2), (cx + head_r, cy - head_r * 0.4)],
+                 fill=RUNNER)
+    # 身体 (向前倾)
+    body_top = (cx, cy - head_r * 0.4)
+    body_bot = (cx + s * 0.3, cy + s * 0.5)
+    draw.line([body_top, body_bot], fill=RUNNER, width=max(2, int(s * 0.5)))
+    # 前腿 (迈出)
+    draw.line([body_bot, (cx + s * 2, cy + s * 2.5)], fill=RUNNER, width=max(2, int(s * 0.5)))
+    # 后腿 (推地)
+    draw.line([body_bot, (cx - s * 0.8, cy + s * 1.8)], fill=RUNNER, width=max(2, int(s * 0.5)))
+    # 前臂 (摆)
+    draw.line([(cx, cy), (cx + s * 1.5, cy - s * 0.5)], fill=RUNNER, width=max(2, int(s * 0.5)))
+    # 后臂
+    draw.line([(cx, cy), (cx - s * 0.8, cy + s * 0.3)], fill=RUNNER, width=max(2, int(s * 0.5)))
+
+
+def draw_start_marker(draw, size):
     w, h = size
     r = max(8, int(w / 28))
-    cx, cy = w * 0.10, h * 0.75
-    # 白色描边
+    cx, cy = w * 0.12, h * 0.78
     draw.ellipse([(cx - r - 2, cy - r - 2), (cx + r + 2, cy + r + 2)], fill=TRACK)
     draw.ellipse([(cx - r, cy - r), (cx + r, cy + r)], fill=START)
 
 
-def draw_end_star(draw: ImageDraw.ImageDraw, size: tuple[int, int]) -> None:
-    """终点五角星(右上)"""
+def draw_end_star(draw, size):
     w, h = size
-    cx, cy = w * 0.92, h * 0.22
+    cx, cy = w * 0.88, h * 0.20
     r_outer = max(12, int(w / 18))
     r_inner = r_outer * 0.45
-    # 计算 5 个外点 + 5 个内点
     pts = []
     for i in range(10):
-        angle = -math.pi / 2 + i * math.pi / 5  # 从顶部开始
+        angle = -math.pi / 2 + i * math.pi / 5
         r = r_outer if i % 2 == 0 else r_inner
         x = cx + r * math.cos(angle)
         y = cy + r * math.sin(angle)
         pts.append((x, y))
-    # 描边(深色) + 主色(白色)
-    # 用 polygon 画阴影
     shadow_pts = [(p[0] + 2, p[1] + 2) for p in pts]
     draw.polygon(shadow_pts, fill=(120, 53, 15))
     draw.polygon(pts, fill=STAR)
-    # 中心高亮
-    draw.ellipse([(cx - 3, cy - 3), (cx + 3, cy + 3)], fill=(245, 158, 11))
 
 
-def generate_favicon(size: tuple[int, int], out_path: Path) -> None:
+def generate_favicon(size, out_path):
     w, h = size
     radius = int(min(w, h) * 0.18)
 
-    # 1. 渐变背景
     bg = vertical_gradient(size, BG_TOP, BG_BOTTOM)
-    # 2. 应用圆角 mask
     mask = rounded_rectangle_mask(size, radius)
     rounded = Image.new("RGBA", size, (0, 0, 0, 0))
     rounded.paste(bg.convert("RGBA"), (0, 0), mask)
 
-    # 3. 在主图层上画
+    shadow_layer = Image.new("RGBA", size, (0, 0, 0, 0))
+    draw_shadow = ImageDraw.Draw(shadow_layer)
     draw = ImageDraw.Draw(rounded)
+
+    # 后画的在上面
+    draw_clouds(draw, size)
+    draw_compass(draw, size)
+    draw_heart_icon(draw, size)
     draw_mountains(draw, size)
-    draw_track_with_shadow(draw, draw, size, seed=42)
+    draw_trees(draw, size)
+    draw_track(draw, draw_shadow, size)
     draw_start_marker(draw, size)
+    draw_runner_silhouette(draw, size)
     draw_end_star(draw, size)
 
-    # 4. 保存
     out_path.parent.mkdir(parents=True, exist_ok=True)
     rounded.save(out_path, "PNG", optimize=True)
     print(f"✓ {out_path}  {size[0]}x{size[1]}")
