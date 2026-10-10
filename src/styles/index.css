@@ -80,8 +80,13 @@
     --color-run-date: #1d1d1f;
     --color-run-table-thead: #6e6e73; /* System Secondary Label */
     --color-run-row-hover-background: rgba(0, 0, 0, 0.04);
-    --color-activity-card: #ffffff; /* 白卡片浮在 #f5f5f7 上 */
-    --color-activity-card-border: rgba(0, 0, 0, 0.06);
+    --color-activity-card: #f5f5f7; /* 与外层 #f5f5f7 同色，靠 hairline 区分 */
+    --color-activity-card-border: rgba(
+      0,
+      0,
+      0,
+      0.12
+    ); /* hairline 加深，统一外内协调感 */
     --svg-color-active-cell: #34c759; /* System Green（轨迹高亮）*/
     --svg-special-color: #ff9500; /* System Orange */
     --svg-special-color2: #ff3b30; /* System Red */
@@ -100,8 +105,13 @@
     --color-run-date: #f5f5f7;
     --color-run-table-thead: #98989d;
     --color-run-row-hover-background: rgba(255, 255, 255, 0.06);
-    --color-activity-card: #1c1c1e; /* iOS Card Background (Dark) */
-    --color-activity-card-border: rgba(255, 255, 255, 0.08);
+    --color-activity-card: #000000; /* 与外层 #000 同色，靠 hairline 区分 */
+    --color-activity-card-border: rgba(
+      255,
+      255,
+      255,
+      0.14
+    ); /* hairline 加深，暗色模式下可见 */
     --svg-color-active-cell: #34c759; /* System Green (Dark) */
     --svg-special-color: #ff9f0a; /* System Orange (Dark) */
     --svg-special-color2: #ff453a; /* System Red (Dark) */
@@ -119,8 +129,8 @@
   --color-run-date: #1d1d1f;
   --color-run-table-thead: #6e6e73;
   --color-run-row-hover-background: rgba(0, 0, 0, 0.04);
-  --color-activity-card: #ffffff;
-  --color-activity-card-border: rgba(0, 0, 0, 0.06);
+  --color-activity-card: #f5f5f7;
+  --color-activity-card-border: rgba(0, 0, 0, 0.12);
   --svg-color-inactive-cell: rgba(0, 0, 0, 0.06);
   --svg-color-active-cell: #34c759;
   --svg-special-color: #ff9500;
@@ -137,8 +147,8 @@
   --color-run-date: #f5f5f7;
   --color-run-table-thead: #98989d;
   --color-run-row-hover-background: rgba(255, 255, 255, 0.06);
-  --color-activity-card: #1c1c1e;
-  --color-activity-card-border: rgba(255, 255, 255, 0.08);
+  --color-activity-card: #000000;
+  --color-activity-card-border: rgba(255, 255, 255, 0.14);
   --svg-color-active-cell: #34c759;
   --svg-special-color: #ff9f0a;
   --svg-special-color2: #ff453a;

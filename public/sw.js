@@ -20,7 +20,7 @@
  *   老 SW 的缓存。bump CACHE_VERSION 让 SW 检测到版本不匹配 → 删除整个
  *   STATIC_CACHE + DATA_CACHE → 下次 fetch 拿到最新数据。
  */
-const CACHE_VERSION = 'sports-fair-v2.3.1';
+const CACHE_VERSION = 'sports-fair-v2.3.2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -28,6 +28,7 @@ const PRECACHE_URLS = [
   '/',
   '/manifest.json',
   '/images/favicon.png',
+  '/images/og-image.png',
 ];
 
 const DATA_URL_PATTERNS = [
