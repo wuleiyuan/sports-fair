@@ -12,7 +12,7 @@ interface ISiteMetadataResult {
 const data: ISiteMetadataResult = {
   siteTitle: 'Sports Fair - 运动集市',
   siteUrl: 'https://sports-fair.vercel.app',
-  logo: '/images/favicon.png',
+  logo: '/images/favicon.png', // v2.5.23: 跟随 WorkBuddy 新版集市彩条设计
   description:
     'Sports Fair 是一个通用的运动数据可视化仪表盘。支持跑步、跳绳、爬楼、徒步、骑行等多种运动类型，从 Keep / Apple Health / Garmin / Strava 等数据源一键同步。',
   navLinks: [
