@@ -150,6 +150,25 @@ def make_run_id(path: Path) -> int:
 # Sync
 # ─────────────────────────────────────────────────────────────
 
+_EPOCH = datetime(1970, 1, 1)
+
+
+def _seconds_to_interval_str(seconds) -> str:
+    """秒数 → SQLAlchemy Interval 在 SQLite 下的存储格式。
+
+    Activity.moving_time / elapsed_time 在生成器 ORM 里是 `Column(Interval)`
+    (run_page/generator/db.py:57)。SQLite 下 SQLAlchemy 把 Interval 存成
+    "epoch + 时长"，也就是 `1970-01-01 HH:MM:SS.ffffff`。
+
+    如果直接用裸整数秒写进去，凡是走 ORM 的读取方都会崩 ——
+    2026-10-10 CI 第 16 步 `Make svg GitHub profile`（gen_svg.py --from-db）
+    就是这么挂的：SQLAlchemy 拿到 "22764" 当 datetime 解析失败。
+    所以这里必须写同样的格式。
+    """
+    total = int(seconds or 0)
+    return (_EPOCH + timedelta(seconds=total)).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+
 def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
     """把 hikes/ 里的 GPX 写进 SQLite。
 
@@ -225,6 +244,9 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
         else:
             mt_sec = int(stats["duration_s"])
 
+        # 写库用 ORM Interval 格式（否则 gen_svg.py --from-db 读不了）
+        mt_interval = _seconds_to_interval_str(mt_sec)
+
         # 起点时间: 优先 meta.json start_date_local (本地时间)
         if "start_date_local" in meta and meta["start_date_local"]:
             # meta.json 给的是本地时间字符串,start_date 用 ISO
@@ -262,8 +284,8 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
                 run_id,
                 name,
                 distance_m,
-                mt_sec,
-                mt_sec,
+                mt_interval,
+                mt_interval,
                 SPORT_TYPE,
                 SPORT_SUBTYPE,
                 start_utc_str,
@@ -303,7 +325,9 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
     return added
 
 
-_SENTINEL_TIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2} (\d+):(\d+):(\d+)")
+_SENTINEL_TIME_RE = re.compile(
+    r"^(\d{4})-(\d{2})-(\d{2}) (\d+):(\d+):(\d+)"
+)
 
 
 def _duration_to_hhmmss(value):
@@ -330,8 +354,13 @@ def _duration_to_hhmmss(value):
             return None
         m = _SENTINEL_TIME_RE.match(s)
         if m:
-            h, mn, sec = (int(g) for g in m.groups())
-            total = h * 3600 + mn * 60 + sec
+            y, mo, da, h, mn, sec = (int(g) for g in m.groups())
+            # Interval 存的是 "epoch + 时长"，跨天的时长天数会进位到日期上
+            try:
+                day_offset = (dt.date(y, mo, da) - dt.date(1970, 1, 1)).days
+            except ValueError:
+                day_offset = 0
+            total = day_offset * 86400 + h * 3600 + mn * 60 + sec
         elif ":" in s:
             # 已经是 "H:MM:SS" / "X days, H:MM:SS"，原样保留
             return s
