@@ -16,10 +16,14 @@
 
 /* ===== Light tokens (default) ===== */
 [data-kinetic] {
-  /* 背景层级 (iOS systemBackground / systemGroupedBackground) */
-  --k-bg: #ffffff;
+  /* 背景层级 (iOS systemBackground / systemGroupedBackground)
+   * v2.5.20+ 调整: 页面主背景与卡片同色, 形成"同色融合"Apple HIG 效果
+   *   --k-bg = #f5f5f7 (与 --k-card-bg 一致, 外层 = 卡片色)
+   *   --k-bg-tertiary 保留白色, 用于 input/chip 等需要"凹陷"感的元素
+   */
+  --k-bg: #f5f5f7;
   --k-bg-secondary: #f2f2f7; /* iOS systemGroupedBackground */
-  --k-bg-tertiary: #ffffff; /* iOS secondarySystemBackground */
+  --k-bg-tertiary: #ffffff; /* iOS secondarySystemBackground — 保留白, 用于 input/chip */
 
   /* 卡片 (运动集市 v2.5.17+: 与外层 #f5f5f7 同色, 靠 hairline 区分) */
   --k-card-bg: #f5f5f7;
@@ -1033,14 +1037,17 @@
   --color-text-disabled: #666666;
   --color-text-faded: #999999;
 
-  /* ===== 背景色 ===== */
-  --color-bg: #ffffff; /* 页面主背景 */
+  /* ===== 背景色 =====
+   * v2.5.20+ 调整: --color-bg 由 #ffffff 改为 #f5f5f7, 与 --color-bg-page/card 完全同色
+   * 实现外层与卡片"同色融合"Apple HIG 效果, 仅靠 1px hairline + 阴影区分边界
+   */
+  --color-bg: #f5f5f7; /* 页面主背景 (与 --color-bg-page 同色) */
   --color-bg-page: #f5f5f7; /* Apple systemGroupedBackground */
   --color-bg-card: #f5f5f7; /* 卡片底（与外层 --color-bg-page 同色）*/
   --color-bg-soft: #fafafa; /* 极淡灰底 (SharePoster 之类) */
-  --color-bg-surface: #ffffff;
+  --color-bg-surface: #ffffff; /* input/chip 表面 — 保留白, 与外层形成轻微凹陷感 */
   --color-bg-muted: #f5f5f7;
-  --color-bg-elevated: #ffffff;
+  --color-bg-elevated: #ffffff; /* modal / banner 提升面 — 保留白 */
 
   /* ===== 边框色 ===== */
   --color-border: #e5e7eb; /* Tailwind gray-200 */

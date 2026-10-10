@@ -636,12 +636,15 @@ const SportDetail = () => {
                     />
                     <YAxis tick={{ fill: '#98989d', fontSize: 11 }} unit="km" />
                     <Tooltip
-                      contentStyle={{
-                        backgroundColor: '#ffffff',
-                        border: '1px solid rgba(0,0,0,0.08)',
-                        borderRadius: 8,
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-                      }}
+                      contentStyle={
+                        {
+                          // v2.5.21: 改用 CSS 变量 (Dark 模式自动接管)，fallback 保留 #ffffff
+                          backgroundColor: 'var(--color-bg-surface, #ffffff)',
+                          border: '1px solid rgba(0,0,0,0.08)',
+                          borderRadius: 8,
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                        } as CSSProperties
+                      }
                       labelStyle={{ color: '#1d1d1f' }}
                       labelFormatter={(label: string) => `📅 ${label}`}
                       formatter={(value: number) => [
