@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+from datetime import datetime, timedelta
 import hashlib
 import json
 import sqlite3
@@ -193,7 +194,56 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
             continue
 
         run_id = make_run_id(gpx_path)
-        start_local = stats["start_utc"].astimezone(CN_TZ)
+
+        # 配套 .meta.json（佳明 CSV 提取的元数据）覆盖
+        # 优先级：meta.json 里的 distance / time / elev / 心率 > GPX 算出来的
+        meta_path = gpx_path.with_name(gpx_path.stem + ".meta.json")
+        meta: dict = {}
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                print(f"  + {gpx_path.name}  [+meta.json: source={meta.get('source')}]")
+            except Exception as e:
+                print(f"  ⚠️  meta.json 解析失败 {meta_path.name}: {e}", file=sys.stderr)
+                meta = {}
+
+        # 距离: 优先 meta.json (km) → 转 m
+        if "distance_km" in meta and meta["distance_km"]:
+            distance_m = float(meta["distance_km"]) * 1000
+        else:
+            distance_m = stats["distance_m"]
+
+        # 时长: 优先 meta.json (秒) → int
+        if "moving_time_sec" in meta and meta["moving_time_sec"]:
+            mt_sec = int(meta["moving_time_sec"])
+        else:
+            mt_sec = int(stats["duration_s"])
+
+        # 起点时间: 优先 meta.json start_date_local (本地时间)
+        if "start_date_local" in meta and meta["start_date_local"]:
+            # meta.json 给的是本地时间字符串,start_date 用 ISO
+            start_local_str = meta["start_date_local"]
+            # 构造 start_date (UTC): 假设 start_date_local 是北京时间
+            try:
+                from datetime import timedelta
+                local_dt = datetime.strptime(start_local_str, "%Y-%m-%d %H:%M:%S")
+                utc_dt = local_dt - timedelta(hours=CN_TZ.utcoffset(None).total_seconds() / 3600)
+                start_utc_str = utc_dt.strftime("%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                start_utc_str = stats["start_utc"].strftime("%Y-%m-%d %H:%M:%S")
+                start_local_str = stats["start_utc"].astimezone(CN_TZ).strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            start_utc_str = stats["start_utc"].strftime("%Y-%m-%d %H:%M:%S")
+            start_local_str = stats["start_utc"].astimezone(CN_TZ).strftime("%Y-%m-%d %H:%M:%S")
+
+        # 爬升: 优先 meta.json
+        elev_gain = meta.get("elevation_gain") or stats["elev_gain"] or None
+
+        # 心率: 优先 meta.json
+        avg_hr = meta.get("avg_heartrate") or None
+
+        # name: 优先 meta.json title
+        name = meta.get("title") or stats["name"]
 
         try:
             cur.execute("SELECT 1 FROM activities WHERE run_id = ?", (run_id,))
@@ -202,26 +252,25 @@ def sync_hikes(hikes_dir: Path, db_path: Path, dry_run: bool = False) -> int:
                 print(f"  = {gpx_path.name}  (已存在，run_id={run_id})")
                 continue
 
-            mt_sec = int(stats["duration_s"])
             values = (
                 run_id,
-                stats["name"],
-                stats["distance_m"],
+                name,
+                distance_m,
                 mt_sec,
                 mt_sec,
                 SPORT_TYPE,
                 SPORT_SUBTYPE,
-                stats["start_utc"].strftime("%Y-%m-%d %H:%M:%S"),
-                start_local.strftime("%Y-%m-%d %H:%M:%S"),
-                "",
+                start_utc_str,
+                start_local_str,
+                meta.get("title", "") or "",  # location_country 字段复用存 title
                 stats["summary_polyline"],
-                None,
+                avg_hr,
                 stats["avg_speed_mps"],
-                stats["elev_gain"] if stats["elev_gain"] else None,
+                elev_gain,
             )
             cur.execute(insert_sql, values)
             added += 1
-            km = stats["distance_m"] / 1000
+            km = distance_m / 1000
             h = stats["duration_s"] / 3600
             print(f"  + {gpx_path.name[:34]:34s}  {km:>6.2f} km  {h:>5.2f} h  run_id={run_id}")
         except Exception as e:

@@ -1,0 +1,21 @@
+{
+  "source": "garmin_csv",
+  "garmin_activity_type": "登山",
+  "start_date_local": "2026-07-24 11:02:00",
+  "start_date_local_raw": "2026-07-24 11:02:00",
+  "distance_km": 10.36,
+  "moving_time": "05:59:46",
+  "moving_time_sec": 21586,
+  "avg_heartrate": 131,
+  "max_heartrate": 184,
+  "avg_speed_kmh": 1.7,
+  "max_speed_kmh": 9.8,
+  "elevation_gain": 952,
+  "elevation_loss": 955,
+  "min_elevation": 623,
+  "max_elevation": 1497,
+  "calories": 1833,
+  "tss": 0.0,
+  "laps": 1,
+  "title": "西安市 徒步"
+}
