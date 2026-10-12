@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-11T04:35:50",
+  "generated_at": "2026-10-12T04:52:25",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,33 +17,33 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 86.3,
-    "chronic_28d_trimp": 196.0,
-    "acute_days_with_data": 1,
-    "chronic_days_with_data": 6,
-    "ratio": 0.44,
-    "status": "undertrained",
-    "warning": "ACWR < 0.8 训练不足, 可逐步加量"
+    "acute_7d_trimp": 382.4,
+    "chronic_28d_trimp": 270.0,
+    "acute_days_with_data": 2,
+    "chronic_days_with_data": 7,
+    "ratio": 1.42,
+    "status": "caution",
+    "warning": null
   },
   "tsb": {
-    "ctl": 33.2,
-    "atl": 24.1,
-    "tsb": 9.1,
-    "status": "fresh",
+    "ctl": 39.4,
+    "atl": 60.3,
+    "tsb": -20.9,
+    "status": "overtraining",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1545
+    "data_span_days": 1546
   },
   "hr_zones": {
-    "z1_recovery": 47.7,
-    "z2_aerobic_base": 21.1,
-    "z3_aerobic": 25.8,
-    "z4_threshold": 5.4,
+    "z1_recovery": 54.0,
+    "z2_aerobic_base": 18.6,
+    "z3_aerobic": 22.7,
+    "z4_threshold": 4.7,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 21.1,
-    "polarized_pct": 68.8,
-    "activities_with_hr": 31,
+    "z2_pct": 18.6,
+    "polarized_pct": 72.6,
+    "activities_with_hr": 32,
     "window_days": 90
   },
   "cadence": null,
@@ -92,11 +92,15 @@
     {
       "date": "2026-10-08",
       "trimp": 86.3
+    },
+    {
+      "date": "2026-10-09",
+      "trimp": 296.0
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-10-08",
-    "total_activities": 830
+    "latest": "2026-10-09",
+    "total_activities": 831
   }
 }
