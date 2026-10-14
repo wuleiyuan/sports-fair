@@ -20,7 +20,7 @@ jobs:
         # version 从 package.json:6 的 packageManager 字段自动读取
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
