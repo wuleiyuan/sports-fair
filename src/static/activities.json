@@ -6375,7 +6375,7 @@
 "reps": null
 },
 {
-"run_id": 598764126966617649,
+"run_id": 5331198709976599852,
 "name": "Route 2023-12-01 8:53pm",
 "distance": 10871.882735591918,
 "moving_time": "5:46:16",
@@ -9418,7 +9418,7 @@
 "reps": null
 },
 {
-"run_id": 8210572465056474535,
+"run_id": 3121035081564591014,
 "name": "Route 2026-05-04 4:02pm",
 "distance": 10295.508772496314,
 "moving_time": "7:18:53",
@@ -11067,7 +11067,7 @@
 "reps": null
 },
 {
-"run_id": 5789058070581917282,
+"run_id": 8639041522724289203,
 "name": "Route 2026-07-07 5:08pm",
 "distance": 7723.028064775642,
 "moving_time": "5:07:55",
@@ -11322,7 +11322,7 @@
 "reps": null
 },
 {
-"run_id": 7792572794320602749,
+"run_id": 144403321962818979,
 "name": "Route 2026-07-19 1:48pm",
 "distance": 4392.758086088692,
 "moving_time": "3:08:25",
@@ -11509,7 +11509,7 @@
 "reps": null
 },
 {
-"run_id": 1269318399549569903,
+"run_id": 3719133688654993815,
 "name": "西安市 徒步",
 "distance": 10360.0,
 "moving_time": "5:59:46",
@@ -11883,7 +11883,7 @@
 "reps": null
 },
 {
-"run_id": 1102741696550238367,
+"run_id": 733547918331756598,
 "name": "Route 2026-08-09 10:06pm",
 "distance": 6530.891094162175,
 "moving_time": "1:28:04",
@@ -13226,7 +13226,7 @@
 "reps": null
 },
 {
-"run_id": 7572255985882610894,
+"run_id": 2244869602637358836,
 "name": "Route 2026-09-15 5:37pm",
 "distance": 11918.739585269468,
 "moving_time": "7:03:50",
@@ -13515,7 +13515,7 @@
 "reps": null
 },
 {
-"run_id": 592918248994947263,
+"run_id": 2470216718018879929,
 "name": "route_2026-10-02_5.11pm (merged)",
 "distance": 17975.269067464586,
 "moving_time": "9:18:31",
@@ -14123,6 +14123,23 @@
 "average_heartrate": 127.0,
 "average_speed": 0.5571665137427328,
 "subtype": "Hiking",
+"elevation_gain": 0.0,
+"reps": null
+},
+{
+"run_id": 9223370244956369807,
+"name": "Run from keep",
+"distance": 10050.69140625,
+"moving_time": "1:14:48",
+"elapsed_time": "1:28:31",
+"type": "Run",
+"start_date": "2026-10-13 12:04:55",
+"start_date_local": "2026-10-13 20:04:55",
+"location_country": "{'latitude': 34.314644, 'longitude': 108.785072, 'country': '中国', 'nationCode': '156', 'province': '陕西省', 'city': '咸阳市', 'cityCode': '0910', 'district': None, 'districtCode': None, 'startLatitude': 0.0, 'startLongitude': 0.0}",
+"summary_polyline": "gqqrFsrkeU??",
+"average_heartrate": 156.0,
+"average_speed": 2.239458869485294,
+"subtype": "Run",
 "elevation_gain": 0.0,
 "reps": null
 }

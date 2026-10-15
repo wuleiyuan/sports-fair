@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T04:00:45",
+  "generated_at": "2026-10-15T03:40:03",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,42 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 382.4,
-    "chronic_28d_trimp": 270.0,
-    "acute_days_with_data": 2,
+    "acute_7d_trimp": 511.2,
+    "chronic_28d_trimp": 258.1,
+    "acute_days_with_data": 3,
     "chronic_days_with_data": 7,
-    "ratio": 1.42,
-    "status": "caution",
-    "warning": null
+    "ratio": 1.98,
+    "status": "high_risk",
+    "warning": "ACWR > 1.5 属高危伤病风险, 建议安排 1-2 天全休或极轻松交叉训练"
   },
   "tsb": {
-    "ctl": 39.4,
-    "atl": 60.3,
-    "tsb": -20.9,
-    "status": "overtraining",
+    "ctl": 38.8,
+    "atl": 51.2,
+    "tsb": -12.4,
+    "status": "fatigued",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1546
+    "data_span_days": 1550
   },
   "hr_zones": {
-    "z1_recovery": 54.0,
-    "z2_aerobic_base": 18.6,
-    "z3_aerobic": 22.7,
-    "z4_threshold": 4.7,
+    "z1_recovery": 55.2,
+    "z2_aerobic_base": 19.0,
+    "z3_aerobic": 23.4,
+    "z4_threshold": 2.5,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 18.6,
-    "polarized_pct": 72.6,
-    "activities_with_hr": 32,
+    "z2_pct": 19.0,
+    "polarized_pct": 74.2,
+    "activities_with_hr": 31,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-08-30",
-      "trimp": 138.5
-    },
     {
       "date": "2026-09-01",
       "trimp": 97.5
@@ -96,11 +92,15 @@
     {
       "date": "2026-10-09",
       "trimp": 296.0
+    },
+    {
+      "date": "2026-10-13",
+      "trimp": 128.8
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-10-09",
-    "total_activities": 831
+    "latest": "2026-10-13",
+    "total_activities": 832
   }
 }
