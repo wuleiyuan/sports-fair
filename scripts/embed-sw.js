@@ -5,13 +5,13 @@
  * 而 esbuild 编译 .ts 也不支持 Vite 的 `?raw` 语法.
  *
  * 方案: vite build 之后, 读 public/sw.js + public/manifest.json,
- *       写到 api/shared/content.ts, api/sw.js.ts / api/manifest.json.ts 直接 import.
+ *       写到 api/_shared/content.ts, api/sw.js.ts / api/manifest.json.ts 直接 import.
  *
- * v2.4.0 (2026-11-21): 输出位置从 lib/ 改为 api/shared/content.ts ——
+ * v2.4.0 (2026-11-21): 输出位置从 lib/ 改为 api/_shared/content.ts ——
  *   Vercel 只把 api/ 目录内的代码打进函数包, api/ 之外的相对导入运行时会失败.
  *
  * v2.3.3: Vercel build 时 .vercelignore 把 public/ 排了, 找不到源文件直接跳过
- *   —— api/shared/content.ts 已经在仓库里 (上次本地 build 嵌入的产物), Vercel 直接用现成的就行.
+ *   —— api/_shared/content.ts 已经在仓库里 (上次本地 build 嵌入的产物), Vercel 直接用现成的就行.
  */
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
@@ -19,12 +19,12 @@ import { join } from 'path';
 const ROOT = process.cwd();
 const SW_SRC = join(ROOT, 'public', 'sw.js');
 const MANIFEST_SRC = join(ROOT, 'public', 'manifest.json');
-const OUT = join(ROOT, 'api', 'shared', 'content.ts');
+const OUT = join(ROOT, 'api', '_shared', 'content.ts');
 
-// Vercel build 环境 public/ 不在 → 跳过, 用仓库里现成的 api/shared/content.ts
+// Vercel build 环境 public/ 不在 → 跳过, 用仓库里现成的 api/_shared/content.ts
 if (!existsSync(SW_SRC) || !existsSync(MANIFEST_SRC)) {
   console.log(
-    `⏭  embed-sw: public/ 不可见, 跳过 (用仓库里已嵌入的 api/shared/content.ts)`
+    `⏭  embed-sw: public/ 不可见, 跳过 (用仓库里已嵌入的 api/_shared/content.ts)`
   );
   process.exit(0);
 }
@@ -45,5 +45,5 @@ writeFileSync(
 );
 
 console.log(
-  `✅ embedded: sw.js (${swContent.length} bytes), manifest.json (${manifestRaw.length} bytes) → api/shared/content.ts`
+  `✅ embedded: sw.js (${swContent.length} bytes), manifest.json (${manifestRaw.length} bytes) → api/_shared/content.ts`
 );

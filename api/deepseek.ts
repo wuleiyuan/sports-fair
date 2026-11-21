@@ -19,7 +19,7 @@ import {
   callOcr,
   callAsr,
   callTts,
-} from '../shared/deepseek.js';
+} from './_shared/deepseek.js';
 
 const TOOLS = ['search', 'fetch', 'ocr', 'asr', 'tts'] as const;
 type Tool = (typeof TOOLS)[number];
@@ -33,9 +33,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST')
     return res.status(405).json({ error: 'Method not allowed' });
 
-  // Vercel 动态路由参数：/api/deepseek/<tool>
-  const raw = req.query.tool;
-  const tool = (Array.isArray(raw) ? raw[0] : raw) as Tool | undefined;
+  // 工具名来源：优先从 URL 路径取（/api/deepseek/search，由 vercel.json
+  // rewrite 把 /api/deepseek/:tool 重写到这里并保留 ?tool=），
+  // 其次退回 query 参数（/api/deepseek?tool=search）。
+  const fromQuery = req.query.tool;
+  const queryTool = Array.isArray(fromQuery) ? fromQuery[0] : fromQuery;
+  const fromPath = (req.url || '').split('?')[0].split('/').pop();
+  const raw = queryTool || fromPath;
+  const tool = raw as Tool | undefined;
   if (!tool || !TOOLS.includes(tool)) {
     return res.status(404).json({
       error: `Unknown tool. Available: ${TOOLS.map((t) => `/api/deepseek/${t}`).join(', ')}`,

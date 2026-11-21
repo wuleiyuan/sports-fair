@@ -5,6 +5,10 @@
     { "source": "/sw.js", "destination": "/api/sw.js" },
     { "source": "/manifest.json", "destination": "/api/manifest.json" },
     {
+      "source": "/api/deepseek/:tool",
+      "destination": "/api/deepseek?tool=:tool"
+    },
+    {
       "source": "/((?!images/|assets/|favicon\\.png|.*\\.(?:js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf)).*)",
       "destination": "/"
     }

@@ -1,4 +1,4 @@
 src/static/activities.json
 pnpm-lock.yaml
 # 构建时由 scripts/embed-sw.js 生成
-api/shared/content.ts
+api/_shared/content.ts
