@@ -55,12 +55,17 @@ module.exports = [
     },
   },
   {
-    // Vercel serverless functions (api/**) run in Node, not the browser:
-    // declare Node globals so `process` / `Buffer` are not flagged by no-undef.
-    files: ['api/**/*.ts', 'api/**/*.tsx'],
+    // Server-side code (Vercel functions + shared lib) runs in Node, not the
+    // browser: declare Node globals so `process` / `Buffer` are not flagged.
+    files: ['api/**/*.ts', 'api/**/*.tsx', 'lib/**/*.ts', 'tests/api/**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.node,
+        // mocked fetch signatures in tests annotate DOM types
+        RequestInit: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        Headers: 'readonly',
       },
     },
   },

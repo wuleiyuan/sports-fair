@@ -13,7 +13,7 @@ export default defineConfig({
     environment: 'node',
     include: [
       'src/**/__tests__/**/*.test.{ts,tsx}',
-      'api/**/__tests__/**/*.test.{ts,tsx}',
+      'tests/api/**/*.test.{ts,tsx}',
     ],
     // 允许 .tsx 组件测试走 happy-dom (更快)
     environmentMatchGlobs: [['src/components/**/*.test.tsx', 'happy-dom']],

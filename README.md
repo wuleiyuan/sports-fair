@@ -229,8 +229,18 @@ so a plain clone + deploy works out of the box.
 
 An individual `DEEPSEEK_ENABLE_*` variable wins over the tier preset. `chat` is always on.
 
-Standalone tool endpoints (Bearer-authed via the same key, gated by tier/switches):
-`POST /api/search`, `/api/fetch`, `/api/ocr`, `/api/asr`, `/api/tts`.
+Standalone tool endpoints (gated by tier/switches, the server holds the key):
+
+| Endpoint                    | Body                                                      |
+| --------------------------- | --------------------------------------------------------- |
+| `POST /api/deepseek/search` | `{ query, count?, needContent?, oriQuestion? }`           |
+| `POST /api/deepseek/fetch`  | `{ url }`                                                 |
+| `POST /api/deepseek/ocr`    | `{ fileBase64, filename, purpose? }`                      |
+| `POST /api/deepseek/asr`    | `{ fileBase64, filename }`                                |
+| `POST /api/deepseek/tts`    | `{ text, voiceId?, format? }` → `{ audioBase64, format }` |
+
+These five share a single dynamic route (`api/deepseek/[tool].ts`) so the deployment stays
+within Vercel Hobby's 12-Serverless-Function limit.
 Check the current config with `GET /api/config`, or open the **DeepSeek 全家桶 · 能力配置**
 panel on the Health Assess page. The panel is read-only — switches are managed by the
 environment variables above (this keeps the project free of any backend storage).

@@ -18,13 +18,25 @@ const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (k: string) => store[k] ?? null,
-    setItem: (k: string, v: string) => { store[k] = v; },
-    removeItem: (k: string) => { delete store[k]; },
-    clear: () => { store = {}; },
+    setItem: (k: string, v: string) => {
+      store[k] = v;
+    },
+    removeItem: (k: string) => {
+      delete store[k];
+    },
+    clear: () => {
+      store = {};
+    },
   };
 })();
-Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock, writable: false });
-Object.defineProperty(globalThis, 'window', { value: { localStorage: localStorageMock }, writable: false });
+Object.defineProperty(globalThis, 'localStorage', {
+  value: localStorageMock,
+  writable: false,
+});
+Object.defineProperty(globalThis, 'window', {
+  value: { localStorage: localStorageMock },
+  writable: false,
+});
 
 import { fetchAIGuidanceWithCache } from '../../src/utils/healthAssessment';
 import type { AssessmentBundle } from '../../src/utils/healthAssessment';
@@ -33,7 +45,14 @@ const fakeBundle: AssessmentBundle = {
   generatedAt: '2026-06-13T00:00:00Z',
   windowDays: 7,
   cards: [
-    { key: 'rhr', title: '静息心率', main: '60 bpm', sub: '稳定', severity: 'good', advice: '良好' },
+    {
+      key: 'rhr',
+      title: '静息心率',
+      main: '60 bpm',
+      sub: '稳定',
+      severity: 'good',
+      advice: '良好',
+    },
   ],
   overall: '整体良好',
   trainingLoadTrend: [10, 20, 30],
@@ -71,9 +90,14 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
   });
 
   it('happy path: MiMo 返回中文建议', async () => {
-    globalThis.fetch = mockLLMProvider('mimo', '本周重点：保持节奏，训练 3 次即可。\n训练建议：周一慢跑 5km，周三间歇。\n生活建议：保证 8h 睡眠。');
+    globalThis.fetch = mockLLMProvider(
+      'mimo',
+      '本周重点：保持节奏，训练 3 次即可。\n训练建议：周一慢跑 5km，周三间歇。\n生活建议：保证 8h 睡眠。'
+    );
 
-    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
 
     expect(response.aiGuidance).toContain('本周重点');
     expect(response.provider).toBe('mimo');
@@ -84,7 +108,9 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
   it('provider 切换: OpenAI 也走通', async () => {
     globalThis.fetch = mockLLMProvider('openai', 'OpenAI 的建议');
 
-    const { response } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'openai' });
+    const { response } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'openai',
+    });
     expect(response.aiGuidance).toBe('OpenAI 的建议');
     expect(response.provider).toBe('openai');
   });
@@ -92,7 +118,9 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
   it('provider 切换: Anthropic 也走通', async () => {
     globalThis.fetch = mockLLMProvider('anthropic', 'Claude 的建议');
 
-    const { response } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'anthropic' });
+    const { response } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'anthropic',
+    });
     expect(response.aiGuidance).toBe('Claude 的建议');
     expect(response.provider).toBe('anthropic');
   });
@@ -144,7 +172,9 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
       );
     });
 
-    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const { response, fromCache } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
 
     expect(response.aiGuidance).toBeNull();
     expect(response.error).toContain('HTTP 502');
@@ -170,7 +200,9 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
       );
     });
 
-    const { response } = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const { response } = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
     expect(callCount).toBe(2);
     expect(response.aiGuidance).toBe('重试后成功');
   });
@@ -183,11 +215,15 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     });
-    const first = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const first = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
     expect(first.fromCache).toBe(false);
 
     // 第二次同 bundle 命中 cache
-    const second = await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
+    const second = await fetchAIGuidanceWithCache(fakeBundle, {
+      provider: 'mimo',
+    });
     expect(second.fromCache).toBe(true);
     expect(second.response.aiGuidance).toBe('首次建议');
   });
@@ -196,7 +232,10 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
     let captured: Record<string, unknown> | null = null;
     globalThis.fetch = vi.fn(async (_url, init) => {
       captured = JSON.parse(init.body as string);
-      return new Response(JSON.stringify({ aiGuidance: 'ok', provider: 'mimo' }), { status: 200 });
+      return new Response(
+        JSON.stringify({ aiGuidance: 'ok', provider: 'mimo' }),
+        { status: 200 }
+      );
     });
 
     await fetchAIGuidanceWithCache(fakeBundle, { provider: 'mimo' });
@@ -207,6 +246,8 @@ describe('E2E: 前端 → /api/assess-ai → LLM provider', () => {
       provider: 'mimo',
     });
     expect((captured as { cards: unknown[] }).cards.length).toBe(1);
-    expect((captured as { trainingLoadTrend: number[] }).trainingLoadTrend).toEqual([10, 20, 30]);
+    expect(
+      (captured as { trainingLoadTrend: number[] }).trainingLoadTrend
+    ).toEqual([10, 20, 30]);
   });
 });

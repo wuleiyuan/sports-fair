@@ -2,7 +2,7 @@
  * v2.3.0 — /manifest.json endpoint
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { MANIFEST_CONTENT } from './manifest-content';
+import { MANIFEST_CONTENT } from '../lib/manifest-content';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'public, max-age=3600');

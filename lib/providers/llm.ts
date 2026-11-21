@@ -329,7 +329,7 @@ interface DeepSeekProviderOptions {
 }
 
 /**
- * DeepSeek 全功能 provider：复用 api/deepseek/provider.ts 的 chatWithDefaults，
+ * DeepSeek 全功能 provider：复用 lib/deepseek/provider.ts 的 chatWithDefaults，
  * 让三档套餐 + 每个 DEEPSEEK_ENABLE_* 开关真正作用于主对话（web 工具 / thinking /
  * safety / title 都由能力中心决定，而不是在这里写死一个朴素 chat 请求）。
  */
