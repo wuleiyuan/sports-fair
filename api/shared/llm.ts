@@ -1,24 +1,12 @@
 /**
- * v2.2.1 — LLM Provider 抽象层
+ * LLM Provider 抽象层（mimo / openai / anthropic / deepseek）
+ * 从 lib/ 迁入 api/shared/，原因见 api/shared/deepseek.ts 顶部说明。
  *
- * 目的：让前端 / 部署方可在不改动主 handler 的情况下切换 LLM 提供商。
- * 当前实现：
- *   - mimo      (小米 MiMo, OpenAI 兼容)
- *   - openai    (gpt-4o-mini 等)
- *   - anthropic (claude-haiku 等)
- *   - deepseek  (DeepSeek 全家桶应用 API, Chat Completions 协议)
- *
- * 切换方式：
- *   1. Vercel dashboard 环境变量 `LLM_PROVIDER=mimo` (默认)
- *   2. 配对应 key: MIMO_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY / DEEPSEEK_API_KEY
- *
- * 加新 provider 步骤：
- *   1. 在此文件下加 type ProviderName
- *   2. 加一个 createXxxProvider() 函数
- *   3. 在 PROVIDERS 字典里登记
+ * deepseek 分支走共享的 chat 实现（含能力开关），因此运行时依赖 ./deepseek；
+ * 而 ./deepseek 只在类型层面引用本文件的 LLMMessage（`import type`，运行时擦除），
+ * 所以不存在运行时循环依赖。
  */
-
-import { chatWithDefaults } from '../deepseek/provider';
+import { chatWithDefaults } from './deepseek';
 
 export type ProviderName = 'mimo' | 'openai' | 'anthropic' | 'deepseek';
 

@@ -8,7 +8,7 @@
  * function 编译时 import SW_CONTENT 常量.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { SW_CONTENT } from '../lib/sw-content';
+import { SW_CONTENT } from './shared/content';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   // v2.3.0 debug: import diagnostic

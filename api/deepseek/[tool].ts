@@ -19,7 +19,7 @@ import {
   callOcr,
   callAsr,
   callTts,
-} from '../../lib/deepseek/client';
+} from '../shared/deepseek';
 
 const TOOLS = ['search', 'fetch', 'ocr', 'asr', 'tts'] as const;
 type Tool = (typeof TOOLS)[number];

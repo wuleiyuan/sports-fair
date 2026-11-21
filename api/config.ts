@@ -12,7 +12,7 @@ import {
   CAPABILITY_META,
   TIER_PRESET,
   type Capability,
-} from '../lib/deepseek/capabilities';
+} from './shared/deepseek';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET')
