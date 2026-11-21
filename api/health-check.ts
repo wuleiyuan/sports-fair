@@ -22,7 +22,12 @@ interface ProviderStatus {
 
 const ACTIVE_PROVIDER = (process.env.LLM_PROVIDER as ProviderName) || 'mimo';
 
-function checkProvider(name: ProviderName, envKeyName: string, defaultModel: string, modelEnvKey: string): ProviderStatus {
+function checkProvider(
+  name: ProviderName,
+  envKeyName: string,
+  defaultModel: string,
+  modelEnvKey: string
+): ProviderStatus {
   const apiKey = process.env[envKeyName];
   const model = process.env[modelEnvKey] || defaultModel;
   return {
@@ -52,7 +57,18 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const providers: ProviderStatus[] = [
     checkProvider('mimo', 'MIMO_API_KEY', 'mimo-v2-flash', 'MIMO_MODEL'),
     checkProvider('openai', 'OPENAI_API_KEY', 'gpt-4o-mini', 'OPENAI_MODEL'),
-    checkProvider('anthropic', 'ANTHROPIC_API_KEY', 'claude-haiku-4-5', 'ANTHROPIC_MODEL'),
+    checkProvider(
+      'anthropic',
+      'ANTHROPIC_API_KEY',
+      'claude-haiku-4-5',
+      'ANTHROPIC_MODEL'
+    ),
+    checkProvider(
+      'deepseek',
+      'DEEPSEEK_API_KEY',
+      'deepseek-flash',
+      'DEEPSEEK_MODEL'
+    ),
   ];
 
   const active = providers.find((p) => p.isActive);
@@ -62,9 +78,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     activeProvider: ACTIVE_PROVIDER,
     activeReady: active?.hasKey ?? false,
     activeModel: active?.model,
-    hint: active && !active.hasKey
-      ? `Active provider "${ACTIVE_PROVIDER}" is missing ${active.envKeyName}. Set it in Vercel dashboard → Environment Variables.`
-      : 'OK',
+    hint:
+      active && !active.hasKey
+        ? `Active provider "${ACTIVE_PROVIDER}" is missing ${active.envKeyName}. Set it in Vercel dashboard → Environment Variables.`
+        : 'OK',
     providers,
     timestamp: new Date().toISOString(),
   });

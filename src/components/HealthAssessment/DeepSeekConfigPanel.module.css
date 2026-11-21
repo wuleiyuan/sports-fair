@@ -1,0 +1,220 @@
+/* v1.0.0: DeepSeek 全家桶配置面板 */
+.panel {
+  margin-bottom: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface, var(--color-bg-soft));
+  overflow: hidden;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-primary, var(--color-text-muted));
+  text-align: left;
+}
+
+.toggle:hover {
+  background: var(--color-row-hover, rgba(99, 102, 241, 0.05));
+}
+
+.chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+.chevron[data-open='true'] {
+  transform: rotate(90deg);
+}
+
+.badge {
+  display: inline-block;
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.badgeOk {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.badgeWarn {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.body {
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.muted {
+  color: var(--color-text-tertiary);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 12px 0;
+}
+
+.error {
+  color: var(--color-danger-text);
+  font-size: 0.85rem;
+  margin: 12px 0;
+}
+
+.retryBtn {
+  margin-left: 12px;
+  padding: 2px 10px;
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: 4px;
+  color: var(--color-danger-text);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.summary {
+  margin: 12px 0 8px;
+  font-size: 0.9rem;
+}
+
+.hint {
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: var(--color-warning-bg);
+  border-left: 3px solid var(--color-warning-amber);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--color-warning-text-strong);
+}
+
+.code {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 0.78rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.tierRow {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.tierCard {
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.tierActive {
+  border-color: var(--color-primary, var(--color-indigo));
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.tierName {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tierDesc {
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.tierCount {
+  color: var(--color-text-tertiary);
+  font-size: 0.75rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 12px 0;
+}
+
+.table th,
+.table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.table th {
+  background: var(--color-row-hover, rgba(0, 0, 0, 0.02));
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.descCell {
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.switchOn {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.switchOff {
+  background: var(--color-row-hover, rgba(0, 0, 0, 0.05));
+  color: var(--color-text-tertiary);
+}
+
+.switchDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.hasKey {
+  color: var(--color-success-text);
+  font-size: 0.8rem;
+}
+
+.noKey {
+  color: var(--color-danger-text);
+  font-size: 0.8rem;
+}
+
+.footer {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  line-height: 1.6;
+}
+
+.footer code {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}

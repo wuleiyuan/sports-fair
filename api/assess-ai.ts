@@ -16,7 +16,11 @@
  *   6. 每次请求生成 requestId，方便用户报 bug 时贴
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { buildProvider, type LLMMessage, type ProviderName } from './providers/llm';
+import {
+  buildProvider,
+  type LLMMessage,
+  type ProviderName,
+} from './providers/llm';
 
 /** 生成 requestId（兼容 Node + Edge runtime） */
 function newRequestId(): string {
@@ -61,7 +65,8 @@ const FORBIDDEN_PATTERNS = [
 function sanitize(s: string | undefined): string {
   if (!s) return '';
   // 截断
-  const truncated = s.length > MAX_FIELD_LEN ? s.slice(0, MAX_FIELD_LEN) + '…' : s;
+  const truncated =
+    s.length > MAX_FIELD_LEN ? s.slice(0, MAX_FIELD_LEN) + '…' : s;
   // 过滤敏感 pattern
   let safe = truncated;
   for (const pat of FORBIDDEN_PATTERNS) {
@@ -82,7 +87,12 @@ function buildPrompt(body: RequestBody): LLMMessage[] {
   const cardsText = cards
     .slice(0, 10) // 最多 10 卡片（防御性，正常只有 5）
     .map((c) => {
-      const sevMap = { good: '良好', watch: '关注', warn: '警告', urgent: '紧急' };
+      const sevMap = {
+        good: '良好',
+        watch: '关注',
+        warn: '警告',
+        urgent: '紧急',
+      };
       return `- ${sanitize(c.title)}：${sanitize(c.main)}（${sanitize(c.sub)}）— 状态：${sevMap[c.severity]}\n  静态建议：${sanitize(c.advice)}`;
     })
     .join('\n');
@@ -91,7 +101,9 @@ function buildPrompt(body: RequestBody): LLMMessage[] {
     trainingLoadTrend && trainingLoadTrend.length > 0
       ? `\n近 7 天每日训练负荷 (TRIMP)：${trainingLoadTrend
           .slice(0, MAX_TREND_LEN)
-          .map((v) => (typeof v === 'number' && Number.isFinite(v) ? v.toFixed(0) : '0'))
+          .map((v) =>
+            typeof v === 'number' && Number.isFinite(v) ? v.toFixed(0) : '0'
+          )
           .join(', ')}`
       : '';
 
@@ -155,7 +167,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // 60s CDN cache
-  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=0, s-maxage=60, stale-while-revalidate=300'
+  );
 
   // 构建 provider
   let provider;
@@ -168,7 +183,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       aiGuidance: null,
       error: msg,
       requestId,
-      hint: '检查 Vercel env: LLM_PROVIDER + 对应 API key (MIMO_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY)。也可访问 GET /api/health-check 看配置状态。',
+      hint: '检查 Vercel env: LLM_PROVIDER + 对应 API key (MIMO_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY / DEEPSEEK_API_KEY)。也可访问 GET /api/health-check 看配置状态。',
     });
   }
 
@@ -201,7 +216,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error(`[assess-ai ${requestId}] LLM call failed (provider=${provider.name}):`, msg);
+    console.error(
+      `[assess-ai ${requestId}] LLM call failed (provider=${provider.name}):`,
+      msg
+    );
     return res.status(502).json({
       aiGuidance: null,
       error: msg,

@@ -6,10 +6,11 @@
  *   - mimo      (小米 MiMo, OpenAI 兼容)
  *   - openai    (gpt-4o-mini 等)
  *   - anthropic (claude-haiku 等)
+ *   - deepseek  (DeepSeek 全家桶应用 API, Chat Completions 协议)
  *
  * 切换方式：
  *   1. Vercel dashboard 环境变量 `LLM_PROVIDER=mimo` (默认)
- *   2. 配对应 key: MIMO_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY
+ *   2. 配对应 key: MIMO_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY / DEEPSEEK_API_KEY
  *
  * 加新 provider 步骤：
  *   1. 在此文件下加 type ProviderName
@@ -17,7 +18,9 @@
  *   3. 在 PROVIDERS 字典里登记
  */
 
-export type ProviderName = 'mimo' | 'openai' | 'anthropic';
+import { chatWithDefaults } from '../deepseek/provider';
+
+export type ProviderName = 'mimo' | 'openai' | 'anthropic' | 'deepseek';
 
 export interface LLMMessage {
   role: 'system' | 'user' | 'assistant';
@@ -37,6 +40,8 @@ export interface LLMUsage {
   prompt_tokens?: number;
   completion_tokens?: number;
   total_tokens?: number;
+  /** DeepSeek 安全审核 token（单独计费，仅 DeepSeek 开启 safety 时返回） */
+  safety_tokens?: number;
 }
 
 export interface LLMResponse {
@@ -81,7 +86,10 @@ function createMimoProvider(opts: MiMoProviderOptions): LLMProvider {
 
     async call(req: LLMRequest): Promise<LLMResponse> {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), req.timeoutMs ?? 10_000);
+      const timeout = setTimeout(
+        () => controller.abort(),
+        req.timeoutMs ?? 10_000
+      );
 
       try {
         const resp = await fetch(`${baseUrl}/chat/completions`, {
@@ -134,7 +142,10 @@ function createOpenAIProvider(opts: MiMoProviderOptions): LLMProvider {
 
     async call(req: LLMRequest): Promise<LLMResponse> {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), req.timeoutMs ?? 10_000);
+      const timeout = setTimeout(
+        () => controller.abort(),
+        req.timeoutMs ?? 10_000
+      );
 
       try {
         const resp = await fetch(`${baseUrl}/chat/completions`, {
@@ -193,7 +204,10 @@ function createAnthropicProvider(opts: AnthropicProviderOptions): LLMProvider {
 
     async call(req: LLMRequest): Promise<LLMResponse> {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), req.timeoutMs ?? 12_000);
+      const timeout = setTimeout(
+        () => controller.abort(),
+        req.timeoutMs ?? 12_000
+      );
 
       try {
         // Anthropic Messages API 格式与 OpenAI 不同：system 单独字段
@@ -223,7 +237,9 @@ function createAnthropicProvider(opts: AnthropicProviderOptions): LLMProvider {
 
         if (!resp.ok) {
           const err = await resp.text();
-          throw new Error(`Anthropic HTTP ${resp.status}: ${err.slice(0, 200)}`);
+          throw new Error(
+            `Anthropic HTTP ${resp.status}: ${err.slice(0, 200)}`
+          );
         }
 
         const data = await resp.json();
@@ -234,7 +250,9 @@ function createAnthropicProvider(opts: AnthropicProviderOptions): LLMProvider {
             ? {
                 prompt_tokens: data.usage.input_tokens,
                 completion_tokens: data.usage.output_tokens,
-                total_tokens: (data.usage.input_tokens ?? 0) + (data.usage.output_tokens ?? 0),
+                total_tokens:
+                  (data.usage.input_tokens ?? 0) +
+                  (data.usage.output_tokens ?? 0),
               }
             : undefined,
           provider: 'anthropic',
@@ -286,7 +304,68 @@ export function buildProvider(opts: BuildProviderOptions = {}): LLMProvider {
         model: process.env.ANTHROPIC_MODEL,
       });
     }
+    case 'deepseek': {
+      const apiKey = process.env.DEEPSEEK_API_KEY;
+      if (!apiKey) throw new Error('DEEPSEEK_API_KEY not configured');
+      return createDeepSeekProvider({
+        apiKey,
+        baseUrl: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        model: process.env.DEEPSEEK_MODEL || 'deepseek-flash',
+      });
+    }
     default:
       throw new Error(`Unknown LLM provider: ${name}`);
   }
+}
+
+// ============================================================
+// 4. DeepSeek（全家桶应用 API, Chat Completions 协议）
+// ============================================================
+
+interface DeepSeekProviderOptions {
+  apiKey: string;
+  baseUrl?: string;
+  model?: string;
+}
+
+/**
+ * DeepSeek 全功能 provider：复用 api/deepseek/provider.ts 的 chatWithDefaults，
+ * 让三档套餐 + 每个 DEEPSEEK_ENABLE_* 开关真正作用于主对话（web 工具 / thinking /
+ * safety / title 都由能力中心决定，而不是在这里写死一个朴素 chat 请求）。
+ */
+function createDeepSeekProvider(opts: DeepSeekProviderOptions): LLMProvider {
+  return {
+    name: 'deepseek',
+    envKeyName: 'DEEPSEEK_API_KEY',
+    defaultModel: 'deepseek-flash',
+    defaultBaseUrl: 'https://api.deepseek.com',
+    async call(req: LLMRequest): Promise<LLMResponse> {
+      const result = await chatWithDefaults(
+        req.messages,
+        undefined,
+        req.timeoutMs ?? 30_000
+      );
+      if (result.refusal) {
+        throw new Error(
+          'DeepSeek safety check refused this request (content_filter)'
+        );
+      }
+      return {
+        content: result.content,
+        model: result.model || opts.model || 'deepseek-flash',
+        provider: 'deepseek',
+        usage: result.usage
+          ? {
+              prompt_tokens: result.usage.prompt_tokens,
+              completion_tokens: result.usage.completion_tokens,
+              total_tokens: result.usage.total_tokens,
+              // 安全审核 token 单独计费，这里透传供上层统计
+              ...(result.usage.safety_tokens !== undefined
+                ? { safety_tokens: result.usage.safety_tokens }
+                : {}),
+            }
+          : undefined,
+      };
+    },
+  };
 }

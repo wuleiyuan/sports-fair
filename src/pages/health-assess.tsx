@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { useTheme } from '@/hooks/useTheme';
 import AssessmentCard from '@/components/HealthAssessment/AssessmentCard';
 import AIDiagnosticsPanel from '@/components/HealthAssessment/AIDiagnosticsPanel';
+import DeepSeekConfigPanel from '@/components/HealthAssessment/DeepSeekConfigPanel';
 import { SkeletonText } from '@/components/Skeleton';
 import {
   assessHealth,
@@ -19,6 +20,7 @@ const PROVIDER_LABELS: Record<LLMProvider, string> = {
   mimo: 'MiMo (小米)',
   openai: 'OpenAI',
   anthropic: 'Anthropic',
+  deepseek: 'DeepSeek',
 };
 
 const HealthAssessPage: React.FC = () => {
@@ -80,7 +82,7 @@ const HealthAssessPage: React.FC = () => {
     if (!isEmptyData && aiState === 'idle') {
       handleAskAI();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // 只在数据首次可用时自动提问一次；handleAskAI 依赖 aiState（此处故意不列入）
   }, [isEmptyData, bundle]);
 
   return (
@@ -130,7 +132,7 @@ const HealthAssessPage: React.FC = () => {
           <div className="k-assess-banner">
             <p>
               <strong>Apple HealthKit 数据暂不可用</strong>。建议在 iPhone
-              "健康" App 中检查数据同步状态。
+              「健康」App 中检查数据同步状态。
             </p>
             <p className="k-assess-banner-sub">
               {hasTrainingData
@@ -142,6 +144,9 @@ const HealthAssessPage: React.FC = () => {
 
         {/* AI 配置诊断面板 */}
         <AIDiagnosticsPanel autoOpenOnError={aiState === 'error'} />
+
+        {/* DeepSeek 全家桶能力配置面板 */}
+        <DeepSeekConfigPanel />
 
         {/* AI 个性化建议 */}
         <section className="k-section">

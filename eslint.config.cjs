@@ -55,6 +55,16 @@ module.exports = [
     },
   },
   {
+    // Vercel serverless functions (api/**) run in Node, not the browser:
+    // declare Node globals so `process` / `Buffer` are not flagged by no-undef.
+    files: ['api/**/*.ts', 'api/**/*.tsx'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     ignores: [
       '**/node_modules/',
       '**/dist/',

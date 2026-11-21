@@ -10,6 +10,7 @@ import {
   type HealthCheckResponse,
   type ProviderStatus,
 } from '@/utils/healthCheckClient';
+import type { LLMProvider } from '@/utils/healthAssessment';
 import styles from './AIDiagnosticsPanel.module.css';
 
 interface Props {
@@ -17,10 +18,11 @@ interface Props {
   autoOpenOnError?: boolean;
 }
 
-const PROVIDER_DISPLAY_NAMES: Record<string, string> = {
+const PROVIDER_DISPLAY_NAMES: Record<LLMProvider, string> = {
   mimo: 'MiMo (小米)',
   openai: 'OpenAI',
   anthropic: 'Anthropic',
+  deepseek: 'DeepSeek 全家桶',
 };
 
 const AIDiagnosticsPanel: React.FC<Props> = ({ autoOpenOnError = false }) => {

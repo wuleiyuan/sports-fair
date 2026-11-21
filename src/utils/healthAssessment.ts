@@ -686,7 +686,7 @@ export function assessHealth(opts: AssessOptions = {}): AssessmentBundle {
 /**
  * v2.2.1: 支持多 LLM provider 切换
  */
-export type LLMProvider = 'mimo' | 'openai' | 'anthropic';
+export type LLMProvider = 'mimo' | 'openai' | 'anthropic' | 'deepseek';
 
 /**
  * AI 建议接口响应

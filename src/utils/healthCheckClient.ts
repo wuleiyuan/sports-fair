@@ -5,7 +5,7 @@
  * 失败容错: 网络错 → 抛回给调用方处理
  */
 export interface ProviderStatus {
-  name: 'mimo' | 'openai' | 'anthropic';
+  name: 'mimo' | 'openai' | 'anthropic' | 'deepseek';
   envKeyName: string;
   hasKey: boolean;
   isActive: boolean;
@@ -14,7 +14,7 @@ export interface ProviderStatus {
 
 export interface HealthCheckResponse {
   ok: boolean;
-  activeProvider: 'mimo' | 'openai' | 'anthropic';
+  activeProvider: 'mimo' | 'openai' | 'anthropic' | 'deepseek';
   activeReady: boolean;
   activeModel?: string;
   hint: string;
