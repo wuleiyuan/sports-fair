@@ -10,7 +10,7 @@
  *   - 仅返回布尔 hasKey
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import type { ProviderName } from './shared/llm';
+import type { ProviderName } from './shared/llm.js';
 
 interface ProviderStatus {
   name: ProviderName;

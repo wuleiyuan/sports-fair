@@ -6,7 +6,7 @@
  * 而 ./deepseek 只在类型层面引用本文件的 LLMMessage（`import type`，运行时擦除），
  * 所以不存在运行时循环依赖。
  */
-import { chatWithDefaults } from './deepseek';
+import { chatWithDefaults } from './deepseek.js';
 
 export type ProviderName = 'mimo' | 'openai' | 'anthropic' | 'deepseek';
 

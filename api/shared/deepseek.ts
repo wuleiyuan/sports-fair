@@ -11,7 +11,7 @@
  *   2. Chat 实现      callDeepSeekChat / chatWithDefaults
  *   3. 工具客户端     callSearch / callFetch / callOcr / callAsr / callTts
  */
-import type { LLMMessage } from './llm';
+import type { LLMMessage } from './llm.js';
 
 // ============================================================
 // 1. 能力开关中心

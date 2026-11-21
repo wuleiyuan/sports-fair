@@ -20,7 +20,7 @@ import {
   buildProvider,
   type LLMMessage,
   type ProviderName,
-} from './shared/llm';
+} from './shared/llm.js';
 
 /** 生成 requestId（兼容 Node + Edge runtime） */
 function newRequestId(): string {
