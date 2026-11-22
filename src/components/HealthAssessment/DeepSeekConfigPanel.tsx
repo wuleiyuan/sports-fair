@@ -111,6 +111,32 @@ const DeepSeekConfigPanel: React.FC = () => {
                 </p>
               ))}
 
+              {!data.hasKey && (
+                <div className={styles.notice}>
+                  <div className={styles.noticeTitle}>
+                    ⚠ 还没有配置 DEEPSEEK_API_KEY
+                  </div>
+                  <div className={styles.noticeBody}>
+                    下面列出的能力是「档位打算开启什么」，
+                    在填入 Key 之前所有工具端点都会返回{' '}
+                    <code className={styles.code}>DEEPSEEK_API_KEY not
+                    configured</code>。
+                    <br />
+                    到 Vercel → Project → Settings → Environment Variables
+                    添加 <code className={styles.code}>DEEPSEEK_API_KEY</code>
+                    （在{' '}
+                    <a
+                      href="https://platform.deepseek.com/api_keys"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      platform.deepseek.com
+                    </a>{' '}
+                    申请）后重新部署即可生效。
+                  </div>
+                </div>
+              )}
+
               <div className={styles.tierRow}>
                 {(Object.keys(TIER_LABELS) as DeepSeekTier[]).map((t) => (
                   <div
@@ -133,7 +159,7 @@ const DeepSeekConfigPanel: React.FC = () => {
                   <tr>
                     <th>能力</th>
                     <th>说明</th>
-                    <th>状态</th>
+                    <th>{data.hasKey ? '状态' : '状态（缺 Key）'}</th>
                     <th>环境变量</th>
                   </tr>
                 </thead>
@@ -144,8 +170,20 @@ const DeepSeekConfigPanel: React.FC = () => {
                       <td className={styles.descCell}>{c.description}</td>
                       <td>
                         <span
-                          className={`${styles.switch} ${c.enabled ? styles.switchOn : styles.switchOff}`}
-                          title={c.enabled ? '已开启' : '已关闭'}
+                          className={`${styles.switch} ${
+                            c.enabled && data.hasKey
+                              ? styles.switchOn
+                              : c.enabled
+                                ? styles.switchIdle
+                                : styles.switchOff
+                          }`}
+                          title={
+                            c.enabled
+                              ? data.hasKey
+                                ? '已开启'
+                                : '档位已开，但缺 API Key 无法调用'
+                              : '已关闭'
+                          }
                         >
                           <span className={styles.switchDot} />
                           {c.enabled ? '开' : '关'}

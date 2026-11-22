@@ -191,6 +191,40 @@
   color: var(--color-text-tertiary);
 }
 
+/* 档位已开、但缺 API Key —— 灰黄色，避免让人误以为现在就能用 */
+.switchIdle {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  opacity: 0.75;
+}
+
+.notice {
+  margin: 12px 0;
+  padding: 12px 14px;
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-amber);
+  border-left-width: 4px;
+  border-radius: 6px;
+}
+
+.noticeTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-warning-text-strong);
+  margin-bottom: 6px;
+}
+
+.noticeBody {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--color-warning-text-strong);
+}
+
+.noticeBody a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .switchDot {
   width: 6px;
   height: 6px;
