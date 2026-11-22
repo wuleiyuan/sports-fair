@@ -6,6 +6,7 @@
  * POST /api/deepseek/ocr     body: { fileBase64, filename, purpose? }
  * POST /api/deepseek/asr     body: { fileBase64, filename }
  * POST /api/deepseek/tts     body: { text, voiceId?, format? }
+ * POST /api/deepseek/files   body: { action: 'upload'|'list'|'get'|'delete', ... }
  *
  * v1.0.2 (2026-11-21): 从动态路由 api/deepseek/[tool].ts 改为静态单函数
  * + vercel.json rewrite（/api/deepseek/:tool → /api/deepseek?tool=:tool）。
@@ -20,9 +21,14 @@ import {
   callOcr,
   callAsr,
   callTts,
+  callFileUpload,
+  callFileList,
+  callFileGet,
+  callFileDelete,
+  type FilePurpose,
 } from './_shared/deepseek.js';
 
-const TOOLS = ['search', 'fetch', 'ocr', 'asr', 'tts'] as const;
+const TOOLS = ['search', 'fetch', 'ocr', 'asr', 'tts', 'files'] as const;
 type Tool = (typeof TOOLS)[number];
 
 function fail(res: VercelResponse, e: unknown) {
@@ -170,6 +176,123 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {
         return fail(res, e);
       }
+    }
+
+    // Files API：上传后拿 file_id，可在对话里用 {type:'file', file_id} 引用
+    case 'files': {
+      const { action = 'upload' } = body;
+      const FILE_PURPOSES: FilePurpose[] = [
+        'user_data',
+        'text_recognition',
+        'rich_layout_recognition',
+      ];
+
+      if (action === 'upload') {
+        const { fileBase64, filename, purpose = 'user_data', expiry } = body;
+        if (!fileBase64 || typeof fileBase64 !== 'string') {
+          return res.status(400).json({ error: 'fileBase64 is required' });
+        }
+        if (!FILE_PURPOSES.includes(purpose)) {
+          return res.status(400).json({
+            error: `purpose must be one of: ${FILE_PURPOSES.join(', ')}`,
+          });
+        }
+        // 官方限制：{anchor:'created_at', seconds: 3600–2592000}
+        if (expiry !== undefined) {
+          if (
+            !expiry ||
+            expiry.anchor !== 'created_at' ||
+            typeof expiry.seconds !== 'number' ||
+            !Number.isFinite(expiry.seconds) ||
+            expiry.seconds < 3600 ||
+            expiry.seconds > 2_592_000
+          ) {
+            return res.status(400).json({
+              error:
+                'expiry must be { anchor: "created_at", seconds: 3600-2592000 }',
+            });
+          }
+        }
+
+        const gate = gateCapability('fileInput');
+        if (!gate.ok) return res.status(gate.status).json(gate.body);
+        try {
+          return res
+            .status(200)
+            .json(
+              await callFileUpload(
+                fileBase64,
+                filename || 'upload.bin',
+                purpose,
+                expiry
+              )
+            );
+        } catch (e) {
+          return fail(res, e);
+        }
+      }
+
+      if (action === 'list') {
+        const { after, limit, order, purpose } = body;
+        if (
+          limit !== undefined &&
+          (!Number.isFinite(Number(limit)) ||
+            Number(limit) < 1 ||
+            Number(limit) > 1000)
+        ) {
+          return res.status(400).json({ error: 'limit must be 1-1000' });
+        }
+        if (order !== undefined && order !== 'asc' && order !== 'desc') {
+          return res
+            .status(400)
+            .json({ error: "order must be 'asc' or 'desc'" });
+        }
+        if (purpose !== undefined && !FILE_PURPOSES.includes(purpose)) {
+          return res.status(400).json({
+            error: `purpose must be one of: ${FILE_PURPOSES.join(', ')}`,
+          });
+        }
+
+        const gate = gateCapability('fileInput');
+        if (!gate.ok) return res.status(gate.status).json(gate.body);
+        try {
+          return res.status(200).json(
+            await callFileList({
+              after,
+              limit: limit === undefined ? undefined : Number(limit),
+              order,
+              purpose,
+            })
+          );
+        } catch (e) {
+          return fail(res, e);
+        }
+      }
+
+      if (action === 'get' || action === 'delete') {
+        const { fileId } = body;
+        if (!fileId || typeof fileId !== 'string') {
+          return res.status(400).json({ error: 'fileId is required' });
+        }
+
+        const gate = gateCapability('fileInput');
+        if (!gate.ok) return res.status(gate.status).json(gate.body);
+        try {
+          return res
+            .status(200)
+            .json(
+              action === 'get'
+                ? await callFileGet(fileId)
+                : await callFileDelete(fileId)
+            );
+        } catch (e) {
+          return fail(res, e);
+        }
+      }
+
+      return res
+        .status(400)
+        .json({ error: 'action must be one of: upload, list, get, delete' });
     }
   }
 }

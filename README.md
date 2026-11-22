@@ -238,10 +238,25 @@ Standalone tool endpoints (gated by tier/switches, the server holds the key):
 | `POST /api/deepseek/ocr`    | `{ fileBase64, filename, purpose? }`                      |
 | `POST /api/deepseek/asr`    | `{ fileBase64, filename }`                                |
 | `POST /api/deepseek/tts`    | `{ text, voiceId?, format? }` → `{ audioBase64, format }` |
+| `POST /api/deepseek/files`  | `{ action: 'upload'\|'list'\|'get'\|'delete', ... }`      |
 
-These five share a single static function (`api/deepseek.ts`) — a `vercel.json` rewrite maps
+Files API body by action:
+
+- `upload` — `{ fileBase64, filename, purpose?, expiry? }`. `purpose` is `user_data`
+  (images / plain text / spreadsheets / ebooks), `text_recognition` or
+  `rich_layout_recognition` (PDF / Word / PowerPoint — uploading those as `user_data`
+  returns 400 upstream). `expiry` is `{ anchor: 'created_at', seconds: 3600-2592000 }`.
+  Returns the file object; keep its `id` (`file-api-...`).
+- `list` — `{ after?, limit? (1-1000), order? ('asc'|'desc'), purpose? }`
+- `get` / `delete` — `{ fileId }`
+
+To use an uploaded file in a chat turn, send a content block instead of a plain string:
+`{ "type": "file", "file_id": "file-api-..." }`. Files belong to the account, so every
+API key under it shares them.
+
+These six share a single static function (`api/deepseek.ts`) — a `vercel.json` rewrite maps
 `/api/deepseek/:tool` onto it — so the deployment stays within Vercel Hobby's
-12-Serverless-Function limit. (A `[tool].ts` dynamic route is *not* bundled into a function
+12-Serverless-Function limit. (A `[tool].ts` dynamic route is _not_ bundled into a function
 by `@vercel/node`, so it silently 405s; keep this file static if you refactor.)
 Check the current config with `GET /api/config`, or open the **DeepSeek 全家桶 · 能力配置**
 panel on the Health Assess page. The panel is read-only — switches are managed by the

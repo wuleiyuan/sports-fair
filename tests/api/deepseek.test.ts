@@ -64,7 +64,10 @@ async function call(
 
 /** 记录 fetch 调用，并按需返回构造好的响应 */
 function stubFetch(
-  responder: (url: string, init: any) => {
+  responder: (
+    url: string,
+    init: any
+  ) => {
     status?: number;
     json?: unknown;
     text?: string;
@@ -98,6 +101,7 @@ const ENV_KEYS = [
   'DEEPSEEK_ENABLE_ASR',
   'DEEPSEEK_ENABLE_TTS',
   'DEEPSEEK_ENABLE_SAFETY',
+  'DEEPSEEK_ENABLE_FILE_INPUT',
 ];
 
 let saved: Record<string, string | undefined> = {};
@@ -410,6 +414,149 @@ describe('上游请求形状', () => {
     expect(Buffer.from(r.payload.audioBase64, 'base64').toString()).toBe(
       'RIFF____fake_wav'
     );
+  });
+});
+
+// ============================================================
+// Files API（fileInput 能力）
+// ============================================================
+
+describe('files：文件上传与管理', () => {
+  it('upload → POST /files，multipart 里 purpose 排在 file 之前', async () => {
+    const calls = stubFetch(() => ({
+      json: {
+        id: 'file-api-abc',
+        object: 'file',
+        bytes: 10,
+        created_at: 1,
+        filename: 'a.png',
+        purpose: 'user_data',
+      },
+    }));
+    const r = await call({
+      query: { tool: 'files' },
+      body: {
+        action: 'upload',
+        fileBase64: Buffer.from('xx').toString('base64'),
+        filename: 'a.png',
+      },
+    });
+
+    expect(r.status).toBe(200);
+    expect(r.payload.id).toBe('file-api-abc');
+    // 官方要求：端点是 /files（不带 /v1）
+    expect(calls[0].url).toBe('https://api.deepseek.com/files');
+    const form = calls[0].init.body as FormData;
+    // FormData 保持插入顺序，purpose 必须先于 file
+    const keys = [...form.keys()];
+    expect(keys.indexOf('purpose')).toBeLessThan(keys.indexOf('file'));
+    expect(form.get('purpose')).toBe('user_data');
+  });
+
+  it('upload → 非法 purpose 被拒', async () => {
+    const r = await call({
+      query: { tool: 'files' },
+      body: {
+        action: 'upload',
+        fileBase64: 'eA==',
+        filename: 'a.pdf',
+        purpose: 'user_datax',
+      },
+    });
+    expect(r.status).toBe(400);
+    expect(r.payload.error).toContain('purpose must be one of');
+  });
+
+  it('upload → expiry 超出 3600-2592000 被拒', async () => {
+    const bad = await call({
+      query: { tool: 'files' },
+      body: {
+        action: 'upload',
+        fileBase64: 'eA==',
+        filename: 'a.png',
+        expiry: { anchor: 'created_at', seconds: 60 },
+      },
+    });
+    expect(bad.status).toBe(400);
+    expect(bad.payload.error).toContain('3600-2592000');
+
+    // anchor 只支持 created_at
+    const badAnchor = await call({
+      query: { tool: 'files' },
+      body: {
+        action: 'upload',
+        fileBase64: 'eA==',
+        filename: 'a.png',
+        expiry: { anchor: 'upload_at', seconds: 3600 },
+      },
+    });
+    expect(badAnchor.status).toBe(400);
+  });
+
+  it('list → GET /files 并带上翻页与过滤参数', async () => {
+    const calls = stubFetch(() => ({
+      json: { object: 'list', data: [], has_more: false },
+    }));
+    const r = await call({
+      query: { tool: 'files' },
+      body: { action: 'list', limit: 5, order: 'desc', purpose: 'user_data' },
+    });
+
+    expect(r.status).toBe(200);
+    expect(calls[0].url).toBe(
+      'https://api.deepseek.com/files?limit=5&order=desc&purpose=user_data'
+    );
+    // 列文件是 GET
+    expect(calls[0].init.method ?? 'GET').toBe('GET');
+  });
+
+  it('list → limit 超出 1-1000 被拒', async () => {
+    const r = await call({
+      query: { tool: 'files' },
+      body: { action: 'list', limit: 5000 },
+    });
+    expect(r.status).toBe(400);
+    expect(r.payload.error).toContain('limit must be 1-1000');
+  });
+
+  it('get / delete → 需要 fileId，且路径带转义', async () => {
+    const noId = await call({
+      query: { tool: 'files' },
+      body: { action: 'get' },
+    });
+    expect(noId.status).toBe(400);
+    expect(noId.payload.error).toBe('fileId is required');
+
+    const calls = stubFetch(() => ({
+      json: { id: 'file-api-x', object: 'file', deleted: true },
+    }));
+    const r = await call({
+      query: { tool: 'files' },
+      body: { action: 'delete', fileId: 'file-api-x' },
+    });
+    expect(r.status).toBe(200);
+    expect(calls[0].url).toBe('https://api.deepseek.com/files/file-api-x');
+    expect(calls[0].init.method).toBe('DELETE');
+    expect(r.payload.deleted).toBe(true);
+  });
+
+  it('未知 action 被拒', async () => {
+    const r = await call({
+      query: { tool: 'files' },
+      body: { action: 'rename' },
+    });
+    expect(r.status).toBe(400);
+    expect(r.payload.error).toContain('upload, list, get, delete');
+  });
+
+  it('lite 档关掉 fileInput → 403 且提示正确的 env 名', async () => {
+    process.env.DEEPSEEK_TIER = 'lite';
+    const r = await call({
+      query: { tool: 'files' },
+      body: { action: 'list' },
+    });
+    expect(r.status).toBe(403);
+    expect(r.payload.hint).toContain('DEEPSEEK_ENABLE_FILE_INPUT');
   });
 });
 

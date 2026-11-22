@@ -612,3 +612,126 @@ export async function callTts(
     clearTimeout(timer);
   }
 }
+
+// ============================================================
+// Files API（fileInput 能力）
+//
+// 官方要点（api-docs.deepseek.com/zh-cn/guides/files_api）：
+// - 端点是 /files（注意不是 /v1/files）
+// - multipart 里 purpose 字段必须排在 file 之前，否则文档上传 400
+// - purpose=user_data 收图片/纯文本/表格/电子书；PDF/Word/PPT 必须用
+//   text_recognition 或 rich_layout_recognition，否则 400
+// - 上传过程中完成解析，解析成功才返回，file_id 立即可用
+// - 文件归属于账号，同账号所有 API key 共享
+// ============================================================
+
+export type FilePurpose =
+  | 'user_data'
+  | 'text_recognition'
+  | 'rich_layout_recognition';
+
+export interface DeepSeekFile {
+  id: string;
+  object: string;
+  bytes: number;
+  created_at: number;
+  filename: string;
+  purpose: FilePurpose;
+  expires_at?: number;
+}
+
+export interface FileExpiry {
+  /** 有效期起点，目前只支持 created_at */
+  anchor: 'created_at';
+  /** 有效期秒数，3600–2592000（1 小时 ~ 30 天） */
+  seconds: number;
+}
+
+async function bearerGetJson(path: string): Promise<any> {
+  const apiKey = getApiKey();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30_000);
+  try {
+    const resp = await fetch(`${DEEPSEEK_BASE_URL}${path}`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: controller.signal,
+    });
+    if (!resp.ok) {
+      const err = await resp.text();
+      throw new Error(`DeepSeek HTTP ${resp.status}: ${err.slice(0, 300)}`);
+    }
+    return await resp.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * 上传文件。purpose 决定服务端如何解析：
+ * - user_data：图片 / 纯文本 / 表格 / 电子书，模型能"看到"原内容
+ * - text_recognition：PDF/Word/PPT，只取文字
+ * - rich_layout_recognition：PDF/Word/PPT，图文混排一起给模型
+ */
+export async function callFileUpload(
+  fileBase64: string,
+  filename: string,
+  purpose: FilePurpose = 'user_data',
+  expiry?: FileExpiry
+): Promise<DeepSeekFile> {
+  const fields: Record<string, string> = {};
+  // purpose 必须排在 file 之前：bearerPostMultipart 先写 fields 再 append file，
+  // 正好满足这个顺序要求
+  fields.purpose = purpose;
+  if (expiry) {
+    fields['expires_after[anchor]'] = expiry.anchor;
+    fields['expires_after[seconds]'] = String(expiry.seconds);
+  }
+  return bearerPostMultipart('/files', fields, fileBase64, filename, 'file');
+}
+
+/** 列出已上传文件。limit 1–1000，order 默认 asc */
+export async function callFileList(options?: {
+  after?: string;
+  limit?: number;
+  order?: 'asc' | 'desc';
+  purpose?: FilePurpose;
+}): Promise<{ object: string; data: DeepSeekFile[]; has_more: boolean }> {
+  const qs = new URLSearchParams();
+  if (options?.after) qs.set('after', options.after);
+  if (options?.limit !== undefined) qs.set('limit', String(options.limit));
+  if (options?.order) qs.set('order', options.order);
+  if (options?.purpose) qs.set('purpose', options.purpose);
+  const suffix = qs.toString() ? `?${qs.toString()}` : '';
+  return bearerGetJson(`/files${suffix}`);
+}
+
+/** 查询单个文件信息 */
+export async function callFileGet(fileId: string): Promise<DeepSeekFile> {
+  return bearerGetJson(`/files/${encodeURIComponent(fileId)}`);
+}
+
+/** 删除文件。原始文件与解析结果本就不支持下载，删除只影响后续引用 */
+export async function callFileDelete(
+  fileId: string
+): Promise<{ id: string; object: string; deleted: boolean }> {
+  const apiKey = getApiKey();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30_000);
+  try {
+    const resp = await fetch(
+      `${DEEPSEEK_BASE_URL}/files/${encodeURIComponent(fileId)}`,
+      {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${apiKey}` },
+        signal: controller.signal,
+      }
+    );
+    if (!resp.ok) {
+      const err = await resp.text();
+      throw new Error(`DeepSeek HTTP ${resp.status}: ${err.slice(0, 300)}`);
+    }
+    return await resp.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
