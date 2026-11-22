@@ -75,7 +75,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ? Math.min(50, Math.max(1, Math.trunc(n)))
         : 10;
 
-      const gate = gateCapability('webSearch');
+      const gate = await gateCapability('webSearch');
       if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
@@ -95,7 +95,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'url must be <= 8192 chars' });
       }
 
-      const gate = gateCapability('readUrl');
+      const gate = await gateCapability('readUrl');
       if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res.status(200).json(await callFetch(url));
@@ -117,7 +117,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
       }
 
-      const gate = gateCapability('ocr');
+      const gate = await gateCapability('ocr');
       if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
@@ -134,7 +134,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'fileBase64 is required' });
       }
 
-      const gate = gateCapability('asr');
+      const gate = await gateCapability('asr');
       if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
@@ -160,7 +160,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: "format must be 'wav' or 'pcm'" });
       }
 
-      const gate = gateCapability('tts');
+      const gate = await gateCapability('tts');
       if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         const { audioBase64, format: fmt } = await callTts(
@@ -214,7 +214,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
         }
 
-        const gate = gateCapability('fileInput');
+        const gate = await gateCapability('fileInput');
         if (!gate.ok) return res.status(gate.status).json(gate.body);
         try {
           return res
@@ -253,7 +253,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           });
         }
 
-        const gate = gateCapability('fileInput');
+        const gate = await gateCapability('fileInput');
         if (!gate.ok) return res.status(gate.status).json(gate.body);
         try {
           return res.status(200).json(
@@ -275,7 +275,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ error: 'fileId is required' });
         }
 
-        const gate = gateCapability('fileInput');
+        const gate = await gateCapability('fileInput');
         if (!gate.ok) return res.status(gate.status).json(gate.body);
         try {
           return res

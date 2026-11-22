@@ -179,6 +179,14 @@
   border-radius: 10px;
   font-size: 0.75rem;
   font-weight: 500;
+  /* 这个开关是一个 <button>，把浏览器默认样式清掉 */
+  border: none;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.switch:disabled {
+  cursor: default;
 }
 
 .switchOn {
@@ -251,4 +259,59 @@
 
 .footer code {
   font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ---- 可点击开关（配了 KV + admin token 时） ---- */
+.switchClickable {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+
+.switchClickable:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.switchClickable:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ---- 管理员令牌行 ---- */
+.adminRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--k-card-border);
+  border-radius: 10px;
+  background: var(--color-fill-secondary, rgba(120, 120, 128, 0.06));
+}
+
+.adminLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 220px;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+
+.adminInput {
+  padding: 6px 10px;
+  border: 1px solid var(--k-card-border);
+  border-radius: 8px;
+  background: var(--color-bg-primary, #fff);
+  color: var(--color-text-primary);
+  font-size: 0.82rem;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+.adminInput:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
 }

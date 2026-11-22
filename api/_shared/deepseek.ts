@@ -12,6 +12,7 @@
  *   3. 工具客户端     callSearch / callFetch / callOcr / callAsr / callTts
  */
 import type { LLMMessage } from './llm.js';
+import { storageAvailable, loadOverrides } from './overrides.js';
 
 // ============================================================
 // 1. 能力开关中心
@@ -272,6 +273,58 @@ export function isCapabilityOn(cfg: DeepSeekConfig, key: Capability): boolean {
   return cfg.capabilities[key]?.enabled ?? false;
 }
 
+/**
+ * 把运行时覆盖（后台开关）叠加到环境变量算出的配置上。
+ *
+ * 语义：环境变量 = 默认值，后台开关 = 运行时覆盖，可以双向拨。
+ * 总闸仍然是 DEEPSEEK_API_KEY（没 key 一律不可用）和 DEEPSEEK_TIER（决定默认集合），
+ * 覆盖不可能绕过这两者产生费用——真要彻底关停，删 key 即可。
+ *
+ * 安全：能写覆盖的只有持有 DEEPSEEK_ADMIN_TOKEN 的请求（见 api/config.ts），
+ * 否则任何访客都能把付费能力全打开。
+ */
+export function applyOverrides(
+  cfg: DeepSeekConfig,
+  overrides: Partial<Record<Capability, boolean>>
+): DeepSeekConfig {
+  const capabilities = { ...cfg.capabilities };
+  (Object.keys(CAPABILITY_META) as Capability[]).forEach((key) => {
+    const override = overrides[key];
+    if (typeof override !== 'boolean') return;
+    const state = capabilities[key];
+    if (!state) return;
+    // chat 是基础设施，永远不能被关掉
+    if (key === 'chat' && !override) return;
+    capabilities[key] = {
+      ...state,
+      enabled: override,
+      source: 'override',
+      explicitlySet: true,
+    };
+  });
+  return { ...cfg, capabilities };
+}
+
+/**
+ * 与环境变量配置 + 后台覆盖合并后的完整配置。
+ * 没配存储（fork 者默认情况）时退化成 resolveDeepSeekConfig()。
+ *
+ * 用静态 import 而不是动态 import：Vercel 的依赖追踪对动态 import 的
+ * 静态字面量支持得并不稳，一旦漏打包就是运行时 500（这个坑踩过一次）。
+ * overrides.ts 对 Capability 只有 type import，运行时擦除，不会形成循环依赖。
+ */
+export async function resolveDeepSeekConfigWithOverrides(): Promise<DeepSeekConfig> {
+  const cfg = resolveDeepSeekConfig();
+  try {
+    if (!storageAvailable()) return cfg;
+    const overrides = await loadOverrides();
+    return applyOverrides(cfg, overrides);
+  } catch {
+    // 覆盖读不到就用环境变量配置，主流程不该因此失败
+    return cfg;
+  }
+}
+
 // ============================================================
 // 2. Chat 实现
 // ============================================================
@@ -431,7 +484,7 @@ export async function chatWithDefaults(
   override?: DeepSeekChatOptions,
   timeoutMs?: number
 ): Promise<DeepSeekChatResult> {
-  const cfg = resolveDeepSeekConfig();
+  const cfg = await resolveDeepSeekConfigWithOverrides();
   return callDeepSeekChat(messages, {
     ...optsFromConfig(cfg),
     ...(override || {}),
@@ -454,7 +507,7 @@ export interface GateResultErr {
 export type GateResult = GateResultOk | GateResultErr;
 
 /** 校验 key + 能力开关；不通过时返回可直接 res.status().json() 的错误体 */
-export function gateCapability(cap: Capability): GateResult {
+export async function gateCapability(cap: Capability): Promise<GateResult> {
   try {
     getApiKey();
   } catch {
@@ -467,7 +520,7 @@ export function gateCapability(cap: Capability): GateResult {
       },
     };
   }
-  const cfg = resolveDeepSeekConfig();
+  const cfg = await resolveDeepSeekConfigWithOverrides();
   if (!isCapabilityOn(cfg, cap)) {
     const meta = CAPABILITY_META[cap];
     return {

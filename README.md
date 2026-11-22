@@ -207,7 +207,8 @@ See [Data Sync Guide](docs/DATA_SYNC.md) for per-source setup instructions.
 The AI Coach can run on [DeepSeek's full app API](https://api-docs.deepseek.com/) — including
 web search (normal + deep-thinking), read-url, file input, OCR / ASR / TTS and safety checks.
 Everything is controlled by **environment variables** — no extra service (KV/database) needed,
-so a plain clone + deploy works out of the box.
+so a plain clone + deploy works out of the box. (Adding KV is optional and only needed if you
+want to flip switches from the UI — see [Switching capabilities at runtime](#switching-capabilities-at-runtime-optional).)
 
 **Setup** (Vercel → Project → Settings → Environment Variables, then redeploy):
 
@@ -258,9 +259,36 @@ These six share a single static function (`api/deepseek.ts`) — a `vercel.json`
 `/api/deepseek/:tool` onto it — so the deployment stays within Vercel Hobby's
 12-Serverless-Function limit. (A `[tool].ts` dynamic route is _not_ bundled into a function
 by `@vercel/node`, so it silently 405s; keep this file static if you refactor.)
-Check the current config with `GET /api/config`, or open the **DeepSeek 全家桶 · 能力配置**
-panel on the Health Assess page. The panel is read-only — switches are managed by the
-environment variables above (this keeps the project free of any backend storage).
+
+### Switching capabilities at runtime (optional)
+
+By default the switches come from the environment variables above and you need a redeploy to
+change them — a plain clone has **zero extra services**. If you'd rather flip switches from
+the UI without redeploying, add two things:
+
+1. Connect **Vercel KV** (or any Upstash Redis) — Vercel injects `KV_REST_API_URL` /
+   `KV_REST_API_TOKEN` automatically.
+2. Set `DEEPSEEK_ADMIN_TOKEN` to a long random string of your own.
+
+Then open the **DeepSeek 全家桶 · 能力配置** panel on the Health Assess page, paste the token,
+and click any switch. Changes take effect on the next request — no redeploy.
+
+| Variable               | Meaning                                                                  |
+| ---------------------- | ------------------------------------------------------------------------ |
+| `DEEPSEEK_ADMIN_TOKEN` | Enables writing overrides from the panel. Unset → the panel is read-only |
+
+How it stays safe:
+
+- Without `DEEPSEEK_ADMIN_TOKEN` the write endpoint returns 503; with a wrong token, 401.
+  Nothing can be flipped by a visitor.
+- `chat` can never be disabled.
+- Overrides are stored under one key (`sports-fair:deepseek:overrides:v1`) via the plain
+  Upstash REST protocol — no extra npm dependency.
+- Deleting `DEEPSEEK_API_KEY` still hard-stops every capability, overrides included.
+
+`GET /api/config` returns the resolved config (including `writable`, `storageAvailable` and
+each capability's `source`: `tier` or `override`). `POST /api/config` takes
+`{ capability, enabled }` (or `{ reset: true }`) and requires the `x-admin-token` header.
 
 ---
 
