@@ -51,9 +51,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const body = req.body || {};
 
   switch (tool) {
+    // 每个 case 的顺序：先校验入参（400，与密钥无关），再查能力开关（403/500），
+    // 最后才真正发起上游请求。这样未配置 key 时也能得到明确的参数错误。
     case 'search': {
-      const gate = gateCapability('webSearch');
-      if (!gate.ok) return res.status(gate.status).json(gate.body);
       const { query, count = 10, needContent = false, oriQuestion } = body;
       if (!query || typeof query !== 'string' || query.trim().length === 0) {
         return res
@@ -68,6 +68,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const safeCount = Number.isFinite(n)
         ? Math.min(50, Math.max(1, Math.trunc(n)))
         : 10;
+
+      const gate = gateCapability('webSearch');
+      if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
           .status(200)
@@ -78,12 +81,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'fetch': {
-      const gate = gateCapability('readUrl');
-      if (!gate.ok) return res.status(gate.status).json(gate.body);
       const { url } = body;
       if (!url || typeof url !== 'string') {
         return res.status(400).json({ error: 'url is required' });
       }
+      if (url.length > 8192) {
+        return res.status(400).json({ error: 'url must be <= 8192 chars' });
+      }
+
+      const gate = gateCapability('readUrl');
+      if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res.status(200).json(await callFetch(url));
       } catch (e) {
@@ -92,8 +99,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'ocr': {
-      const gate = gateCapability('ocr');
-      if (!gate.ok) return res.status(gate.status).json(gate.body);
       const { fileBase64, filename, purpose = 'text_recognition' } = body;
       if (!fileBase64 || typeof fileBase64 !== 'string') {
         return res.status(400).json({ error: 'fileBase64 is required' });
@@ -105,6 +110,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           error: `purpose must be one of: ${PURPOSES.join(', ')}`,
         });
       }
+
+      const gate = gateCapability('ocr');
+      if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
           .status(200)
@@ -115,12 +123,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'asr': {
-      const gate = gateCapability('asr');
-      if (!gate.ok) return res.status(gate.status).json(gate.body);
       const { fileBase64, filename } = body;
       if (!fileBase64 || typeof fileBase64 !== 'string') {
         return res.status(400).json({ error: 'fileBase64 is required' });
       }
+
+      const gate = gateCapability('asr');
+      if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         return res
           .status(200)
@@ -131,8 +140,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'tts': {
-      const gate = gateCapability('tts');
-      if (!gate.ok) return res.status(gate.status).json(gate.body);
       const { text, voiceId = 'stella', format = 'wav' } = body;
       if (!text || typeof text !== 'string' || text.length === 0) {
         return res.status(400).json({ error: 'text is required' });
@@ -146,6 +153,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (format !== 'wav' && format !== 'pcm') {
         return res.status(400).json({ error: "format must be 'wav' or 'pcm'" });
       }
+
+      const gate = gateCapability('tts');
+      if (!gate.ok) return res.status(gate.status).json(gate.body);
       try {
         const { audioBase64, format: fmt } = await callTts(
           text,
