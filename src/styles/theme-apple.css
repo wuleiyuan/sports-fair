@@ -449,6 +449,47 @@
   line-height: 1.6;
 }
 
+/* AI 建议下方的引用来源（DeepSeek 联网搜索时才有） */
+[data-kinetic] .k-assess-citations {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--k-card-border);
+}
+
+[data-kinetic] .k-assess-citations-label {
+  display: block;
+  font-size: var(--k-caption);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--k-text-tertiary);
+  margin-bottom: 6px;
+}
+
+[data-kinetic] .k-assess-citations ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+[data-kinetic] .k-assess-citations li {
+  font-size: var(--k-subhead);
+  line-height: 1.6;
+  color: var(--k-text-secondary);
+  margin: 2px 0;
+}
+
+[data-kinetic] .k-assess-citations a {
+  color: var(--k-text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--k-card-border);
+  transition: color 0.15s ease;
+}
+
+[data-kinetic] .k-assess-citations a:hover {
+  color: var(--k-accent);
+  border-bottom-color: var(--k-accent);
+}
+
 [data-kinetic] .k-assess-code {
   font-size: 11px;
   color: var(--k-text-tertiary);

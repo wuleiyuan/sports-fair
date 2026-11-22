@@ -211,6 +211,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       model: result.model,
       provider: result.provider,
       usage: result.usage,
+      // 联网搜索时的引用来源（DeepSeek 才有），前端在建议下方列出处
+      ...(result.citations && result.citations.length > 0
+        ? { citations: result.citations }
+        : {}),
       generatedAt: new Date().toISOString(),
       requestId,
     });

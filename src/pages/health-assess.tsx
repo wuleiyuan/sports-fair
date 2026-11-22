@@ -186,6 +186,22 @@ const HealthAssessPage: React.FC = () => {
                     {line}
                   </p>
                 ))}
+
+              {/* DeepSeek 联网搜索时模型会附引用，列出来让用户能核对出处 */}
+              {aiResponse.citations && aiResponse.citations.length > 0 && (
+                <div className="k-assess-citations">
+                  <span className="k-assess-citations-label">参考来源</span>
+                  <ol>
+                    {aiResponse.citations.map((c, i) => (
+                      <li key={i}>
+                        <a href={c.url} target="_blank" rel="noreferrer">
+                          {c.title || c.url}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
           )}
 

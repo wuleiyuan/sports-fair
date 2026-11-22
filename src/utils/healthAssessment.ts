@@ -701,6 +701,8 @@ export interface AIGuidanceResponse {
     completion_tokens?: number;
     total_tokens?: number;
   };
+  /** DeepSeek 联网搜索时的引用来源（其他 provider 不返回） */
+  citations?: { url: string; title: string }[];
   generatedAt?: string;
   error?: string;
   /** v2.2.1: 调试用 requestId */
@@ -922,7 +924,15 @@ export function loadProviderPref(): LLMProvider {
   if (typeof window === 'undefined') return 'mimo';
   try {
     const v = localStorage.getItem(PROVIDER_PREF_KEY);
-    if (v === 'mimo' || v === 'openai' || v === 'anthropic') return v;
+    // 白名单要覆盖所有 provider，否则用户选了 deepseek 也存不住
+    if (
+      v === 'mimo' ||
+      v === 'openai' ||
+      v === 'anthropic' ||
+      v === 'deepseek'
+    ) {
+      return v;
+    }
   } catch {
     // localStorage disabled
   }

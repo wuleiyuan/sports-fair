@@ -32,12 +32,22 @@ export interface LLMUsage {
   safety_tokens?: number;
 }
 
+export interface LLMCitation {
+  url: string;
+  title: string;
+}
+
 export interface LLMResponse {
   content: string;
   model: string;
   usage?: LLMUsage;
   /** provider 标识（用于前端徽章 / 日志） */
   provider: ProviderName;
+  /**
+   * 引用来源（仅 DeepSeek 开启联网搜索时返回）。
+   * 来自 message.annotations[].url_citation，用于在建议下方列出出处。
+   */
+  citations?: LLMCitation[];
 }
 
 export interface LLMProvider {
@@ -353,6 +363,10 @@ function createDeepSeekProvider(opts: DeepSeekProviderOptions): LLMProvider {
                 : {}),
             }
           : undefined,
+        // 联网搜索的引用来源：不传下去用户就看不到出处了
+        ...(result.citations && result.citations.length > 0
+          ? { citations: result.citations }
+          : {}),
       };
     },
   };
