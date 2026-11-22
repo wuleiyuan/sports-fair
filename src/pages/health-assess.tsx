@@ -58,14 +58,23 @@ const HealthAssessPage: React.FC = () => {
     setAiState('loading');
     setAiResponse(null);
     try {
-      const res = await fetchAIGuidanceWithCache(bundle, provider);
-      if (res) {
-        setAiResponse(res);
+      // 第二个参数是 options 对象（不是裸 provider 字符串），返回值是
+      // { response, fromCache } 包装体——之前两处都写错了，导致
+      // aiResponse 拿到的其实是包装体，aiGuidance 永远 undefined，
+      // AI 建议文本一次都渲染不出来。
+      const { response, fromCache: hit } = await fetchAIGuidanceWithCache(
+        bundle,
+        { provider }
+      );
+      if (response && response.aiGuidance) {
+        setAiResponse(response);
         setAiState('ok');
-        setFromCache(res.fromCache ?? false);
+        setFromCache(hit);
       } else {
+        // 失败时 response.aiGuidance 为 null，但里面带着 error/requestId
+        // 供下面的降级提示展示
+        setAiResponse(response ?? null);
         setAiState('error');
-        setAiResponse(null);
       }
     } catch (e: any) {
       setAiState('error');
