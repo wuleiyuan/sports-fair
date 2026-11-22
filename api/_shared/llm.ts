@@ -1,6 +1,6 @@
 /**
  * LLM Provider 抽象层（mimo / openai / anthropic / deepseek）
- * 从 lib/ 迁入 api/shared/，原因见 api/shared/deepseek.ts 顶部说明。
+ * 原在仓库根 lib/，现迁入 api/_shared/（原因见 api/_shared/deepseek.ts 顶部说明）。
  *
  * deepseek 分支走共享的 chat 实现（含能力开关），因此运行时依赖 ./deepseek；
  * 而 ./deepseek 只在类型层面引用本文件的 LLMMessage（`import type`，运行时擦除），
@@ -317,7 +317,7 @@ interface DeepSeekProviderOptions {
 }
 
 /**
- * DeepSeek 全功能 provider：复用 lib/deepseek/provider.ts 的 chatWithDefaults，
+ * DeepSeek 全功能 provider：复用 api/_shared/deepseek.ts 的 chatWithDefaults，
  * 让三档套餐 + 每个 DEEPSEEK_ENABLE_* 开关真正作用于主对话（web 工具 / thinking /
  * safety / title 都由能力中心决定，而不是在这里写死一个朴素 chat 请求）。
  */

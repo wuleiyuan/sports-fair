@@ -469,15 +469,13 @@ export function gateCapability(cap: Capability): GateResult {
   }
   const cfg = resolveDeepSeekConfig();
   if (!isCapabilityOn(cfg, cap)) {
+    const meta = CAPABILITY_META[cap];
     return {
       ok: false,
       status: 403,
       body: {
         error: `Capability "${cap}" is disabled`,
-        hint: `当前套餐/开关下未启用该能力。检查 DEEPSEEK_TIER 或在 DEEPSEEK_ENABLE_${cap
-          .toUpperCase()
-          .replace(/[A-Z]/g, (m) => '_' + m)
-          .replace(/^_/, '')} 中开启。`,
+        hint: `当前套餐/开关下未启用该能力。检查 DEEPSEEK_TIER，或在 ${meta.envVar} 中设为 true 单独开启。`,
       },
     };
   }

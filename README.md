@@ -239,8 +239,10 @@ Standalone tool endpoints (gated by tier/switches, the server holds the key):
 | `POST /api/deepseek/asr`    | `{ fileBase64, filename }`                                |
 | `POST /api/deepseek/tts`    | `{ text, voiceId?, format? }` → `{ audioBase64, format }` |
 
-These five share a single dynamic route (`api/deepseek/[tool].ts`) so the deployment stays
-within Vercel Hobby's 12-Serverless-Function limit.
+These five share a single static function (`api/deepseek.ts`) — a `vercel.json` rewrite maps
+`/api/deepseek/:tool` onto it — so the deployment stays within Vercel Hobby's
+12-Serverless-Function limit. (A `[tool].ts` dynamic route is *not* bundled into a function
+by `@vercel/node`, so it silently 405s; keep this file static if you refactor.)
 Check the current config with `GET /api/config`, or open the **DeepSeek 全家桶 · 能力配置**
 panel on the Health Assess page. The panel is read-only — switches are managed by the
 environment variables above (this keeps the project free of any backend storage).

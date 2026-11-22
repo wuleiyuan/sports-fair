@@ -7,9 +7,10 @@
  * POST /api/deepseek/asr     body: { fileBase64, filename }
  * POST /api/deepseek/tts     body: { text, voiceId?, format? }
  *
- * v1.0.1 (2026-11-21): 五个端点合并为一个动态路由。
- * Vercel Hobby 计划每部署限 12 个 Serverless Function，
- * 拆成 5 个文件会把函数数推到上限之外（部署直接失败）。
+ * v1.0.2 (2026-11-21): 从动态路由 api/deepseek/[tool].ts 改为静态单函数
+ * + vercel.json rewrite（/api/deepseek/:tool → /api/deepseek?tool=:tool）。
+ * 原因：@vercel/node 不会把 [tool].ts 动态路由打成函数，线上只会 405；
+ * 而拆成 5 个文件又会超过 Vercel Hobby 每部署 12 个 Serverless Function 的上限。
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import {
@@ -59,10 +60,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .status(400)
           .json({ error: 'query is required (1-128 chars)' });
       }
+      if (query.length > 128) {
+        return res.status(400).json({ error: 'query must be <= 128 chars' });
+      }
+      // 官方限制：count 1-50，默认 10
+      const n = Number(count);
+      const safeCount = Number.isFinite(n)
+        ? Math.min(50, Math.max(1, Math.trunc(n)))
+        : 10;
       try {
         return res
           .status(200)
-          .json(await callSearch(query, count, needContent, oriQuestion));
+          .json(await callSearch(query, safeCount, !!needContent, oriQuestion));
       } catch (e) {
         return fail(res, e);
       }
@@ -88,6 +97,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { fileBase64, filename, purpose = 'text_recognition' } = body;
       if (!fileBase64 || typeof fileBase64 !== 'string') {
         return res.status(400).json({ error: 'fileBase64 is required' });
+      }
+      // 官方只接受两个枚举值
+      const PURPOSES = ['text_recognition', 'rich_layout_recognition'];
+      if (!PURPOSES.includes(purpose)) {
+        return res.status(400).json({
+          error: `purpose must be one of: ${PURPOSES.join(', ')}`,
+        });
       }
       try {
         return res
@@ -120,6 +136,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { text, voiceId = 'stella', format = 'wav' } = body;
       if (!text || typeof text !== 'string' || text.length === 0) {
         return res.status(400).json({ error: 'text is required' });
+      }
+      // 官方上限：单次 10000 计费字符，body 不超过 64KiB
+      if (text.length > 10_000) {
+        return res
+          .status(400)
+          .json({ error: 'text must be <= 10000 characters' });
+      }
+      if (format !== 'wav' && format !== 'pcm') {
+        return res.status(400).json({ error: "format must be 'wav' or 'pcm'" });
       }
       try {
         const { audioBase64, format: fmt } = await callTts(
