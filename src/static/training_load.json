@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T07:16:54",
+  "generated_at": "2026-11-27T07:11:59",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,33 +17,33 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 77.3,
-    "chronic_28d_trimp": 19.3,
-    "acute_days_with_data": 1,
-    "chronic_days_with_data": 1,
+    "acute_7d_trimp": 90.1,
+    "chronic_28d_trimp": 22.5,
+    "acute_days_with_data": 2,
+    "chronic_days_with_data": 2,
     "ratio": 4.0,
     "status": "high_risk",
     "warning": "ACWR > 1.5 属高危伤病风险, 建议安排 1-2 天全休或极轻松交叉训练"
   },
   "tsb": {
-    "ctl": 18.2,
-    "atl": 10.5,
-    "tsb": 7.7,
+    "ctl": 18.5,
+    "atl": 12.0,
+    "tsb": 6.5,
     "status": "fresh",
     "ctl_days": 42,
     "atl_days": 7,
     "data_span_days": 1592
   },
   "hr_zones": {
-    "z1_recovery": 53.6,
-    "z2_aerobic_base": 11.2,
-    "z3_aerobic": 30.6,
-    "z4_threshold": 4.6,
+    "z1_recovery": 55.2,
+    "z2_aerobic_base": 10.8,
+    "z3_aerobic": 29.6,
+    "z4_threshold": 4.5,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 11.2,
-    "polarized_pct": 64.8,
-    "activities_with_hr": 16,
+    "z2_pct": 10.8,
+    "polarized_pct": 66.0,
+    "activities_with_hr": 17,
     "window_days": 90
   },
   "cadence": null,
@@ -62,6 +62,10 @@
       "trimp": 76.2
     },
     {
+      "date": "2026-11-23",
+      "trimp": 12.8
+    },
+    {
       "date": "2026-11-24",
       "trimp": 77.3
     }
@@ -69,6 +73,6 @@
   "data_window": {
     "earliest": "2019-05-25",
     "latest": "2026-11-24",
-    "total_activities": 835
+    "total_activities": 836
   }
 }
