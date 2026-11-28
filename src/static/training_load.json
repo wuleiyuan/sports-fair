@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T07:11:59",
+  "generated_at": "2026-11-28T06:46:21",
   "config": {
     "hr_max": 197.0,
     "hr_rest": 60.0,
@@ -17,46 +17,38 @@
     }
   },
   "acwr": {
-    "acute_7d_trimp": 90.1,
-    "chronic_28d_trimp": 22.5,
-    "acute_days_with_data": 2,
-    "chronic_days_with_data": 2,
+    "acute_7d_trimp": 216.1,
+    "chronic_28d_trimp": 54.0,
+    "acute_days_with_data": 3,
+    "chronic_days_with_data": 3,
     "ratio": 4.0,
     "status": "high_risk",
     "warning": "ACWR > 1.5 属高危伤病风险, 建议安排 1-2 天全休或极轻松交叉训练"
   },
   "tsb": {
-    "ctl": 18.5,
-    "atl": 12.0,
-    "tsb": 6.5,
-    "status": "fresh",
+    "ctl": 20.2,
+    "atl": 24.6,
+    "tsb": -4.4,
+    "status": "optimal",
     "ctl_days": 42,
     "atl_days": 7,
-    "data_span_days": 1592
+    "data_span_days": 1595
   },
   "hr_zones": {
-    "z1_recovery": 55.2,
-    "z2_aerobic_base": 10.8,
-    "z3_aerobic": 29.6,
-    "z4_threshold": 4.5,
+    "z1_recovery": 53.4,
+    "z2_aerobic_base": 10.4,
+    "z3_aerobic": 31.8,
+    "z4_threshold": 4.3,
     "z5_anaerobic": 0.0,
     "dominant_zone": "z1",
-    "z2_pct": 10.8,
-    "polarized_pct": 66.0,
-    "activities_with_hr": 17,
+    "z2_pct": 10.4,
+    "polarized_pct": 63.8,
+    "activities_with_hr": 18,
     "window_days": 90
   },
   "cadence": null,
   "cadence_note": "v2.2.8 占位: activities.json 无 cadence 字段. v2.2.9+ 需在 sync 源 (keep_sync / apple_health / gpx_sync) 加 cadence 字段后才能分析. 目标: 平均步频 175-180 spm, 长期 < 170 需注意.",
   "daily_trimp_series": [
-    {
-      "date": "2026-10-13",
-      "trimp": 128.8
-    },
-    {
-      "date": "2026-10-15",
-      "trimp": 148.3
-    },
     {
       "date": "2026-10-18",
       "trimp": 76.2
@@ -68,11 +60,15 @@
     {
       "date": "2026-11-24",
       "trimp": 77.3
+    },
+    {
+      "date": "2026-11-27",
+      "trimp": 125.9
     }
   ],
   "data_window": {
     "earliest": "2019-05-25",
-    "latest": "2026-11-24",
-    "total_activities": 836
+    "latest": "2026-11-27",
+    "total_activities": 837
   }
 }
